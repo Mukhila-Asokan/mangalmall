@@ -35,14 +35,14 @@ html[data-bs-theme=dark] {
 
 [data-menu-color=light] {
   --bs-menu-bg: #ffffff;
-  --bs-menu-item-color: #495057;
+  --bs-menu-item-color: #000;
   --bs-menu-item-hover-color: #3f87fd;
   --bs-menu-item-active-color: #3f87fd;
 }
 
 [data-menu-color=dark],
 [data-bs-theme=dark][data-menu-color=light] {
-  --bs-menu-bg: #22262b;
+  --bs-menu-bg: #752c37;
   --bs-menu-item-color: #9097a7;
   --bs-menu-item-hover-color: #c8cddc;
   --bs-menu-item-active-color: #fff;
@@ -63,7 +63,7 @@ html[data-bs-theme=dark] {
 
 [data-topbar-color=dark],
 [data-bs-theme=dark][data-topbar-color=light] {
-  --bs-topbar-bg: #22262b;
+  --bs-topbar-bg: #752c37;
   --bs-topbar-item-color: #a4b0be;
   --bs-topbar-item-hover-color: #bccee4;
 }
@@ -130,8 +130,8 @@ html[data-bs-theme=dark] {
   --bs-info-text-emphasis: #055160;
   --bs-warning-text-emphasis: #664d03;
   --bs-danger-text-emphasis: #58151c;
-  --bs-light-text-emphasis: #495057;
-  --bs-dark-text-emphasis: #495057;
+  --bs-light-text-emphasis: #000;
+  --bs-dark-text-emphasis: #000;
   --bs-primary-bg-subtle: #e2d9f3;
   --bs-secondary-bg-subtle: #f8f9fa;
   --bs-success-bg-subtle: #d6f5e3;
@@ -214,7 +214,7 @@ html[data-bs-theme=dark] {
   --bs-emphasis-color-rgb: 248, 249, 250;
   --bs-secondary-color: #adb5bd;
   --bs-secondary-color-rgb: 173, 181, 189;
-  --bs-secondary-bg: #22262b;
+  --bs-secondary-bg: #752c37;
   --bs-secondary-bg-rgb: 34, 38, 43;
   --bs-tertiary-color: rgba(173, 181, 189, 0.5);
   --bs-tertiary-color-rgb: 173, 181, 189;
@@ -237,12 +237,12 @@ html[data-bs-theme=dark] {
   --bs-light-bg-subtle: #343a40;
   --bs-dark-bg-subtle: #1a1d20;
   --bs-primary-border-subtle: #432874;
-  --bs-secondary-border-subtle: #495057;
+  --bs-secondary-border-subtle: #000;
   --bs-success-border-subtle: #1d7a44;
   --bs-info-border-subtle: #0a4d5e;
   --bs-warning-border-subtle: #604e0b;
   --bs-danger-border-subtle: #993737;
-  --bs-light-border-subtle: #495057;
+  --bs-light-border-subtle: #000;
   --bs-dark-border-subtle: #343a40;
   --bs-heading-color: #fff;
   --bs-link-color: #a98eda;

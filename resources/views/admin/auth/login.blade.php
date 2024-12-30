@@ -33,11 +33,22 @@
                                         <p class="text-muted mb-4">Enter your email address and password to access admin
                                             panel.</p>
 
-                                        <form action="{{ route('admin.login') }}" method="post">
+                                        <form action="{{ route('admin.authcheck') }}" method="post">
                                         	@csrf
+
+
+                                        @if(Session::has('error')) 
+                                            <span style="color:red;">{{ Session::get('error') }}</span>
+                                         @endif
+                                        @if ($errors->any())
+                                            @foreach ($errors->all() as $error)
+                                                <div style="color:red;">{{ $error }}</div>
+                                             @endforeach
+                                        @endif
+
                                             <div class="form-group mb-3">
                                                 <label class="form-label" for="emailaddress">Email address</label>
-                                                <input class="form-control" type="email" id="emailaddress" required=""
+                                                <input class="form-control" type="email" id="emailaddress" required="" value="" name="email"
                                                     placeholder="Enter your email">
                                             </div>
 
@@ -45,7 +56,7 @@
                                                 <a href="pages-recoverpw.html"
                                                     class="text-muted float-end"><small></small></a>
                                                 <label class="form-label" for="password">Password</label>
-                                                <input class="form-control" type="password" required="" id="password"
+                                                <input class="form-control" type="password" required="" id="password" value="" name="password"
                                                     placeholder="Enter your password">
                                             </div>
 
