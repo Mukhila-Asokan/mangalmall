@@ -20,23 +20,80 @@
                     <li class="menu-title">Menu</li>
 
                     <li class="menu-item">
-                        <a href="#" class="menu-link waves-effect">
+                        <a href="{{ route('admin/dashboard') }}" class="menu-link waves-effect">
                             <span class="menu-icon"><i data-lucide="airplay "></i></span>
                             <span class="menu-text"> Dashboards </span>
-                            <span class="badge bg-info rounded-pill ms-auto">3</span>
+                         
                         </a>
                     </li>
-
-                    <li class="menu-title">Staff Mangement</li>
-                    <li class="menu-title">Venu Management</li>
-                    <li class="menu-title">Settings</li>
-                   
-
-                              
+                    <li class="menu-item">
+                        <a href="#menuExpages" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="copy"></i></span>
+                            <span class="menu-text"> Venue Management </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuExpages">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a href="#" class="menu-link">
+                                        <span class="menu-text">Venue List</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" class="menu-link">
+                                        <span class="menu-text">Invoice</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" class="menu-link">
+                                        <span class="menu-text">Venue Categories</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" class="menu-link">
+                                        <span class="menu-text">Venue Amenities</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" class="menu-link">
+                                        <span class="menu-text">Venue Builder</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" class="menu-link">
+                                        <span class="menu-text">Venue Settings</span>
+                                    </a>
+                                </li>                               
                             </ul>
                         </div>
                     </li>
-                </ul>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <span class="menu-icon"><i data-lucide="file-image"></i></span>
+                            <span class="menu-text">Inviation Mangement</span>
+                        </a>
+                    </li>
+                    
+                    <li class="menu-item">
+                        <a href="#" class="menu-link waves-effect"> 
+                            <span class="menu-icon"><i data-lucide="fan"></i></span>
+                            <span class="menu-text">Vendor Management</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <span class="menu-icon"><i data-lucide="person-standing"></i></span>
+                            <span class="menu-text">Staff Mangement</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">  
+                            <span class="menu-icon"><i data-lucide="cog"></i></span>
+                            <span class="menu-text">Settings</span>
+                        </a>
+                    </li>
+              </ul>
+                      
 
                 <div class="help-box">
                     <h5 class="text-muted font-size-15 mb-3">For Help &amp; Support</h5>

@@ -8,6 +8,8 @@
     <meta content="Occasion Pannel" name="description" />
     <meta content="Rel Del Mercado" name="author" />
 
+    <meta name="_token" content="{!! csrf_token() !!}" />
+
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
