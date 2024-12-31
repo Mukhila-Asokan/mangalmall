@@ -38,6 +38,7 @@
 
 <?php echo $__env->make('admin.layouts.scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
+<?php echo $__env->yieldContent('scripts'); ?> 
 </body>
 
 </html><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/app-admin.blade.php ENDPATH**/ ?>

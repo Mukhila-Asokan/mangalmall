@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/venue",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Venue\\": "app/",
+            "Modules\\Venue\\Database\\Factories\\": "database/factories/",
+            "Modules\\Venue\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Venue\\Tests\\": "tests/"
+        }
+    }
+}

@@ -232,7 +232,7 @@
                                 <div class="dropdown-divider"></div>
 
                                 <!-- item-->
-                                <a href="{{ route('admin.logout') }}" class="dropdown-item notify-item">
+                                <a href="{{ route('admin/logout') }}" class="dropdown-item notify-item">
                                     <i data-lucide="log-out" class="font-size-16 me-2"></i>
                                     <span>Logout</span>
                                 </a>

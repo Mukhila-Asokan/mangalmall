@@ -1,0 +1,11 @@
+{
+    "name": "Venue",
+    "alias": "venue",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Venue\\Providers\\VenueServiceProvider"
+    ],
+    "files": []
+}

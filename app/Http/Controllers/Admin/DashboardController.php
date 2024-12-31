@@ -3,12 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\AdminLoginRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash; 
+
+use App\Models\AdminUser;
+
 use Session;
-use AdminUser;
 
 class DashboardController extends Controller
 {
+    use AuthorizesRequests; 
     public function index()
     {
          $username = Session::get('username');
@@ -31,35 +41,36 @@ class DashboardController extends Controller
     {
         $pagetitle = "Change Password";
 
+        $validator =  Validator::make($request->all(), [
+        'oldpassword' => 'required',
+        'newpassword' => 'required|min:8',
+        'confirmpassword' => 'required|min:8']);
 
-        $validator = Validator::make($request->all(), [
-            'oldpassword' => 'required',
-            'newpassword' => 'required|min:8|confirmed',
-            'confirmpassword' => 'required|min:8',
-        ]);
-
-        if ($validator->fails()) {
+         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
          $username = Session::get('username');
-         $userid = Session::get('id');
+         $userid = Session::get('userid');
+
+        
 
          $user = AdminUser::find($userid);
+
+       
 
          if (!Hash::check($request->oldpassword, $user->password)) {
             return back()->withErrors(['oldpassword' => __('The provided current password is incorrect.')]);
         }
 
         $user->forceFill([
-            'password' => Hash::make($request->new_password),
+            'password' => Hash::make($request->newpassword),
         ])->save();
 
          
         Auth::logout();
 
-        return redirect()->route('admin.login')->with('status', __('Your password has been updated successfully.'));
-           
-                
+        return redirect()->route('admin.login')->with('success', __('Your password has been updated successfully.'));
+       
     }
 }
