@@ -90,7 +90,7 @@ class LoginController extends Controller
             ]);*/
 
         }else{
-            return redirect(route('admin/login'))->with([
+            return redirect(route('admin.login'))->with([
                 'error' => "Invalid Credentials."
             ]);
         }

@@ -33,6 +33,13 @@
                                         <p class="text-muted mb-4">Enter your email address and password to access admin
                                             panel.</p>
 
+
+                                            @if (session('success'))
+                                            <div class="alert alert-info alert-dismissible fade show mb-0"> 
+                                                {{ session('success') }}
+                                            </div>
+                                            @endif
+
                                         <form action="{{ route('admin.authcheck') }}" method="post">
                                         	@csrf
 

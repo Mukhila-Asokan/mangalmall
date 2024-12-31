@@ -35,6 +35,10 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
      Route::any('/changepassword', [DashboardController::class, 'changepassword'])->name('admin.changepassword');
      Route::any('/passwordupdate', [DashboardController::class, 'passwordupdate'])->name('admin.passwordupdate');
 
-    Route::post('logout', [LoginController::class, 'destroy'])->name('admin.logout');
+
+
+   
+
+    Route::any('logout', [LoginController::class, 'destroy'])->name('admin/logout');
 
 });
