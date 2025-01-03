@@ -23,20 +23,15 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Venue Category List</h4>
-                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <h5 class="card-header">Featured</h5>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="javascript:void(0);" class="btn btn-primary waves-effect waves-light">Go somewhere</a>
-                                    </div>
-                                </div>
-                                <!-- end card-box-->
-                            </div>
+                        <h4 class="header-title mb-4">Venue List</h4>
+                       
+                        <div class="text-end">
+                         <a href = "{{ route('venue/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                          <span class="tf-icon mdi mdi-plus me-1"></span>Add Venue
+                           </a>
                         </div>
+                  
+                         
                     </div>
                 </div>
             </div>

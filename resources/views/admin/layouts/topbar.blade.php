@@ -123,8 +123,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon">
-                                                        <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle"
-                                                            alt="" />
+                                                    
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 text-truncate ms-2">

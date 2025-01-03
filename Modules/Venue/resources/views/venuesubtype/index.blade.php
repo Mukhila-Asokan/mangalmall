@@ -27,11 +27,24 @@
                          <div class="row">
                             <div class="col-md-4">
                                 <div class="card">
-                                    <h5 class="card-header">Featured</h5>
+                                    <h5 class="card-header border-bottom">Venue Type</h5>
                                     <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="javascript:void(0);" class="btn btn-primary waves-effect waves-light">Go somewhere</a>
+                                        
+                                        <h5 class="card-title">Create a new venue type</h5><br>
+                                        <a href="{{ route('venuetype/create') }}" class="btn btn-primary waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venuetype/show') }}" class="btn btn-primary waves-effect waves-light">View</a>
+                                    </div>
+                                </div>
+                                <!-- end card-box-->
+                            </div>
+                             <div class="col-md-4">
+                                <div class="card">
+                                    <h5 class="card-header border-bottom">Venue Sub Type</h5>
+                                    <div class="card-body">
+                                        
+                                        <h5 class="card-title">Create a new venue type</h5><br>
+                                        <a href="{{ route('venuesubtype/create') }}" class="btn btn-primary waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venuesubtype/show') }}" class="btn btn-primary waves-effect waves-light">View</a>
                                     </div>
                                 </div>
                                 <!-- end card-box-->
