@@ -38,7 +38,14 @@
 
 @include('admin.layouts.scripts')
 
-@yield('scripts') 
+
+
+
+
+
+@include('admin.layouts.popup')
+@stack('scripts') 
+@include('admin.layouts.popupscripts')
 </body>
 
 </html>

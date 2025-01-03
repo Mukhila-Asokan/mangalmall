@@ -4,6 +4,11 @@ namespace Modules\Venue\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Session;
+use Modules\Venue\Models\VenueType;
+use Modules\Venue\Models\VenueAmenities;
+Use Modules\Venue\Models\VenueDataField;
+Use Modules\Venue\Models\VenueDataFieldDetails;
 
 class VenueController extends Controller
 {
@@ -12,7 +17,20 @@ class VenueController extends Controller
      */
     public function index()
     {
-        return view('venue::index');
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue List";
+        $pageroot = "Venue"; 
+        return view('venue::venues.show',compact('pagetitle','pageroot','username'));
+    }
+
+    public function venuesettings()
+    {
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue Settings";
+        $pageroot = "Venue";        
+        return view('venue::venuesettings',compact('pagetitle','pageroot','username'));
     }
 
     /**
@@ -20,7 +38,14 @@ class VenueController extends Controller
      */
     public function create()
     {
-        return view('venue::create');
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue";
+        $pageroot = "Home";
+        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
+        $venueamenities = VenueAmenities::where('delete_status',0)->get();
+        $venuedatafield = VenueDataField::where('delete_status',0)->get();
+        return view('venue::venues.create',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield'));
     }
 
     /**

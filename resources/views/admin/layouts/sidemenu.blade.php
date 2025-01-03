@@ -34,23 +34,24 @@
                         </a>
                         <div class="collapse" id="menuExpages">
                             <ul class="sub-menu">
-                                <li class="menu-item">
-                                    <a href="#" class="menu-link">
-                                        <span class="menu-text">Venue List</span>
+                                 <li class="menu-item">
+                                    <a href="{{ route('venue') }}" class="menu-link">
+                                        <span class="menu-text">Venue</span>
                                     </a>
                                 </li>
+                             
                                 <li class="menu-item">
                                     <a href="#" class="menu-link">
                                         <span class="menu-text">Invoice</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('venuetype/show') }}" class="menu-link">
+                                    <a href="{{ route('admin/venuetype') }}" class="menu-link">
                                         <span class="menu-text">Venue Categories</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                                    <a href="{{ route('venue/venueamenities') }}" class="menu-link">
                                         <span class="menu-text">Venue Amenities</span>
                                     </a>
                                 </li>
@@ -60,7 +61,7 @@
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                                    <a href="{{ route('venuesettings') }}" class="menu-link">
                                         <span class="menu-text">Venue Settings</span>
                                     </a>
                                 </li>                               

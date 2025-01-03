@@ -4,22 +4,20 @@ namespace Modules\Venue\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Venue\Database\Factories\VenueTypeFactory;
+// use Modules\Venue\Database\Factories\VenueAmenitiesFactory;
 
-class VenueType extends Model
+class VenueAmenities extends Model
 {
     use HasFactory;
 
-     protected $table = 'venuetype';
-
+    protected $table = 'venueamenities';
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [];
 
-    // protected static function newFactory(): VenueTypeFactory
+    // protected static function newFactory(): VenueAmenitiesFactory
     // {
-    //     // return VenueTypeFactory::new();
+    //     // return VenueAmenitiesFactory::new();
     // }
-
 }

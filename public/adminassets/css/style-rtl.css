@@ -14411,7 +14411,7 @@ html[data-bs-theme=dark] .auth-logo .logo-dark {
 .navbar-custom {
   top: 0;
   position: sticky;
-  z-index: 1000;
+  /*z-index: 1000;*/
   background: var(--bs-topbar-bg);
   min-height: var(--bs-topbar-height);
   -webkit-transition: all 0.25s ease-in-out;

@@ -18,6 +18,6 @@
     <!-- App css -->
     <link href="{{ asset('adminassets/css/style.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('adminassets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
-    <script src="{{ asset('adminassets/assets/js/config.js') }}"></script>
+    <script src="{{ asset('adminassets/js/config.js') }}"></script>
 </head>
 <body>
