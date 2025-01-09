@@ -11,7 +11,7 @@
                             </a>
 
                             <!-- Brand Logo Dark -->
-                            <a href="index.html" class="logo-dark">
+                            <a href="#" class="logo-dark">
                                 <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="dark logo" class="logo-lg" height="32">
                                 <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="small logo" class="logo-sm" height="32">
                             </a>

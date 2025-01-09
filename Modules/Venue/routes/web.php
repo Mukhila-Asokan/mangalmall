@@ -6,6 +6,7 @@ use Modules\Venue\Http\Controllers\VenueTypeController;
 use Modules\Venue\Http\Controllers\VenueSubTypeController;
 use Modules\Venue\Http\Controllers\VenueAmenitiesController;
 use Modules\Venue\Http\Controllers\VenueDataFieldController;
+use Modules\Venue\Http\Controllers\ThemeBuilderController;
 
 /*VenueAmenitiesController
 |--------------------------------------------------------------------------
@@ -27,9 +28,32 @@ Route::group([], function () {
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
-     Route::any('/venue', [VenueController::class,'index'])->name('venue');
-     Route::any('/venue/create', [VenueController::class,'create'])->name('venue/create');
-     Route::any('/venue/show', [VenueController::class,'show'])->name('venue/show');
+    Route::any('/venue', [VenueController::class,'index'])->name('venue');
+    Route::any('/venue/create', [VenueController::class,'create'])->name('venue/create');
+    Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
+    Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
+    Route::post('/venue/store', [VenueController::class,'store'])->name('venue.venue_add');
+    Route::any('/venue/show', [VenueController::class,'index'])->name('venue/index');
+    Route::any('/venue/detailview/{id}', [VenueController::class,'detailview'])->name('venue/detailview');
+    Route::any('/venue/{id}/edit', [VenueController::class,'edit']);
+    Route::any('/venue/{id}/themebuilder', [VenueController::class,'themebuilder'])->name('venue/themelistview');
+    Route::any('/venue/themebuilder/{venueid}/{id}/editor', [VenueController::class,'themeeditor'])->name('venue/themelistview/editor');
+
+
+    Route::any('/venue/venuethemes', [ThemeBuilderController::class,'index'])->name('admin/venuethemes');
+
+    Route::any('/venue/themebuilder', [ThemeBuilderController::class,'index'])->name('admin/themebuilder');
+
+    Route::any('/venue/themebuilder/{id}/preview', [ThemeBuilderController::class,'preview'])->name('venue/themebuilder/preview');
+    Route::any('/venue/themebuilder/create', [ThemeBuilderController::class,'create'])->name('themebuilder/create');
+    Route::any('/venue/themebuilder/{id}/edit', [ThemeBuilderController::class,'edit']);
+    Route::put('/venue/themebuilder/update', [ThemeBuilderController::class,'update'])->name('themebuilder.update');
+    Route::post('/venue/themebuilder/store', [ThemeBuilderController::class,'store'])->name('venue.themebuilder_add');
+    Route::any('/venue/themebuilder/show', [ThemeBuilderController::class,'show'])->name('themebuilder/show');
+    Route::any('/venue/themebuilder/{id}/destroy', [ThemeBuilderController::class,'destroy']);
+    Route::any('/venue/themebuilder/{id}/updatestatus', [ThemeBuilderController::class,'updatestatus']);
+
+
 
 
      

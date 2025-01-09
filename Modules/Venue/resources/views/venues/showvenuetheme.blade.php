@@ -1,0 +1,2 @@
+@include('venue::editor.header');
+

@@ -40,6 +40,7 @@
                                         <th>#</th>
                                         <th>Data Field Name</th>
                                         <th>Field Type</th>
+                                        <th>Field Units</th>
                                         <th>Field Value</th>
                                         <th>Action</th>
                                     </tr>
@@ -50,6 +51,7 @@
                                     <tr>
                                         <th scope="row">{{  $i++ }}</th>
                                         <td>{{ $typename->datafieldname }}</td>           
+                                        <td>{{ $typename->datafieldnametype }}</td>
                                         <td>{{ $typename->datafieldtype }}</td>
                                         <td>
 

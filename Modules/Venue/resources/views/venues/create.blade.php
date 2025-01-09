@@ -6,8 +6,14 @@
     {
         border:1px solid black;
     }
-</style>
 
+    .imageOutput img
+    {
+        width:200px;
+        height:auto;
+    }
+</style>
+ <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
 <!-- start page title -->
         <div class="py-3 py-lg-4">
             <div class="row">
@@ -33,12 +39,12 @@
                         <h4 class="header-title mb-4">Add Venue</h4>
                        
                         <div class="text-end">
-                         <a href = "{{ route('venue/show') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                         <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                           <span class="tf-icon mdi mdi-eye me-1"></span>Venue List
                            </a>
                         </div>
                   
-                          <form class="form-horizontal" role="form" method = "post" action="{{ route('venuetype.venuetype_add') }}">
+                          <form class="form-horizontal" role="form" method = "post" action="{{ route('venue.venue_add') }}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="col-12">
 
@@ -59,21 +65,21 @@
                                           <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="venuetypename">Venue Name</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="venuetype_name" name="venuetype_name" class="form-control" placeholder="Enter the venue name" value = "{{ old('venuetype_name') }}" required>
-                                                @if($errors->has('venuetype_name'))
-                                                <div class="text-danger">{{ $errors->first('venuetype_name') }}</div>
+                                                  <input type="text" id="venuename" name="venuename" class="form-control" placeholder="Enter the venue name" value = "{{ old('venuename') }}" required>
+                                                @if($errors->has('venuename'))
+                                                <div class="text-danger">{{ $errors->first('venuename') }}</div>
                                                 
                                             @endif
                                             </div>
 
                                         </div>
                                          <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuelocation">Venue Location</label>
+                                            <label class="col-md-4 col-form-label" for="venueaddress">Venue Location</label>
                                             <div class="col-md-8">
                                                   
 
-                                                 <textarea class="form-control" placeholder="Enter the venue location" id="venuelocation" style="height: 100px">{{ old('venuelocation') }}</textarea>
-                                                  @if($errors->has('venuelocation'))
+                                                 <textarea class="form-control" placeholder="Enter the venue location" id="venueaddress" name = "venueaddress" style="height: 100px">{{ old('venueaddress') }}</textarea>
+                                                  @if($errors->has('venueaddress'))
                                                 <div class="text-danger">{{ $errors->first('venuelocation') }}</div>
                                                  @endif
 
@@ -84,7 +90,7 @@
                                           <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="venuearea">Area</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="venuearea" name="venuearea" class="form-control" placeholder="Enter the Area name" value = "{{ old('venuearea') }}" required>
+                                                  <select id="venuearea" name="venuearea"  placeholder="Enter the Area name" required></select>
                                                 @if($errors->has('venuearea'))
                                                 <div class="text-danger">{{ $errors->first('venuearea') }}</div>
                                                 
@@ -97,6 +103,7 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="venuecity">City</label>
                                             <div class="col-md-8">
+                                                <input type = "hidden" name = "locationid" id = "locationid" value = "" />
                                                   <input type="text" id="venuecity" name="venuecity" class="form-control" placeholder="Enter the city name" value = "{{ old('venuecity') }}" required>
                                                 @if($errors->has('venuecity'))
                                                 <div class="text-danger">{{ $errors->first('venuecity') }}</div>
@@ -131,7 +138,7 @@
                                       <div class="mb-4 row">
                                             <label class="col-md-2 col-form-label" for="description">Description</label>
                                             <div class="col-md-10">
-                                                  <textarea class="form-control" placeholder="Enter the venue location" id="description" style="height: 100px">{{ old('description') }}</textarea>
+                                                  <textarea class="form-control" placeholder="Enter the venue location" id="description" name = "description" style="height: 100px">{{ old('description') }}</textarea>
                                                   @if($errors->has('description'))
                                                 <div class="text-danger">{{ $errors->first('description') }}</div>
                                                  @endif
@@ -189,9 +196,9 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="contactemail">Website</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="websitename" name="contactemail" class="form-control" placeholder="Enter the Contact Email" value = "{{ old('contactemail') }}" required>
-                                                @if($errors->has('contactemail'))
-                                                <div class="text-danger">{{ $errors->first('contactemail') }}</div>              
+                                                  <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the Contact Email" value = "{{ old('websitename') }}" required>
+                                                @if($errors->has('websitename'))
+                                                <div class="text-danger">{{ $errors->first('websitename') }}</div>              
                                             @endif
                                             </div>
                                         </div> 
@@ -202,16 +209,16 @@
 <div class ="row">
     <div class="col-6">
              <div class="mb-4 row">
-                  <label class="col-md-4 col-form-label" for="venuetypename">Select Venue Type</label>
+                  <label class="col-md-4 col-form-label" for="venuetypeid">Select Venue Type</label>
                    <div class="col-md-8">
-                 <select class="form-select" id="roottype" name="roottype" aria-label="Floating label select example">
+                 <select class="form-select" id="venuetypeid" name="venuetypeid" aria-label="Floating label select example">
                                 <option selected>Open this Venue Type</option>
                                 @foreach($venuetypes as $type)
                                 <option value = "{{ $type->id }}">{{ $type->venuetype_name }}</option>
                                 @endforeach
                             </select>
-                     @if($errors->has('venuetype_name'))
-                    <div class="text-danger">{{ $errors->first('venuetype_name') }}</div>
+                     @if($errors->has('venuetypeid'))
+                    <div class="text-danger">{{ $errors->first('venuetypeid') }}</div>
                     
                 @endif
                 </div>
@@ -220,34 +227,31 @@
 </div>
     <div class="col-6">
            <div class="mb-4 row">
-                  <label class="col-md-4 col-form-label" for="venuetypename">Select Venue Subtype</label>
+                  <label class="col-md-4 col-form-label" for="venuesubtypeid">Select Venue Subtype</label>
                    <div class="col-md-8">
-                 <select class="form-select" id="roottype" name="roottype" aria-label="Floating label select example">
+                 <select class="form-select" id="venuesubtypeid" name="venuesubtypeid" aria-label="Floating label select example">
                     <option selected>Open this Venue Subtype</option>
                   </select>
-                     @if($errors->has('venuetype_name'))
-                    <div class="text-danger">{{ $errors->first('venuetype_name') }}</div>
+                     @if($errors->has('venuesubtypeid'))
+                    <div class="text-danger">{{ $errors->first('venuesubtypeid') }}</div>
                     
                 @endif
                 </div>
 
              </div>
 </div>
-</div>
-
-
-                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="flush-headingTwo">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">Select Amenities
-                                                    </button>
-                                                </h2>
-                                                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                                                    data-bs-parent="#accordionFlushExample">
-                                                    <div class="accordion-body">
+</div></div>
+      </div>
+           </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">Select Amenities
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
 
 
                                          
@@ -256,7 +260,7 @@
                                          @foreach($venueamenities as $amenities)
                                          <div class="mt-3">
                                              <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+                                                <input class="form-check-input" type="checkbox" value="{{ $amenities->id }}" id="venueamenities" name="venueamenities[]">
                                                         <label class="form-check-label" for="flexCheckChecked">
                                                     {{ $amenities->amenities_name }}
                                                 </label>
@@ -278,40 +282,133 @@
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div class="accordion-body">
                                                         
-                                                        @foreach($venuedatafield as $datafield)
-                                                        @if($datafield->datafieldtype == "Text" && $datafield->datafieldtype == "Textarea")
+                                                @foreach($venuedatafield as $datafield)
+                                                        @if($datafield->datafieldtype == "Text")
                                                              <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
+                                            <label class="col-md-4 col-form-label" for="datafieldvalue{{ $datafield->id }}">{{ $datafield->datafieldname }}</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="extradatafield" name="extradatafield[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value" value = "{{ old('extradatafield') }}" required>
-                                                @if($errors->has('extradatafield'))
-                                                <div class="text-danger">{{ $errors->first('extradatafield') }}</div>
+                                                <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
+                                                  <input type="text" id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value" value = "{{ old('datafieldvalue.$datafield->id') }}" >
+                                             
                                             </div>
                                             </div>
-                                                @else if($datafield->datafieldtype == "Select"):
+
+                                             @elseif($datafield->datafieldtype == "Select")
+
+                                             @php
+                                             $data = $datafield->datafieldvalues;
+
+                                                if($data!="")
+                                                {
+                                                    $jsonData = json_decode($data, true); 
+                                               
+                                                @endphp
+
 
                                                    <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
+                                            <label class="col-md-4 col-form-label" for="datafieldvalue">{{ $datafield->datafieldname }}</label>
                                             <div class="col-md-8">
-                                                  
+                                                  <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" /> 
+                                                  <select class="form-select" id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]">
+
+                                                    <option selected>Select this {{ $datafield->datafieldname }}</option>
+
+                                                     @foreach($jsonData as $item)
+                                                     <option value="{{ $item['id'] }}">{{ $item['optionname'] }}</option>
+                                                     @endforeach
+
+                                                  </select>
 
 
-                                                  <input type="text" id="extradatafield" name="extradatafield[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value" value = "{{ old('extradatafield') }}" required>
                                                 
-                                                @if($errors->has('extradatafield'))
-                                                <div class="text-danger">{{ $errors->first('extradatafield') }}
-
+                                               
                                                 </div>
                                             </div>
+                                           @php
+
+                                            }
+                                                
+                                            @endphp
+
+                                            @elseif($datafield->datafieldtype == "Textarea")
+
+                                             <div class="mb-4 row">
+                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
+                                            <div class="col-md-8">
+                                                 <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
+                                                  <textarea id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value">{{ old('datafieldvalue.$datafield->id') }}</textarea>
+                                             
+                                            </div>
                                             </div>
 
-                                            @else    
+                                            @elseif($datafield->datafieldtype == "Radio")
+
+                                            @php
+                                             $data = $datafield->datafieldvalues;
+
+                                                if($data!="")
+                                                {
+                                                    $jsonData = json_decode($data, true); 
+                                               
+                                                @endphp
+
+                                            <div class="mb-4 row">
+                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
+                                            <div class="col-md-8">
+                                                 <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
+                                                 <div class="form-check">
+                                                    @foreach($jsonData as $item)
+
+                                                        <input class="form-check-input" type="radio" name="datafieldvalue[]" id="datafieldvalue{{ $datafield->id }}" value = "{{ $item['id'] }}">
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            {{ $item['optionname'] }}
+                                                        </label>
+                                                     @endforeach
+                                                 </div>
+                                                
+                                            </div>
+                                             @php
+
+                                            }
+                                                
+                                            @endphp
+
+                                            @else
+                                               
+                                            @php
+                                             $data = $datafield->datafieldvalues;
+
+                                                if($data!="")
+                                                {
+                                                    $jsonData = json_decode($data, true); 
+                                               
+                                                @endphp
+
+                                            <div class="mb-4 row">
+                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
+                                            <div class="col-md-8">
+                                                 <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
+                                                 <div class="form-check">
+                                                    @foreach($jsonData as $item)
+
+                                                         <input class="form-check-input" type="checkbox" value="{{ $item['id'] }}" name = "datafieldvalue[]"id="datafieldvalue{{ $datafield->id }}">
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            {{ $item['optionname'] }}
+                                                        </label>
+                                                     @endforeach
+                                                    </div>
+                                                 
+                                              
+                                            </div>
+                                             @php
+
+                                            }
+                                                
+                                            @endphp
 
                                             @endif
-                                            
-
                                         
-                                                        @endforeach
+                                            @endforeach
 
 
                                                     </div>
@@ -327,10 +424,38 @@
                                                 </h2>
                                                 <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
                                                     data-bs-parent="#accordionFlushExample">
-                                                    <div class="accordion-body">Yes, We will update the Scoxe regularly. All the
-                                                        future updates would be available without any cost</div>
+                                                    <div class="accordion-body">
+                                        <div class="mb-4 row">
+                                         <label for="formFile" class="form-label">Image Uplaod</label>
+                                        <input class="form-control imageUpload" type="file" id="formFile" name = "bannerimage">
+                                        </div>
+
+                                         <div id = "categoryiconimage" class="imageOutput"></div>
+
+                                        <!--div class="mb-4 row">
+                                            <label for="formFileMultiple" class="form-label">Gallery Image</label>
+  <input class="form-control" type="file" id="formFileMultiple" multiple>
+                                        </div-->
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    </div>
                                                 </div>
                                             </div>
+
+
+
+
+
                                         </div>
 
 
@@ -353,4 +478,141 @@
                 </div>
             </div>
         </div>
+
+<?php 
+    $areaContent = ''; 
+
+    foreach ($arealocation as $key => $area) {
+        $areaContent .= '{id: '.$area['id'].', title: "' . $area['Areaname'] . '"},'; 
+    }
+
+    // Remove the trailing comma
+    $areaContent = rtrim($areaContent, ','); 
+
+   
+?>
+
+
 @endsection
+@push('scripts')
+<script type="text/javascript">
+
+  $images = $('#categoryiconimage')
+    $(".imageUpload").change(function(event){
+        readURL(this);
+       
+    });
+ 
+    function readURL(input) {
+
+if (input.files && input.files[0]) {
+    
+    $.each(input.files, function() {
+        var reader = new FileReader();
+        reader.onload = function (e) {           
+            $images.html('<img src="'+ e.target.result+'" />')
+        }
+        reader.readAsDataURL(this);
+    });
+    
+}
+}
+
+</script>
+<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+<script type="text/javascript">
+    
+  
+
+    $('#venuearea').selectize({
+ 
+  valueField: 'id',
+  labelField: 'title',
+  searchField: 'title',
+  options: [<?PHP echo $areaContent; ?> 
+  ],
+  create: false
+});
+
+
+
+   $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        }
+    });
+   
+
+
+
+      $("#venuearea").change(function(e) {
+
+
+      
+        e.preventDefault();   
+        var area_id = $(this).val();
+
+        $.ajax({
+           type:'POST',
+           url:"{{ route('venue/create/ajaxcitylist') }}",
+           dataType: 'json',
+           data:{ "_token": "{{ csrf_token() }}", "area_id" :area_id},
+           success:function(response){     
+            var returnData = response;          
+            $("#venuecity").val(returnData[0]['City']);
+            $("#venuestate").val(returnData[0]['State']);
+            $("#venuepincode").val(returnData[0]['Pincode']);
+            $("#locationid").val(returnData[0]['id']);
+                   
+         }        
+          
+        });
+           
+     });
+
+
+
+      $("#venuetypeid").change(function(e) {
+
+
+      
+        e.preventDefault();   
+        var venuetypeid = $(this).val();
+
+        $.ajax({
+           type:'POST',
+           url:"{{ route('venue/create/ajaxcvenuesubtypelist') }}",
+           dataType: 'json',
+           data:{ "_token": "{{ csrf_token() }}", "venuetypeid" :venuetypeid},
+           success:function(response){  
+            $("#venuesubtypeid").empty();   
+            var returnData = response;   
+            if(returnData.length>0)
+            {
+                let casestr = '<option>Select Venue Sub Type</option>';
+                for(i=0;i<returnData.length;i++)
+                {
+                    casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['venuetype_name'] + '</option>';
+                }
+             console.log(casestr);       
+           
+             $("#venuesubtypeid").append(casestr);
+            }
+            else
+            {
+                alert("No Data")
+            }
+         }        
+          
+        });
+           
+     });
+
+
+
+
+
+
+
+</script>
+@endpush

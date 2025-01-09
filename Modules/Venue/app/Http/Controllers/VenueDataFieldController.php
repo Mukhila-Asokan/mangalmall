@@ -49,6 +49,7 @@ class VenueDataFieldController extends Controller
          $datafield = new VenueDataField;
          $datafield->datafieldtype  = $request->datafieldtype;
          $datafield->datafieldname  = $request->datafieldname;
+         $datafield->datafieldnametype  = $request->datafieldnametype;
       
          $datafield->status = 'Active';
          $datafield->delete_status = 0;
@@ -115,6 +116,7 @@ class VenueDataFieldController extends Controller
          $datafield = VenueDataField::find($id);
          $datafield->datafieldtype  = $request->datafieldtype;
          $datafield->datafieldname  = $request->datafieldname;
+         $datafield->datafieldnametype  = $request->datafieldnametype;
       
          $datafield->status = 'Active';
          $datafield->delete_status = 0;

@@ -8,12 +8,14 @@
     <meta content="Occasion Pannel" name="description" />
     <meta content="Rel Del Mercado" name="author" />
 
-    <meta name="_token" content="{!! csrf_token() !!}" />
+    <meta name="_token" content="{{ csrf_token() }}" />
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <link href="{{ asset('adminassets/libs/morris.js/morris.css') }}" rel="stylesheet" type="text/css" />
+     <!-- Plugins css -->
+        <link href="{{ asset('adminassets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
     <link href="{{ asset('adminassets/css/style.min.css') }}" rel="stylesheet" type="text/css">
