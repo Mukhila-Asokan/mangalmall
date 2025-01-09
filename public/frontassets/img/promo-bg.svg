@@ -1,0 +1,7 @@
+  <svg id="promo-shape" class="promo-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 411.47" preserveAspectRatio="xMinYMin meet">
+    <path d="M0,411.47V117.94s.35-1.06.53-1.59Q4,106.5,12.08,101.86l91.32-52.7,9.91-5.72L183.75,2.78c5.6-4.16,16.32-3,16.25-.76l-.07,12.78V411.47Z" style="fill: #f5f5f5"></path>
+</svg>
+
+<svg id="promo-shape" class="promo-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 312.59" preserveAspectRatio="xMinYMin meet">
+  <path d="M7.82,308.2.21,312.59,0,61.73l97.08-56q16.49-9.52,33.34-3.18t23.48,24.6l42.9,117.81q6.66,18.27-.52,38.45t-23.67,29.72L28.15,296.47Z" fill="#f7f7f7"></path>
+</svg>

@@ -19,7 +19,9 @@ $(document).ready(function() {
     });
 
     $('.statusid').click(function() { 
-        var id = $(this).data("id");        
+
+        var id = $(this).data("id");  
+
         $('#statusselectedid').val(id);   
           
     });
@@ -34,8 +36,7 @@ $(document).ready(function() {
    
     $('button').click(function() { 
 
-        var id = $('.statusid').data("id");
-        
+        var id = $('.statusid').data("id");      
         $('#selectedid').val(id);
     });
 

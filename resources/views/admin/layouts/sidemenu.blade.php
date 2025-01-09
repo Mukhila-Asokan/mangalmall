@@ -56,7 +56,7 @@
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                                    <a href="{{ route('admin/themebuilder') }}" class="menu-link">
                                         <span class="menu-text">Venue Builder</span>
                                     </a>
                                 </li>
@@ -64,7 +64,12 @@
                                     <a href="{{ route('venuesettings') }}" class="menu-link">
                                         <span class="menu-text">Venue Settings</span>
                                     </a>
-                                </li>                               
+                                </li>     
+                                 <li class="menu-item">
+                                    <a href="{{ route('admin/venuethemes') }}" class="menu-link">
+                                        <span class="menu-text">Venue Themes</span>
+                                    </a>
+                                </li>                            
                             </ul>
                         </div>
                     </li>

@@ -71,6 +71,21 @@
                                             </div>
 
                                         </div>
+
+                                        
+                                        <div class="mb-4 row">
+                                            <label class="col-md-4 col-form-label" for="datafieldnametype">Datafield Name Units</label>
+                                            <div class="col-md-8">
+                                                  <input type="text" id="datafieldnametype" name="datafieldnametype" class="form-control" placeholder="Enter the Venue Datafield Unit name" value = "{{ $venuedatafield->datafieldnametype }}" required>
+                                                @if($errors->has('datafieldnametype'))
+                                                <div class="text-danger">{{ $errors->first('datafieldnametype') }}</div>
+                                                
+                                            @endif
+                                            </div>
+
+                                        </div>
+
+                                        
                                       </div>
 
 
