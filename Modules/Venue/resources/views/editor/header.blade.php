@@ -11,7 +11,8 @@
 	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/spectrum.css'); }}">
     <link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/font-awesome.min.css'); }}">
 	<link rel="shortcut icon" type="image/ico" href="" />
-	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/typekitcss'); }}">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/typekitcss.css'); }}">
     <link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/style.css'); }}">
 <style>
 		
@@ -250,7 +251,7 @@
 					</div>
 				</div>
 				<div class="mt_sidebar_logos">
-					<a href="#"><img src="{{ asset('adminassets/images/logo-light.png') }}" style = "width:75px;" title="" alt="Logo"/></a>
+					<a href="#"><img src="{{ asset('adminassets/editor_assets/images/logo.png') }}" title="" alt="Logo"/></a>
 				</div>
 				<div class="mt_sidebar_manu">
                 <ul class="editorMenus">
@@ -292,12 +293,48 @@
 					</div>
 					<div class="mt_header_left">
 						<div class="mt_sidebar_logos">
-							<a href="#"><img src="{{ asset('adminassets/images/logo-light.png') }}"></a>
+							<a href="#"><img src="{{ asset('adminassets/images/logo-light.png') }}" title="" alt=""></a>
 						</div>
+						<a href="{{ url()->previous() }}" class="mt_btn mt_back_btn"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="7">
+							  <path d="M4.105,5.629 L2.740,4.274 L11.193,4.274 C11.634,4.274 11.994,3.917 11.994,3.479 C11.994,3.040 11.634,2.683 11.193,2.683 L2.740,2.683 L4.108,1.325 C4.415,1.011 4.406,0.506 4.088,0.200 C3.776,-0.099 3.287,-0.099 2.974,0.200 L0.238,2.916 C0.086,3.066 0.002,3.266 0.002,3.478 C0.002,3.479 0.002,3.479 0.002,3.479 C0.002,3.691 0.086,3.891 0.238,4.042 L2.974,6.758 C3.292,7.063 3.801,7.054 4.108,6.738 C4.410,6.429 4.409,5.943 4.105,5.629 Z" class="cls-1"/>
+							</svg>Back</a>
 					</div>
 					<div class="mt_st_heading">
                         <h3>Edit - {{ $theme->themename }}</h3>
 					</div>
-					
+					<div class="mt_header_right">
+						<div class="fix_menubar_section d-none" >
+							<div class="sticky-checkbox">
+								<label>
+								<input type="checkbox" name="remeber" id="menu_type_btn" class="pn-checkbox">
+								<span>Fixed Menubar</span>
+								</label>
+							</div>
+						</div>
+					@php 
+					        $preview_imageurl = url("admin/venue/themebuilder/".$theme->id."/preview");
+
+						@endphp
+					     <a href="{{ $preview_imageurl }}" target="_blank" class="mt_btn mt_edt_view_button" >
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 519.643 519.643" xmlns:v="https://vecta.io/nano"><circle cx="259.823" cy="259.866" r="80"/><path d="M511.673 237.706c-61.494-74.31-154.579-145.84-251.85-145.84-97.29 0-190.397 71.58-251.85 145.84-10.63 12.84-10.63 31.48 0 44.32 15.45 18.67 47.84 54.71 91.1 86.2 108.949 79.312 212.311 79.487 321.5 0 43.26-31.49 75.65-67.53 91.1-86.2 10.599-12.815 10.654-31.438 0-44.32zm-251.85-89.84c61.76 0 112 50.24 112 112s-50.24 112-112 112-112-50.24-112-112 50.24-112 112-112z"/></svg>
+						</a>
+					    <a href="javascript:;" class="mt_btn mt_edt_save_button pxg_save_admin_template" data-temp-id="{{ $theme->id }}" ><svg xmlns="http://www.w3.org/2000/svg" width="14" height="15">
+    							  <path d="M13.995,12.355 C13.994,14.002 13.097,14.987 11.577,14.995 C9.711,15.005 7.845,14.997 5.979,14.997 C4.147,14.997 4.314,15.001 2.482,14.996 C0.892,14.991 0.002,14.028 0.001,12.315 C-0.000,8.432 -0.001,6.550 0.002,2.668 C0.003,0.987 0.897,0.011 2.452,0.007 C5.467,0.001 6.483,-0.012 9.497,0.025 C9.934,0.031 10.426,0.208 10.793,0.470 C11.993,1.325 12.944,2.468 13.640,3.827 C13.855,4.247 13.975,4.779 13.980,5.261 C14.011,8.292 13.997,9.324 13.995,12.355 ZM8.945,1.029 C6.647,1.024 6.348,1.024 4.050,1.030 C3.422,1.031 3.129,1.344 3.122,2.025 C3.110,3.180 3.111,4.336 3.122,5.491 C3.129,6.183 3.408,6.474 4.048,6.477 C4.190,6.478 4.284,6.479 4.346,6.479 C4.396,6.479 4.424,6.479 4.496,6.479 C5.645,6.479 7.794,6.483 8.943,6.478 C9.617,6.474 9.888,6.187 9.892,5.467 C9.899,4.329 9.899,3.192 9.892,2.054 C9.888,1.340 9.606,1.031 8.945,1.029 ZM11.745,8.974 C11.741,8.408 11.453,8.095 10.938,8.084 C9.659,8.057 8.379,8.043 7.100,8.045 C5.057,8.047 5.015,8.075 2.973,8.072 C2.286,8.071 1.898,8.425 1.903,9.154 C1.914,11.010 1.932,10.866 1.950,12.722 C1.958,13.529 2.202,13.797 2.937,13.798 C4.568,13.801 4.200,13.799 5.831,13.799 C7.495,13.799 9.160,13.803 10.825,13.797 C11.455,13.795 11.746,13.520 11.750,12.874 C11.761,10.907 11.759,10.941 11.745,8.974 ZM7.116,1.960 C7.702,1.960 8.274,1.960 8.873,1.960 C8.873,3.116 8.873,4.244 8.873,5.412 C8.299,5.412 7.728,5.412 7.116,5.412 C7.116,4.272 7.116,3.133 7.116,1.960 Z" class="cls-1"/>
+    							</svg>
+    							Save & Continue</a>
+						<a href="javascript:;" class="mt_btn custom_js_css" onclick="openSection(this,'customcss')"><span>custom css/js</span></a>
+					    	<div class="mt_st_toggle">
+						<ul class="d-none">
+							<li>Hello <p>{{ $username}}</p></li>
+							<li><a href="#"><img src="{{ asset('adminassets/editor_assets/images/avatar.png') }}"/></a></li>
+						</ul>
+					</div>
+					<div class="mt_profile_open d-none">
+						<img src="{{ asset('adminassets/editor_assets/images/border-shape.svg') }}"/>
+						<ul>
+							<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
+							<li><a href="#"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a></li>
+						</ul>
+					</div>
 					</div>
 				</div>

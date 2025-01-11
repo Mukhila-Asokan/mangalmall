@@ -1,8 +1,6 @@
-/*--------------------- Copyright (c) 2020 -----------------------
-[Master Javascript]
-Project: PixelPages
--------------------------------------------------------------------*/
-(function ($) {
+<script>
+
+	(function ($) {
 
 
 
@@ -617,32 +615,22 @@ Project: PixelPages
 	});
 
 	$(document).on('click', '.mt_use_img', function () {
-
 		var src = $(this).attr('src');
-		var type = $(this).attr('data-type');	
+		var type = $(this).attr('data-type');
 		useThisImage(src, type);
 
 	});
 
 	function useThisImage(src, type) {
-		
 		processStatus(true)
 		if (type == 'image_src') {
-			
 			$('.editableElementActive').attr('src', src);
 		} else if (type == 'image_bg') {
-		
 			if ($('.mt_bgconatainer').length) {
-				
 				$('.mt_bgconatainer .mt_popup_bgground .mt_popup_bgground_inner ').css('background-image', 'url(' + src + ')');
 			} else {
-				
 				$('.mt_bgtempconatainer.active').css('background-image', 'url(' + src + ')');
 			}
-		}
-		else
-		{
-			$('.editableElementActive').attr('src', src);
 		}
 		processStatus(false)
 
@@ -750,7 +738,7 @@ Project: PixelPages
 		initialisedDropzone('imgbackgroundupload', 'image_bg');
 	}
 
-	function initialisedDropzone(elementid, type = 'image_src') {	
+	function initialisedDropzone(elementid, type = 'image_src') {
 
 		$("#" + elementid).dropzone({
 			url: baseurl + "/admin/venue/theme/upload_image",
@@ -760,9 +748,6 @@ Project: PixelPages
 			maxFiles: 1,
 			paramName: "upload_file",
 			addRemoveLinks: true,
-			headers: {
-        		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
-   			 },
 			timeout: 90000, /*milliseconds*/
 			error: function (file, response) {
 				showNotifications('error', 'Oops|' + response);
@@ -770,7 +755,6 @@ Project: PixelPages
 
 			},
 			success: function (file, response) {
-				
 				var res = JSON.parse(response);
 				if (res.status == 1) {
 					load_media_library(type);
@@ -800,30 +784,25 @@ Project: PixelPages
 	});
 
 	function load_media_library(img_container_id, appends = 'true', offset = 0, searchTerm = '') {
-
-		var LoadData = { 'offset': offset, 'searchTerm': searchTerm, 'img_container_id': img_container_id, 'csrf_pixelpages': $('#csrf_token').val() };
-		var targetElement = $('#' + img_container_id);		
+		
+		var LoadData = { 'offset': offset, 'searchTerm': searchTerm, 'img_container_id': img_container_id, 'csrf_pixelpages':'{{ csrf_token() }}',  "_token": "{{ csrf_token() }}" };
+		var targetElement = $('#' + img_container_id);
+		console.log(baseurl + "/admin/venue/theme/load_media_library_img");
+		console.log($('#csrf_token').val());
 		$.ajax({
 			method: 'post',			
-			url: baseurl + "/admin/venue/theme/load_media_library_img",
+			url: '{{ route("venue/theme/load_media_library_img") }}',
 			contentType: "application/json",
 			dataType: 'json',
 			data: LoadData,
 			headers: {
         		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
-    },
+   			 },
 			success: function (resp) {
-				
-				
-				console.log(resp);
-				
-
+				resp = JSON.parse(resp);
 				if (resp['status'] == 1) {
 
 					var load_more_button = targetElement.closest('.mt_photo_gallery_container').find('a.loadMoreMediaLibraryImage');
-
-					console.log(load_more_button);
-
 					if (appends == true) {
 						targetElement.append(resp['data']);
 					} else {
@@ -844,9 +823,6 @@ Project: PixelPages
 				} else {
 					toastr.error('Something went wrong, please try again.')
 				}
-
-
-
 			},
 			error: function () {
 				if (loadType != 'filter') {
@@ -932,7 +908,7 @@ Project: PixelPages
 		processStatus(true)
 		$.ajax({
 			method: 'post',
-			url: baseurl + 'admin/venue/uploadImageUrl',
+			url: baseurl + 'ajax/uploadImageUrl',
 			data: LoadData,
 			success: function (resp) {
 				resp = JSON.parse(resp);
@@ -1093,86 +1069,4 @@ Project: PixelPages
 	});
 
 }(jQuery));
-
-if ($('.ppd_my_template').length) {
-	$(document).on('click', '.mt_edt_save_button', function () {
-		$('.mt_bgtempconatainer,.editableElement').removeClass('editableElementActive').removeClass('active');
-		// 105 destroy drag and drop before save
-		$(".mt_edit_template_container").sortable("destroy");
-		let obj = new FormData()
-		obj.append('template_id', $(this).data('temp-id'))
-		obj.append('template_content', $('.mt_edit_template_container').html())
-		initiateAjaxRequest('ajax/saveMyTemplate', obj, (resp) => {
-			$('.mt_main_structure').addClass('mt_hide_sidebar')
-		});
-	})
-}
-
-function openSection(_this, type) {
-	$('.mt_main_structure').removeClass('mt_hide_sidebar')
-	$(".mt_sidebar_editor").addClass("mt_hide");
-	$("#" + type + "_editor").removeClass("mt_hide").addClass('open_editor');
-	$(".editorMenus li").removeClass('active');
-	$(_this).parent().addClass('active');
-}
-
-function generateRandom(length) {
-	var result = '';
-	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	var charactersLength = characters.length;
-	for (var i = 0; i < length; i++) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	}
-	return result;
-}
-
-$(document).ready(function () {
-	if ($('.pp-header-wrapper').hasClass('fixed-menu')) {
-		$('#menu_type_btn').prop('checked', true)
-	} else {
-		$('#menu_type_btn').prop('checked', false)
-	}
-});
-
-$(document).on('click', '#menu_type_btn', function (e) {
-	let sts_ = $(this).prop('checked');
-	if (sts_) {
-		$('.pp-header-wrapper').addClass('fixed-menu')
-	} else {
-		$('.pp-header-wrapper').removeClass('fixed-menu')
-	}
-})
-
-$(window).scroll(function () {
-	if ($('.pp-header-wrapper').hasClass('pp-header-fixed')) {
-		$('.fix_menubar_section').fadeIn('slow').removeClass('d-none')
-	}
-	if ($('.pp-header-wrapper').hasClass('fixed-menu')) {
-		$('.pp-header-wrapper').removeClass('pp-header-fixed')
-	}
-})
-
-$(document).on('click', '.as-CommonClass-navbar', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-})
-
-// 105 show hide js for main section
-$(document).on('click', '.hideSection', (e) => {
-    var _this = $(e.target);
-    var status = (_this.is(':checked') ? 1 : 0);
-    if(status == 0){
-		if($('.mt_bgtempconatainer.active').parent().parent().hasClass('row') || $('.mt_bgtempconatainer.active').parent().hasClass('swiper-slide')){		
-			$('.mt_bgtempconatainer.active').parent().removeClass('d-none');
-		}else{
-        	$('.mt_bgtempconatainer.active').removeClass('d-none');
-		}
-    }else{
-		if($('.mt_bgtempconatainer.active').parent().parent().hasClass('row') || $('.mt_bgtempconatainer.active').parent().hasClass('swiper-slide')){
-			$('.mt_bgtempconatainer.active').parent().addClass('d-none');
-		}else{
-        	$('.mt_bgtempconatainer.active').addClass('d-none');
-		}
-    }
-        
-})
+</script>

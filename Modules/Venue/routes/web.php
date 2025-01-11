@@ -39,6 +39,15 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/venue/{id}/themebuilder', [VenueController::class,'themebuilder'])->name('venue/themelistview');
     Route::any('/venue/themebuilder/{venueid}/{id}/editor', [VenueController::class,'themeeditor'])->name('venue/themelistview/editor');
 
+    Route::any('venue/updatetheme_venue', [VenueController::class,'updatetheme_venue'])->name('venue/updatetheme_venue');
+
+    Route::any('venue/theme/upload_image', [VenueController::class,'upload_image'])->name('venue/theme/upload_image');
+    Route::any('venue/theme/load_media_library_img', [VenueController::class,'load_media_library_img'])->name('venue/theme/load_media_library_img');
+
+    Route::any('venue/theme/load_api_img', [VenueController::class,'load_api_img'])->name('venue/theme/load_api_img');
+    Route::any('venue/theme/uploadImageUrl', [VenueController::class,'uploadImageUrl'])->name('venue/theme/uploadImageUrl');
+
+
 
     Route::any('/venue/venuethemes', [ThemeBuilderController::class,'index'])->name('admin/venuethemes');
 

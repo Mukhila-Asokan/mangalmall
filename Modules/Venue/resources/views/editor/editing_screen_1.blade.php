@@ -18,44 +18,44 @@
 								C147.097,447.637,146.36,447.193,145.734,446.572z"></path>
 						</svg></span>
 					</div>
-					<?php include_once('text_editor.php'); ?>
-					<?php include_once('image_editor.php'); ?>
-					<?php include_once('background_editor.php'); ?>
-					
-					<?php include_once('form_editor.php'); ?>
-					<?php include_once('customcss_editor.php'); ?>
-					
-					<div class="mt_popup_live_preview">
-					<div data-replace-path="<?= isset( $cData[0]['zip_path'] )? base64_encode( base_url( $cData[0]['zip_path'].'/') ): 'NA' ?>" class="mt_edit_template_container <?= isset( $cData[0]['template_html'] )? 'ppd_my_template' : '' ?> ">
+				
+				@include('venue::editor.text_editor')
+				@include('venue::editor.image_editor')
+				@include('venue::editor.background_editor')
+				@include('venue::editor.form_editor')
+				@include('venue::editor.customcss_editor')
+
+				<div class="mt_popup_live_preview">
+					<div data-replace-path="" class = "mt_edit_template_container @if (isset($template)) 
+    {{ $template->template_html != '' ? 'ppd_my_template' : '' }}
+@endif" >
 											
-						<?php if( isset(  $cData[0]['zip_path'] ) ) {
-								$file_contents = file_get_contents( getcwd().'/'.$cData[0]['zip_path'].'/index.html' );
-								$file_contents = str_replace("assets/", base_url( $cData[0]['zip_path'].'/assets/') , $file_contents );
-								echo $file_contents;
-							}
-							else if( isset( $cData[0]['template_html'] ) ){
-								if( file_exists( getcwd().'/'.$cData[0]['template_html'] ) ){
-									$template_html = file_get_contents( getcwd().'/'.$cData[0]['template_html'] );
-									echo $template_html;
-								}
-								else{
-									$template_html = $cData[0]['template_html'];
-									$upload_path  = createTemplateDirectory();
-									$p            = $upload_path.time().'.html';
-									file_put_contents( getcwd().$p, $cData[0]['template_html'] );
-									$res          = $this->Qdb->update_data('user_campaigns', array( 'template_html' => $p ), array( 'user_id' => $this->session->userdata('user_id'), 'id' => $cData[0]['id'] ));
-									echo $template_html;
-								}
-							} 
-						?>	
-    
+						
+					@php 
+						 $themefullpath = $theme->zip_path;
+
+						 $publicurl = str_replace('\\', '/', public_path());
+						 $url = $publicurl.$themefullpath;
+						 $filePath = $url.'/index.html'; 
+						 $asseturl = url('/').$themefullpath;
+       					 $file_contents = file_get_contents( $filePath );
+       					  $file_contents = str_replace("assets",$asseturl.'/assets' , $file_contents );
+       					
+
+					@endphp
+					 {!! $file_contents !!} 
+    			
 					</div>
 					</div>
 				    <div class="mt_btn_sticky">
     					<div class="mt_next_prev_btn">
     						<ul>
-    							<input type="hidden" id="campId" value="<?=$cData[0]['id'];?>">
+    							<input type="hidden" id="campId" value="{{ $template->id ?? '' }}">
     						</ul>
     					</div>
 					</div>
 				</div>
+
+				<input type="hidden" id="venueid" name = "venueid" value="{{ $venue->id }}">
+				<input type="hidden" id="venuename" name = "themname" value="{{ $venue->venuename }}">
+				<input type="hidden" id="themname" name = "themname" value="{{ $theme->themename }}">

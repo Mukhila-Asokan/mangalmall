@@ -3,75 +3,75 @@
                     <path d="M7.5 14.5L1 8L7.5 1.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg></span>
 						<div class="mt_heading_editor">
-							<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_1')); ?></p>
+							<p>Text Settings</p>
 						</div>
 						<div class="mt_detail_editor">
 						    <div class="mt_md_input mt_select_editor md_textoptions_btnlink">
-									<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_2')); ?></p>
+									<p>Button Link</p>
 									<input type="text" class="textoptions_btnlink" placeholder="http://example.com/">
-									<button class="textoptions_linkupdate mt_btn"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_3')); ?></button>
+									<button class="textoptions_linkupdate mt_btn">Update</button>
 							</div> 
 							<div class="mt_editor_flex">
 							    	<div class="mt_select_editor">
 							    <div class="mt_select_box mt_select_editor mt_for_txt">
-								<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_4')); ?></p>
+								<p>Font Family</p>
 								<select class="wide" id="textoptions_font_family">
-								  <option value="default" data-fonttype="" selected><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_5')); ?></option>
-								  <option value="montserrat" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_6')); ?></option>
-								  <option value="lato" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_7')); ?></option>
-								  <option value="poppins" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_8')); ?></option>
-								  <option value="satisfy" data-fonttype="cursive"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_9')); ?></option>
-								  <option value="cardo" data-fonttype="serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_10')); ?></option>
-								  <option value="roboto" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_11')); ?></option>
-								  <option value="raleway" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_12')); ?></option>
-								  <option value="ubuntu" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_13')); ?></option>
-								  <option value="droid" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_14')); ?></option>
-								  <option value="hind" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_15')); ?></option> 
-								  <option value="oxygen" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_16')); ?></option> 
-								  <option value="oswald" data-fonttype="sans-serif"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_17')); ?></option> 
+								  <option value="default" data-fonttype="" selected>Default</option>
+								  <option value="montserrat" data-fonttype="sans-serif">Montserrat</option>
+								  <option value="lato" data-fonttype="sans-serif">Lato</option>
+								  <option value="poppins" data-fonttype="sans-serif">Poppins</option>
+								  <option value="satisfy" data-fonttype="cursive">Satisfy</option>
+								  <option value="cardo" data-fonttype="serif">Cardo</option>
+								  <option value="roboto" data-fonttype="sans-serif">Roboto</option>
+								  <option value="raleway" data-fonttype="sans-serif">Raleway</option>
+								  <option value="ubuntu" data-fonttype="sans-serif">Ubuntu</option>
+								  <option value="droid" data-fonttype="sans-serif">Droid</option>
+								  <option value="hind" data-fonttype="sans-serif">Hind</option> 
+								  <option value="oxygen" data-fonttype="sans-serif">Oxygen</option> 
+								  <option value="oswald" data-fonttype="sans-serif">Oswald</option> 
 								</select>
 							</div>
 							</div>
 							</div>
 								<div class="mt_select_editor mt_edit_text mt_for_txt">
-								<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_18')); ?></p>
+								<p>edit your text</p>
 								<textarea  class="textoptions_textarea"></textarea>
 							</div>
 							<div class="mt_select_editor mt_md_input mt_hide">
-								<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_19')); ?></p>
+								<p>edit your link</p>
 								<input type="text" class="textoptions_href" placeholder="http://example.com/">
 							</div>
 							<div class="range-slider asas">
-								<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_20')); ?></p>
+								<p>Font size</p>
 								<input class="range-slider__range" id="textoptions_font_size" type="range" value="0" min="14" max="60" step="1">
 								<span class="range-slider__value">0</span>
 							</div>
 							<div class="mt_editor_flex mt_for_txt">
 								<div class="mt_select_box mt_select_editor mt_for_txt">
-									<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_21')); ?></p>
+									<p>Font Weight</p>
 									<select class="wide select_font_weight" id="textoptions_font_weight">
-									  <option value="100"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_22')); ?></option>
-									  <option value="200"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_23')); ?></option>
-									  <option value="300"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_24')); ?></option>
-									  <option value="400"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_25')); ?></option>
-									  <option value="500"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_26')); ?></option>
-									  <option value="600"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_27')); ?></option>
-									  <option value="700"> <?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_28')); ?></option>
-									  <option value="800"> <?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_29')); ?></option>
-									  <option value="900"><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_30')); ?></option>
+									  <option value="100">100 Thin (Hairline)</option>
+									  <option value="200">200 Extra Light (Ultra Light)</option>
+									  <option value="300">300 Light</option>
+									  <option value="400">400 Normal (Regular)</option>
+									  <option value="500">500 Medium</option>
+									  <option value="600">600 Semi Bold (Demi Bold)</option>
+									  <option value="700">700 Bold</option>
+									  <option value="800">800 Extra Bold (Ultra Bold)</option>
+									  <option value="900">900 Black (Heavy)</option>
 									</select>
 								</div>
 							</div>
 							<div class="mt_editor_flex">
 								<div class="mt_select_editor mt_color_picker mt_for_txt">
-									<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_31')); ?></p>
+									<p>Text color</p>
 									<div class="mt_picker mt_picker1">
 										
 									   <input data-css="color" data-element=".headline" id="textoptions_color" name="textoptions_color" type="text" value="#039be5">
 									</div>
 								</div>
 								<div class="mt_select_editor mt_color_picker">
-									<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_32')); ?></p>
+									<p>Background color</p>
 									<div class="mt_picker mt_picker1">
 										
 									   <input data-css="color" data-element=".headline" id="textoptions_bgcolor" name="textoptions_bgcolor" type="text" value="#039be5">
@@ -81,14 +81,14 @@
 							</div>
 							<div class="mt_editor_flex">
 								<div class="mt_select_editor mt_color_picker mt_for_txt">
-									<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_33')); ?></p>
+									<p>Hover text color</p>
 									<div class="mt_picker mt_picker1">
 										
 									   <input data-css="color" data-element=".headline" id="textoptions_color_hv" name="textoptions_color_hv" type="text" value="#039be5">
 									</div>
 								</div>
 								<div class="mt_select_editor mt_color_picker">
-									<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_34')); ?></p>
+									<p>Hover Bg color</p>
 									<div class="mt_picker mt_picker1">
 										
 									   <input data-css="color" data-element=".headline" id="textoptions_bgcolor_hv" name="textoptions_bgcolor_hv" type="text" value="#039be5">
@@ -97,7 +97,7 @@
 								
 							</div>
 							<div class="range-slider">
-								<p><?php echo html_escape($this->lang->line('ltr_common_text_editor_txt_35')); ?></p>
+								<p>Opacity</p>
 								<input class="range-slider__range" id="textoptions_opacity" type="range" value="0" min="0" max="1" step="0.01">
 								<span class="range-slider__value">0</span>
 							</div>
