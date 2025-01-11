@@ -1,6 +1,6 @@
 </div>
     </div>
-    <input id="csrf_token" type="hidden" name="<?=$csrf['name'];?>" value="<?=$csrf['hash'];?>" />
+  <input id="csrf_token" type="hidden" name="_token" value="{{ csrf_token() }}">
     <!-- Notification HTML -->
     <div class="mt_hide" id="notificationBox">
         <div class="mt_success_flex">
@@ -13,19 +13,21 @@
     </div>
 
     </div>
-    <script>window.websitelink = "<?= base_url() ?>";</script>
-    <script>window.baseurl = "<?= base_url() ?>";</script>
-	<script src="<?= base_url() ?>assets/editor_assets/js/jquery.nice-select.min.js"></script>
-	<script src="<?= base_url() ?>assets/editor_assets/js/range.js"></script>
-	<script src="<?= base_url() ?>assets/editor_assets/js/dropzone.min.js"></script>
-	<script src="<?= base_url() ?>assets/editor_assets/js/spectrum.js"></script>
-    <script src="<?= base_url() ?>assets/editor_assets/js/bootstrap.min.js"></script>
-    <script src="<?= base_url() ?>assets/editor_assets/js/editor.js?q=<?= date('his') ?>"></script>
-    <script src="<?= base_url() ?>assets/js/custom.js?q=<?= date('his') ?>"></script>
-    <script src="<?= base_url() ?>assets/editor_assets/js/common.js?q=<?= date('his') ?>"></script>
-    <script src="<?= base_url() ?>assets/editor_assets/js/custom.js?q=<?= date('his') ?>"></script>
-    <?php if( $this->session->userdata('u_type') == 1 ){ ?>
-        <script src="<?= base_url() ?>assets/js/page_js/admin.js?q=<?= date('his') ?>"></script>
-    <?php } ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>window.websitelink = "{{ url('/') }}";</script>
+    <script>window.baseurl = "{{ url('/') }}";</script>
+	<script src="{{ asset('adminassets/editor_assets/js/jquery.nice-select.min.js') }}"></script>
+	<script src="{{ asset('adminassets/editor_assets/js/range.js') }}"></script>
+	<script src="{{ asset('adminassets/editor_assets/js/dropzone.min.js') }}"></script>
+	<script src="{{ asset('adminassets/editor_assets/js/spectrum.js') }}"></script>
+    <script src="{{ asset('adminassets/editor_assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('adminassets/editor_assets/js/editor.js') }}"></script>
+    <script src="{{ asset('adminassets/js/custom.js') }}"></script>
+   
+
+    <script src="{{ asset('adminassets/editor_assets/js/common.js') }}"></script>
+    <script src="{{ asset('adminassets/editor_assets/js/custom.js') }}"></script>
+    <script src="{{ asset('adminassets/js/page_js/admin.js') }}"></script>
+  
   </body>
 </html>

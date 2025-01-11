@@ -4,7 +4,7 @@ namespace Modules\Venue\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Session;
+
 use Modules\Venue\Models\VenueType;
 use Modules\Venue\Models\VenueAmenities;
 Use Modules\Venue\Models\VenueDataField;
@@ -13,8 +13,15 @@ use Modules\Venue\Models\indialocation;
 use Modules\Venue\Models\VenueGalleryImage;
 use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\VenueDetails;
+use Modules\Venue\Models\VenueCampaigns;
+use Modules\Venue\Models\Imagelibrary;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use DataTables;
+use Session;
 
 class VenueController extends Controller
 {
@@ -179,9 +186,13 @@ class VenueController extends Controller
         $pageroot = "Venue"; 
         $venue = VenueDetails::where('id',$venueid)->first();
         $theme = VenueThemeBuilder::where('id',$id)->first();
+        $template = VenueCampaigns::where('venueid',$venueid)->where('theme_id',$id)->first();
+        $themefullpath = $theme->zip_path;
+        $pathurl = url('/').$themefullpath.'/index.html'; 
+       
+       
 
-        return view('venue::venues.showvenuetheme',compact('pagetitle','pageroot','username','userid','theme','venue'));
-
+       return view('venue::venues.showvenuetheme',compact('pagetitle','pageroot','username','userid','theme','venue','pathurl','template'));
     }
 
     /**
@@ -220,6 +231,145 @@ class VenueController extends Controller
         $venuetypeid = $request->venuetypeid;
         $venuesubtype = VenueType::where('roottype','=',$venuetypeid)->get();
         return response()->json($venuesubtype, 200);
+    }
+    public function updatetheme_venue(Request $request)
+    {
+        $template_id = $request->template_id;
+        $html = $request->html;
+        $venueid = $request->venueid;
+        $venuename = $request->venuename;
+        $themname = $request->themname;
+        $venuecampaign = new VenueCampaigns;
+        $venuecampaign->venueid = $venueid;
+        $venuecampaign->venuename = $venuename;
+        $venuecampaign->theme_id = $template_id;
+        $venuecampaign->themename = $themname;
+        $venuecampaign->custom_css = $request->custom_css;
+        $venuecampaign->custom_js = $request->custom_js;
+        $venuecampaign->template_html = $html;
+      
+        $venuecampaign->save();
+
+    }
+
+    public function upload_image(Request $request)
+    {
+          
+            $uuid = Str::uuid(); 
+
+            $resData = "";
+            $filename = "";
+            if($request->hasFile('upload_file')){   
+                 $filename = $request->file('upload_file')->store('uploads/medialibrary', 'public');;
+            }
+            if($filename != '')
+            {
+               $url = url('/').Storage::url('/').$filename;
+             
+
+                 $imgLibrary = new Imagelibrary;
+                 $imgLibrary->uid =  $uuid;
+                 $imgLibrary->url =  $url;
+                 $imgLibrary->title =  $filename;
+                 $imgLibrary->source =  'custom';
+                 
+                 $imgLibrary->save();
+
+
+                $lastInsertedId = $imgLibrary->id;
+                $resData = array('status' => 1 , 'data' => $url, 'title'=>$filename, 'id' =>$lastInsertedId);
+            }
+
+            /*$resData = array('status' => 1 , 'data' => 'https://mighteee.app/uploads/medialibrary/4ef4c9a2de_2.png' , 'title'=>'favicon.png' , 'id' =>8);*/
+
+          
+
+            return response()->json($resData, 200);
+    }
+
+    public function load_media_library_img(Request $request)
+    {
+        $uuid = Str::uuid();
+        
+        /*if(isset($request->searchTerm) && $request->searchTerm !=''){
+                $campaign_name = $request->searchTerm;
+                $Cond .= " AND title LIKE '%$campaign_name%'";
+        }*/
+
+        /*$imgLibrary = DB::table('imagelibrary')->where('uid',$uuid)->get();*/
+
+
+       
+        $imgLibrary = Imagelibrary::all();
+        $imglibMsg = 'No more images in your Image Library There is not any images in your Library';
+        $libData = '';
+        
+        if($imgLibrary){
+            foreach($imgLibrary as $imgData){
+                
+                $libData .= '<li><a href="javascript:;"><img src="'.$imgData->url.'" alt="image"/ class="mt_use_img" data-type="'.$request->img_container_id.'" ></a></li>'; 
+            }
+        }else{
+            $libData .= '<li>'.$imglibMsg.'</li>';
+        }
+       
+        $resData = array('status' => 1 , 'data' => $libData , 'pagination' => 1);
+         return response()->json($resData, 200);
+
+    }
+    public function load_api_img(Request $request)
+    {
+        $uuid = Str::uuid();
+        $imgLibrary = Imagelibrary::all();
+
+        $imglibMsg = 'No more images in your Image Library There is not any images in your Library';
+        $libData = '';
+        
+        if($imgLibrary){
+            foreach($imgLibrary as $imgData){
+                
+                $libData .= '<li><a href="javascript:;"><img src="'.$imgData->url.'" alt="image"/ class="mt_use_img" data-type="'.$request->img_container_id.'" ></a></li>'; 
+            }
+        }else{
+            $libData .= '<li>'.$imglibMsg.'</li>';
+        }
+       
+        $resData = array('status' => 1 , 'data' => $libData , 'pagination' => 10);
+         return response()->json($resData, 200);
+
+    }
+    public function uploadImageUrl(Request $request)
+    {
+        $uuid = Str::uuid(); 
+
+            $resData = "";
+            $filename = "";
+            if($request->hasFile('upload_file')){   
+                 $filename = $request->file('upload_file')->store('uploads/medialibrary', 'public');;
+            }
+            if($filename != '')
+            {
+               $url = url('/').Storage::url('/').$filename;
+             
+
+                 $imgLibrary = new Imagelibrary;
+                 $imgLibrary->uid =  $uuid;
+                 $imgLibrary->url =  $url;
+                 $imgLibrary->title =  $filename;
+                 $imgLibrary->source =  'pixabay';
+                 
+                 $imgLibrary->save();
+
+
+                $lastInsertedId = $imgLibrary->id;
+                $resData = array('status' => 1 , 'data' => $url, 'title'=>$filename, 'id' =>$lastInsertedId);
+            }
+
+            /*$resData = array('status' => 1 , 'data' => 'https://mighteee.app/uploads/medialibrary/4ef4c9a2de_2.png' , 'title'=>'favicon.png' , 'id' =>8);*/
+
+          
+
+            return response()->json($resData, 200);
     }
 
 }

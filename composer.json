@@ -8,9 +8,11 @@
     "require": {
         "php": "^8.2",
         "astra-techno/data-forge": "^1.4",
+        "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "nwidart/laravel-modules": "^11.1",
+        "web-token/jwt-framework": "^4.0",
         "yajra/laravel-datatables-oracle": "11.0",
         "yoeunes/toastr": "^3.1"
     },
