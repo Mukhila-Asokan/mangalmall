@@ -47,7 +47,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('venue/theme/load_api_img', [VenueController::class,'load_api_img'])->name('venue/theme/load_api_img');
     Route::any('venue/theme/uploadImageUrl', [VenueController::class,'uploadImageUrl'])->name('venue/theme/uploadImageUrl');
 
-
+     Route::any('venue/theme/saveMyTemplate', [VenueController::class,'saveMyTemplate'])->name('venue/theme/saveMyTemplate');
 
     Route::any('/venue/venuethemes', [ThemeBuilderController::class,'index'])->name('admin/venuethemes');
 

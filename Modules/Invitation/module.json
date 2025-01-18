@@ -1,0 +1,11 @@
+{
+    "name": "Invitation",
+    "alias": "invitation",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Invitation\\Providers\\InvitationServiceProvider"
+    ],
+    "files": []
+}

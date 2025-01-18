@@ -1,3 +1,5 @@
 {
-    "Venue": true
+    "Venue": true,
+    "Invitation": true,
+    "VenueAdmin": true
 }

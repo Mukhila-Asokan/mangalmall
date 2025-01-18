@@ -234,8 +234,8 @@ class VenueController extends Controller
     }
     public function updatetheme_venue(Request $request)
     {
-        $template_id = $request->template_id;
-        $html = $request->html;
+       $template_id = $request->template_id;
+        $html = $request->template_content;
         $venueid = $request->venueid;
         $venuename = $request->venuename;
         $themname = $request->themname;
@@ -244,12 +244,56 @@ class VenueController extends Controller
         $venuecampaign->venuename = $venuename;
         $venuecampaign->theme_id = $template_id;
         $venuecampaign->themename = $themname;
-        $venuecampaign->custom_css = $request->custom_css;
-        $venuecampaign->custom_js = $request->custom_js;
-        $venuecampaign->template_html = $html;
-      
-        $venuecampaign->save();
+        $venuecampaign->custom_css = $request->custom_css ?? '-';
+        $venuecampaign->custom_js = $request->custom_js  ?? '-';
+        $venuecampaign->template_html = $html;  
 
+        $venuecampaign->save();
+        $upload_path = $this->createTemplateDirectory($venueid);
+        $p = $upload_path.time().'.html';
+        file_put_contents($p, $html);
+
+        $browserResponse['status']   = 'success';
+        $browserResponse['message']  = 'Template updated successfully';
+        return response()->json($browserResponse, 200);
+
+    }
+
+    public function saveMyTemplate(Request $request)
+    {
+        $template_id = $request->template_id;
+        $html = $request->template_content;
+        $venueid = $request->venueid;
+        $venuename = $request->venuename;
+        $themname = $request->themname;
+        $venuecampaign = new VenueCampaigns;
+        $venuecampaign->venueid = $venueid;
+        $venuecampaign->venuename = $venuename;
+        $venuecampaign->theme_id = $template_id;
+        $venuecampaign->themename = $themname;
+        $venuecampaign->custom_css = $request->custom_css ?? '-';
+        $venuecampaign->custom_js = $request->custom_js  ?? '-';
+        $venuecampaign->template_html = $html;  
+
+        $venuecampaign->save();
+        $upload_path = $this->createTemplateDirectory($venueid);
+        $p = $upload_path.time().'.html';
+        file_put_contents($p, $html);
+
+        $browserResponse['status']   = 'success';
+        $browserResponse['message']  = 'Template updated successfully';
+        return response()->json($browserResponse, 200);
+
+    }
+
+    function createTemplateDirectory($venueid){  
+        $upload_path = public_path('storage/uploads/sites/venue'.$venueid.'/');
+        $checkPath   = public_path('storage/uploads/sites/venue'.$venueid.'/');
+
+        if(!File::exists($checkPath)) {
+            File::makeDirectory($upload_path, 0755, true); 
+        }
+        return $upload_path;
     }
 
     public function upload_image(Request $request)
@@ -300,7 +344,7 @@ class VenueController extends Controller
 
 
        
-        $imgLibrary = Imagelibrary::all();
+        $imgLibrary = Imagelibrary::latest()->get();
         $imglibMsg = 'No more images in your Image Library There is not any images in your Library';
         $libData = '';
         

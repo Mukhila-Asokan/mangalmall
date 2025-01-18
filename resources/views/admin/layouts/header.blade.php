@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>{{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Occasion Pannel" name="description" />
+    <meta content="Mangal Mall" name="description" />
     <meta content="Rel Del Mercado" name="author" />
 
     <meta name="_token" content="{{ csrf_token() }}" />

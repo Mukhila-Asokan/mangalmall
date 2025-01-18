@@ -12,14 +12,14 @@ use Modules\Venue\Models\VenueGalleryImage;
 use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\VenueDetails;
 
+
 class HomeController extends Controller
 {
     public function home()
     {
-        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
-       
-        $arealocation = indialocation::where('delete_status',0)->get();
 
+        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();       
+        $arealocation = indialocation::where('delete_status',0)->get();
         return view('layouts.home',compact('venuetypes','arealocation'));
     }
     public function ajaxcvenuesubtypelist(Request $request)

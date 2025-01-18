@@ -610,10 +610,16 @@ function initiateAjaxRequest(posturl, obj, cb = null) {
 	
 	obj.append('csrf_pixelpages', $('#csrf_token').val())
 	processStatus(true)
+	$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 	$.ajax({
 		url: baseurl + posturl,
 		type: "POST",
 		data: obj,
+
 		contentType: false,
 		cache: false,
 		processData: false,
@@ -634,25 +640,26 @@ function initiateAjaxRequest(posturl, obj, cb = null) {
 // }
 
 function handleResponse(resp) {
-	let response = JSON.parse(resp);
-	processStatus(false, response.redirect)
-	if (response.message)
-		showNotifications(response.status, response.message);
+	//let response = JSON.parse(resp);
+	let response = resp;
+	processStatus(false, response['redirect'])
+	if (response['message'])
+		showNotifications(response['status'], response['message']);
 
-	if (response.html)
-		$(response.targetElement).html(response.html);
-	else if (response.singlevalue)
-		$(response.targetElement).val(response.singlevalue);
-	else if (response.bottext)
-		showBotAnswers(response.bottext)
-	else if (response.datatable) {
-		var $lmTable = $("#" + response.datatable).dataTable({ bRetrieve: true });
+	if (response['html'])
+		$(response['targetElement']).html(response['html']);
+	else if (response['singlevalue'])
+		$(response['targetElement']).val(response['singlevalue']);
+	else if (response['bottext'])
+		showBotAnswers(response['bottext'])
+	else if (response['datatable']) {
+		var $lmTable = $("#" + response['datatable']).dataTable({ bRetrieve: true });
 		$lmTable.fnDraw();
 		$('.modal').modal('hide');
 	}
-	else if (response.form) {
-		let formDataArray = JSON.parse(response.formData);
-		$(response.form).find("input , textarea , select").each(function () {
+	else if (response['form']) {
+		let formDataArray = response['formData'];
+		$(response['form']).find("input , textarea , select").each(function () {
 			let _this = $(this);
 			if (_this.prop("nodeName") == "SELECT")
 				_this
@@ -667,19 +674,19 @@ function handleResponse(resp) {
 				else _this.val(formDataArray[_this.attr("name")]);
 			}
 		});
-		if (response.openModal)
-			$(response.openModal).modal('show');
+		if (response['openModal'])
+			$(response['openModal']).modal('show');
 
-	} else if (response.resetCheckbox) {
-		$(response.resetCheckbox).prop("checked", false);
-		if (response.redirect == "close") $(".modal").modal("hide");
+	} else if (response['resetCheckbox']) {
+		$(response['resetCheckbox']).prop("checked", false);
+		if (response['redirect'] == "close") $(".modal").modal("hide");
 	} else {
 		setTimeout(function () {
-			if (response.redirect == "reload"){location.reload(); $(".modal").modal("hide"); } 
-			else if (response.redirect == "close") $(".modal").modal("hide");
-			else if (response.redirect.charAt(0) == "/") {
+			if (response['redirect'] == "reload"){location.reload(); $(".modal").modal("hide"); } 
+			else if (response['redirect'] == "close") $(".modal").modal("hide");
+			else if (response['redirect'].charAt(0) == "/") {
 				window.location.href = baseurl + response.redirect.substring(1);
-				if (response.redirect.search("#") > 0) location.reload();
+				if (response['redirect'].search("#") > 0) location.reload();
 			}
 		}, 3000);
 	}
