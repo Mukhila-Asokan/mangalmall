@@ -20,8 +20,7 @@
                         <span class="tf-icon mdi mdi-eye me-1"></span> Staff List
         </a>
     </div>
-    <form class="form-horizontal" role="form" method = "post" action="<?php echo e(route('departments.dep_add')); ?>">
-                <?php echo csrf_field(); ?>
+  
 
     <ul class="nav nav-pills navtab-bg nav-justified">
         <li class="nav-item">
@@ -245,7 +244,7 @@
 	 </div>
 		
 	</div>
-	<input type = "hidden" name = "staffid" id ="staffid" value = "" />
+
 	<div class="row mt-3">
 		<div class="justify-content-end row">
 			<div class="col-sm-2">
@@ -419,7 +418,7 @@
 	<div class="row mt-3">
 		<div class="justify-content-end row">
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-primary waves-effect waves-light"> <span class="tf-icon mdi mdi-plus me-1"></span> Add</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light" id = "addskillset"> <span class="tf-icon mdi mdi-plus me-1"></span> Add</button>	
 			
 			</div>
 			
@@ -435,7 +434,7 @@
 					
 				</tr>
 				</thead>
-				<tbody>
+				<tbody id = "skillsettable">
 				</tbody>
 			</table>
 		</div>
@@ -473,7 +472,7 @@
 	<br>
 	<div class="justify-content-end row mb-4">
 			<div class="col-sm-6">
-				<button type="button" class="btn btn-primary waves-effect waves-light"> <span class="tf-icon mdi mdi-plus me-1"></span> Upload Image</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light" id="uploadimage">Upload Image</button>	
 			
 			</div>
 			
@@ -509,7 +508,7 @@
 		<div class="row mt-3">
 		<div class="justify-content-end row">
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-primary waves-effect waves-light"> <span class="tf-icon mdi mdi-plus me-1"></span> Add</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light uploadfiles"> <span class="tf-icon mdi mdi-plus me-1"></span> Add</button>	
 			
 			</div>
 			
@@ -525,7 +524,7 @@
 					
 				</tr>
 				</thead>
-				<tbody>
+				<tbody id="uploadfilestable">
 				</tbody>
 			</table>
 		</div>
@@ -545,7 +544,10 @@
 </div>
 
 <div class="tab-pane" id="contact">
-	
+	<form class="form-horizontal" role="form" method = "post" action="<?php echo e(route('staff.staff_add')); ?>">
+        <?php echo csrf_field(); ?>
+		
+		<input type = "hidden" name = "staffid" id ="staffid" value = "" />
 	<div class ="row">
 	<div class="col-6">	
 		<div class="mb-4 row">
@@ -590,20 +592,20 @@
 	<div class="row mt-3">
 		<div class="justify-content-end row">
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-primary waves-effect waves-light">Save</button>	
+				<button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>	
 			
 			</div>
 			
 		</div>
 	</div>
-	
+	</form>
 </div>
 
 
 </div>
 
 
-    </form>
+    
         </div>
     </div>
 </div>
@@ -686,9 +688,11 @@ $(".staffdetails").click(function(){
 	   dataType: 'json',
 	   data:{ "_token": "<?php echo e(csrf_token()); ?>", "first_name" :first_name, "last_name" :last_name, "email" :email, "phone" :phone, "contact_address" :contact_address, "location" :location, "date_of_birth" :date_of_birth,"hire_date" :hire_date,"roleid" :roleid,"departmentid" :departmentid,"supervisor_id" :supervisor_id},
 	   success:function(response){  
-		var success = response.responseJSON.success;
-			$('#staffid').val(success['id']);
+		
+			
 			console.log(response);
+			
+			$('#staffid').val(response['id']);
 			 $('.nav-item .active').parent().next('li').find('a').trigger('click');
 		
 		},
@@ -732,7 +736,7 @@ $(".addqualification").click(function(){
 	   data:{ "_token": "<?php echo e(csrf_token()); ?>", "degreename" :degreename, "qualification_type" :qualification_type, "institution" :institution, "completion_date" :completion_date,"staffid":staffid},
 	   success:function(response){
 			$("#qualificationtable").empty();  
-			var returnData = response;   
+			var returnData = response.['details'];   
             if(returnData.length>0)
             {
                 let casestr = '';
@@ -825,6 +829,127 @@ $("#addworkingdetails").click(function(){
 	   });
 
 });
+
+
+$("#addskillset").click(function(){
+	
+	var skill_name = $('#skill_name').val();
+	var proficiency_level = $('#proficiency_level').val();
+	
+	var staffid = $('#staffid').val(); 
+	
+	 $.ajax({
+	   type:'POST',
+	   url:"<?php echo e(route('staff.ajaxskillset')); ?>",
+	   dataType: 'json',
+	   data:{ "_token": "<?php echo e(csrf_token()); ?>", "skill_name" :skill_name, "proficiency_level" :proficiency_level,"staffid":staffid},
+	   success:function(response){
+			$("#skillsettable").empty();  
+			var returnData = response;   
+            if(returnData.length>0)
+            {
+                let casestr = '';
+                for(i=0;i<returnData.length;i++)
+                {
+                    casestr  += '<tr><td>' + i +'</td><td>' + returnData[i]['skill_name'] + '</td><td>' + returnData[i]['proficiency_level'] +'</td></tr>';
+                }
+             console.log(casestr);       
+           
+             $("#skillsettable").append(casestr);
+            }
+            else
+            {
+                alert("No Data")
+            }
+	   },
+         error: function(response) {
+            console.log(response);
+			var errors = response.responseJSON.errors;
+			
+			console.log(errors);
+			
+			 $('.failmessage').css('display','none');
+
+              $.each( response.responseJSON.errors, function( key, value ) {
+                console.log(key + " :  " +value);
+
+                 $('.'+key).css('display','block');
+                 $('.'+key).html(value);
+
+              });
+
+			
+		}	
+	   });
+
+});
+
+
+$("#uploadimage").click(function(){
+	
+	
+	var staffid = $('#staffid').val(); 
+	var staff_photo = $('#formFile').prop('files'); 
+	
+	
+	
+	$.ajax({
+	   type:'POST',
+	   url:"<?php echo e(route('staff.ajaxphotoadd')); ?>",
+	   dataType: 'json',
+	   data:{ "_token": "<?php echo e(csrf_token()); ?>", "staff_photo" :staff_photo,"staffid":staffid},
+	   success:function(response){
+			alert("Image added successfully");
+	   },
+         error: function(response) {
+		 }
+	});
+	
+
+	
+
+});
+
+
+$("#uploadfiles").click(function(){
+	
+	var staffid = $('#staffid').val(); 
+	var document_name = $('#document_name').val(); 
+	var file_path = $('#file_path').prop('files'); 
+	
+	$.ajax({
+	   type:'POST',
+	   url:"<?php echo e(route('staff.ajaxdocuments')); ?>",
+	   dataType: 'json',
+	   data:{ "_token": "<?php echo e(csrf_token()); ?>", "file_path" :file_path,"staffid":staffid, "document_name":document_name },
+	   success:function(response){
+			$("#uploadfilestable").empty();  
+			var returnData = response;   
+            if(returnData.length>0)
+            {
+                let casestr = '';
+                for(i=0;i<returnData.length;i++)
+                {
+                    casestr  += '<tr><td>' + i +'</td><td>' + returnData[i]['document_name'] + '</td><td>' + returnData[i]['file_path'] +'</td></tr>';
+                }
+             console.log(casestr);       
+           
+             $("#uploadfilestable").append(casestr);
+            }
+            else
+            {
+                alert("No Data")
+            }
+	   },
+         error: function(response) {
+		 }
+	});
+	
+	
+});
+
+
+
 
 </script>
 

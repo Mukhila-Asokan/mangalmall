@@ -84,7 +84,15 @@ class StaffManagementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $staffid = $request->staffid;
+        $emcont = new StaffEmergency;
+        $emcont->personname = $request->personname;
+        $emcont->mobileno = $request->mobileno;
+        $emcont->address = $request->address;
+        $emcont->relationship = $request->relationship;
+        $emcont->save();
+        return redirect('admin/staff')->with('success', 'New Staff added Successfully,');
+
     }
 
     /**
@@ -176,6 +184,7 @@ class StaffManagementController extends Controller
             $admin_user->save();
 
             $staff = new staff;
+            $staff->adminuserid = $admin_user->id;
             $staff->first_name =  $first_name;
             $staff->last_name = $last_name;
             $staff->email = $email;
@@ -216,14 +225,14 @@ class StaffManagementController extends Controller
 
     public function ajaxqualification(Request $request)
     {
-        $staff_id = $request->staff_id;
+        $staffid = $request->staffid;
         $degreename = $request->degreename;
         $qualification_type = $request->qualification_type;
         $institution = $request->institution;
         $completion_date = $request->completion_date;
 
         $validator = Validator::make($request->all(),[
-            'staff_id' => 'required',
+            'staffid' => 'required',
             'degreename' => 'required',
             'qualification_type' => 'required',
             'completion_date' => 'required',
@@ -236,16 +245,16 @@ class StaffManagementController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); 
         }
 
-        if($staff_id)
+        if($staffid)
         {
             $staff_qualification = new StaffQualification;
-            $staff_qualification->staff_id = $staff_id;
+            $staff_qualification->staffid = $staffid;
             $staff_qualification->degreename = $degreename;
             $staff_qualification->qualification_type = $qualification_type;
             $staff_qualification->institution = $institution;
             $staff_qualification->completion_date = $completion_date;
             $staff_qualification->save();
-            $details = StaffQualification::where('staff_id',$staff_id)->get();
+            $details = StaffQualification::where('staffid',$staffid)->get();
             $browserResponse['status']   = 'success';
             $browserResponse['message']  = 'New Qualification details added, Please check';
             $browserResponse['details'] = $details;
@@ -261,7 +270,7 @@ class StaffManagementController extends Controller
     }
     public function ajaxworkingdetails(Request $request)
     {
-        $staff_id = $request->staff_id;
+        $staffid = $request->staffid;
         $employeername = $request->employeername;
         $desgination = $request->desgination;
         $start_date = $request->start_date;
@@ -269,7 +278,7 @@ class StaffManagementController extends Controller
         $leavereason = $request->leavereason;
 
         $validator = Validator::make($request->all(),[
-            'staff_id' => 'required',
+            'staffid' => 'required',
             'employeername' => 'required',
             'desgination' => 'required',
             'start_date' => 'required' ,
@@ -283,10 +292,10 @@ class StaffManagementController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); 
         }
 
-        if($staff_id)
+        if($staffid)
         {
             $staff_workingdetails = new StaffWorkHistory;
-            $staff_workingdetails->staff_id = $staff_id;
+            $staff_workingdetails->staffid = $staffid;
             $staff_workingdetails->employeername = $employeername;
             $staff_workingdetails->desgination = $desgination;
             $staff_workingdetails->start_date = $start_date;
@@ -294,7 +303,7 @@ class StaffManagementController extends Controller
             $staff_workingdetails->leavereason = $leavereason;
             $staff_workingdetails->save();
 
-            $details = StaffWorkHistory::where('staff_id',$staff_id)->get();
+            $details = StaffWorkHistory::where('staffid',$staffid)->get();
             $browserResponse['status']   = 'success';
             $browserResponse['message']  = 'New Working details added, Please check';
             $browserResponse['details'] = $details;
@@ -310,13 +319,13 @@ class StaffManagementController extends Controller
 
     public function ajaxskillset(Request $request)
     {
-        $staff_id = $request->staff_id;
+        $staffid = $request->staffid;
         $skill_name = $request->skill_name;
         $proficiency_level = $request->proficiency_level;
        
 
         $validator = Validator::make($request->all(),[
-            'staff_id' => 'required',
+            'staffid' => 'required',
             'skill_name' => 'required',
             'proficiency_level' => 'required',           
         ]);
@@ -327,16 +336,16 @@ class StaffManagementController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); 
         }
 
-        if($staff_id)
+        if($staffid)
         {
             $staff_skills = new StaffSkills;
-            $staff_skills->staff_id = $staff_id;
+            $staff_skills->staffid = $staffid;
             $staff_skills->employeername = $skill_name;
             $staff_skills->desgination = $proficiency_level;
           
             $staff_skills->save();
 
-            $details = StaffSkills::where('staff_id',$staff_id)->get();
+            $details = StaffSkills::where('staffid',$staffid)->get();
             $browserResponse['status']   = 'success';
             $browserResponse['message']  = 'New Skill set added, Please check';
             $browserResponse['details'] = $details;
@@ -352,13 +361,10 @@ class StaffManagementController extends Controller
 
     public function ajaxdocuments(Request $request)
     {
-        $staff_id = $request->staff_id;
+        $staffid = $request->staffid;
         $document_name = $request->document_name;
-        $file_path = $request->file_path;
-       
-
         $validator = Validator::make($request->all(),[
-            'staff_id' => 'required',
+            'staffid' => 'required',
             'document_name' => 'required',
             'file_path' => 'required',           
         ]);
@@ -369,18 +375,23 @@ class StaffManagementController extends Controller
             return response()->json(['errors' => $validator->errors()], 422); 
         }
 
-        if($staff_id)
-        {
-            $staff_skills = new StaffDocuments;
-            $staff_skills->staff_id = $staff_id;
-            $staff_skills->document_name = $document_name;
-            $staff_skills->file_path = $file_path;
-          
-            $staff_skills->save();
+        if($request->hasFile('file_path')){         
+            $filename = $request->file('file_path')->store('staff_documents', 'public');;
 
-            $details = StaffDocuments::where('staff_id',$staff_id)->get();
+        }
+
+        if($staffid)
+        {
+            $staff_docs = new StaffDocuments;
+            $staff_docs->staffid = $staffid;
+            $staff_docs->document_name = $document_name;
+            $staff_docs->file_path = $filename;
+          
+            $staff_docs->save();
+
+            $details = StaffDocuments::where('staffid',$staffid)->get();
             $browserResponse['status']   = 'success';
-            $browserResponse['message']  = 'New Skill set added, Please check';
+            $browserResponse['message']  = 'New documents added, Please check';
             $browserResponse['details'] = $details;
             }
             else
@@ -389,7 +400,23 @@ class StaffManagementController extends Controller
                     $browserResponse['message']  = 'Please check your entered details';
             }
 
-    return response()->json($browserResponse, 200);
+            return response()->json($browserResponse, 200);
+    }
+
+    public function ajaxphotoadd(Request $request)
+    {
+        $staffid = $request->staffid;
+        if($request->hasFile('staff_photo')){         
+            $filename = $request->file('staff_photo')->store('staff_photo', 'public');;
+
+        }
+        $staff = Staff::find($staffid);
+        $staff->staff_photo = $filename;
+        $staff->save();
+        $browserResponse['status']   = 'success';
+        $browserResponse['message']  = 'New Skill set added, Please check';
+        return response()->json($browserResponse, 200);
+
     }
 
 }
