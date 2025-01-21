@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+Use App\Models\OccasionType;
+Use App\Models\UserOccasion;
 
 class ProfileController extends Controller
 {
@@ -56,5 +58,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function show()
+    {
+        $occasion = OccasionType::where('delete_status','0')->get();
+        return view('occasion',compact('occasion'));
     }
 }

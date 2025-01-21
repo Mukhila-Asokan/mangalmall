@@ -2,7 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserOccasionController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use App\Http\Middleware\FlashMessageMiddleware;
+use App\Http\Controllers\VenueController;
+
+ /*$username = Session::get('username');
+ $username = preg_replace('/\s+/', '_', $username);*/
 
 Route::get('/',[HomeController::class, 'home'])->name('home');
 Route::any('/ajaxcvenuesubtypelist',[HomeController::class, 'ajaxcvenuesubtypelist'])->name('home/ajaxcvenuesubtypelist');
@@ -17,6 +24,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+});
+
+
+Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class])->group(function () { 
+
+    Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home/occasion');
+    Route::any(session('userpath').'/occasion/add', [UserOccasionController::class, 'store'])->name('home/occasion/add');
+
+    Route::any(session('userpath').'/venue/search', [VenueController::class, 'index'])->name('home/venue/search');
+
 });
 
 require __DIR__.'/auth.php';

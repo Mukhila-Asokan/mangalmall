@@ -47,7 +47,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('venue/theme/load_api_img', [VenueController::class,'load_api_img'])->name('venue/theme/load_api_img');
     Route::any('venue/theme/uploadImageUrl', [VenueController::class,'uploadImageUrl'])->name('venue/theme/uploadImageUrl');
 
-
+     Route::any('venue/theme/saveMyTemplate', [VenueController::class,'saveMyTemplate'])->name('venue/theme/saveMyTemplate');
 
     Route::any('/venue/venuethemes', [ThemeBuilderController::class,'index'])->name('admin/venuethemes');
 
@@ -110,6 +110,10 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
     Route::any('/venuesettings/datafield/{id}/edit', [VenueDataFieldController::class,'edit']);
     Route::put('/venuesettings/datafield/update', [VenueDataFieldController::class,'update'])->name('datafield.update');
+
+    Route::any('/venueportalrequest',[VenueController::class,'venueportalrequest'])->name('venue.venueportalrequest');
+    Route::any('/venueportalrequest/{id}/updatestatus',[VenueController::class,'venueuserupdatestatus']);
+
 
 });
 

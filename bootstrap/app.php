@@ -13,7 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'IsAdminRoleCheck' => \App\Http\Middleware\IsAdminRoleCheck::class,
+            'flashmessage' => \App\Http\Middleware\FlashMessageMiddleware::class,
+            'JwtAuthMiddleware' => \App\Http\Middleware\JwtAuthMiddleware::class,
+            'VenueAdminMiddleware' => \Modules\VenueAdmin\Http\Controllers\VenueAdminController::class,
         ]);
+      
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

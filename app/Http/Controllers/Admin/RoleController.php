@@ -12,7 +12,6 @@ class RoleController extends Controller
 {
     public function redirectRoutes()
     {
-
        
         Session::put('username', Auth::guard('admin')->user()->name);
         Session::put('userrole', Auth::guard('admin')->user()->role);

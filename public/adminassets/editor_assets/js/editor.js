@@ -770,9 +770,8 @@ Project: PixelPages
 
 			},
 			success: function (file, response) {
-				
-				var res = JSON.parse(response);
-				if (res.status == 1) {
+				console.log(response);
+				if (response['status'] == 1) {
 					load_media_library(type);
 					useThisImage(res.data, type);
 				} else {
@@ -883,7 +882,7 @@ Project: PixelPages
 			url: baseurl + '/admin/venue/theme/load_api_img',
 			data: LoadData,
 			success: function (resp) {
-				resp = JSON.parse(resp);
+				
 				if (resp['status'] == 1) {
 
 					var load_more_button = targetElement.closest('.mt_tabs_pixabay').find('a.loadPixabayImage');
@@ -1094,19 +1093,27 @@ Project: PixelPages
 
 }(jQuery));
 
-if ($('.ppd_my_template').length) {
-	$(document).on('click', '.mt_edt_save_button', function () {
-		$('.mt_bgtempconatainer,.editableElement').removeClass('editableElementActive').removeClass('active');
-		// 105 destroy drag and drop before save
-		$(".mt_edit_template_container").sortable("destroy");
-		let obj = new FormData()
-		obj.append('template_id', $(this).data('temp-id'))
-		obj.append('template_content', $('.mt_edit_template_container').html())
-		initiateAjaxRequest('ajax/saveMyTemplate', obj, (resp) => {
-			$('.mt_main_structure').addClass('mt_hide_sidebar')
-		});
-	})
-}
+
+$(document).on('click', '.mt_edt_save_button', function () {
+	$( ".mt_edit_template_container" ).sortable(); 
+	$('.mt_bgtempconatainer,.editableElement').removeClass('editableElementActive').removeClass('active');
+	// 105 destroy drag and drop before save
+	$(".mt_edit_template_container").sortable("destroy");
+	let obj = new FormData()
+	obj.append('template_id', $(this).data('temp-id'))
+	obj.append('venueid', $('#venueid').val())
+	obj.append('venuename', $('#venuename').val())
+	obj.append('themname', $('#themname').val())
+	obj.append('template_content', $('.mt_edit_template_container').html())
+	initiateAjaxRequest('/admin/venue/theme/saveMyTemplate', obj, (resp) => {
+		$('.mt_main_structure').addClass('mt_hide_sidebar')
+		  console.log('Success:', resp); 
+
+	});
+
+	$('#preloader').fadeOut('slow');
+})
+
 
 function openSection(_this, type) {
 	$('.mt_main_structure').removeClass('mt_hide_sidebar')

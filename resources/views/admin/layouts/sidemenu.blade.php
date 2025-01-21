@@ -39,6 +39,13 @@
                                         <span class="menu-text">Venue</span>
                                     </a>
                                 </li>
+
+                                 
+                                <li class="menu-item">
+                                    <a href="{{ route('venue.venueportalrequest') }}" class="menu-link">
+                                        <span class="menu-text">Venue Portal Request</span>
+                                    </a>
+                                </li>
                              
                                 <li class="menu-item">
                                     <a href="#" class="menu-link">
@@ -74,29 +81,128 @@
                         </div>
                     </li>
                     <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="#invitationExpages" data-bs-toggle="collapse" class="menu-link waves-effect" >
                             <span class="menu-icon"><i data-lucide="file-image"></i></span>
-                            <span class="menu-text">Inviation Mangement</span>
+                            <span class="menu-text">Invitation Mangement</span>
+                            <span class="menu-arrow"></span>
                         </a>
+
+                         <div class="collapse" id="invitationExpages">
+                            <ul class="sub-menu">
+                                 <li class="menu-item">
+                                    <a href="{{ route('invitation/invitationmodel') }}" class="menu-link">
+                                        <span class="menu-text">Design & Style</span>
+                                    </a>
+                                </li>
+                                
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation/invitationsize') }}" class="menu-link">
+                                        <span class="menu-text">Size</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation/invitationcolor') }}" class="menu-link">
+                                        <span class="menu-text">Silhouette</span>
+                                    </a>
+                                </li>
+                                
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation/invitationcolor') }}" class="menu-link">
+                                        <span class="menu-text">Color</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation/printingmethod') }}" class="menu-link">
+                                        <span class="menu-text">Printing Method</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation/material') }}" class="menu-link">
+                                        <span class="menu-text">Material</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation/budget') }}" class="menu-link">
+                                        <span class="menu-text">Budget</span>
+                                    </a>
+                                </li>     
+                                                            
+                            </ul>
+                        </div>
+
                     </li>
                     
                     <li class="menu-item">
                         <a href="#" class="menu-link waves-effect"> 
                             <span class="menu-icon"><i data-lucide="fan"></i></span>
                             <span class="menu-text">Vendor Management</span>
+                             <span class="menu-arrow"></span>
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="#menustaffpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                             <span class="menu-icon"><i data-lucide="person-standing"></i></span>
                             <span class="menu-text">Staff Mangement</span>
+                             <span class="menu-arrow"></span>
                         </a>
+                         <div class="collapse" id="menustaffpages">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a href="{{ route('admin/staff') }}" class="menu-link">
+                                        <span class="menu-text">Staff</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('staff/departments') }}" class="menu-link">
+                                        <span class="menu-text">Departments</span>
+                                    </a>
+                                </li>  
+                                 <li class="menu-item">
+                                    <a href="{{ route('staff/roles') }}" class="menu-link">
+                                        <span class="menu-text">Roles</span>
+                                    </a>
+                                </li>  
+                                 <li class="menu-item">
+                                    <a href="{{ route('staff/roles') }}" class="menu-link">
+                                        <span class="menu-text">Module Access</span>
+                                    </a>
+                                </li>  
+                            </ul>
+                        </div>
+
                     </li>
                     <li class="menu-item">
-                        <a href="#" class="menu-link">  
+                        <!--a href="#" class="menu-link">  
                             <span class="menu-icon"><i data-lucide="cog"></i></span>
                             <span class="menu-text">Settings</span>
+                        </a-->
+
+                         <a href="#menuSettpages" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="cog"></i></span>
+                            <span class="menu-text"> Settings </span>
+                            <span class="menu-arrow"></span>
                         </a>
+
+                         <div class="collapse" id="menuSettpages">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a href="{{ route('admin/occasion') }}" class="menu-link">
+                                        <span class="menu-text">Occasion</span>
+                                    </a>
+                                </li>   
+                                <li class="menu-item">
+                                    <a href="{{ route('admin/religion') }}" class="menu-link">
+                                        <span class="menu-text">Religion</span>
+                                    </a>
+                                </li>  
+                                 <li class="menu-item">
+                                    <a href="{{ route('admin/religion') }}" class="menu-link">
+                                        <span class="menu-text">Menu</span>
+                                    </a>
+                                </li>    
+                            </ul>
+                         </div>   
                     </li>
               </ul>
                       

@@ -26,9 +26,10 @@
 				@include('venue::editor.customcss_editor')
 
 				<div class="mt_popup_live_preview">
-					<div data-replace-path="" class = "mt_edit_template_container @if (isset($template)) 
-    {{ $template->template_html != '' ? 'ppd_my_template' : '' }}
-@endif" >
+					<div data-replace-path="" class = "mt_edit_template_container 
+					@if (isset($template)) 
+    					{{ $template->template_html != '' ? 'ppd_my_template' : '' }}
+					@endif" >
 											
 						
 					@php 

@@ -15,7 +15,8 @@
                                 </div>
 
                                 <!--login form-->
-                                <form class="login-signup-form">
+                                <form class="login-signup-form" method = "post" action = "{{ route('logincheck') }}">
+                                    @csrf
                                     <div class="form-group">
                                         <label class="pb-1">Email Address</label>
                                         <div class="input-group input-group-merge">

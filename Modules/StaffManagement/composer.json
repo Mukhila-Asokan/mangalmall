@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/staffmanagement",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\StaffManagement\\": "app/",
+            "Modules\\StaffManagement\\Database\\Factories\\": "database/factories/",
+            "Modules\\StaffManagement\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\StaffManagement\\Tests\\": "tests/"
+        }
+    }
+}

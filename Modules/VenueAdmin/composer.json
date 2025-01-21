@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/venueadmin",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\VenueAdmin\\": "app/",
+            "Modules\\VenueAdmin\\Database\\Factories\\": "database/factories/",
+            "Modules\\VenueAdmin\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\VenueAdmin\\Tests\\": "tests/"
+        }
+    }
+}

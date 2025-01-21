@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\OccasionTypeController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,18 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
 
      Route::any('/dashboard', [DashboardController::class, 'index'])->name('admin/dashboard');
+     
+     Route::any('/occasion', [OccasionTypeController::class, 'index'])->name('admin/occasion');
+     Route::any('/occasion/create', [OccasionTypeController::class, 'create'])->name('admin/occasion/create');
+     Route::any('/occasion/store', [OccasionTypeController::class, 'store'])->name('admin/occasion/store');
+     Route::any('/occasion/{id}/destroy', [OccasionTypeController::class,'destroy']);
+     Route::any('/occasion/{id}/updatestatus', [OccasionTypeController::class,'updatestatus']);
+     Route::any('/occasion/{id}/edit', [OccasionTypeController::class,'edit']);
+     Route::put('/occasion/update', [OccasionTypeController::class,'update'])->name('admin/occasion/update');
+
+     Route::any('/religion', [OccasionTypeController::class, 'index'])->name('admin/religion');
+
+     
      Route::any('staff/dashboard', [StaffController::class, 'index'])->name('admin/staff/dashboard');
      Route::any('/changepassword', [DashboardController::class, 'changepassword'])->name('admin.changepassword');
      Route::any('/passwordupdate', [DashboardController::class, 'passwordupdate'])->name('admin.passwordupdate');

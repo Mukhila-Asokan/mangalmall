@@ -6,57 +6,38 @@
         color:#000;
     }
 </style>
+ <div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="header-title mb-4">Venue List</h4>
+			   
+				<div class="text-end">
+				 <a href = "{{ route('venue/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+								  <span class="tf-icon mdi mdi-plus me-1"></span>Add Venue
+				   </a>
+				</div>
+			
 
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
-         <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title mb-4">Venue List</h4>
-                       
-                        <div class="text-end">
-                         <a href = "{{ route('venue/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                          <span class="tf-icon mdi mdi-plus me-1"></span>Add Venue
-                           </a>
-                        </div>
-                    
-
-                        <table class="table table-bordered data-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Venue Name</th>
-                        <th>Location</th>
-                        <th>Contact Person</th>
-                        <th>Mobile No</th>
-                        <th width="100px">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-                         
-                    </div>
-                </div>
-            </div>
-        </div>
+				<table class="table table-bordered data-table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Venue Name</th>
+				<th>Location</th>
+				<th>Contact Person</th>
+				<th>Mobile No</th>
+				<th width="100px">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+				 
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @push('scripts')
     <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">

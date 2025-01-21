@@ -1,0 +1,1 @@
+<?php /**PATH C:\xampp\htdocs\mangalmall\Modules/StaffManagement\resources/views/staff/detailview.blade.php ENDPATH**/ ?>
