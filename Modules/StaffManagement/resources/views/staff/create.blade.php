@@ -30,31 +30,31 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#qualification" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
+            <a href="#qualification" data-bs-toggle="tab" aria-expanded="true" class="nav-link navqualification">
                 <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
                 <span class="d-none d-sm-inline-block">Qualification</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#workhistory" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+            <a href="#workhistory" data-bs-toggle="tab" aria-expanded="false" class="nav-link navworkhistory">
                 <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
                 <span class="d-none d-sm-inline-block">Work History</span>
             </a>
         </li>
 		<li class="nav-item">
-            <a href="#skillset" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+            <a href="#skillset" data-bs-toggle="tab" aria-expanded="false" class="nav-link navskillset">
                 <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
                 <span class="d-none d-sm-inline-block">Skill Set</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#docs" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+            <a href="#docs" data-bs-toggle="tab" aria-expanded="false" class="nav-link navdocs">
                 <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
                 <span class="d-none d-sm-inline-block">Upload Docs & Photos</span>
             </a>
         </li> 
 		<li class="nav-item">
-            <a href="#contact" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+            <a href="#contact" data-bs-toggle="tab" aria-expanded="false" class="nav-link navContact">
                 <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
                 <span class="d-none d-sm-inline-block">Emergency Contact</span>
             </a>
@@ -273,7 +273,7 @@
 <div class="row mt-3">	
 		<div class="justify-content-end row">
 			<div class="col-sm-4">
-				<button type="button" class="btn btn-primary waves-effect waves-light">Save & Continue</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light savedegree">Save & Continue</button>	
 			
 			</div>
 			
@@ -372,7 +372,7 @@
 <div class="row mt-3">	
 		<div class="justify-content-end row">
 			<div class="col-sm-4">
-				<button type="button" class="btn btn-primary waves-effect waves-light">Save & Continue</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light saveworking">Save & Continue</button>	
 			
 			</div>
 			
@@ -442,7 +442,7 @@
 <div class="row mt-3">	
 		<div class="justify-content-end row">
 			<div class="col-sm-4">
-				<button type="button" class="btn btn-primary waves-effect waves-light">Save & Continue</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light saveskills">Save & Continue</button>	
 			
 			</div>
 			
@@ -532,7 +532,7 @@
 <div class="row mt-3">	
 		<div class="justify-content-end row">
 			<div class="col-sm-4">
-				<button type="button" class="btn btn-primary waves-effect waves-light">Save</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light savedocs">Save & Continue</button>	
 			
 			</div>
 			
@@ -693,7 +693,7 @@ $(".staffdetails").click(function(){
 			console.log(response);
 			
 			$('#staffid').val(response['id']);
-			 $('.nav-item .active').parent().next('li').find('a').trigger('click');
+			 $('.nav-pills .active').parent().next('li').find('a').trigger('click');
 		
 		},
          error: function(response) {
@@ -717,6 +717,24 @@ $(".staffdetails").click(function(){
 		});
 		
 	
+});
+
+$(".savedegree").click(function(){
+	alert("ha");
+	 $('.nav-pills .active').parent().next('li').find('a').trigger('click');
+	
+});
+
+$(".saveworking").click(function(){
+	 $('.nav-pills .active').parent().next('li').find('a').trigger('click');
+});
+
+$(".savedocs").click(function(){
+	 $('.nav-pills .active').parent().next('li').find('a').trigger('click');
+});
+
+$(".saveskills").click(function(){
+	 $('.nav-pills .active').parent().next('li').find('a').trigger('click');
 });
 
 

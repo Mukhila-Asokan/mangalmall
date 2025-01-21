@@ -2,5 +2,6 @@
     "Venue": true,
     "Invitation": true,
     "VenueAdmin": true,
-    "StaffManagement": true
+    "StaffManagement": true,
+    "Merchandiser": true
 }

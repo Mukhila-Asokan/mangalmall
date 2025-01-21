@@ -1,0 +1,11 @@
+{
+    "name": "Merchandiser",
+    "alias": "merchandiser",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Merchandiser\\Providers\\MerchandiserServiceProvider"
+    ],
+    "files": []
+}
