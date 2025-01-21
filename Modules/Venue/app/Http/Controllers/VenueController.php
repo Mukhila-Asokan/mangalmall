@@ -15,6 +15,7 @@ use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\VenueCampaigns;
 use Modules\Venue\Models\Imagelibrary;
+use Modules\VenueAdmin\Models\VenueUser;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -414,6 +415,29 @@ class VenueController extends Controller
           
 
             return response()->json($resData, 200);
+    }
+
+    public function venueportalrequest()
+    {
+        $venueuser = VenueUser::where('status','Inactive')->paginate(20);
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue User Request";
+        $pageroot = "Venue";        
+        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser'));
+
+    }
+    public function venueuserupdatestatus($id)
+    {
+        $venueuser = VenueUser::where('id', '=', $id)->select('status')->first();
+        $status = $venueuser->status;
+        $venueuserstatus = "Active";
+        if($status == "Active") {
+            $venueuserstatus = "Inactive";
+        }
+        VenueUser::where('id', '=', $id)->update(['status' => $venueuserstatus]);
+        return redirect('admin/venueportalrequest')->with('success', 'Venue User status successfully activatied');
+
     }
 
 }

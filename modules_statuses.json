@@ -1,5 +1,6 @@
 {
     "Venue": true,
     "Invitation": true,
-    "VenueAdmin": true
+    "VenueAdmin": true,
+    "StaffManagement": true
 }

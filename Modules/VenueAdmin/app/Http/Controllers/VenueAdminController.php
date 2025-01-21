@@ -23,7 +23,7 @@ class VenueAdminController extends Controller
 
     public function mobileotp(Request $request)
     {
-         $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(),[
             'mobileno' => 'required', 'string', 'regex:/^[0-9]{10}$/'
         ]);
 

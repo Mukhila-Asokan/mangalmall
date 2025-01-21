@@ -111,5 +111,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/venuesettings/datafield/{id}/edit', [VenueDataFieldController::class,'edit']);
     Route::put('/venuesettings/datafield/update', [VenueDataFieldController::class,'update'])->name('datafield.update');
 
+    Route::any('/venueportalrequest',[VenueController::class,'venueportalrequest'])->name('venue.venueportalrequest');
+    Route::any('/venueportalrequest/{id}/updatestatus',[VenueController::class,'venueuserupdatestatus']);
+
+
 });
 

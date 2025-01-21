@@ -1,23 +1,6 @@
 @extends('admin.layouts.app-admin')
 @section('content')
 
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
 
          <div class="row">
             <div class="col-12">
@@ -27,7 +10,7 @@
                        
                         <div class="text-end">
                          <a href = "{{ route('invitation/invitationmodel') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                          <span class="tf-icon mdi mdi-eye me-1"></span>Event List
+                                          <span class="tf-icon mdi mdi-eye me-1"></span>Invitation Model List
                            </a>
                        </div>
                           <form class="form-horizontal" role="form" method = "post" action="{{ route('invitationmodel.model_add') }}">

@@ -1,0 +1,11 @@
+{
+    "name": "StaffManagement",
+    "alias": "staffmanagement",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\StaffManagement\\Providers\\StaffManagementServiceProvider"
+    ],
+    "files": []
+}
