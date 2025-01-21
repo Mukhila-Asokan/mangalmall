@@ -134,11 +134,34 @@
                     </li>
                     
                     <li class="menu-item">
-                        <a href="#" class="menu-link waves-effect"> 
+                        <a href="#menuvendor" data-bs-toggle="collapse" class="menu-link waves-effect"> 
                             <span class="menu-icon"><i data-lucide="fan"></i></span>
                             <span class="menu-text">Vendor Management</span>
                              <span class="menu-arrow"></span>
                         </a>
+
+
+                        <div class="collapse" id="menuvendor">
+                        <ul class="sub-menu">
+
+                        <li class="menu-item">
+                            <a href="<?php echo e(route('venue.venueportalrequest')); ?>" class="menu-link">
+                                <span class="menu-text">Vendor List</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="<?php echo e(route('venue.venueportalrequest')); ?>" class="menu-link">
+                                <span class="menu-text">Vendor Portal Request</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="<?php echo e(route('venue.venueportalrequest')); ?>" class="menu-link">
+                                <span class="menu-text">Vendor Category</span>
+                            </a>
+                        </li>
+</ul>
+</div>
+
                     </li>
                     <li class="menu-item">
                         <a href="#menustaffpages" data-bs-toggle="collapse" class="menu-link waves-effect">
