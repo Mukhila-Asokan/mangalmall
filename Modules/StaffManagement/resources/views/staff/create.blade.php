@@ -472,7 +472,7 @@
 	<br>
 	<div class="justify-content-end row mb-4">
 			<div class="col-sm-6">
-				<button type="button" class="btn btn-primary waves-effect waves-light"> <span class="tf-icon mdi mdi-plus me-1"></span> Upload Image</button>	
+				<button type="button" class="btn btn-primary waves-effect waves-light" id="uploadimage">Upload Image</button>	
 			
 			</div>
 			
@@ -524,7 +524,7 @@
 					
 				</tr>
 				</thead>
-				<tbody>
+				<tbody id="uploadfilestable">
 				</tbody>
 			</table>
 		</div>
@@ -592,7 +592,7 @@
 	<div class="row mt-3">
 		<div class="justify-content-end row">
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-primary waves-effect waves-light">Save</button>	
+				<button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>	
 			
 			</div>
 			
@@ -688,9 +688,11 @@ $(".staffdetails").click(function(){
 	   dataType: 'json',
 	   data:{ "_token": "{{ csrf_token() }}", "first_name" :first_name, "last_name" :last_name, "email" :email, "phone" :phone, "contact_address" :contact_address, "location" :location, "date_of_birth" :date_of_birth,"hire_date" :hire_date,"roleid" :roleid,"departmentid" :departmentid,"supervisor_id" :supervisor_id},
 	   success:function(response){  
-		var success = response.responseJSON.success;
-			$('#staffid').val(success['id']);
+		
+			
 			console.log(response);
+			
+			$('#staffid').val(response['id']);
 			 $('.nav-item .active').parent().next('li').find('a').trigger('click');
 		
 		},
@@ -734,7 +736,7 @@ $(".addqualification").click(function(){
 	   data:{ "_token": "{{ csrf_token() }}", "degreename" :degreename, "qualification_type" :qualification_type, "institution" :institution, "completion_date" :completion_date,"staffid":staffid},
 	   success:function(response){
 			$("#qualificationtable").empty();  
-			var returnData = response;   
+			var returnData = response['details'];   
             if(returnData.length>0)
             {
                 let casestr = '';
@@ -789,7 +791,7 @@ $("#addworkingdetails").click(function(){
 	   data:{ "_token": "{{ csrf_token() }}", "employeername" :employeername, "desgination" :desgination, "start_date" :start_date, "end_date" :end_date,"leavereason" :leavereason,"staffid":staffid},
 	   success:function(response){
 			$("#workdetailstable").empty();  
-			var returnData = response;   
+			var returnData = response['details'];   
             if(returnData.length>0)
             {
                 let casestr = '';
@@ -843,7 +845,7 @@ $("#addskillset").click(function(){
 	   data:{ "_token": "{{ csrf_token() }}", "skill_name" :skill_name, "proficiency_level" :proficiency_level,"staffid":staffid},
 	   success:function(response){
 			$("#skillsettable").empty();  
-			var returnData = response;   
+			var returnData = response['details'];   
             if(returnData.length>0)
             {
                 let casestr = '';
@@ -880,6 +882,70 @@ $("#addskillset").click(function(){
 		}	
 	   });
 
+});
+
+
+$("#uploadimage").click(function(){
+	
+	
+	var staffid = $('#staffid').val(); 
+	var staff_photo = $('#formFile').prop('files'); 
+	
+	
+	
+	$.ajax({
+	   type:'POST',
+	   url:"{{ route('staff.ajaxphotoadd') }}",
+	   dataType: 'json',
+	   data:{ "_token": "{{ csrf_token() }}", "staff_photo" :staff_photo,"staffid":staffid},
+	   success:function(response){
+			alert("Image added successfully");
+	   },
+         error: function(response) {
+		 }
+	});
+	
+
+	
+
+});
+
+
+$("#uploadfiles").click(function(){
+	
+	var staffid = $('#staffid').val(); 
+	var document_name = $('#document_name').val(); 
+	var file_path = $('#file_path').prop('files'); 
+	
+	$.ajax({
+	   type:'POST',
+	   url:"{{ route('staff.ajaxdocuments') }}",
+	   dataType: 'json',
+	   data:{ "_token": "{{ csrf_token() }}", "file_path" :file_path,"staffid":staffid, "document_name":document_name },
+	   success:function(response){
+			$("#uploadfilestable").empty();  
+			var returnData = response['details'];   
+            if(returnData.length>0)
+            {
+                let casestr = '';
+                for(i=0;i<returnData.length;i++)
+                {
+                    casestr  += '<tr><td>' + i +'</td><td>' + returnData[i]['document_name'] + '</td><td>' + returnData[i]['file_path'] +'</td></tr>';
+                }
+             console.log(casestr);       
+           
+             $("#uploadfilestable").append(casestr);
+            }
+            else
+            {
+                alert("No Data")
+            }
+	   },
+         error: function(response) {
+		 }
+	});
+	
+	
 });
 
 
