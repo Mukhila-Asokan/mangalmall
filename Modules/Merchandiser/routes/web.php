@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Merchandiser\Http\Controllers\MerchandiserController;
+use Modules\Merchandiser\Http\Controllers\MerchandiserCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,19 +15,18 @@ use Modules\Merchandiser\Http\Controllers\MerchandiserController;
 |
 */
 
-Route::group([], function () {
+/* Route::group([], function () {
     Route::resource('merchandiser', MerchandiserController::class)->names('merchandiser');
-    
-});
+}); */
 
-Route::prefix('admin/merchandiser')->middleware('auth:admin')->group(function () {
-   
-    Route::any('/merchandisermodel', [MerchandiserController::class, 'index'])->name('merchandiser.merchandisermodel');
-    Route::post('/save', MerchandiserController::class,'store')->names('merchandiser.save');
-    Route::any('/merchandisermodel/{id}/edit', [MerchandiserController::class,'edit']);
-    Route::any('/merchandisermodel/create', MerchandiserController::class,'create')->names('merchandisermodel/create');
-    Route::put('/update', [MerchandiserController::class,'update'])->name('merchandiser.update');
-    Route::any('/show', [MerchandiserController::class,'show'])->name('merchandisermodel/show');
-    Route::any('/merchandisermodel/{id}/destroy', [MerchandiserController::class,'destroy']);
-    Route::any('/merchandisermodel/{id}/updatestatus', [MerchandiserController::class,'updatestatus']);
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::any('/merchandisercategory', [MerchandiserCategoryController::class, 'index'])->name('merchandisercategory');
+    Route::post('/merchandisercategory/save', [MerchandiserCategoryController::class, 'store'])->name('merchandisercategory.save');
+    Route::any('/merchandisercategory/{id}/edit', [MerchandiserCategoryController::class, 'edit']);
+    Route::any('/merchandisercategory/create', [MerchandiserCategoryController::class, 'create'])->name('merchandisercategory.create');
+    Route::put('/merchandisercategory/update/{id}', [MerchandiserCategoryController::class, 'update'])->name('merchandisercategory.update');
+    Route::any('/merchandisercategory/show', [MerchandiserCategoryController::class, 'show'])->name('merchandisercategory.show');
+    Route::any('/merchandisercategory/{id}/destroy', [MerchandiserCategoryController::class, 'destroy']);
+    Route::any('/merchandisercategory/{id}/updatestatus', [MerchandiserCategoryController::class, 'updatestatus']); 
 });

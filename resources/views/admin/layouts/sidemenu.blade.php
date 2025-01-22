@@ -146,7 +146,7 @@
 
                     
                         <li class="menu-item">
-                            <a href="{{ route('merchandiser.merchandisermodel') }}" class="menu-link">
+                            <a href="{{ route('merchandisercategory') }}" class="menu-link">
                                 <span class="menu-text">Vendor Category</span>
                             </a>
                         </li>

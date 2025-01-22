@@ -10,7 +10,7 @@
 
                           
                         <div class="text-end">
-                              <a href = "{{ route('merchandisermodel/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end"><span class="tf-icon mdi mdi-plus me-1"></span> Add </a>
+                              <a href = "{{ route('merchandisercategory.create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end"><span class="tf-icon mdi mdi-plus me-1"></span> Add </a>
                         </div>
                    
 
@@ -37,7 +37,7 @@
                 @else 
                 <button type="button" class="btn-info btn statusid" data-bs-toggle="modal"  data-bs-target=".statusModal" data-id="{{ $typename->id }}" title="Status"><i class="fa fa-eye-slash action_icon"></i></button>
                 @endif
-                <a href="{{ url('/admin/merchandiser/merchandisermodel/'.$typename->id.'/edit') }}" class="btn-warning btn" title="Edit"><i class="fa fa-pencil action_icon"></i>
+                <a href="{{ url('/admin/merchandisercategory/'.$typename->id.'/edit') }}" class="btn-warning btn" title="Edit"><i class="fa fa-pencil action_icon"></i>
                 </a>
                  <button type="button" class="btn-danger btn deleteid" data-bs-toggle="modal"  data-bs-target="#delModal" data-id="{{ $typename->id }}" title="Delete"  >
                     <i class="fa fa-trash action_icon"></i>
@@ -57,5 +57,5 @@
             </div>
         </div>
 @endsection
-<input type="hidden" name="redirecturl" id="redirecturl" value="{{ url('/admin/merchandiser/merchandisermodel/') }}">  
+<input type="hidden" name="redirecturl" id="redirecturl" value="{{ url('/admin/merchandisercategory/') }}">  
 
