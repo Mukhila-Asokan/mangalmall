@@ -4,6 +4,8 @@ namespace Modules\Merchandiser\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Merchandiser\Models\MerchantCategory;
+use Session;
 
 class MerchantCategoryController extends Controller
 {
@@ -12,7 +14,12 @@ class MerchantCategoryController extends Controller
      */
     public function index()
     {
-        return view('merchandiser::index');
+        $pageroot = "Home";
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Merchandiser Model";
+        $merchandisermodel = MerchantCategory::where('delete_status','0')->paginate(10);
+        return view('merchandiser::merchandisermodel.index', compact('pagetitle','pageroot','merchandisermodel','username'));
     }
 
     /**
@@ -20,7 +27,11 @@ class MerchantCategoryController extends Controller
      */
     public function create()
     {
-        return view('merchandiser::create');
+        $pageroot = "Home";
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Merchandiser Model";
+        return view('merchandiser::merchandisermodel.create',compact('pagetitle','pageroot','username'));
     }
 
     /**
@@ -28,7 +39,21 @@ class MerchantCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_name' => 'required',
+            'category_icon' => 'required',
+            'category_image' => 'required',
+
+         ]);
+         $merchant = new MerchantCategory;
+         $merchant->category_name = $request->category_name;
+         $merchant->category_icon = $request->category_icon;
+         $merchant->category_image = $request->category_image;
+         $merchant->status = 'Active';
+         $merchant->delete_status = 0;
+         $merchant->save(); 
+
+         return redirect('admin/merchandiser/merchandisermodel')->with('success', 'Merchandiser successfully created');
     }
 
     /**
