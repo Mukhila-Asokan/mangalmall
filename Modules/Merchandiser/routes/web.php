@@ -14,6 +14,11 @@ use Modules\Merchandiser\Http\Controllers\MerchandiserController;
 |
 */
 
-Route::group([], function () {
+/*Route::group([], function () {
     Route::resource('merchandiser', MerchandiserController::class)->names('merchandiser');
+});*/
+
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::any('/merchandisercategory', [MerchandiserController::class,'index'])->name('admin/merchandisercategory');
 });

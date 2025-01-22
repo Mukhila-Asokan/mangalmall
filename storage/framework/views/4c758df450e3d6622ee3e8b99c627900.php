@@ -1,13 +1,12 @@
-@extends('admin.layouts.app-admin')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="row">
 	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
-				<h4 class="header-title mb-4">{{ $pagetitle }}</h4>
+				<h4 class="header-title mb-4"><?php echo e($pagetitle); ?></h4>
 			   
 				<div class="text-end">
-				 <a href = "{{ route('staff/profile') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+				 <a href = "<?php echo e(route('staff/profile')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
 								  <span class="tf-icon mdi mdi-eye me-1"></span>Staff Profile
 				   </a>
 				</div>
@@ -15,7 +14,7 @@
                 <div class="col-xl-10">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title mb-3">Staff Name - {{ $staff->first_name }} {{ $staff->last_name }}</h4>
+                                        <h4 class="header-title mb-3">Staff Name - <?php echo e($staff->first_name); ?> <?php echo e($staff->last_name); ?></h4>
 
                                         <div class="accordion accordion-flush" id="accordionFlushExample">
                                             <div class="accordion-item">
@@ -30,17 +29,17 @@
                                                     <div class="accordion-body">
 													<table class="table-bordered table">
                                                         <tbody>
-														<tr><th>Email</th><td>{{ $staff->email }}</td><td rowspan="10">Image</td>
+														<tr><th>Email</th><td><?php echo e($staff->email); ?></td><td rowspan="10">Image</td>
 														</tr>
-                                                        <tr><th>Mobile</th><td>{{ $staff->phone }}</td></tr>
-                                                        <tr><th>Contact Address</th><td>{{ $staff->contact_address }}</td></tr>
-                                                        <tr><th>Location</th><td>{{ $staff->location }}</td></tr>
-                                                        <tr><th>Date of Birth</th><td>{{ $staff->date_of_birth }}</td></tr>
-                                                        <tr><th>Hiring Date</th><td>{{ $staff->hire_date }}</td></tr>
-                                                        <tr><th>Employee Code</th><td>{{ $staff->employee_code }}</td></tr>
-                                                        <tr><th>Role</th><td>{{ $staff->roleid }}</td></tr>
-                                                        <tr><th>Department</th><td>{{ $staff->departmentid }}</td></tr>
-                                                        <tr><th>Reporting</th><td>{{ $staff->supervisor_id }}</td></tr>
+                                                        <tr><th>Mobile</th><td><?php echo e($staff->phone); ?></td></tr>
+                                                        <tr><th>Contact Address</th><td><?php echo e($staff->contact_address); ?></td></tr>
+                                                        <tr><th>Location</th><td><?php echo e($staff->location); ?></td></tr>
+                                                        <tr><th>Date of Birth</th><td><?php echo e($staff->date_of_birth); ?></td></tr>
+                                                        <tr><th>Hiring Date</th><td><?php echo e($staff->hire_date); ?></td></tr>
+                                                        <tr><th>Employee Code</th><td><?php echo e($staff->employee_code); ?></td></tr>
+                                                        <tr><th>Role</th><td><?php echo e($staff->roleid); ?></td></tr>
+                                                        <tr><th>Department</th><td><?php echo e($staff->departmentid); ?></td></tr>
+                                                        <tr><th>Reporting</th><td><?php echo e($staff->supervisor_id); ?></td></tr>
 														</tbody>
 													</table>
 
@@ -67,18 +66,18 @@
 															</tr>
 														</thead>
 														<tbody>
-														@php
+														<?php
 															$i=1;
-														@endphp
-															@foreach($staff_qualification as $qualification)
+														?>
+															<?php $__currentLoopData = $staff_qualification; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $qualification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<tr>
-																<td> {{  $i++ }}</td>
-																<td>{{ $qualification->degreename }}</td>
-																<td>{{ $qualification->qualification_type }}</td>
-																<td>{{ $qualification->institution }}</td>
-																<td>{{ $qualification->completion_date }}</td>
+																<td> <?php echo e($i++); ?></td>
+																<td><?php echo e($qualification->degreename); ?></td>
+																<td><?php echo e($qualification->qualification_type); ?></td>
+																<td><?php echo e($qualification->institution); ?></td>
+																<td><?php echo e($qualification->completion_date); ?></td>
 															</tr>
-															@endforeach
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 														</tbody>
 													</table>
 													
@@ -104,16 +103,16 @@
 															</tr>
 														</thead>
 														<tbody>
-														@php
+														<?php
 															$s=1;
-														@endphp
-															@foreach($staff_skill as $skill)
+														?>
+															<?php $__currentLoopData = $staff_skill; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $skill): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<tr>
-																<td> {{  $s++ }}</td>
-																<td>{{ $skill->skill_name }}</td>
-																<td>{{ $skill->proficiency_level }}</td>																
+																<td> <?php echo e($s++); ?></td>
+																<td><?php echo e($skill->skill_name); ?></td>
+																<td><?php echo e($skill->proficiency_level); ?></td>																
 															</tr>
-															@endforeach
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 														</tbody>
 													</table>
 													</div>
@@ -141,19 +140,19 @@
 															</tr>
 														</thead>
 														<tbody>
-														@php
+														<?php
 															$s=1;
-														@endphp
-															@foreach($staff_work as $work)
+														?>
+															<?php $__currentLoopData = $staff_work; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $work): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<tr>
-																<td> {{  $s++ }}</td>
-																<td>{{ $work->employeername }}</td>
-																<td>{{ $work->desgination }}</td>																
-																<td>{{ $work->start_date }}</td>																
-																<td>{{ $work->end_date }}</td>																
-																<td>{{ $work->leavereason }}</td>																
+																<td> <?php echo e($s++); ?></td>
+																<td><?php echo e($work->employeername); ?></td>
+																<td><?php echo e($work->desgination); ?></td>																
+																<td><?php echo e($work->start_date); ?></td>																
+																<td><?php echo e($work->end_date); ?></td>																
+																<td><?php echo e($work->leavereason); ?></td>																
 															</tr>
-															@endforeach
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 														</tbody>
 													</table></div>
                                                 </div>
@@ -177,16 +176,16 @@
 															</tr>
 														</thead>
 														<tbody>
-														@php
+														<?php
 															$s=1;
-														@endphp
-															@foreach($staff_doc as $doc)
+														?>
+															<?php $__currentLoopData = $staff_doc; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<tr>
-																<td> {{  $s++ }}</td>
-																<td>{{ $doc->document_name }}</td>
-																<td>{{ $doc->file_path }}</td>																
+																<td> <?php echo e($s++); ?></td>
+																<td><?php echo e($doc->document_name); ?></td>
+																<td><?php echo e($doc->file_path); ?></td>																
 															</tr>
-															@endforeach
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 														</tbody>
 													</table>
 													
@@ -212,18 +211,18 @@
 															</tr>
 														</thead>
 														<tbody>
-														@php
+														<?php
 															$s=1;
-														@endphp
-															@foreach($staff_em as $em )
+														?>
+															<?php $__currentLoopData = $staff_em; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $em): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<tr>
-																<td> {{  $s++ }}</td>
-																<td>{{ $em->personname }}</td>
-																<td>{{ $em->mobileno }}</td>																
-																<td>{{ $em->address }}</td>																
-																<td>{{ $em->relationship }}</td>																
+																<td> <?php echo e($s++); ?></td>
+																<td><?php echo e($em->personname); ?></td>
+																<td><?php echo e($em->mobileno); ?></td>																
+																<td><?php echo e($em->address); ?></td>																
+																<td><?php echo e($em->relationship); ?></td>																
 															</tr>
-															@endforeach
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 														</tbody>
 													</table></div>
                                                 </div>
@@ -243,4 +242,5 @@
 	</div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.app-admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/StaffManagement\resources/views/staff/detailview.blade.php ENDPATH**/ ?>

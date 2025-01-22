@@ -14,6 +14,7 @@ class MerchantCategory extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [];
+    protected $table = "merchantcategory";
 
     // protected static function newFactory(): MerchantCategoryFactory
     // {

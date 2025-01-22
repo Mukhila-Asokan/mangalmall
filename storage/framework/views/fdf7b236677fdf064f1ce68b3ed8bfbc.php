@@ -361,6 +361,7 @@
 					<th>Designation</th>
 					<th>Start Date</th>
 					<th>End Date</th>
+					<th>Reason for Leave</th>
 					
 				</tr>
 				</thead>
