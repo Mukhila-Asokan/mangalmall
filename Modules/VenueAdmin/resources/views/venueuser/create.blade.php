@@ -1,4 +1,4 @@
-@extends('admin.layouts.app-admin')
+@extends('venueadmin::layouts.admin-layout')
 @section('content')
 <style type="text/css">
     
@@ -14,197 +14,176 @@
     }
 </style>
  <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
-         <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title mb-4">Add Venue</h4>
-                       
-                        <div class="text-end">
-                         <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                          <span class="tf-icon mdi mdi-eye me-1"></span>Venue List
-                           </a>
-                        </div>
-                  
-                          <form class="form-horizontal" role="form" method = "post" action="{{ route('venue.venue_add') }}" enctype="multipart/form-data">
+ <div class="col-12">
+ 
+  <div class="card">
+	<div class="card-header text-bg-primary">
+	  <h4 class="mb-0 text-white">Fill up the form</h4>
+	</div>
+ 
+ 
+<form class="form-horizontal" role="form" method = "post" action="{{ route('venueadmin/venueadd') }}" enctype="multipart/form-data">
                                         @csrf
-                                        <div class="col-12">
+    <div class="col-12 mt-5">
+	
+	
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Venue Details
+                </button>
+            </h2>
+			
+			
+            <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
 
-                                           <div class="accordion accordion-flush" id="accordionFlushExample">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="flush-headingOne">
-                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                        Venue Details
-                                                    </button>
-                                                </h2>
-                                                <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne"
-                                                    data-bs-parent="#accordionFlushExample">
-                                                    <div class="accordion-body">
+                <div class="row">
+                        <div class="col-6">                    
+                                <div class="mb-4 row">
+                                <label class="col-md-4 col-form-label" for="venuetypename">Venue Name</label>
+                                <div class="col-md-8">
+                                        <input type="text" id="venuename" name="venuename" class="form-control" placeholder="Enter the venue name" value = "{{ old('venuename') }}" required>
+                                    @if($errors->has('venuename'))
+                                    <div class="text-danger">{{ $errors->first('venuename') }}</div>
+                                    
+                                @endif
+                                </div>
 
-                          <div class="row">
-                                  <div class="col-6">                    
-                                          <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuetypename">Venue Name</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="venuename" name="venuename" class="form-control" placeholder="Enter the venue name" value = "{{ old('venuename') }}" required>
-                                                @if($errors->has('venuename'))
-                                                <div class="text-danger">{{ $errors->first('venuename') }}</div>
-                                                
-                                            @endif
-                                            </div>
-
-                                        </div>
-                                         <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venueaddress">Venue Location</label>
-                                            <div class="col-md-8">
-                                                  
-
-                                                 <textarea class="form-control" placeholder="Enter the venue location" id="venueaddress" name = "venueaddress" style="height: 100px">{{ old('venueaddress') }}</textarea>
-                                                  @if($errors->has('venueaddress'))
-                                                <div class="text-danger">{{ $errors->first('venuelocation') }}</div>
-                                                 @endif
-
-
-                                            </div>
-
-                                        </div>
-                                          <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuearea">Area</label>
-                                            <div class="col-md-8">
-                                                  <select id="venuearea" name="venuearea"  placeholder="Enter the Area name" required></select>
-                                                @if($errors->has('venuearea'))
-                                                <div class="text-danger">{{ $errors->first('venuearea') }}</div>
-                                                
-                                            @endif
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                   <div class="col-6">
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuecity">City</label>
-                                            <div class="col-md-8">
-                                                <input type = "hidden" name = "locationid" id = "locationid" value = "" />
-                                                  <input type="text" id="venuecity" name="venuecity" class="form-control" placeholder="Enter the city name" value = "{{ old('venuecity') }}" required>
-                                                @if($errors->has('venuecity'))
-                                                <div class="text-danger">{{ $errors->first('venuecity') }}</div>
-                                                
-                                            @endif
-                                            </div>
-                                        </div>
-
-
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuestate">State</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="venuestate" name="venuestate" class="form-control" placeholder="Enter the state name" value = "{{ old('venuestate') }}" required>
-                                                @if($errors->has('venuestate'))
-                                                <div class="text-danger">{{ $errors->first('venuestate') }}</div>              
-                                            @endif
-                                            </div>
-                                        </div> 
-
-                                         <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuepincode">Pincode</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="venuepincode" name="venuepincode" class="form-control" placeholder="Enter the pincode name" value = "{{ old('venuepincode') }}" required>
-                                                @if($errors->has('venuepincode'))
-                                                <div class="text-danger">{{ $errors->first('venuepincode') }}</div>              
-                                            @endif
-                                            </div>
-                                        </div> 
-
-                                    </div> 
-
-                                      <div class="mb-4 row">
-                                            <label class="col-md-2 col-form-label" for="description">Description</label>
-                                            <div class="col-md-10">
-                                                  <textarea class="form-control" placeholder="Enter the venue location" id="description" name = "description" style="height: 100px">{{ old('description') }}</textarea>
-                                                  @if($errors->has('description'))
-                                                <div class="text-danger">{{ $errors->first('description') }}</div>
-                                                 @endif
-                                            </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="col-6">
-                                             <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactperson">Contact Person</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value = "{{ old('contactperson') }}" required>
-                                                @if($errors->has('contactperson'))
-                                                <div class="text-danger">{{ $errors->first('contactperson') }}</div>              
-                                            @endif
-                                            </div>
-                                        </div> 
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactmobile">Mobile No</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value = "{{ old('contactmobile') }}" required>
-                                                @if($errors->has('contactmobile'))
-                                                <div class="text-danger">{{ $errors->first('contactmobile') }}</div>              
-                                            @endif
-                                            </div>
-                                        </div> 
+                            </div>
+                                <div class="mb-4 row">
+                                <label class="col-md-4 col-form-label" for="venueaddress">Venue Location</label>
+                                <div class="col-md-8">
                                         
 
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contacttelephone">Telephone No</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value = "{{ old('contacttelephone') }}" required>
-                                                @if($errors->has('contacttelephone'))
-                                                <div class="text-danger">{{ $errors->first('contacttelephone') }}</div>              
-                                            @endif
-                                            </div>
-                                        </div> 
+                                        <textarea class="form-control" placeholder="Enter the venue location" id="venueaddress" name = "venueaddress" style="height: 100px">{{ old('venueaddress') }}</textarea>
+                                        @if($errors->has('venueaddress'))
+                                    <div class="text-danger">{{ $errors->first('venuelocation') }}</div>
+                                        @endif
 
 
+                                </div>
 
-                                        </div>
-                                        <div class="col-6">
+                    </div>
+                        <div class="mb-4 row">
+                        <label class="col-md-4 col-form-label" for="venuearea">Area</label>
+                        <div class="col-md-8">
+                                <select id="venuearea" name="venuearea"  placeholder="Enter the Area name" required></select>
+                            @if($errors->has('venuearea'))
+                            <div class="text-danger">{{ $errors->first('venuearea') }}</div>
+                            
+                        @endif
+                        </div>
+                    </div>
+                </div>
 
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactemail">Email Id</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value = "{{ old('contactemail') }}" required>
-                                                @if($errors->has('contactemail'))
-                                                <div class="text-danger">{{ $errors->first('contactemail') }}</div>              
-                                            @endif
-                                            </div>
-                                        </div> 
+                <div class="col-6">
+                    <div class="mb-4 row">
+                        <label class="col-md-4 col-form-label" for="venuecity">City</label>
+                        <div class="col-md-8">
+                            <input type = "hidden" name = "locationid" id = "locationid" value = "" />
+                                <input type="text" id="venuecity" name="venuecity" class="form-control" placeholder="Enter the city name" value = "{{ old('venuecity') }}" required>
+                            @if($errors->has('venuecity'))
+                            <div class="text-danger">{{ $errors->first('venuecity') }}</div>
+                            
+                        @endif
+                        </div>
+                    </div>
 
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactemail">Website</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the Contact Email" value = "{{ old('websitename') }}" required>
-                                                @if($errors->has('websitename'))
-                                                <div class="text-danger">{{ $errors->first('websitename') }}</div>              
-                                            @endif
-                                            </div>
-                                        </div> 
 
-                                        </div>
-                                        </div>
+                    <div class="mb-4 row">
+                        <label class="col-md-4 col-form-label" for="venuestate">State</label>
+                        <div class="col-md-8">
+                                <input type="text" id="venuestate" name="venuestate" class="form-control" placeholder="Enter the state name" value = "{{ old('venuestate') }}" required>
+                            @if($errors->has('venuestate'))
+                            <div class="text-danger">{{ $errors->first('venuestate') }}</div>              
+                        @endif
+                        </div>
+                    </div> 
+
+                    <div class="mb-4 row">
+                    <label class="col-md-4 col-form-label" for="venuepincode">Pincode</label>
+                    <div class="col-md-8">
+                            <input type="text" id="venuepincode" name="venuepincode" class="form-control" placeholder="Enter the pincode name" value = "{{ old('venuepincode') }}" required>
+                        @if($errors->has('venuepincode'))
+                        <div class="text-danger">{{ $errors->first('venuepincode') }}</div>              
+                    @endif
+                    </div>
+                </div> 
+
+            </div> 
+
+            <div class="mb-4 row">
+                <label class="col-md-2 col-form-label" for="description">Description</label>
+                <div class="col-md-10">
+                        <textarea class="form-control" placeholder="Enter the venue location" id="description" name = "description" style="height: 100px">{{ old('description') }}</textarea>
+                        @if($errors->has('description'))
+                    <div class="text-danger">{{ $errors->first('description') }}</div>
+                        @endif
+                </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-6">
+                    <div class="mb-4 row">
+                <label class="col-md-4 col-form-label" for="contactperson">Contact Person</label>
+                <div class="col-md-8">
+                        <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value = "{{ old('contactperson') }}" required>
+                    @if($errors->has('contactperson'))
+                    <div class="text-danger">{{ $errors->first('contactperson') }}</div>              
+                @endif
+                </div>
+            </div> 
+            <div class="mb-4 row">
+                <label class="col-md-4 col-form-label" for="contactmobile">Mobile No</label>
+                <div class="col-md-8">
+                        <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value = "{{ old('contactmobile') }}" required>
+                    @if($errors->has('contactmobile'))
+                    <div class="text-danger">{{ $errors->first('contactmobile') }}</div>              
+                @endif
+                </div>
+            </div> 
+            
+
+            <div class="mb-4 row">
+                <label class="col-md-4 col-form-label" for="contacttelephone">Telephone No</label>
+                <div class="col-md-8">
+                        <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value = "{{ old('contacttelephone') }}" required>
+                    @if($errors->has('contacttelephone'))
+                    <div class="text-danger">{{ $errors->first('contacttelephone') }}</div>              
+                @endif
+                </div>
+            </div> 
+
+            </div>
+            <div class="col-6">
+
+            <div class="mb-4 row">
+                <label class="col-md-4 col-form-label" for="contactemail">Email Id</label>
+                <div class="col-md-8">
+                        <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value = "{{ old('contactemail') }}" required>
+                    @if($errors->has('contactemail'))
+                    <div class="text-danger">{{ $errors->first('contactemail') }}</div>              
+                @endif
+                </div>
+            </div> 
+
+            <div class="mb-4 row">
+                <label class="col-md-4 col-form-label" for="contactemail">Website</label>
+                <div class="col-md-8">
+                        <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the Contact Email" value = "{{ old('websitename') }}" required>
+                    @if($errors->has('websitename'))
+                    <div class="text-danger">{{ $errors->first('websitename') }}</div>              
+                @endif
+                </div>
+            </div> 
+
+            </div>
+            </div>
 
 <div class ="row">
     <div class="col-6">
@@ -438,7 +417,19 @@
                                         </div-->
 
 
+								<div class="mb-4 row">
+                                <label class="col-md-2 col-form-label" for="googlemap">Google Map </label>
+                                <div class="col-md-8">
+                                        
+                                        <textarea class="form-control" placeholder="Enter the venue location" id="googlemap" name = "googlemap" style="height: 100px">{{ old('googlemap') }}</textarea>
+                                        @if($errors->has('googlemap'))
+                                    <div class="text-danger">{{ $errors->first('googlemap') }}</div>
+                                        @endif
 
+
+                                </div>
+
+                    </div>
 
 
 
@@ -466,24 +457,20 @@
 
 
 
-                                        <br><br>
-                                         <div class="justify-content-end row">
-                                                <div class="col-sm-9">
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Add Venue </button>
-                                                </div>
-                                            </div>
-                                        </div>
-										  </div>
-        </div>   </div>
-                                    </form>
-                 
-                </div>
+	<br><br>
+	 <div class="justify-content-end row">
+			<div class="col-sm-9">
+				<button type="submit" class="btn btn-primary waves-effect waves-light">Add Venue </button>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+</div>
+</form>
 </div>
 </div>
-</div>
-          
-
-<?php 
+                                    <?php 
     $areaContent = ''; 
 
     foreach ($arealocation as $key => $area) {
@@ -493,12 +480,13 @@
     // Remove the trailing comma
     $areaContent = rtrim($areaContent, ','); 
 
-   
+  
 ?>
 
-
 @endsection
+
 @push('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 
   $images = $('#categoryiconimage')
@@ -611,12 +599,6 @@ if (input.files && input.files[0]) {
         });
            
      });
-
-
-
-
-
-
 
 </script>
 @endpush

@@ -24,14 +24,14 @@ Route::group([], function () {
 });
 
 */
-
+Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
+    Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
     Route::any('/venue', [VenueController::class,'index'])->name('venue');
     Route::any('/venue/create', [VenueController::class,'create'])->name('venue/create');
-    Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
-    Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
+    
     Route::post('/venue/store', [VenueController::class,'store'])->name('venue.venue_add');
     Route::any('/venue/show', [VenueController::class,'index'])->name('venue/index');
     Route::any('/venue/detailview/{id}', [VenueController::class,'detailview'])->name('venue/detailview');

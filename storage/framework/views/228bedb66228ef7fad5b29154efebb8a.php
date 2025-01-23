@@ -37,7 +37,7 @@
               </a>
                <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">
+                  <a href="<?php echo e(route('venueadmin/venuelist')); ?>" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-circle"></i>
                     </div>
@@ -45,11 +45,38 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">
+                  <a href="<?php echo e(route('venueadmin/create')); ?>" class="sidebar-link">
                     <div class="round-16 d-flex align-items-center justify-content-center">
                       <i class="ti ti-plus"></i>
                     </div>
                     <span class="hide-menu">Add</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+           <li class="sidebar-item">
+              <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                <span class="d-flex">
+                  <i class="ti ti-layout-cog"></i>
+                </span>
+                <span class="hide-menu">Settings</span>
+              </a>
+               <ul aria-expanded="false" class="collapse first-level">
+                <li class="sidebar-item">
+                  <a href="#" class="sidebar-link">
+                    <div class="round-16 d-flex align-items-center justify-content-center">
+                      <i class="ti ti-circle"></i>
+                    </div>
+                    <span class="hide-menu">Profile</span>
+                  </a>
+                </li>
+                <li class="sidebar-item">
+                  <a href="<?php echo e(route('venueadmin/venueadd')); ?>" class="sidebar-link">
+                    <div class="round-16 d-flex align-items-center justify-content-center">
+                      <i class="ti ti-plus"></i>
+                    </div>
+                    <span class="hide-menu">Change Password</span>
                   </a>
                 </li>
               </ul>
