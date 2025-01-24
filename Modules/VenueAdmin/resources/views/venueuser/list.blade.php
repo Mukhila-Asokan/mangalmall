@@ -25,9 +25,9 @@
                             <td>{{  $i++ }}</td>
 							<td> {{ $ven->venuename }} </td>
 							<td> {{ $ven->websitename }} </td>
-							<td> <a href="{{ url('/venueadmin/venuepricing/'.$ven->id.'/add') }}" class="btn-primary btn" title="Pricing"><i class="ti ti-bookmark action_icon"></i>
+							<td> <a href="{{ url('/venueadmin/venuepricing/'.$ven->id.'/add') }}" class="btn-primary btn" title="Pricing"><i class="ti ti-book action_icon"></i>
                Pricing </a> </td>
-							<td><a href="{{ url('/venueadmin/venuebooing/'.$ven->id.'/add') }}" class="btn-success btn" title="Booking"><i class="ti ti-bookmark action_icon"></i>
+							<td><a href="{{ url('/venueadmin/venuebooking/'.$ven->id.'/add') }}" class="btn-success btn" title="Booking"><i class="ti ti-bookmark action_icon"></i>
                Booking </a>  </td>
 							<td> <a href="{{ url('/venueadmin/themebuilder/'.$ven->id.'/edit') }}" class="btn-info btn" title="Theme"><i class="ti ti-wand action_icon"></i>
                 Theme </a></td>

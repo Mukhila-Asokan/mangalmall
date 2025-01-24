@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Support\Facades\Route;
 use Modules\VenueAdmin\Http\Controllers\VenueAdminController;
 use Modules\VenueAdmin\Http\Controllers\VenueUserProfileController;
+use Modules\VenueAdmin\Http\Controllers\VenueBookingController;
 use Illuminate\Foundation\Configuration\Middleware;
 use Modules\VenueAdmin\Http\Middleware\VenueAdminMiddleware;
 use App\Http\Middleware\FlashMessageMiddleware;
@@ -49,6 +50,10 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuelist',[VenueAdminController::class, 'show'])->name('venueadmin/venuelist');
 
 
+    Route::any('/venuebooking/{id}/add',[VenueBookingController::class, 'create']);
+    Route::any('/venuebooking/addnewevents',[VenueBookingController::class, 'addnewevents']);
+    Route::any('/venuebooking/events',[VenueBookingController::class, 'getevents']);
+    Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'edit']);
     
 
      Route::any('/logout',[VenueAdminController::class, 'destroy'])->name('venueadmin/logout');

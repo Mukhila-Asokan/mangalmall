@@ -1,4 +1,4 @@
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="{{ asset('venueassets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('venueassets/libs/simplebar/dist/simplebar.min.js') }}"></script>
 <script src="{{ asset('venueassets/js/theme/app.horizontal.init.js') }}"></script>

@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\VenueAdmin\Models\VenueUser;
 use Modules\VenueAdmin\Models\UserVenue;
-use Illuminate\Support\Facades\Validator;
+use Modules\VenueAdmin\Models\VenueBookingContact;
 
 use Modules\Venue\Models\VenueType;
 use Modules\Venue\Models\VenueAmenities;
@@ -19,6 +19,8 @@ use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\VenueCampaigns;
 use Modules\Venue\Models\Imagelibrary;
+
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;

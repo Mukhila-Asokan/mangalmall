@@ -25,9 +25,9 @@
                             <td><?php echo e($i++); ?></td>
 							<td> <?php echo e($ven->venuename); ?> </td>
 							<td> <?php echo e($ven->websitename); ?> </td>
-							<td> <a href="<?php echo e(url('/venueadmin/venuepricing/'.$ven->id.'/add')); ?>" class="btn-primary btn" title="Pricing"><i class="ti ti-bookmark action_icon"></i>
+							<td> <a href="<?php echo e(url('/venueadmin/venuepricing/'.$ven->id.'/add')); ?>" class="btn-primary btn" title="Pricing"><i class="ti ti-book action_icon"></i>
                Pricing </a> </td>
-							<td><a href="<?php echo e(url('/venueadmin/venuebooing/'.$ven->id.'/add')); ?>" class="btn-success btn" title="Booking"><i class="ti ti-bookmark action_icon"></i>
+							<td><a href="<?php echo e(url('/venueadmin/venuebooking/'.$ven->id.'/add')); ?>" class="btn-success btn" title="Booking"><i class="ti ti-bookmark action_icon"></i>
                Booking </a>  </td>
 							<td> <a href="<?php echo e(url('/venueadmin/themebuilder/'.$ven->id.'/edit')); ?>" class="btn-info btn" title="Theme"><i class="ti ti-wand action_icon"></i>
                 Theme </a></td>
