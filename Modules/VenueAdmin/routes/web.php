@@ -52,6 +52,7 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 
     Route::any('/venuebooking/{id}/add',[VenueBookingController::class, 'create']);
     Route::any('/venuebooking/addnewevents',[VenueBookingController::class, 'addnewevents']);
+    Route::any('/venuebooking/updatenewevents',[VenueBookingController::class, 'updatenewevents']);
     Route::any('/venuebooking/events',[VenueBookingController::class, 'getevents']);
     Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'edit']);
     

@@ -19,8 +19,13 @@
  <?php echo $__env->make('layouts.slider', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php echo $__env->make('layouts.search', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
+<?php
+$url = "frontassets/img/hero-bg-4.jpg";
+
+?>
+
                   <!--call to action new style start-->
-        <section class="call-to-action ptb-100" style="background: url('<?php echo e(asset("frontassets/img/hero-bg-4.jpg")); ?>')no-repeat center center / cover fixed">
+        <section class="call-to-action ptb-100" style="background: url('<?php echo e(asset($url)); ?>')no-repeat center center / cover fixed">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-9 col-lg-8">

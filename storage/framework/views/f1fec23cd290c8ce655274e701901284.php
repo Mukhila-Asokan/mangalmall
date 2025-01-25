@@ -9,7 +9,7 @@
         </div>
         <ul>
             <li><a href="#">Profile</a></li>
-            <li><a href="{{ route('home/venue/search') }}">Venue</a></li>
+            <li><a href="<?php echo e(route('home/venue/search')); ?>">Venue</a></li>
             <li><a href="#">Invitation Design </a></li>
             <li><a href="#">Video Making </a></li>
             <li><a href="#">Search Vendor</a></li>
@@ -41,4 +41,4 @@
         </div>
         <div class="tag-cloud"><a href="#">Occasion</a><a href="#">vendor</a><a href="#">Venue</a><a href="#">Calendor</a></div>
     </aside>
-</div>
+</div><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/profile-layouts/sidebar.blade.php ENDPATH**/ ?>

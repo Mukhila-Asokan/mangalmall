@@ -51323,7 +51323,7 @@ a:hover {
 /*form field css*/
 /* line 351, src/assets/scss/custom/_style.scss */
 .form-control {
-  border-color: #ebebeb;
+  border-color: #525252;
   padding: .75rem 0.85rem;
   height: calc(2em + .75rem + 2px);
 }
@@ -51340,7 +51340,7 @@ input[type]::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder,
 select::-webkit-input-placeholder,
 select.form-control.has-value {
-  color: #b1b1b1 !important;
+  color: #524242 !important;
   font-size: 13px;
 }
 
@@ -51350,7 +51350,7 @@ textarea:-moz-placeholder,
 select:-moz-placeholder,
 select.form-control.has-value {
   /* Firefox 18- */
-  color: #b1b1b1;
+  color: #524242;
   font-size: 13px;
 }
 
@@ -51360,7 +51360,7 @@ textarea::-moz-placeholder,
 select::-moz-placeholder,
 select.form-control.has-value {
   /* Firefox 19+ */
-  color: #b1b1b1;
+  color: #524242;
   font-size: 13px;
 }
 
@@ -51369,7 +51369,7 @@ input[type]:-ms-input-placeholder,
 textarea:-ms-input-placeholder,
 select:-ms-input-placeholder,
 select.form-control.has-value {
-  color: #b1b1b1;
+  color: #524242;
   font-size: 13px;
 }
 
@@ -52396,7 +52396,7 @@ svg.shape-bg, svg.promo-bg {
 /* line 1275, src/assets/scss/custom/_style.scss */
 .hero-equal-height {
   position: relative;
-  min-height: 660px;
+  height: 400px;
   -js-display: flex;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -52408,7 +52408,7 @@ svg.shape-bg, svg.promo-bg {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  height: 100%;
+ 
   width: 100%;
 }
 
@@ -55140,7 +55140,7 @@ a.view-details-link:hover span {
 
 /* line 3535, src/assets/scss/custom/_style.scss */
 .input-icon span {
-  color: #b1b1b1;
+  color: #524242;
   padding: 16px 15px;
   position: absolute;
   font-size: 16px;
@@ -55508,7 +55508,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 /* line 3805, src/assets/scss/custom/_style.scss */
 .comment-meta-date a, .comment-meta-date-shop a {
-  color: #788487;
+  color: #180705;
   opacity: .6;
 }
 
@@ -55635,7 +55635,7 @@ button, [type="button"], [type="reset"], [type="submit"] {
   font-weight: 600;
   font-size: 12px;
   margin: 0;
-  color: #788487;
+  color: #180705;
 }
 
 /* line 3906, src/assets/scss/custom/_style.scss */
@@ -55657,7 +55657,7 @@ button, [type="button"], [type="reset"], [type="submit"] {
 
 /* line 3917, src/assets/scss/custom/_style.scss */
 .widget a {
-  color: #788487;
+  color: #180705;
   display: block;
   font-size: 14px;
 }

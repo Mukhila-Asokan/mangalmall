@@ -1,9 +1,14 @@
 <!--hero section start-->
+@php
+		$url1 = "frontassets/img/hero-17.jpg";
+		
+	@endphp
+
         <section class="hero-slider-section">
             <div class="owl-carousel owl-theme hero-slider-one custom-dot dot-right-center">
                 <div class="item">
                     <div class="hero-equal-height ptb-100" 
-                    style="background: url('{{ asset("frontassets/img/hero-17.jpg"); }}')no-repeat center center / cover">
+                    style="background: url('{{ asset($url1) }}')no-repeat center center / cover">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8">
@@ -17,8 +22,12 @@
                         </div>
                     </div>
                 </div>
+				@php
+		$url2 = "frontassets/img/hero-10.jpg";
+		
+	@endphp
                 <div class="item">
-                    <div class="hero-equal-height ptb-100" style="background: url('{{ asset("frontassets/img/hero-10.jpg"); }}')no-repeat center center / cover">
+                    <div class="hero-equal-height ptb-100" style="background: url('{{ asset($url2); }}')no-repeat center center / cover">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8">
@@ -31,8 +40,14 @@
                         </div>
                     </div>
                 </div>
+				
+						@php
+		$url3 = "frontassets/img/hero-4.jpg";
+		
+	@endphp
+				
                 <div class="item">
-                    <div class="hero-equal-height ptb-100" style="background: url('{{ asset("frontassets/img/hero-4.jpg"); }}')no-repeat center center / cover">
+                    <div class="hero-equal-height ptb-100" style="background: url('{{ asset($url3); }}')no-repeat center center / cover">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8">
@@ -44,9 +59,13 @@
                         </div>
                     </div>
                 </div>
-
+				
+							@php
+		$url4 = "frontassets/img/hero-5.jpg";
+		
+	@endphp
                   <div class="item">
-                    <div class="hero-equal-height ptb-100" style="background: url('{{ asset("frontassets/img/hero-5.jpg"); }}')no-repeat center center / cover">
+                    <div class="hero-equal-height ptb-100" style="background: url('{{ asset($url4); }}')no-repeat center center / cover">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8">

@@ -30,6 +30,7 @@
                   </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+			<form name = "bookingform" id = "bookingform" action = "#" >
                 <div class="modal-body">
                   <div class="row p-4">
                     <div class="col-md-6 mt-6">
@@ -130,8 +131,14 @@
                   </button>                  
                   <button type="button" class="btn btn-primary btn-add-event" id="saveEvent">
                    Save
+                  </button> 
+				  <button type="button" class="btn btn-warning btn-update-event" id="updateEvent" style = "display:none">
+                   Update
                   </button>
+
+
                 </div>
+				</form>
               </div>
             </div>
           </div>

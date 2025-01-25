@@ -1,13 +1,12 @@
-@extends('profile-layouts.profile')
-@section('content')
+<?php $__env->startSection('content'); ?>
   <!--page header section start-->
  
 
              <div class="col-lg-7 col-md-7" >
-                 <h5> Welcome {{ Auth::user()->name }}</h5> 
+                 <h5> Welcome <?php echo e(Auth::user()->name); ?></h5> 
                    
-				   @php $prurl = "frontassets/img/herobg-5.png"; @endphp
-                <div class="page-header-section" style="background: url('{{ asset($prurl) }}')no-repeat center center / cover;height: 200px;">
+				   <?php $prurl = "frontassets/img/herobg-5.png"; ?>
+                <div class="page-header-section" style="background: url('<?php echo e(asset($prurl)); ?>')no-repeat center center / cover;height: 200px;">
                     <div class="row align-items-center">
                         <div class="col-md-7 col-lg-6">
                             <div class="page-header-content text-white">
@@ -26,7 +25,7 @@
                     
 
                    
-                    <a href='{{ route("home/".session("userpath")."occasion") }}' class="btn primary-solid-btn btn-block btn-not-rounded col-lg-3 m-1">Occasion</a>
+                    <a href='<?php echo e(route("home/".session("userpath")."occasion")); ?>' class="btn primary-solid-btn btn-block btn-not-rounded col-lg-3 m-1">Occasion</a>
                     <a href="#" class="btn primary-solid-btn btn-block btn-not-rounded col-lg-3 m-1">Venue Search</a>
                     <a href="#" class="btn primary-solid-btn btn-block btn-not-rounded col-lg-3 m-1">Add Guest</a>
               
@@ -46,7 +45,7 @@
               <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
                 class="rounded-circle img-fluid" style="width: 100px;" />
             </div>
-            <h4 class="mb-2">{{ Auth::user()->name }}</h4>
+            <h4 class="mb-2"><?php echo e(Auth::user()->name); ?></h4>
             <p class="text-muted mb-4">@Programmer <span class="mx-2">|</span> <a
                 href="#!">reldelmercado.com</a></p>
             <div class="mb-4 pb-2">
@@ -85,10 +84,11 @@
  <br>
  <hr>
 
-                @include('profile-layouts.blog')
+                <?php echo $__env->make('profile-layouts.blog', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>
       
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('profile-layouts.profile', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/dashboard.blade.php ENDPATH**/ ?>

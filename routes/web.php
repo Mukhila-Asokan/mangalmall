@@ -36,6 +36,8 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class])->grou
 
     Route::any(session('userpath').'/venue/search', [VenueController::class, 'index'])->name('home/venue/search');
 
+     Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
+
 });
 
 require __DIR__.'/auth.php';

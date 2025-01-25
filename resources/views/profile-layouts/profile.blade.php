@@ -52,7 +52,7 @@
                      </div>
                       @yield('content')
                   </div>
-            </div>
+				</div>
         </section>
 
 

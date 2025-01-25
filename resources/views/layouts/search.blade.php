@@ -1,6 +1,6 @@
 
 	 <!--feature section tab style start-->
-        <section id="features" class="feature-tab-section ptb-100">
+        <section id="features" class="feature-tab-section ptb-100 white-bg shadow-sm mt-md-4 mt-lg-4">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
