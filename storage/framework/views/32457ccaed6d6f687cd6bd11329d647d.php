@@ -2,7 +2,7 @@
                     <h6>Blog</h6>
  </div>
 <article class="post white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
-<div class="post-preview"><a href="#"><img src="<?php echo e(asset('frontassets/img/blog1.png')); ?>" alt="blog" style = "width:100px;" /></a></div>
+<div class="post-preview"><a href="#"><img src="<?php echo e(asset('public/frontassets/img/blog1.png')); ?>" alt="blog" style = "width:100px;" /></a></div>
 <div class="post-wrapper">
     <div class="post-header">
         <h5 class="post-title"><a href="#">Objectively communicate business core competencies </a></h5>

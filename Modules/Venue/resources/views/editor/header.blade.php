@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/bootstrap.min.css'); }}">
-    <link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/range.css'); }}">
-	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/dropzone.min.css'); }}">
-	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/nice-select.css'); }}">
-	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/spectrum.css'); }}">
-    <link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/font-awesome.min.css'); }}">
+    <link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/bootstrap.min.css'); }}">
+    <link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/range.css'); }}">
+	<link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/dropzone.min.css'); }}">
+	<link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/nice-select.css'); }}">
+	<link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/spectrum.css'); }}">
+    <link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/font-awesome.min.css'); }}">
 	<link rel="shortcut icon" type="image/ico" href="" />
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/typekitcss.css'); }}">
-    <link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/style.css'); }}">
+	<link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/typekitcss.css'); }}">
+    <link rel="stylesheet" href="{{ asset('public/adminassets/editor_assets/css/style.css'); }}">
 <style>
 		
 		/*=============================
@@ -251,7 +251,7 @@
 					</div>
 				</div>
 				<div class="mt_sidebar_logos">
-					<a href="#"><img src="{{ asset('adminassets/editor_assets/images/logo.png') }}" title="" alt="Logo"/></a>
+					<a href="#"><img src="{{ asset('public/adminassets/editor_assets/images/logo.png') }}" title="" alt="Logo"/></a>
 				</div>
 				<div class="mt_sidebar_manu">
                 <ul class="editorMenus">
@@ -293,7 +293,7 @@
 					</div>
 					<div class="mt_header_left">
 						<div class="mt_sidebar_logos">
-							<a href="#"><img src="{{ asset('adminassets/images/logo-light.png') }}" title="" alt=""></a>
+							<a href="#"><img src="{{ asset('public/adminassets/images/logo-light.png') }}" title="" alt=""></a>
 						</div>
 						<a href="{{ url()->previous() }}" class="mt_btn mt_back_btn"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="7">
 							  <path d="M4.105,5.629 L2.740,4.274 L11.193,4.274 C11.634,4.274 11.994,3.917 11.994,3.479 C11.994,3.040 11.634,2.683 11.193,2.683 L2.740,2.683 L4.108,1.325 C4.415,1.011 4.406,0.506 4.088,0.200 C3.776,-0.099 3.287,-0.099 2.974,0.200 L0.238,2.916 C0.086,3.066 0.002,3.266 0.002,3.478 C0.002,3.479 0.002,3.479 0.002,3.479 C0.002,3.691 0.086,3.891 0.238,4.042 L2.974,6.758 C3.292,7.063 3.801,7.054 4.108,6.738 C4.410,6.429 4.409,5.943 4.105,5.629 Z" class="cls-1"/>
@@ -326,11 +326,11 @@
 					    	<div class="mt_st_toggle">
 						<ul class="d-none">
 							<li>Hello <p>{{ $username}}</p></li>
-							<li><a href="#"><img src="{{ asset('adminassets/editor_assets/images/avatar.png') }}"/></a></li>
+							<li><a href="#"><img src="{{ asset('public/adminassets/editor_assets/images/avatar.png') }}"/></a></li>
 						</ul>
 					</div>
 					<div class="mt_profile_open d-none">
-						<img src="{{ asset('adminassets/editor_assets/images/border-shape.svg') }}"/>
+						<img src="{{ asset('public/adminassets/editor_assets/images/border-shape.svg') }}"/>
 						<ul>
 							<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
 							<li><a href="#"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a></li>

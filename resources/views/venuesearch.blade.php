@@ -1,5 +1,5 @@
 @extends('profile-layouts.profile')
-<link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('public/adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
 @section('content')
 <div class="col-lg-8 col-md-8">
                         <!-- Search widget-->
@@ -116,7 +116,7 @@
 @endphp
 @push('scripts')
 
-<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+<script src="{{ asset('public/adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
 <script type="text/javascript">
     
   

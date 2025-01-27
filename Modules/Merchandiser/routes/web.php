@@ -19,6 +19,6 @@ use Modules\Merchandiser\Http\Controllers\MerchandiserController;
 });*/
 
 
-Route::prefix('admin')->middleware('auth:admin')->group(function () {
+/*Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/merchandisercategory', [MerchandiserController::class,'index'])->name('admin/merchandisercategory');
-});
+});*/

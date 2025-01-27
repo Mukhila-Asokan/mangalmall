@@ -19,11 +19,11 @@
                                     <div class="p-5">
                                         <div class="text-center w-75 mx-auto auth-logo mb-4">
                                             <a href="#" class="logo-dark">
-                                                <span><img src="{{ asset('adminassets/images/logo-dark.png') }}" alt="" height="75"></span>
+                                                <span><img src="{{ asset('public/adminassets/images/logo-dark.png') }}" alt="" height="75"></span>
                                             </a>
 
                                             <a href="#" class="logo-light">
-                                                <span><img src="{{ asset('adminassets/images/logo-light.png') }}" alt="" height="75"></span>
+                                                <span><img src="{{ asset('public/adminassets/images/logo-light.png') }}" alt="" height="75"></span>
                                             </a>
                                         </div>
 

@@ -12,16 +12,16 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <!-- App css -->
-    <link href="<?php echo e(asset('adminassets/css/style.min.css')); ?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo e(asset('adminassets/css/icons.min.css')); ?>" rel="stylesheet" type="text/css">
-    <script src="<?php echo e(asset('adminassets/js/config.js')); ?>"></script>
+    <link href="<?php echo e(asset('public/adminassets/css/style.min.css')); ?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo e(asset('public/adminassets/css/icons.min.css')); ?>" rel="stylesheet" type="text/css">
+    <script src="<?php echo e(asset('public/adminassets/js/config.js')); ?>"></script>
 </head>
 <body>
     <div style="background-color: #f8b67c!important;">
          <?php echo $__env->yieldContent('content'); ?>
     </div>
      <!-- App js -->
-    <script src="<?php echo e(asset('adminassets/js/vendor.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('public/adminassets/js/vendor.min.js')); ?>"></script>
 
 </body>
 

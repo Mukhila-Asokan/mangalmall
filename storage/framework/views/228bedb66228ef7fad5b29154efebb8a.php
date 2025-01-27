@@ -4,8 +4,8 @@
         <!-- ---------------------------------- -->
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="#" class="text-nowrap logo-img">
-            <img src="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" class="dark-logo" alt="Logo-Dark" />
-            <img src="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" class="light-logo" alt="Logo-light" />
+            <img src="<?php echo e(asset('public/venueassets/images/logo-light.png')); ?>" class="dark-logo" alt="Logo-Dark" />
+            <img src="<?php echo e(asset('public/venueassets/images/logo-light.png')); ?>" class="light-logo" alt="Logo-light" />
           </a>
           <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
             <i class="ti ti-x"></i>

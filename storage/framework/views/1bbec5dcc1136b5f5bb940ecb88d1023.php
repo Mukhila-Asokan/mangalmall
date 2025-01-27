@@ -13,7 +13,7 @@
         height:auto;
     }
 </style>
- <link href="<?php echo e(asset('adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
+ <link href="<?php echo e(asset('public/adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
  <div class="col-12">
  
   <div class="card">
@@ -514,7 +514,7 @@ if (input.files && input.files[0]) {
 }
 
 </script>
-<script src="<?php echo e(asset('adminassets/libs/selectize/js/standalone/selectize.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/adminassets/libs/selectize/js/standalone/selectize.min.js')); ?>"></script>
 <script type="text/javascript">
     
   

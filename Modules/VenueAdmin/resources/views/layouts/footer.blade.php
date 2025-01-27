@@ -1,9 +1,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="{{ asset('venueassets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('venueassets/libs/simplebar/dist/simplebar.min.js') }}"></script>
-<script src="{{ asset('venueassets/js/theme/app.horizontal.init.js') }}"></script>
-<script src="{{ asset('venueassets/js/theme/theme.js') }}"></script>
-<script src="{{ asset('venueassets/js/theme/app.min.js') }}"></script>
+<script src="{{ asset('public/venueassets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('public/venueassets/libs/simplebar/dist/simplebar.min.js') }}"></script>
+<script src="{{ asset('public/venueassets/js/theme/app.horizontal.init.js') }}"></script>
+<script src="{{ asset('public/venueassets/js/theme/theme.js') }}"></script>
+<script src="{{ asset('public/venueassets/js/theme/app.min.js') }}"></script>
 
   <!-- solar icons -->
 <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>

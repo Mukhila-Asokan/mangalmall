@@ -1,5 +1,5 @@
 
-<link href="<?php echo e(asset('adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo e(asset('public/adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-8 col-md-8">
                         <!-- Search widget-->
@@ -132,7 +132,7 @@ if (isset($__slots)) unset($__slots);
 ?>
 <?php $__env->startPush('scripts'); ?>
 
-<script src="<?php echo e(asset('adminassets/libs/selectize/js/standalone/selectize.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/adminassets/libs/selectize/js/standalone/selectize.min.js')); ?>"></script>
 <script type="text/javascript">
     
   

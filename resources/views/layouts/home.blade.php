@@ -1,7 +1,7 @@
  @extends('layouts.guest')
 
 
-<link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('public/adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
 </script>
@@ -59,7 +59,7 @@ $url = "frontassets/img/hero-bg-4.jpg";
 @endphp
 @push('scripts')
 
-<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+<script src="{{ asset('public/adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
 <script type="text/javascript">
     
   

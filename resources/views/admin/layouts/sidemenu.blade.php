@@ -4,12 +4,12 @@
             <div class="logo-box">
                 <!-- Brand Logo Light -->
                 <a href="#" class="logo-light">
-                    <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="" height="75">
+                    <img src="{{ asset('public/adminassets/images/logo-light.png') }}" alt="" height="75">
                 </a>
 
                 <!-- Brand Logo Dark -->
                 <a href="#" class="logo-dark">
-                    <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="" height="75">
+                    <img src="{{ asset('public/adminassets/images/logo-light.png') }}" alt="" height="75">
                 </a>
             </div>
 
