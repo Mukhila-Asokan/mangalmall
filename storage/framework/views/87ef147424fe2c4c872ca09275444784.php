@@ -35,7 +35,7 @@
                 <nav class="js-mega-menu navbar navbar-expand-md header-nav">
 
                     <!--logo start-->
-                    <a class="navbar-brand" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('public/frontassets//img/logo-color.png')); ?>" width="120" alt="logo" class="img-fluid" /></a>
+                    <a class="navbar-brand" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('frontassets//img/logo-color.png')); ?>" width="120" alt="logo" class="img-fluid" /></a>
                     <!--logo end-->
 
                     <!--responsive toggle button start-->

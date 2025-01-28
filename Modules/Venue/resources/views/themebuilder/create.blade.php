@@ -9,7 +9,7 @@
         height:auto;
     }
 </style>
- <link href="{{ asset('public/adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+ <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
 <!-- start page title -->
         <div class="py-3 py-lg-4">
             <div class="row">

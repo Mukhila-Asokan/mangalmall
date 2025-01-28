@@ -7,13 +7,13 @@
                         <div class="logo-box">
                             <!-- Brand Logo Light -->
                             <a href="#" class="logo-light">
-                                <img src="{{ asset('public/adminassets/images/logo-light.png') }}" alt="" height="75">
+                                <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="" height="75">
                             </a>
 
                             <!-- Brand Logo Dark -->
                             <a href="#" class="logo-dark">
-                                <img src="{{ asset('public/adminassets/images/logo-light.png') }}" alt="dark logo" class="logo-lg" height="32">
-                                <img src="{{ asset('public/adminassets/images/logo-light.png') }}" alt="small logo" class="logo-sm" height="32">
+                                <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="dark logo" class="logo-lg" height="32">
+                                <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="small logo" class="logo-sm" height="32">
                             </a>
                         </div>
 
@@ -166,7 +166,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
                                                     <div class="notify-icon">
-                                                        <img src="{{ asset('public/adminassets/images/users/avatar-4.jpg') }}" class="img-fluid rounded-circle"
+                                                        <img src="{{ asset('adminassets/images/users/avatar-4.jpg') }}" class="img-fluid rounded-circle"
                                                             alt="" />
                                                     </div>
                                                 </div>
@@ -196,7 +196,7 @@
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
                                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="{{ asset('public/adminassets/images/users/avatar-4.png') }}" alt="user-image" class="rounded-circle">
+                                <img src="{{ asset('adminassets/images/users/avatar-4.png') }}" alt="user-image" class="rounded-circle">
                                 <span class="ms-1 d-none d-md-inline-block">
                                     {!! $username !!} <i class="mdi mdi-chevron-down"></i>
                                 </span>

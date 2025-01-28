@@ -8,20 +8,20 @@
                             <ul class="nav nav-tabs feature-tab border-bottom-0 mb-5" data-tabs="tabs">
                                 <li class="nav-item">
                                     <a class="nav-link d-flex align-items-center gray-light-bg active" href="#tab6-1" data-toggle="tab">
-                                        <img src="<?php echo e(asset('public/frontassets/img/weddinghall.jpg')); ?>" width="35" alt="Wedding Hall" class="mr-2" />
+                                        <img src="<?php echo e(asset('frontassets/img/weddinghall.jpg')); ?>" width="35" alt="Wedding Hall" class="mr-2" />
                                         <h6 class="mb-0"> Venue</h6>
                                     </a>
 
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link d-flex align-items-center gray-light-bg" href="#tab6-2" data-toggle="tab">
-                                        <img src="<?php echo e(asset('public/frontassets/img/36.png')); ?>" width="35" alt="Invitation" class="mr-2" />
+                                        <img src="<?php echo e(asset('frontassets/img/36.png')); ?>" width="35" alt="Invitation" class="mr-2" />
                                         <h6 class="mb-0">Invitation</h6>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link d-flex align-items-center gray-light-bg" href="#tab6-3" data-toggle="tab">
-                                        <img src="<?php echo e(asset('public/frontassets/img/vendor.jpg')); ?>" width="35" alt="wp hosting" class="mr-2" />
+                                        <img src="<?php echo e(asset('frontassets/img/vendor.jpg')); ?>" width="35" alt="wp hosting" class="mr-2" />
                                         <h6 class="mb-0">Vendor</h6>
                                     </a>
                                 </li>
@@ -31,7 +31,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-3 col-12 order-lg-last align-self-center">
                                             <div class="image-box fadein text-xl-right text-center">
-                                                <img src="<?php echo e(asset('public/frontassets/img/weddinghall.jpg')); ?>" alt="Wedding Hall" class="img-fluid" />
+                                                <img src="<?php echo e(asset('frontassets/img/weddinghall.jpg')); ?>" alt="Wedding Hall" class="img-fluid" />
                                             </div>
                                         </div>
                                         <div class="col-xl-8 col-lg-9 col-12 order-xl-first">
@@ -71,7 +71,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-3 col-12 order-lg-last align-self-center">
                                             <div class="image-box fadein text-xl-right text-center">
-                                                <img src="<?php echo e(asset('public/frontassets/img/36.png')); ?>" alt="wp-hosting" class="img-fluid" />
+                                                <img src="<?php echo e(asset('frontassets/img/36.png')); ?>" alt="wp-hosting" class="img-fluid" />
                                             </div>
                                         </div>
                                         <div class="col-xl-8 col-lg-9 col-12 order-xl-first">
@@ -101,7 +101,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-3 col-12 order-lg-last align-self-center">
                                             <div class="image-box fadein text-xl-right text-center">
-                                                <img src="<?php echo e(asset('public/frontassets/img/vendor.jpg')); ?>" alt="Vendor" class="img-fluid" />
+                                                <img src="<?php echo e(asset('frontassets/img/vendor.jpg')); ?>" alt="Vendor" class="img-fluid" />
                                             </div>
                                         </div>
                                         <div class="col-xl-8 col-lg-9 col-12 order-xl-first">

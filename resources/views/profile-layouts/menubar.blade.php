@@ -18,7 +18,7 @@
                         <div class="topbar-text">
                             <ul class="list-inline text-right">
                                 <li class="list-inline-item"><a href = "#">{{ Auth::user()->name }}</a></li>
-                                <li class="list-inline-item"> <a href = "{{ route('logout') }}">
+                                <li class="list-inline-item"> <a href = "{{ route('home/logout') }}">
                         {{ __('Log Out') }}</a>
              
                                 </li>
@@ -37,7 +37,7 @@
                 <nav class="js-mega-menu navbar navbar-expand-md header-nav">
 
                     <!--logo start-->
-                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('public/frontassets//img/logo-color.png'); }}" width="120" alt="logo" class="img-fluid" /></a>
+                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('frontassets//img/logo-color.png'); }}" width="120" alt="logo" class="img-fluid" /></a>
                     <!--logo end-->
 
                     <!--responsive toggle button start-->

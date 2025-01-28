@@ -149,7 +149,7 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('scripts'); ?>
 	
-  <script src="<?php echo e(asset('public/venueassets/libs/fullcalendar/index.global.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/venueassets/js/apps/calendar-init.js')); ?>"></script>
+  <script src="<?php echo e(asset('venueassets/libs/fullcalendar/index.global.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('venueassets/js/apps/calendar-init.js')); ?>"></script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('venueadmin::layouts.admin-layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/VenueAdmin\resources/views/booking/create.blade.php ENDPATH**/ ?>

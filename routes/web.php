@@ -12,6 +12,7 @@ use App\Http\Controllers\VenueController;
  $username = preg_replace('/\s+/', '_', $username);*/
 
 Route::get('/',[HomeController::class, 'home'])->name('home');
+Route::get('/home',[HomeController::class, 'home'])->name('home');
 Route::any('/ajaxcvenuesubtypelist',[HomeController::class, 'ajaxcvenuesubtypelist'])->name('home/ajaxcvenuesubtypelist');
 Route::any('/venuesearchresults',[HomeController::class, 'venuesearchresults'])->name('home/venuesearchresults');
 Route::any('/home/{id}/venuedetails',[HomeController::class, 'venuedetails'])->name('home/venuedetails');

@@ -7,9 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('public/frontassets/css/main.css'); }}">
+    <link rel="stylesheet" href="{{ asset('frontassets/css/main.css'); }}">
     <!-- endbuild -->
-    <link rel="stylesheet" href="{{ asset('public/frontassets/css/custom.css'); }}">
+    <link rel="stylesheet" href="{{ asset('frontassets/css/custom.css'); }}">
        
     </head>
     <body class="font-sans antialiased">

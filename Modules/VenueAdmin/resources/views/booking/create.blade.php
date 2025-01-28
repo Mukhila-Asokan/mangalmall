@@ -149,6 +149,6 @@
 @endsection
 @push('scripts')
 	
-  <script src="{{ asset('public/venueassets/libs/fullcalendar/index.global.min.js') }}"></script>
-  <script src="{{ asset('public/venueassets/js/apps/calendar-init.js') }}"></script>
+  <script src="{{ asset('venueassets/libs/fullcalendar/index.global.min.js') }}"></script>
+  <script src="{{ asset('venueassets/js/apps/calendar-init.js') }}"></script>
 @endpush

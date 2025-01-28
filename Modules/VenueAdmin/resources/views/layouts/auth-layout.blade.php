@@ -5,12 +5,12 @@
         <div class="row">
         	@php
 
-        	$bgurl = asset('public/venueassets/images/authbg.jpg');
+        	$bgurl = asset('venueassets/images/authbg.jpg');
         	@endphp
         	<div class="col-xl-7 col-xxl-8" style = "background: url('{{ $bgurl }}'); no-repeat center center / cover">
             <a href="#" class="text-nowrap logo-img d-block px-4 py-9 w-100">
-              <img src="{{ asset('public/venueassets/images/logo-light.png') }}" class="dark-logo" alt="Logo-Dark" />
-              <img src="{{ asset('public/venueassets/images/logo-light.png') }}" class="light-logo" alt="Logo-light" />
+              <img src="{{ asset('venueassets/images/logo-light.png') }}" class="dark-logo" alt="Logo-Dark" />
+              <img src="{{ asset('venueassets/images/logo-light.png') }}" class="light-logo" alt="Logo-light" />
             </a>
            
           </div>

@@ -12,13 +12,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon icon-->
-  <link rel="shortcut icon" type="image/png" href="<?php echo e(asset('public/venueassets/images/logo-light.png')); ?>" />
+  <link rel="shortcut icon" type="image/png" href="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" />
 
   <meta name="_token" content="<?php echo e(csrf_token()); ?>" />
 
 
   <!-- Core Css -->
-  <link rel="stylesheet" href="<?php echo e(asset('public/venueassets/css/styles.css')); ?>" />
+  <link rel="stylesheet" href="<?php echo e(asset('venueassets/css/styles.css')); ?>" />
 
   <title>Venue Admin</title>
 </head>
@@ -26,5 +26,5 @@
 
   <!-- Preloader -->
   <div class="preloader">
-    <img src="<?php echo e(asset('public/venueassets/images/logo-light.png')); ?>" alt="loader" class="lds-ripple img-fluid" />
+    <img src="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" alt="loader" class="lds-ripple img-fluid" />
   </div><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/VenueAdmin\resources/views/layouts/header.blade.php ENDPATH**/ ?>

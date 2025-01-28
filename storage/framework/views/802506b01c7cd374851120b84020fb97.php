@@ -1,6 +1,12 @@
 <?php $__env->startSection('content'); ?>
 
-
+<style>
+.form-group span
+{
+    color:red;
+    font-weight: bold;
+}
+</style>
     <section class="ptb-100 height-lg-100vh d-flex align-items-center">
             <div class="container">
                 <div class="row justify-content-center pt-5 pt-sm-5 pt-md-5 pt-lg-0">
@@ -15,14 +21,41 @@
                                 <!--login form-->
                                 <form class="login-signup-form" method = "post" action = "<?php echo e(route('logincheck')); ?>">
                                     <?php echo csrf_field(); ?>
+
+                                    <?php if(session('error')): ?>
+                                    <div class="alert alert-danger">
+                                        <?php echo e(session('error')); ?>
+
+                                    </div>
+                                     <?php endif; ?>
+
+
+
                                     <div class="form-group">
                                         <label class="pb-1">Email Address</label>
                                         <div class="input-group input-group-merge">
                                             <div class="input-icon">
                                                 <span class="ti-email color-primary"></span>
                                             </div>
-                                            <input type="email" class="form-control" placeholder="name@domain.com" name = "email">
+                                           <input type="email" class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="name@domain.com" name="email" value="<?php echo e(old('email')); ?>" required>
                                         </div>
+                                         <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                            <span><?php echo e($message); ?></span>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                     </div>
                                     <!-- Password -->
                                     <div class="form-group">
@@ -31,7 +64,7 @@
                                                 <label class="pb-1">Password</label>
                                             </div>
                                             <div class="col-auto">
-                                                <a href="recover-account.html" class="form-text small text-muted">
+                                                <a href="#" class="form-text small text-muted">
                                                     Forgot password?
                                                 </a>
                                             </div>
@@ -40,7 +73,24 @@
                                             <div class="input-icon">
                                                 <span class="ti-lock color-primary"></span>
                                             </div>
-                                            <input type="password" class="form-control" placeholder="Enter your password" name ="password">
+                                           <input type="password" class="form-control <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="Enter your password" name="password" required>
+                                              <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="invalid-feedback" role="alert"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         </div>
                                     </div>
 

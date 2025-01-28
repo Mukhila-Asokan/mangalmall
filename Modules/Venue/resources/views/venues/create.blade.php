@@ -13,7 +13,7 @@
         height:auto;
     }
 </style>
- <link href="{{ asset('public/adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+ <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
 <!-- start page title -->
         <div class="py-3 py-lg-4">
             <div class="row">
@@ -523,7 +523,7 @@ if (input.files && input.files[0]) {
 }
 
 </script>
-<script src="{{ asset('public/adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
 <script type="text/javascript">
     
   

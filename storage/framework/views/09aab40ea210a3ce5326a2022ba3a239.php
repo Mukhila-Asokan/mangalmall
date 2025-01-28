@@ -10,7 +10,7 @@
                                 <div class="footer-nav-wrap text-white">
                                   
 									
-                                   <img src="<?php echo e(asset('public/frontassets/img/logo-color.png')); ?>" width="200" alt="logo" class="img-fluid" />
+                                   <img src="<?php echo e(asset('frontassets/img/logo-color.png')); ?>" width="200" alt="logo" class="img-fluid" />
                                 </div>
                             </div>
                         </div>
