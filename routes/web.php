@@ -58,7 +58,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class])->grou
 
      Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
 
-      Route::get('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
+      Route::any('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
 
 });
 

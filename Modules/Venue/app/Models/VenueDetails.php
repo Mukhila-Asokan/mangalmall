@@ -40,6 +40,9 @@ class VenueDetails extends Model
     {
     return $this->belongsToMany(VenueAmenities::class, 'venueamenities', 'venue_id', 'id');
     }
-
+    public function venueamenitiesapi()
+    {
+        return $this->hasMany(VenueAmenities::class, 'venue_id', 'id'); // Adjust table & keys
+    }
 
 }

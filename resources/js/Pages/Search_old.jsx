@@ -3,9 +3,6 @@ import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from "@inertiajs/react";
 import Select from "react-select";
 import AsyncSelect from "react-select/async";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-
 
 const baseImageUrl = window.location.origin + "/storage/";
 const baseurl = window.location.origin;
@@ -19,13 +16,13 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     const [selectedAmenities, setSelectedAmenities] = useState(filters?.selectedAmenities || []);
     const [sortBy, setSortBy] = useState(filters?.sortBy || '');
     const [venueSubtypes, setVenueSubtypes] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // Default to page 1
-    const [lastPage, setLastPage] = useState(1); // Default to 1 page available
 
-    console.log(initialVenuelist['data']);
+    const [currentPage, setCurrentPage] = useState([]); // Default to page 1
+    const [lastPage, setLastPage] = useState([]); // Default to 1 page available
+
     // Update the state when the prop changes
     useEffect(() => {
-        setVenues(initialVenuelist['data']);
+        setVenues(initialVenuelist);
     }, [initialVenuelist]);
 
     const loadOptions = async (inputValue, callback) => {
@@ -47,103 +44,91 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     };
 
     const handleCheckboxChange = (event) => {
-         const checked = event.target.checked;
-		
         const value = event.target.value;
-		
-		setSelectedAmenities((prevSelected) => {
-            console.log("Previous selected:", prevSelected); // Check previous state
-
-            if (prevSelected.includes(value)) {
-                console.log("Removing:", value);
-                return prevSelected.filter((id) => id !== value); // Uncheck
-            } else {
-                console.log("Adding:", value);
-                return [...prevSelected, value]; // Check
-            }
-        });
-		
-       /*  if (selectedAmenities.includes(value)) {
-
+        if (selectedAmenities.includes(value)) {
             setSelectedAmenities(selectedAmenities.filter((id) => id !== value));
         } else {
             setSelectedAmenities([...selectedAmenities, value]);
-        } 
-		
-		 setSelectedAmenities(
-          checked
-            ? [...selectedAmenities, value]
-            : setSelectedAmenities.filter((id) => id !== value)
-       ); */
-		
-		/* setSelectedAmenities((prevSelected) =>
-            prevSelected.includes(value)
-                ? prevSelected.filter((id) => id !== value) // Uncheck
-                : [...prevSelected, value] // Check
-        );
-		 */
+        }
     };
 
-    const handleFilterChange = async () => {
-        console.log("Fetching venues with filters:", {
+   /* const handleFilterChange = () => {
+        console.log("handleFilterChange triggered!", {
             searchArea,
             searchType,
             searchSubtype,
             selectedAmenities,
             sortBy,
-            currentPage,
         });
 
-        try {
-            const queryParams = new URLSearchParams({
-                searchArea: searchArea?.value || "",
-                searchType,
-                searchSubtype,
-                selectedAmenities: selectedAmenities.join(","),
-                sortBy,
-                page: currentPage,
-            });
-
-            console.log("Query Params:", queryParams.toString());
-
-            const response = await fetch(`/api/venuereact-search?${queryParams}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            console.log("API Response Status:", response.status);
-
-            if (!response.ok) {
-                throw new Error("Failed to fetch venues");
+        Inertia.get(`/home/venuereact-search`, {
+            searchArea,
+            searchType,
+            searchSubtype,
+            selectedAmenities,
+            sortBy,
+        }, {
+            preserveState: true,
+            replace: true,
+            onSuccess: (page) => {
+                console.log("New venues fetched:", page.props.venuelist);
+              
+                if (page.props.venuelist) {
+                setVenues(page.props.venuelist); // Ensure state updates
             }
-
-            const data = await response.json();
-            console.log("API Response Data:", data);
-
-            if (data && data.venuelist && Array.isArray(data.venuelist.data)) {
-                setVenues(data.venuelist.data);
-            } else {
-                console.log(data.venuelist.data);
-                console.error("Invalid data format: data.data is not an array");
-                setVenues([]);
             }
+        });
+    };*/
 
-            setCurrentPage(data.current_page || 1);
-            setLastPage(data.last_page || 1);
-        } catch (error) {
-            console.log("Error fetching venues:", error);
-            setVenues([]);
-        }
-    };
+const handleFilterChange = async () => {
+    console.log("Fetching venues with filters:", {
+        searchArea,
+        searchType,
+        searchSubtype,
+        selectedAmenities,
+        sortBy,
+        currentPage, 
+    });
 
-    const handlePageChange = (newPage) => {
-        if (newPage >= 1 && newPage <= lastPage) {
-            setCurrentPage(newPage);
-            handleFilterChange(); // Fetch new page data
+    try {
+        const queryParams = new URLSearchParams({
+            searchArea: searchArea?.value || "",  
+            searchType,
+            searchSubtype,
+            selectedAmenities: selectedAmenities.join(","),
+            sortBy,
+            page: currentPage, 
+        });
+
+        const response = await fetch(`/api/venuereact-search?${queryParams}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch venues");
         }
-    };
+
+        const data = await response.json();
+        console.log("Venues fetched:", data);
+        setVenues(Array.isArray(data.data) ? data.data : []); // Ensure an array
+        setCurrentPage(data.current_page || 1);
+        setLastPage(data.last_page || 1);
+    } catch (error) {
+        console.log("Error fetching venues:", error);
+        setVenues([]);
+    }
+};
+
+const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= lastPage) {
+        setCurrentPage(newPage);
+        handleFilterChange(); // Fetch new page data
+    }
+};
+
 
     const handleReset = () => {
         console.log("Resetting all filters...");
@@ -154,7 +139,13 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
         setSelectedAmenities([]);
         setSortBy('');
 
-        Inertia.get('/home/venuereact-search', {}, {
+        Inertia.get('/home/venuereact-search', {
+            searchArea: '',
+            searchType: '',
+            searchSubtype: '',
+            selectedAmenities: [],
+            sortBy: '',
+        }, {
             preserveState: true,
             replace: true,
         });
@@ -173,8 +164,8 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 
     return (
         <div className="mx-auto p-1" style={{ width: "100%" }}>
-         
-           <Head title="Venue Search" />
+
+            <Head title="Venue Search" />
             <div className="mx-auto p-1" style={{ width: "100%" }}>
             <Head title="Venue Search" />
 
@@ -272,10 +263,8 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input"
-                                                /* value={amenity.id}
-                                                checked={selectedAmenities.includes(amenity.id)} */
-												value={amenity.id.toString()} // Convert to string
-										checked={selectedAmenities.includes(amenity.id.toString())}
+                                                value={amenity.id}
+                                                checked={selectedAmenities.includes(amenity.id)}
                                                  onChange={(event) => {
         console.log("Amenity changed:", event.target.value);
         handleCheckboxChange(event);
@@ -322,56 +311,57 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 
 </div>
 </div>
-            <div className="row grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
-                {Array.isArray(venues) && venues.length > 0 ? (
-                    venues.map((venue) => (
-                        <div key={venue.id} className="col-md-6 col-lg-6 single-service-plane rounded white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
-                            <div className="features-box p-4">
-                                <div className="features-box-icon">
-                                    <img src={`${baseImageUrl}${venue.bannerimage}`} alt={venue.venuename} style={{ width: "100px" }} />
-                                </div>
-                                <div className="features-box-content">
-                                    <h4 className="text-xl font-bold mt-2">{venue.venuename}</h4>
-                                    <p>{venue.venueaddress}</p>
-                                    <p>City {venue.description}</p>
-                                    <p>{venue.description}</p>
-                                    <div className="text-end">
-                                        <Link href={`/home/${venue.id}/venuedetails`} className="text-blue-500">
-                                            View Details
-                                        </Link>
-                                    </div>
+<div className="row grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
+            {venues.length > 0 ? (
+                venues.map((venue) => (
+                    <div key={venue.id} className="col-md-6 col-lg-6 single-service-plane rounded white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
+                        <div className="features-box p-4">
+                            <div className="features-box-icon">
+                                <img src={`${baseImageUrl}${venue.bannerimage}`} alt={venue.venuename} style={{ width: "100px" }} />
+                            </div>
+                            <div className="features-box-content">
+                                <h4 className="text-xl font-bold mt-2">{venue.venuename}</h4>
+                                <p>{venue.venueaddress}</p>
+                                <p>City {venue.description}</p>
+                                <p>{venue.description}</p>
+                                <div className="text-end">
+                                    <Link href={`/home/${venue.id}/venuedetails`} className="text-blue-500">
+                                        View Details
+                                    </Link>
                                 </div>
                             </div>
                         </div>
-                    ))
-                ) : (
-                    <p>No venues found.</p>
-                )}
-            </div>
-
-            {/* Pagination Buttons */}
-            <div className="pagination-controls row">
-                <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="col-md-1 btn primary-solid-btn btn-block btn-not-rounded mt-3"
-                >
-                   <FontAwesomeIcon icon={faArrowLeft} />
-                </button>
-
-                <span className="col-md-4 mt-3"> Page {currentPage} of {lastPage} </span>
-
-                <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === lastPage}
-                    className="col-md-1 btn primary-solid-btn btn-block btn-not-rounded mt-3"
-                >
-                    <FontAwesomeIcon icon={faArrowRight} />
-                </button>
-            </div>
+                    </div>
+                ))
+            ) : (
+                <p>No venues found.</p>
+            )}
         </div>
 
+        {/* Pagination Buttons */}
+        <div className="pagination-controls">
+            <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="btn btn-primary m-1"
+            >
+                Previous
+            </button>
+
+            <span> Page {currentPage} of {lastPage} </span>
+
+            <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === lastPage}
+                className="btn btn-primary m-1"
+            >
+                Next
+            </button>
         </div>
+
+
+
+        </div></div>
     );
 };
 

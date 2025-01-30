@@ -16,72 +16,20 @@ class VenueSearchController extends Controller
     public function index(Request $request)
     {
 
-        if (!Auth::check()) {
+    if (!Auth::check()) {
         return response()->json(['error' => 'User is not authenticated'], 401);
     }
 
-   /* return Inertia::render('VenueSearch', [
-        'auth' => ['user' => Auth::user()]
-    ]);
-*/
-        // Fetch initial data
-       /* $areas = indialocation::where('delete_status', '0')->select('City')->distinct()
-        ->orderBy('City')->get();*/
-        $areas = indialocation::where('delete_status', '0')->get();
+ 
         $venuetypes = VenueType::where('delete_status',0)->where('roottype','=',0)->get();
         $venueamenities = VenueAmenities::where('delete_status','0')->get();
         $currentInstance = VenueDetails::first();
 
         // Filter venues based on request parameters
-        $query = VenueDetails::query();
+        $venuelist = VenueDetails::where('delete_status',0)->paginate(10);
+       
 
-        if ($request->has('searchArea')) {
-            $locations = indialocation::where('Areaname', 'like', '%' . $request->searchArea . '%')->pluck('id');
-            if ($locations->isNotEmpty()) {
-                $query->whereIn('locationid', $locations);
-            }
-        }
-
-        if ($request->has('searchType')) {
-            $query->where('venuetypeid', $request->searchType);
-        }
-
-        if ($request->has('searchSubtype')) {
-            $query->where('venuesubtypeid', $request->searchSubtype);
-        }
-
-        if ($request->has('selectedAmenities')) {
-            $query->whereHas('venueamenities', function ($query) use ($request) {
-                $query->whereIn('id', $request->selectedAmenities);
-            });
-        }
-
-        if ($request->has('sortBy')) {
-            switch ($request->sortBy) {
-                case 'price_asc':
-                    $query->orderBy('bookingprice', 'asc');
-                    break;
-                case 'price_desc':
-                    $query->orderBy('bookingprice', 'desc');
-                    break;
-                case 'featured':
-                    $query->orderBy('featured', 'desc');
-                    break;
-                case 'alphabetical_asc':
-                    $query->orderBy('venuename', 'asc');
-                    break;
-                case 'alphabetical_desc':
-                    $query->orderBy('venuename', 'desc');
-                    break;
-            }
-        }
-
-        $venuelist = $query->get();
-
-         Log::info('Rendering area', $areas->toArray());
-
-        return Inertia::render('VenueSearch', [
-            'areas' => $areas ?? [],
+        return Inertia::render('VenueSearch', [          
             'venuetypes' => $venuetypes ?? [],
             'venueamenities' => $venueamenities ?? [],
             'venuelist' => $venuelist ?? [],
@@ -91,7 +39,7 @@ class VenueSearchController extends Controller
 
 
     }
-    public function searchAreas()
+    public function searchAreas(Request $request)
     {
         // Get the search query from the request
         $query = $request->query('query', '');
@@ -103,5 +51,70 @@ class VenueSearchController extends Controller
                       ->get();
 
         return response()->json($areas);
+    }
+
+
+    public function searchvenue(Request $request)
+    {
+        $query = VenueDetails::query();
+
+        Log::info('Received filters:', $request->all());
+     
+       
+        if ($request->has('searchArea') && $request->searchArea != '') {
+
+            /* $searchAreaId = $request->searchArea;       */    
+
+            $query->where('locationid', $request->searchArea);
+            
+
+        }
+
+        if ($request->has('searchType') && $request->searchType != '' ) {
+             Log::info('Applying searchType:', [$request->searchType]);
+            $query->where('venuetypeid', $request->searchType);
+        }
+
+        if ($request->has('searchSubtype')  && $request->searchSubtype != '') {
+             Log::info('Applying searchSubtype:', [$request->searchSubtype]);
+            $query->where('venuesubtypeid', $request->searchSubtype);
+        }
+
+              Log::info('Applying selectedAmenities:', [$request->selectedAmenities]);
+
+           
+              if ($request->has('selectedAmenities')  && $request->searchSubtype != '') {
+                    $query->whereHas('venueamenitiesapi', function ($query) use ($request) {
+                     $selectedAmenities = explode(',', $request->selectedAmenities);
+                    $query->whereIn('amenity_id', $selectedAmenities); 
+          });
+        
+        }
+        if ($request->has('sortBy') && $request->sortBy != '' ) {
+        
+            switch ($request->sortBy) {
+                case 'price_asc':
+                    $query->orderBy('bookingprice', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('bookingprice', 'desc');
+                    break;
+                case 'featured':
+                    $query->orderBy('featured', 'desc');
+                    break;
+                case 'alphabetical_asc':                
+                    $query->orderBy('venuename', 'asc');
+                    break;
+                case 'alphabetical_desc':
+
+                    $query->orderBy('venuename', 'desc');
+                    break;
+            }
+        }
+
+         $venuelist = $query->paginate(10);  
+        return response()->json([           
+           'venuelist' => $venuelist ?? [],     
+        ], 200);
     }
 }

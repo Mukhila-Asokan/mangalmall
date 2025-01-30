@@ -1,5 +1,6 @@
 
 <link href="<?php echo e(asset('adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
+
    <?php echo app('Tighten\Ziggy\BladeRouteGenerator')->generate(); ?>  <!-- ✅ Include Ziggy routes -->
     <?php echo app('Illuminate\Foundation\Vite')->reactRefresh(); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/app.jsx'); ?>
