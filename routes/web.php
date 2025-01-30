@@ -7,6 +7,20 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Middleware\FlashMessageMiddleware;
 use App\Http\Controllers\VenueController;
+use App\Http\Controllers\VenueSearchController;
+use Illuminate\Support\Facades\Log;
+
+use Modules\Venue\Models\VenueType;
+use Illuminate\Http\Request;
+
+Route::get('/get-subtypes/{typeId}', function ($typeId) {
+
+    $venuesubtypes = VenueType::where('delete_status', 0)
+        ->where('roottype', $typeId)->get();
+    Log::info('Rendering venuesubtypes', $venuesubtypes->toArray());
+    return response()->json($venuesubtypes);
+});
+
 
  /*$username = Session::get('username');
  $username = preg_replace('/\s+/', '_', $username);*/
@@ -16,6 +30,8 @@ Route::get('/home',[HomeController::class, 'home'])->name('home');
 Route::any('/ajaxcvenuesubtypelist',[HomeController::class, 'ajaxcvenuesubtypelist'])->name('home/ajaxcvenuesubtypelist');
 Route::any('/venuesearchresults',[HomeController::class, 'venuesearchresults'])->name('home/venuesearchresults');
 Route::any('/home/{id}/venuedetails',[HomeController::class, 'venuedetails'])->name('home/venuedetails');
+
+Route::get('/home/venue-search', [VenueSearchController::class, 'index'])->name('venue.search');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -37,8 +53,18 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class])->grou
 
     Route::any(session('userpath').'/venue/search', [VenueController::class, 'index'])->name('home/venue/search');
 
+
+     Route::any(session('userpath').'/venue/searchtest1', [VenueController::class, 'searchtest'])->name('home/venue/test');
+
      Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
 
+      Route::get('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
+
+});
+
+
+Route::middleware(['auth'])->group(function () {
+   
 });
 
 require __DIR__.'/auth.php';

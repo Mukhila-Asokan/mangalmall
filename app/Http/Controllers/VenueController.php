@@ -17,6 +17,7 @@ use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\VenueCampaigns;
 use Modules\Venue\Models\Imagelibrary;
+use App\Livewire\VenueSearch;
 
 
 use Session;
@@ -31,6 +32,16 @@ class VenueController extends Controller
         $arealocation = indialocation::where('delete_status',0)->get();
 
         return view('venuesearch',compact('venuetypes','venueamenities','venuedatafield','arealocation'));
+    }
+
+    public function searchtest(Request $request)
+    {
+         $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
+        $venueamenities = VenueAmenities::where('delete_status',0)->get();
+        $venuedatafield = VenueDataField::where('delete_status',0)->get();
+        $arealocation = indialocation::where('delete_status',0)->get();
+
+        return view('venuetest1',compact('venuetypes','venueamenities','venuedatafield','arealocation'));
     }
 
     public function index()

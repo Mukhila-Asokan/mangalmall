@@ -35,4 +35,11 @@ class VenueDetails extends Model
     {
         return $this->hasOne(indialocation::class,'id','locationid');
     }
+
+    public function venueamenities()
+    {
+    return $this->belongsToMany(VenueAmenities::class, 'venueamenities', 'venue_id', 'id');
+    }
+
+
 }

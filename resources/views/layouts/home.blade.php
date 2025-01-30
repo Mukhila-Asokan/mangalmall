@@ -17,6 +17,11 @@
   
 
  @include('layouts.slider')
+ @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
         @include('layouts.search')
 
 @php

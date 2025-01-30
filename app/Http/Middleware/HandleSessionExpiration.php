@@ -15,6 +15,11 @@ class HandleSessionExpiration
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (!$request->session()->has('id')) { // Adjust this condition as per your session structure
+            return redirect('/')
+                ->with('error', 'Your session has expired. Please log in again.');
+        }
+
         return $next($request);
     }
 }

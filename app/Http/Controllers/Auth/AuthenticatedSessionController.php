@@ -12,6 +12,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 //use Symfony\Component\HttpFoundation\Cookie;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 Use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
@@ -66,6 +67,29 @@ class AuthenticatedSessionController extends Controller
             // Generate JWT token after successful authentication
             $user = Auth::user();
 
+          
+            if (empty($user->email_verified_at) || $user->email_verified_at == '') {
+
+
+                $otp = rand(100000, 999999);  // Generate a 6-character OTP
+                \Log::info("Generated OTP: $otp");
+                $otptime = now()->addMinutes(10);
+                $user->update([
+                    'otp' => $otp,
+                    'otp_expires_at' => $otptime,  
+                ]);
+              
+            //Mail::to($user->email)->send(new OtpMail($otp));
+
+            // Redirect to OTP verification page
+             return redirect()->route('otp.verify')->with('success', 'An OTP has been sent to your email address.');
+             }
+            else
+            {
+
+
+
+
             // Assuming you're using JWT or another library to generate the token:
             $token = $user->createToken('MangalMall')->plainTextToken;
 
@@ -74,6 +98,7 @@ class AuthenticatedSessionController extends Controller
 
             // Redirect to the intended page or dashboard
             return redirect()->intended(route('dashboard'))->withCookie($cookie);
+            }
         }
         else {
        

@@ -15,7 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'IsAdminRoleCheck' => \App\Http\Middleware\IsAdminRoleCheck::class,
             'flashmessage' => \App\Http\Middleware\FlashMessageMiddleware::class,
             'JwtAuthMiddleware' => \App\Http\Middleware\JwtAuthMiddleware::class,
-            'VenueAdminMiddleware' => \Modules\VenueAdmin\Http\Controllers\VenueAdminController::class,
+            'VenueAdminMiddleware' => \Modules\VenueAdmin\Http\Middleware\VenueAdminMiddleware::class,
+            'HandleSessionExpiration' => \App\Http\Middleware\HandleSessionExpiration::class,
+            'HandleInertiaRequests' => \App\Http\Middleware\HandleInertiaRequests::class,
+            
+            
         ]);
       
     })

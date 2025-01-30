@@ -9,7 +9,7 @@ use Modules\Venue\Models\VenueType;
 use Modules\Venue\Models\VenueAmenities;
 use Illuminate\Support\Facades\Log;
 
-class VenueSearch extends Component
+class VenueNewSearch extends Component
 {
     public $currentInstance;
     public $searchArea = '';
@@ -118,7 +118,7 @@ class VenueSearch extends Component
         Log::info('Rendering _instance with data', $instance->toArray());
 
         // Return the view with the instance and filtered venue list
-        return view('livewire.venue-search', compact('venuelist', 'instance','arealocation'));
+        return view('livewire.venue-new-search', compact('venuelist', 'instance','arealocation'));
 
 
         

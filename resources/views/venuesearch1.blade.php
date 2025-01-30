@@ -22,7 +22,7 @@
 			
 			
 			
-		<livewire:venue-search />
+			@livewire('venue-search') 
 
            
 
@@ -40,7 +40,14 @@
 
 @push('scripts')
 
-
+ 
+<script>
+    Livewire.on('instanceUpdated', (instance) => {
+		alertI("hai");
+        console.log(instance);  // Log the instance data to the console
+        document.getElementById('instance-name').innerText = instance.venuename; // Update DOM
+    });
+</script>
 
 <script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
 <script type="text/javascript">
@@ -48,23 +55,23 @@
   const searchUrl = "{{ route('home/venuesearchresults') }}";
 const subtypeUrl = "{{ route('home/ajaxcvenuesubtypelist') }}";
 
+$('#venuearea').selectize({
+    valueField: 'id',
+    labelField: 'title',
+    searchField: 'title',
+    options: [<?php echo $areaContent; ?>],
+    create: false,
+}).on('change', function () {
+    @this.set('searchArea', $(this).val());
+});
+
 
 $('#venuetypeid').selectize({
-    onChange: function(value) {        
-		/* Livewire.dispatch('setSearchType', { value }); */
-		window.Livewire.dispatch('setSearchType', { value });
-		  
+    onChange: function(value) {
+        @this.set('searchType', value);
     }
 });
 
-$('#venuearea').selectize({
-    onChange: function(value) {  
-		/* Livewire.dispatch('setsearchArea', { value }); */
-		window.Livewire.dispatch('setsearchArea', { value });
-    }
-});
-
-console.log("Livewire object:", window.Livewire);
 
 $.ajax({
     type: 'POST',

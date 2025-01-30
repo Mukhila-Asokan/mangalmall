@@ -11,11 +11,11 @@
      <link rel="stylesheet" href="<?php echo e(asset('frontassets/css/main.css')); ?>">
     <!-- endbuild -->
     <link rel="stylesheet" href="<?php echo e(asset('frontassets/css/custom.css')); ?>">
-
+  
     </head>
     <body>
           <!--loader start-->
-    <div id="preloader">
+    <!--div id="preloader">
         <div class="loader1">
             <span></span>
             <span></span>
@@ -23,7 +23,7 @@
             <span></span>
             <span></span>
         </div>
-    </div>
+    </div-->
          <?php echo $__env->make('profile-layouts.menubar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
          <div class="main">
          <!--breadcrumb bar start-->
@@ -66,6 +66,8 @@
         <span class="ti-rocket"></span>
     </button>
     <!--bottom to top button end-->
+
+
     </body>
 
     <!--build:js-->

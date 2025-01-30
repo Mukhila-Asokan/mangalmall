@@ -1,4 +1,5 @@
 <div>
+   <div>
 
   @if ($instance)  {{-- Correct variable name: $instance --}}
         {{ $instance->venuename }} <br/>
@@ -23,7 +24,7 @@
 
     <div class="col-lg-3 col-md-3">
         <div class="form-group">
-            <select wire:model="searchType" id="venuetypeid" class="form-control has-value">			
+            <select wire:model="searchType" id="venuetypeid" class="form-control has-value">            
                 <option value="">Select Venue Type</option>
                 @foreach($venuetypes as $type)
                     <option value="{{ $type->id }}">{{ $type->venuetype_name }}</option>
@@ -33,9 +34,9 @@
     </div>
   
   
-	
+    
   
-	  <div class="col-lg-3 col-md-3">
+      <div class="col-lg-3 col-md-3">
         <div class="form-group">
             <select wire:model="searchSubtype" id="venuesubtypeid" class="form-control has-value">
                 <option value="">Select Venue Subtype</option>
@@ -45,7 +46,7 @@
             </select>
         </div>
     </div>
-	
+    
   
   
   
@@ -101,38 +102,38 @@
 <div class=" row grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
  @if(isset($venuelist) && $venuelist->count() > 0)
     @foreach($venuelist as $list)
-	
-	@php
-		$baseImageUrl = rtrim(url('/'), '/') . Storage::url('/');
-		$venueLink = url('/home/' . e($list->id) . '/venuedetails');
+    
+    @php
+        $baseImageUrl = rtrim(url('/'), '/') . Storage::url('/');
+        $venueLink = url('/home/' . e($list->id) . '/venuedetails');
 
           $imageUrl = $baseImageUrl .$list->bannerimage;
-	
-	@endphp
-		
-		<div class="col-md-6 col-lg-6 single-service-plane rounded white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
-				<div class="features-box p-4">
-					<div class="features-box-icon">
-						<img src="{{ $imageUrl }}" style="width:200px" />
-					</div>
-					<div class="features-box-content">
-						<h5>{{ $list->venuename }}</h5>
-						<p>Location - {{ $list->venueaddress }} <br>
+    
+    @endphp
+        
+        <div class="col-md-6 col-lg-6 single-service-plane rounded white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
+                <div class="features-box p-4">
+                    <div class="features-box-icon">
+                        <img src="{{ $imageUrl }}" style="width:200px" />
+                    </div>
+                    <div class="features-box-content">
+                        <h5>{{ $list->venuename }}</h5>
+                        <p>Location - {{ $list->venueaddress }} <br>
               Area - {{ $list->indianlocation->Areaname }} <br>
             {{ $list->indianlocation->City }}, {{ $list->indianlocation->District }}</p>
-						<p>{{ $list->description }}</p>
-						<p>Contact Person - {{ $list->contactperson }} - {{ $list->contactmobile }}</p>
-						<p>Contact Email Id - {{ $list->contactemail }}</p>
-						<div class="text-end">
-							<a href="{{ $venueLink }}">View Venue Details</a>
-						</div>
-					</div>
-				</div>
-			</div>
-	
+                        <p>{{ $list->description }}</p>
+                        <p>Contact Person - {{ $list->contactperson }} - {{ $list->contactmobile }}</p>
+                        <p>Contact Email Id - {{ $list->contactemail }}</p>
+                        <div class="text-end">
+                            <a href="{{ $venueLink }}">View Venue Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
     @endforeach
-	
-	 @else
+    
+     @else
             <div class="rounded-lg bg-white p-4 text-center shadow">No venues found.</div>
      @endif
 
@@ -141,3 +142,5 @@
 
 </div>
 
+
+</div>
