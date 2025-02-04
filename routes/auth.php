@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\OtpController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\FlashMessageMiddleware;
 
 Route::prefix('home')->middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -40,8 +41,8 @@ Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('otp.verif
         
 });
 
-Route::middleware('auth')->group(function () {
-    /*Route::get('verify-email', EmailVerificationPromptController::class)
+Route::middleware('auth',FlashMessageMiddleware::class)->group(function () {
+    Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
@@ -57,7 +58,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('home/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-    Route::put('home/password', [PasswordController::class, 'update'])->name('password.update');*/
+    Route::put('home/password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::any('home/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('home/logout');

@@ -8,7 +8,7 @@
             <div class="modal-body p-4">
                 <div class="text-center">
                     <i class="bx bxs-info-circle h1 text-info"></i>
-                    <h4 class="mt-2">{{ $pagetitle }}</h4>
+                    <h4 class="mt-2">{{  $pagetitle ?? ' Home ' }}</h4>
                     <p class="mt-3">Do you really want to change the status ?</p>
                      <button type="button" class="btn btn-success my-2" id="confirmstatus">Yes </button>
                     <button type="button" class="btn btn-info my-2" data-bs-dismiss="modal">No </button>

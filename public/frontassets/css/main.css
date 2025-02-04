@@ -12,7 +12,7 @@ Author: https://themeforest.net/user/themetags
  */
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 :root {
-  --blue:#007bff;
+  --blue:#5C2018;
   --indigo:#6610f2;
   --purple:#6f42c1;
   --pink:#e83e8c;
@@ -173,7 +173,7 @@ sup {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 a {
-  color: #007bff;
+  color: #5C2018;
   text-decoration: none;
   background-color: transparent;
 }
@@ -3155,8 +3155,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #5C2018;
+  border-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -3178,8 +3178,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #5C2018;
+  border-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -3498,15 +3498,15 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-outline-primary {
-  color: #007bff;
-  border-color: #007bff;
+  color: #5C2018;
+  border-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #5C2018;
+  border-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -3517,15 +3517,15 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-outline-primary.disabled, .btn-outline-primary:disabled {
-  color: #007bff;
+  color: #5C2018;
   background-color: transparent;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show > .btn-outline-primary.dropdown-toggle {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #5C2018;
+  border-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -3803,7 +3803,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-link {
   font-weight: 400;
-  color: #007bff;
+  color: #5C2018;
   text-decoration: none;
 }
 
@@ -4129,11 +4129,12 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   padding: .25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: #0d0103;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
   border: 0;
+  font-size:14px;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -4147,7 +4148,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #007bff;
+  background-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -4524,8 +4525,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
-  border-color: #007bff;
-  background-color: #007bff;
+  border-color: #5C2018;
+  background-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -4601,8 +4602,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
-  border-color: #007bff;
-  background-color: #007bff;
+  border-color: #5C2018;
+  background-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -4879,7 +4880,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   width: 1rem;
   height: 1rem;
   margin-top: -.25rem;
-  background-color: #007bff;
+  background-color: #5C2018;
   border: 0;
   border-radius: 1rem;
   -webkit-transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -4919,7 +4920,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .custom-range::-moz-range-thumb {
   width: 1rem;
   height: 1rem;
-  background-color: #007bff;
+  background-color: #5C2018;
   border: 0;
   border-radius: 1rem;
   -moz-transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -4959,7 +4960,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   margin-top: 0;
   margin-right: .2rem;
   margin-left: .2rem;
-  background-color: #007bff;
+  background-color: #5C2018;
   border: 0;
   border-radius: 1rem;
   -ms-transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -5122,7 +5123,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #007bff;
+  background-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -6032,7 +6033,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   padding: .5rem .75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #007bff;
+  color: #5C2018;
   background-color: #fff;
   border: 1px solid #dee2e6;
 }
@@ -6071,8 +6072,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #5C2018;
+  border-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -6173,7 +6174,7 @@ a.badge:focus, a.badge:hover {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .badge-primary {
   color: #fff;
-  background-color: #007bff;
+  background-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -6561,7 +6562,7 @@ a.badge-dark.focus, a.badge-dark:focus {
   color: #fff;
   text-align: center;
   white-space: nowrap;
-  background-color: #007bff;
+  background-color: #5C2018;
   -webkit-transition: width .6s ease;
   transition: width .6s ease;
 }
@@ -6678,8 +6679,8 @@ a.badge-dark.focus, a.badge-dark:focus {
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #5C2018;
+  border-color: #5C2018;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -8072,7 +8073,7 @@ a.close.disabled {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .bg-primary {
-  background-color: #007bff !important;
+  background-color: #5C2018 !important;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -8212,7 +8213,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .border-primary {
-  border-color: #007bff !important;
+  border-color: #5C2018 !important;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -11979,7 +11980,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .text-primary {
-  color: #007bff !important;
+  color: #5C2018 !important;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -50584,7 +50585,8 @@ img.mfp-img {
 /* line 6, src/assets/scss/vendors/owl.carousel.min.css */
 .owl-carousel {
   display: none;
-  width: 100%;
+  width: 90%;
+  margin:0 auto;
   z-index: 1;
 }
 
@@ -51068,6 +51070,10 @@ strong, b {
 .ptb-100 {
   padding: 100px 0;
 }
+.ptb-20 {
+  padding: 20px 0;
+}
+
 .ptb-50
 {
   padding: 50px 0;
@@ -51443,7 +51449,7 @@ select.form-control.has-value {
 /* line 446, src/assets/scss/custom/_style.scss */
 #header-top-bar {
   padding: 0.75rem 0;
-  background: #f1f1f1;
+  background: #5C2018;
 }
 
 /* line 450, src/assets/scss/custom/_style.scss */
@@ -51461,7 +51467,7 @@ select.form-control.has-value {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: #575757;
+  color: #ffffff;
   font-size: 13px;
   line-height: 15px;
   font-family: Poppins, sans-serif;
@@ -51494,6 +51500,8 @@ select.form-control.has-value {
   display: block;
 }
 
+
+
 /* line 486, src/assets/scss/custom/_style.scss */
 .main-header-menu-wrap {
   display: block !important;
@@ -51503,6 +51511,8 @@ select.form-control.has-value {
           animation-duration: 1s;
   -webkit-animation-name: slideInU;
           animation-name: slideInU;
+  background: linear-gradient(to bottom, rgba(255, 236, 219, 0.3), rgba(242, 126, 111, 0.3));
+         
 }
 
 /* line 492, src/assets/scss/custom/_style.scss */
@@ -51525,6 +51535,7 @@ select.form-control.has-value {
           animation-duration: 1s;
   -webkit-animation-name: slideInDown;
           animation-name: slideInDown;
+          background: #ffffff;
 }
 
 /* line 506, src/assets/scss/custom/_style.scss */
@@ -52316,6 +52327,11 @@ a.video-play-icon {
   .ptb-100 {
     padding: 55px 0;
   }
+
+  .ptb-20 {
+    padding: 5px 0;
+  }
+
   /* line 1212, src/assets/scss/custom/_style.scss */
   .pt-100 {
     padding-top: 55px;
@@ -52605,6 +52621,7 @@ svg.shape-bg, svg.promo-bg {
 .hero-slider-section {
   position: relative;
   overflow: hidden;
+  width:100%;
 }
 
 /* line 1459, src/assets/scss/custom/_style.scss */
@@ -55968,11 +55985,23 @@ button.scroll-top:focus {
 
 /* line 4169, src/assets/scss/custom/_style.scss */
 .gallery-img img {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
+ /* -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);*/
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
   display: block;
+  border:10px solid rgba(250, 232, 210, 0.5);
+}
+
+.gallery-text
+{
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+  display: block;
+  background-color: rgba(250, 232, 210, 0.5);
 }
 
 /* line 4176, src/assets/scss/custom/_style.scss */
@@ -56280,4 +56309,160 @@ button.scroll-top:focus {
     line-height: 1.5 !important;
     color: #495057 !important;              
 }
-            
+.dropdown-toggle_cat
+{
+  width: 100%;
+  height: 60px !important; 
+  border-radius: 0.25rem !important;   
+  border: 6px solid rgba(255, 236, 219, 0.5); !important;
+  backdrop-filter: blur(10px);
+  padding:20px;
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #495057 !important;     
+  background-color: #fff!important;       
+  text-align: left;
+}            
+.dropdown-toggle_cat:hover
+{
+   background: #fffeee;   
+}
+.border-width-5
+{
+  border: 6px solid rgba(255, 236, 219, 0.5) !important;
+  backdrop-filter: blur(10px); 
+  z-index: 90;
+   appearance: none; /* Removes default browser styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.dropdown-toggle_catmenu
+{
+  width: 95%;
+  background-color: #fff!important;  
+}
+.feature-promo-seciton
+{
+  background-color: #fae8d2;
+}
+
+.form-control
+{
+   appearance: none; /* Removes default browser styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+  .rating {
+            color: #ffd700;
+        }
+        .favorite-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            padding: 8px;
+        }
+        .share-icons a {
+            text-decoration: none;
+            margin-right: 10px;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+        .share-icons a:hover {
+            color: #0d6efd;
+        }
+        
+        /* Image Container and Zoom Effect Styles */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            height: 150px;
+        }
+        .venue-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .image-container:hover .venue-img {
+            transform: scale(1.15);
+        }
+        
+        /* Overlay Effect on Hover */
+        .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0);
+            transition: background 0.3s ease;
+        }
+        .image-container:hover::after {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .card {
+            transition: all 0.3s ease;
+            border-top: 5px solid #5C2018;
+			border-bottom: 5px solid #5C2018;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Smooth transition for icons */
+        .bi {
+            transition: transform 0.3s ease;
+        }
+        .share-icons a:hover .bi {
+            transform: translateY(-3px);
+        }
+        
+        /* Contact info hover effect */
+        .contact-info {
+            transition: all 0.3s ease;
+            padding: 5px;
+            border-radius: 5px;
+			font-size: 14px;
+			line-height: 20px;
+        }
+        .contact-info:hover {
+            background-color: #f8f9fa;
+        }
+	
+.primary-solid-btn
+{
+		color:white!important;
+}
+.mtb-1
+{
+		margin:10px 0px;
+}
+
+.trusted { background: #130300; }
+.new { background: #7f6c06; }
+.low { background: orange; }
+
+ /* Position the labels */
+.label-container {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	display: flex;
+	gap: 5px;
+}
+.label-badge {
+	font-size: 12px;
+	padding: 5px 25px;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+}

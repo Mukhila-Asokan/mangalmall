@@ -4,6 +4,7 @@ namespace Modules\Venue\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 use Modules\Venue\Models\VenueType;
 use Modules\Venue\Models\VenueAmenities;
@@ -21,6 +22,10 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use Modules\VenueAdmin\Models\VenueBooking;
+
+
+use Illuminate\Support\Facades\Log;
 use DataTables;
 use Session;
 
@@ -100,10 +105,7 @@ class VenueController extends Controller
             'locationid' => 'required',
             'description' => 'required',
             'contactperson' => 'required',
-            'contactmobile' => 'required',
-            'contacttelephone' => 'required',
-            'contactemail' => 'required',
-            'websitename' => 'required',
+            'contactmobile' => 'required', 
             'venuetypeid' => 'required',
             'venuesubtypeid' => 'required',
            
@@ -115,32 +117,39 @@ class VenueController extends Controller
         $venuedetails->description = $request->description;
         $venuedetails->contactperson = $request->contactperson;
         $venuedetails->contactmobile = $request->contactmobile;
-        $venuedetails->contacttelephone = $request->contacttelephone;
-        $venuedetails->contactemail = $request->contactemail;
-        $venuedetails->websitename = $request->websitename;
+        $venuedetails->contacttelephone = $request->contacttelephone  ?? '';
+        $venuedetails->contactemail = $request->contactemail ?? '';
+        $venuedetails->websitename = $request->websitename ?? '';
         $venuedetails->venuetypeid = $request->venuetypeid;
         $venuedetails->venuesubtypeid = $request->venuesubtypeid;
-
-        $venueamenities = json_encode($request->venueamenities);
-        $venuedetails->venueamenities = $venueamenities;
-        $venuedatafield = $request->datafieldid;
-        $venuedatavalue = $request->datafieldvalue;
+        $venuedetails->bookingprice = $request->bookingprice;
         
-         
-       $veneudata = json_encode($venuedatavalue);
+        $venuedetails->googlemap = '-';
+
+         $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
+    $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));
+
+
+
+  $filename = '';
+       if ($request->hasFile('bannerimage')) {
+        $filename = $request->file('bannerimage')->store('venuebannerimage', 'public');
+    }
     
-
-        $filename = '';
-        if($request->hasFile('bannerimage')){         
-            $filename = $request->file('bannerimage')->store('venuebannerimage', 'public');;
-
-        }
-
-       $venuedetails->venuedata = $veneudata;
+      
        $venuedetails->bannerimage = $filename;
+       $venuedetails->featured = 1;
+       $venuedetails->status = 'Active'; 
+       $venuedetails->delete_status = 0;
 
-   
-       $venuedetails->save();
+
+       try {
+            $venuedetails->save();
+        } catch (Exception $e) {          
+
+             return redirect()->back()->with('error', $e->getMessage());
+        }
+      
 
 
 
@@ -201,15 +210,71 @@ class VenueController extends Controller
      */
     public function edit($id)
     {
-        return view('venue::edit');
+
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue";
+        $pageroot = "Home";
+        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
+        $venueamenities = VenueAmenities::where('delete_status',0)->get();
+        $venuedatafield = VenueDataField::where('delete_status',0)->get();
+        $arealocation = indialocation::orderBy('City')->get();
+        $venue = VenueDetails::where('id',$id)->first();
+        return view('venue::venues.edit',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue'));
+      
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
-        //
+        $request->validate([
+        'venuename' => 'required',
+        'venueaddress' => 'required',
+        'venuearea' => 'required',
+        'description' => 'required',
+        'contactperson' => 'required',
+        'contactmobile' => 'required',
+        'contactemail' => 'required',
+        'venuetypeid' => 'required',
+        ]);
+   
+        $venuedetails = VenueDetails::findOrFail($id);
+        $venuedetails->venuename = $request->venuename;
+        $venuedetails->venueaddress = $request->venueaddress;
+        $venuedetails->locationid = $request->venuearea;
+        $venuedetails->description = $request->description;
+        $venuedetails->contactperson = $request->contactperson;
+        $venuedetails->contactmobile = $request->contactmobile;
+        $venuedetails->contacttelephone = $request->contacttelephone  ?? '';
+        $venuedetails->contactemail = $request->contactemail ?? '';
+        $venuedetails->websitename = $request->websitename ?? '';
+        $venuedetails->venuetypeid = $request->venuetypeid;
+        $venuedetails->venuesubtypeid = $request->venuesubtypeid;
+        $venuedetails->bookingprice = $request->bookingprice;
+        
+        $venuedetails->googlemap = '-';
+
+        $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
+        $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));
+        if ($request->hasFile('bannerimage')) {
+            $venuedetails->bannerimage = $request->file('bannerimage')->store('venuebannerimage', 'public');
+        }
+
+        $venuedetails->featured = 1;
+        $venuedetails->status = 'Active'; 
+        $venuedetails->delete_status = 0;
+
+
+       try {
+            $venuedetails->save();
+        } catch (Exception $e) {          
+
+             return redirect()->back()->with('error', $e->getMessage());
+        } 
+       return redirect('admin/venue/show')->with('success', 'Venue  Details successfully updated');
+
     }
 
     /**
@@ -438,6 +503,49 @@ class VenueController extends Controller
         VenueUser::where('id', '=', $id)->update(['status' => $venueuserstatus]);
         return redirect('admin/venueportalrequest')->with('success', 'Venue User status successfully activatied');
 
+    }
+
+    public function webpage($id)
+    {
+
+       $venuecampaign = VenueCampaigns::where('venueid', $id)->latest()->first();
+
+       echo $venuecampaign->template_html;
+        
+    }
+
+    public function bookingdetails($id)
+    {
+
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue";
+        $pageroot = "Home";
+        $page = ["title" => "something"]; 
+        
+        $venue = VenueDetails::where('id',$id)->first();
+        $venuebooking = VenueBooking::where('venue_id',$id)->get();
+
+      /* return view('venue::venues.booking',compact('pagetitle','pageroot','username','venuebooking','venue','page'));*/
+
+
+       return Inertia::render('Venue/VenueBookingCalendar', [
+        'pagetitle' => $pagetitle,
+        'pageroot' => $pageroot,
+        'username' => $username,
+        'venuebooking' => $venuebooking,
+        'venue' => $venue,
+        'page' => $page,       
+    ]);
+        
+    }
+
+    public function getBookings($id)
+    {
+         $month = $request->query('month', date('m'));
+        $bookings = VenueBooking::where('venue_id',$id)->whereMonth('start_datetime', $month)->get();
+
+        return response()->json($bookings);
     }
 
 }

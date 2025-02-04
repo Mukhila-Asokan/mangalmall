@@ -8,9 +8,8 @@
             <h6>Mangal Mall</h6>
         </div>
         <ul>
-            <li><a href="#">Profile</a></li>
-            <li><a href="<?php echo e(route('home/venue/search')); ?>">Venue</a></li>
-            <li><a href="<?php echo e(route('venuereact.search')); ?>">Venue React</a></li>
+            <li><a href="#">Profile</a></li>            
+            <li><a href="<?php echo e(route('venuereact.search')); ?>">Venue</a></li>
             <li><a href="#">Invitation Design </a></li>
             <li><a href="#">Video Making </a></li>
             <li><a href="#">Search Vendor</a></li>

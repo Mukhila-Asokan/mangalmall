@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { usePage, Head, Link } from "@inertiajs/react";
 import { Inertia } from '@inertiajs/inertia';
-import { Head, Link } from "@inertiajs/react";
+
 import Select from "react-select";
 import AsyncSelect from "react-select/async";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,8 +23,11 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     const [currentPage, setCurrentPage] = useState(1); // Default to page 1
     const [lastPage, setLastPage] = useState(1); // Default to 1 page available
 
+      const { auth } = usePage().props; // Get auth data
+      console.log('Auth data:', auth); 
+
     console.log(initialVenuelist['data']);
-    // Update the state when the prop changes
+  
     useEffect(() => {
         setVenues(initialVenuelist['data']);
     }, [initialVenuelist]);
@@ -63,26 +67,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             }
         });
 		
-       /*  if (selectedAmenities.includes(value)) {
-
-            setSelectedAmenities(selectedAmenities.filter((id) => id !== value));
-        } else {
-            setSelectedAmenities([...selectedAmenities, value]);
-        } 
-		
-		 setSelectedAmenities(
-          checked
-            ? [...selectedAmenities, value]
-            : setSelectedAmenities.filter((id) => id !== value)
-       ); */
-		
-		/* setSelectedAmenities((prevSelected) =>
-            prevSelected.includes(value)
-                ? prevSelected.filter((id) => id !== value) // Uncheck
-                : [...prevSelected, value] // Check
-        );
-		 */
-    };
+   };
 
     const handleFilterChange = async () => {
         console.log("Fetching venues with filters:", {
@@ -336,9 +321,19 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                                     <p>City {venue.description}</p>
                                     <p>{venue.description}</p>
                                     <div className="text-end">
-                                        <Link href={`/home/${venue.id}/venuedetails`} className="text-blue-500">
+
+                                     {auth.user ? (
+
+                                        <Link href={`/home/venuesearch/${venue.id}/venuedetails`} className="text-blue-500">
                                             View Details
                                         </Link>
+                                       ) : (
+                                        
+                                          <Link href={`/home/${venue.id}/venuedetails`} className="text-blue-500">
+                                            View Details
+                                        </Link>
+
+                                         )}
                                     </div>
                                 </div>
                             </div>
@@ -376,3 +371,4 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 };
 
 export default VenueSearch;
+

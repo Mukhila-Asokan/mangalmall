@@ -17,6 +17,8 @@ class RoleController extends Controller
         Session::put('userrole', Auth::guard('admin')->user()->role);
         Session::put('userid', Auth::guard('admin')->user()->id);
 
+        \Log::info('Admin session:', Session::all());
+
         if (Auth::guard('admin')->user() && Auth::guard('admin')->user()->role != 'Staff')
         {
             return redirect('admin/dashboard');

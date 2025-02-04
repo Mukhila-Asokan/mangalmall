@@ -118,7 +118,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {   
-
+       
         
         $user = Auth::user();  
        

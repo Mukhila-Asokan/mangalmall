@@ -50,7 +50,7 @@ class UserOccasionController extends Controller
          $occasion->userid = $request->userid;
          $occasion->occasiontypeid = $request->occasiontype;
          $occasion->occasion_place = $request->occasion_place;
-         $occasion->notes = $request->message;
+         $occasion->notes = $request->message ?? '-';
          $occasion->occasiondate = $request->occasiondate;
          $occasion->status = 'Active';
          $occasion->delete_status = 0;

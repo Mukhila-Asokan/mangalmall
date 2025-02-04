@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 use Modules\Venue\Models\VenueType;
 use Illuminate\Http\Request;
+use App\Http\Middleware\HandleInertiaRequests;
 
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
 
@@ -43,10 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
+
 });
 
 
-Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class])->group(function () { 
+Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
 
     Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home/occasion');
     Route::any(session('userpath').'/occasion/add', [UserOccasionController::class, 'store'])->name('home/occasion/add');
@@ -60,11 +62,22 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class])->grou
 
       Route::any('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
 
+
+       Route::any('/venuesyn-search', [VenueSearchController::class, 'syncfushindex'])->name('venuesyn.search');
+
+    Route::any('/venuesearch/{id}/venuedetails',[VenueSearchController::class, 'venuedetails'])->name('venuesearch/venuedetails');
+
+
 });
 
 
 Route::middleware(['auth'])->group(function () {
    
+});
+
+
+Route::any('/errorpage',function () {
+    return view('errorpage');
 });
 
 require __DIR__.'/auth.php';

@@ -32,3 +32,6 @@ Route::middleware('auth')->group(function () {
 
 
 Route::any('/venuereact-search', [VenueSearchController::class, 'searchvenue'])->name('venuereact.search');
+
+
+Route::get('/getBookings/{$id}', [VenueController::class, 'getBookings']);

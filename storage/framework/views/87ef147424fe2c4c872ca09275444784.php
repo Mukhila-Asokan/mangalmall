@@ -30,7 +30,7 @@
         
 
         <!--main header menu start-->
-        <div id="logoAndNav" class="main-header-menu-wrap white-bg border-bottom">
+        <div id="logoAndNav" class="main-header-menu-wrap border-bottom">
             <div class="container">
                 <nav class="js-mega-menu navbar navbar-expand-md header-nav">
 

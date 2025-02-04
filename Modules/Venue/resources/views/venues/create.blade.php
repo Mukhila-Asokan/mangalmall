@@ -14,23 +14,7 @@
     }
 </style>
  <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
+
 
          <div class="row">
             <div class="col-12">
@@ -171,7 +155,7 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="contacttelephone">Telephone No</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value = "{{ old('contacttelephone') }}" required>
+                                                  <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value = "{{ old('contacttelephone') }}" >
                                                 @if($errors->has('contacttelephone'))
                                                 <div class="text-danger">{{ $errors->first('contacttelephone') }}</div>              
                                             @endif
@@ -186,7 +170,7 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="contactemail">Email Id</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value = "{{ old('contactemail') }}" required>
+                                                  <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value = "{{ old('contactemail') }}" >
                                                 @if($errors->has('contactemail'))
                                                 <div class="text-danger">{{ $errors->first('contactemail') }}</div>              
                                             @endif
@@ -196,7 +180,7 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="contactemail">Website</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the Contact Email" value = "{{ old('websitename') }}" required>
+                                                  <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the websitename" value = "{{ old('websitename') }}" >
                                                 @if($errors->has('websitename'))
                                                 <div class="text-danger">{{ $errors->first('websitename') }}</div>              
                                             @endif
@@ -440,13 +424,44 @@
 
 
 
+                                                    </div>
+                                                </div>
+                                            </div>
+				
+				<div class="accordion-item">
+                                                <h2 class="accordion-header" id="flush-headingFour">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                                        Google Map & Budget
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
+                                                    data-bs-parent="#accordionFlushExample">
+                                                    <div class="accordion-body">
+                                        <div class="mb-4 row">
+                                         <label for="formFile" class="form-label">Google Map Location Code</label>
+                                          
+                                            <div class="col-md-10">
+                                                  <textarea class="form-control" placeholder="Enter the venue location" id="googlemap" name = "googlemap" style="height: 100px">{{ old('googlemap') }}</textarea>
+                                                  @error('googlemap')
+													<div class="text-danger">{{ $message }}</div>
+                                                 @enderror
+                                            </div>
+                                  
 
-
-
-
-
-
-
+                                        </div>
+									 <div class="mb-4 row">
+									 <label for="formFile" class="form-label">Booking Rate</label>
+									  
+										<div class="col-md-10">
+											  <input type="text" id="bookingprice" name="bookingprice" class="form-control" placeholder="Enter the Booking Price" value = "{{ old('bookingprice') }}" required>
+											   @error('bookingprice')
+													<div class="text-danger">{{ $message }}</div>
+                                               @enderror
+										</div>
+									</div>
+										
+                                    
 
                                                     </div>
                                                 </div>

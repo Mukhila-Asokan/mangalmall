@@ -20,7 +20,7 @@ class JwtAuthMiddleware extends BaseMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        try {
+       /* try {
             
             $headers = apache_request_headers(); //get header
             $request->headers->set('Authorization', $headers['authorization']);// set header in request
@@ -47,6 +47,49 @@ class JwtAuthMiddleware extends BaseMiddleware
             }
         }
 
-       
+     */
+
+
+
+        try {
+            $headers = apache_request_headers(); // Get header
+            if (!isset($headers['authorization'])) {
+                \Log::info('JwtAuthMiddleware: Authorization header missing');
+                throw new AuthenticationException('Authorization Token not found.');
+            }
+
+            $request->headers->set('Authorization', $headers['authorization']); // Set header in request
+            
+            $token = JWTAuth::getTokenFromRequest(); 
+            $user = JWTAuth::parseToken($token)->authenticate();
+
+            if (!$user) {
+                \Log::info('JwtAuthMiddleware: User authentication failed');
+                throw new AuthenticationException('User authentication failed.');
+            }
+
+            return $next($request);
+
+        } catch (Exception $e) {
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+                \Log::info('JwtAuthMiddleware: Token is Invalid');
+                throw new AuthenticationException('Token is Invalid.');
+            } elseif ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                \Log::info('JwtAuthMiddleware: Token is Expired');
+                throw new AuthenticationException('Token is Expired.');
+            } else {
+                \Log::info('JwtAuthMiddleware: Authorization Token not found');
+                throw new AuthenticationException('Authorization Token not found.');
+            }
+        }
+ 
+
+
+
+
+
+
+
+
     }
 }

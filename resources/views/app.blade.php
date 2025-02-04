@@ -1,7 +1,7 @@
 @extends('profile-layouts.profile')
 <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
 
-   @routes  <!-- ✅ Include Ziggy routes -->
+   @routes 
     @viteReactRefresh
     @vite('resources/js/app.jsx')
     @inertiaHead

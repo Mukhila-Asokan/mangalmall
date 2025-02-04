@@ -17,7 +17,7 @@
                     <div class="col-md-4 col-lg-4">
                         <div class="topbar-text">
                             <ul class="list-inline text-right">
-                                <li class="list-inline-item"><a href = "#"><?php echo e(Auth::user()->name); ?></a></li>
+                                <li class="list-inline-item"><a href = "#"><?php echo e(Auth::user()->name ?? ''); ?></a></li>
                                 <li class="list-inline-item"> <a href = "<?php echo e(route('home/logout')); ?>">
                         <?php echo e(__('Log Out')); ?></a>
              

@@ -111,54 +111,53 @@ class VenueDataFieldController extends Controller
     public function update(Request $request)
     {
 
-         $id = $request->id;
-         $datafieldid = $id;
-         $datafield = VenueDataField::find($id);
-         $datafield->datafieldtype  = $request->datafieldtype;
-         $datafield->datafieldname  = $request->datafieldname;
-         $datafield->datafieldnametype  = $request->datafieldnametype;
-      
-         $datafield->status = 'Active';
-         $datafield->delete_status = 0;
-         $datafield->save();
+          $id = $request->id;
+    $datafield = VenueDataField::find($id);
 
-         if($datafield->datafieldtype != 'Text' && $datafield->datafieldtype != 'Textarea')
-         {
-            $optionid = $request->optionid;
-            $optionname = $request->optionname;
+    
+    if (!$datafield) {
+        return redirect()->back()->with('error', 'Datafield not found.');
+    }
 
-            for($i=0;$i<count($optionid);$i++)
-            {
-               
-                $datafieldvalue = VenueDataFieldDetails::find($optionid[$i]);
-                $datafieldvalue->datafieldid = $datafieldid;
-                $datafieldvalue->optionname = $request->optionname[$i];
-                $datafieldvalue->status = 'Active';
-                $datafieldvalue->delete_status = 0;
-                $datafieldvalue->save();
+   
+    $datafield->datafieldtype = $request->datafieldtype;
+    $datafield->datafieldname = $request->datafieldname;
+    $datafield->datafieldnametype = $request->datafieldnametype;
+    $datafield->status = 'Active';
+    $datafield->delete_status = 0;
+    $datafield->save();
 
-              
+    
+    if ($datafield->datafieldtype != 'Text' && $datafield->datafieldtype != 'Textarea') {
+
+       
+        if ($request->has('optionid') && is_array($request->optionid)) {
+            foreach ($request->optionid as $key => $optionId) {
+                $datafieldvalue = VenueDataFieldDetails::find($optionId);
+                if ($datafieldvalue) {
+                    $datafieldvalue->datafieldid = $id;
+                    $datafieldvalue->optionname = $request->optionname[$key] ?? '';
+                    $datafieldvalue->status = 'Active';
+                    $datafieldvalue->delete_status = 0;
+                    $datafieldvalue->save();
+                }
             }
+        }
 
-         }
-
-        
-
-         if($datafield->datafieldtype != 'Text' && $datafield->datafieldtype != 'Textarea')
-         {
-            $optionnamenew = $request->optionnamenew;
-            for($i=0;$i<count($optionnamenew);$i++)
-            {
-                $datafieldnewvalue = new VenueDataFieldDetails;
-                $datafieldnewvalue->datafieldid = $datafieldid;
-                $datafieldnewvalue->optionname = $request->optionnamenew[$i];
-                $datafieldnewvalue->status = 'Active';
-                $datafieldnewvalue->delete_status = 0;
-                $datafieldnewvalue->save();
+     
+        if ($request->has('optionnamenew') && is_array($request->optionnamenew)) {
+            foreach ($request->optionnamenew as $newOption) {
+                VenueDataFieldDetails::create([
+                    'datafieldid' => $id,
+                    'optionname' => $newOption,
+                    'status' => 'Active',
+                    'delete_status' => 0
+                ]);
             }
-         }
+        }
+    }
 
-         return redirect('admin/venuesettings/datafield')->with('success', 'Datafield modification successfully updated');
+    return redirect('admin/venuesettings/datafield')->with('success', 'Datafield modification successfully updated');
     }
 
     /**

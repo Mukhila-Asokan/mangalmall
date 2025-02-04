@@ -1,10 +1,11 @@
 <!--hero section start-->
 <?php
-		$url1 = "frontassets/img/hero-17.jpg";
+        $url1 = "frontassets/img/hero-17.jpg";
+		$urlbg = "frontassets/img/bg1.png";
 		
 	?>
 
-        <section class="hero-slider-section">
+        <section class="hero-slider-section ptb-20" style="background: url('<?php echo e(asset($urlbg)); ?>')no-repeat" >
             <div class="owl-carousel owl-theme hero-slider-one custom-dot dot-right-center">
                 <div class="item">
                     <div class="hero-equal-height ptb-100" 

@@ -118,7 +118,7 @@
                 <select id="supervisor_id" name="supervisor_id" class="form-control" >
 					<option value= "">Select</option>
 					@foreach($staff as $st)
-						<option value="{{ $st->id }}"> {{ $st->first_name }} {{ $st->last_name }}  </option> 
+						<option value="{{ $st->id }}"> {{ $st->name }} </option> 
 					@endforeach
 				</select>
 				<div class="alert alert-danger failmessage supervisor_id mt-3" style="display:none"></div>

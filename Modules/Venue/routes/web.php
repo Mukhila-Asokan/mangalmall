@@ -8,6 +8,12 @@ use Modules\Venue\Http\Controllers\VenueAmenitiesController;
 use Modules\Venue\Http\Controllers\VenueDataFieldController;
 use Modules\Venue\Http\Controllers\ThemeBuilderController;
 
+use App\Http\Middleware\HandleInertiaRequests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+
+
 /*VenueAmenitiesController
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +30,11 @@ Route::group([], function () {
 });
 
 */
+
+ $username = Session::get('username');
+        $userid = Session::get('userid');   
+
+
 Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
     Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
 
@@ -36,6 +47,13 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/venue/show', [VenueController::class,'index'])->name('venue/index');
     Route::any('/venue/detailview/{id}', [VenueController::class,'detailview'])->name('venue/detailview');
     Route::any('/venue/{id}/edit', [VenueController::class,'edit']);
+    Route::any('/venue/{id}/webpage', [VenueController::class,'webpage']);
+   Route::put('/venue/{id}', [VenueController::class, 'update'])->name('venue.update');
+
+
+  
+
+
     Route::any('/venue/{id}/themebuilder', [VenueController::class,'themebuilder'])->name('venue/themelistview');
     Route::any('/venue/themebuilder/{venueid}/{id}/editor', [VenueController::class,'themeeditor'])->name('venue/themelistview/editor');
 
@@ -117,3 +135,19 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
 });
 
+
+/*Route::prefix('admin')->middleware('auth:admin', HandleInertiaRequests::class)->group(function () {
+
+    Route::any('/venue/{id}/bookingdetails', [VenueController::class,'bookingdetails']);
+    
+});*/
+
+Route::middleware(HandleInertiaRequests::class)->group(function () {  
+    Route::prefix('admin')->middleware(['auth:admin'])->group(function () { 
+        Route::get('/venue/{id}/bookingdetails', [VenueController::class, 'bookingdetails'])->name('admin.venue.bookingdetails');
+       
+
+    });
+
+    
+});

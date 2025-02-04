@@ -160,19 +160,17 @@ class VenueAdminController extends Controller
     public function storevenue(Request $request)
     {
         $request->validate([
-            'venuename' => 'required',
+           'venuename' => 'required',
             'venueaddress' => 'required',
             'locationid' => 'required',
             'description' => 'required',
             'contactperson' => 'required',
-            'contactmobile' => 'required',
-            'contacttelephone' => 'required',
-            'contactemail' => 'required',
-            'websitename' => 'required',
+            'contactmobile' => 'required', 
             'venuetypeid' => 'required',
             'venuesubtypeid' => 'required',
            
          ]);
+        
         $venuedetails = new VenueDetails;
         $venuedetails->venuename = $request->venuename;
         $venuedetails->venueaddress = $request->venueaddress;
@@ -180,32 +178,40 @@ class VenueAdminController extends Controller
         $venuedetails->description = $request->description;
         $venuedetails->contactperson = $request->contactperson;
         $venuedetails->contactmobile = $request->contactmobile;
-        $venuedetails->contacttelephone = $request->contacttelephone;
-        $venuedetails->contactemail = $request->contactemail;
-        $venuedetails->websitename = $request->websitename;
+        $venuedetails->contacttelephone = $request->contacttelephone  ?? '';
+        $venuedetails->contactemail = $request->contactemail ?? '';
+        $venuedetails->websitename = $request->websitename ?? '';
         $venuedetails->venuetypeid = $request->venuetypeid;
         $venuedetails->venuesubtypeid = $request->venuesubtypeid;
-        $venuedetails->googlemap = $request->googlemap;
-
-        $venueamenities = json_encode($request->venueamenities);
-        $venuedetails->venueamenities = $venueamenities;
-        $venuedatafield = $request->datafieldid;
-        $venuedatavalue = $request->datafieldvalue;
+        $venuedetails->bookingprice = $request->bookingprice;
         
-         
-       $veneudata = json_encode($venuedatavalue);
+        $venuedetails->googlemap = '-';
+
+         $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
+    $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));
+
+
+
+  $filename = '';
+       if ($request->hasFile('bannerimage')) {
+        $filename = $request->file('bannerimage')->store('venuebannerimage', 'public');
+    }
     
-
-        $filename = '';
-        if($request->hasFile('bannerimage')){         
-            $filename = $request->file('bannerimage')->store('venuebannerimage', 'public');;
-
-        }
-
-       $venuedetails->venuedata = $veneudata;
+      
        $venuedetails->bannerimage = $filename;
+       $venuedetails->featured = 1;
+       $venuedetails->status = 'Active'; 
+       $venuedetails->delete_status = 0;
 
-       $venuedetails->save();
+
+       try {
+            $venuedetails->save();
+        } catch (Exception $e) {          
+
+             return redirect()->back()->with('error', $e->getMessage());
+        }
+      
+
 
        $uservenue = new UserVenue;
        $uservenue->venueid = $venuedetails->id;

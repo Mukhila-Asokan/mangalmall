@@ -81,7 +81,8 @@ class StaffManagementController extends Controller
         $pagetitle = "Staff List";
         $pageroot = "Staff";    
         $department = Departments::where('delete_status','0')->get();
-        $staff = Staff::where('delete_status','0')->get();
+
+        $staff = AdminUser::where('delete_status','0')->where('role','Admin')->orwhere('role','Staff')->get();
         $roles = Roles::where('delete_status','0')->get();
         return view('staffmanagement::staff.create',compact('username','userid','pagetitle','pageroot','department','roles','staff'));
     }
@@ -165,7 +166,7 @@ class StaffManagementController extends Controller
         $hire_date = $request->hire_date;
         $roleid = $request->roleid;
         $departmentid = $request->departmentid;
-        $supervisor_id = $request->supervisor_id;
+        $supervisor_id = $request->supervisor_id ?? '';
 
         $validator = Validator::make($request->all(),[
             'phone' => 'required', 'string', 'regex:/^[0-9]{10}$/',
@@ -220,11 +221,14 @@ class StaffManagementController extends Controller
             if($supervisor_id== "")
                 $supervisor_id = 0;
 
-            $staff->supervisor_id =  $supervisor_id;
+            $staff->adminsupervisor_id =  $supervisor_id;
            
             
             $staff->status = "Active";
             $staff->delete_status = 0;
+
+            
+
             $staff->save();
 
             $browserResponse['id']  = $staff->id;
@@ -237,7 +241,7 @@ class StaffManagementController extends Controller
             $browserResponse['message']  = 'Please check your mobile no';
         }
 
-       
+     
         return response()->json($browserResponse, 200);
     }
 
