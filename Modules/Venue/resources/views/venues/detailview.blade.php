@@ -1,24 +1,6 @@
 @extends('admin.layouts.app-admin')
 @section('content')
 <style type="text/css"></style>
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Venue</a></li>
-                        <li class="breadcrumb-item active">Venue Detailed View</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
          <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -138,10 +120,19 @@
                     </table>
                       </div>
                       <div class="col-4">
-                         
-                         <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/edit') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                <span class="tf-icon mdi mdi-pencil me-1"></span>Edit
+
+                            <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/webpage') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end" target="_new">
+                                <span class="tf-icon mdi mdi-webpack me-1"></span>Webpage Design
                            </a>
+
+                            <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/bookingdetails') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                <span class="tf-icon mdi mdi-book-open me-1"></span>Booking Details
+                           </a>
+
+                         
+                             <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/edit') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                    <span class="tf-icon mdi mdi-pencil me-1"></span>Edit
+                               </a>
 
 
 

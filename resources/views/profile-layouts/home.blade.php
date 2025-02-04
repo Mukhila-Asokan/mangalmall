@@ -2,6 +2,7 @@
 
 
 <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+
 <script type="text/javascript">
 
 </script>
@@ -18,7 +19,9 @@
 
  @include('layouts.slider')
         @include('layouts.search')
+ 
 
+    @include('layouts.testimonial')
                   <!--call to action new style start-->
         <section class="call-to-action ptb-100" style="background: url('{{ asset("frontassets/img/hero-bg-4.jpg"); }}')no-repeat center center / cover fixed">
             <div class="container">
@@ -38,7 +41,7 @@
             </div>
         </section>
         <!--call to action new style end-->
-         @include('layouts.testimonial')
+      
 @endsection
  @php
     $areaContent = ''; 

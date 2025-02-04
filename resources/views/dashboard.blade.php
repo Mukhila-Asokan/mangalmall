@@ -6,7 +6,8 @@
              <div class="col-lg-7 col-md-7" >
                  <h5> Welcome {{ Auth::user()->name }}</h5> 
                    
-                <div class="page-header-section" style="background: url('{{ asset("frontassets/img/herobg-5.png"); }}')no-repeat center center / cover;height: 200px;">
+				   @php $prurl = "frontassets/img/herobg-5.png"; @endphp
+                <div class="page-header-section" style="background: url('{{ asset($prurl) }}')no-repeat center center / cover;height: 200px;">
                     <div class="row align-items-center">
                         <div class="col-md-7 col-lg-6">
                             <div class="page-header-content text-white">

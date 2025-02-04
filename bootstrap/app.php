@@ -2,7 +2,12 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
+use App\Exceptions\InvalidOrderException;
+Use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Support\Facades\Log;
+use App\Http\Middleware\HandleInertiaRequests;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,14 +16,29 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+
+        
+
         $middleware->alias([
             'IsAdminRoleCheck' => \App\Http\Middleware\IsAdminRoleCheck::class,
             'flashmessage' => \App\Http\Middleware\FlashMessageMiddleware::class,
             'JwtAuthMiddleware' => \App\Http\Middleware\JwtAuthMiddleware::class,
-            'VenueAdminMiddleware' => \Modules\VenueAdmin\Http\Controllers\VenueAdminController::class,
+            'VenueAdminMiddleware' => \Modules\VenueAdmin\Http\Middleware\VenueAdminMiddleware::class,
+            'HandleSessionExpiration' => \App\Http\Middleware\HandleSessionExpiration::class,
+            'HandleInertiaRequests' => HandleInertiaRequests::class,
+            
+            
         ]);
       
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+         //echo "hai";exit();
+ 
+    /* \Log::info('withExceptions() is running',[$exceptions]); // Debugging log */
+
+     
+       $exceptions->render(function (\Throwable $exception) {
+             \Log::info('Inside Throws Exception',[$exceptions]); // Debugging log
+       });
+    
     })->create();

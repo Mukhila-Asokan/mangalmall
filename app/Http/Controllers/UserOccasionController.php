@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Modules\Venue\Models\indialocation;
 
 Use session;
-
+use DB;
 class UserOccasionController extends Controller
 {
     /**
@@ -27,8 +28,9 @@ class UserOccasionController extends Controller
 
         $occasiontype = OccasionType::where('delete_status','0')->get();
         $useroccasion = UserOccasion::where('userid',$userid)->get();
+        $areaname = DB::table('indialocations')->select("Areaname")->groupBy('Areaname')->get();
 
-        return view('occasion',compact('occasiontype','useroccasion','userid'));
+        return view('occasion',compact('occasiontype','useroccasion','userid','areaname'));
     }
 
     /**
@@ -47,7 +49,8 @@ class UserOccasionController extends Controller
          $occasion = new UserOccasion;
          $occasion->userid = $request->userid;
          $occasion->occasiontypeid = $request->occasiontype;
-         $occasion->notes = $request->message;
+         $occasion->occasion_place = $request->occasion_place;
+         $occasion->notes = $request->message ?? '-';
          $occasion->occasiondate = $request->occasiondate;
          $occasion->status = 'Active';
          $occasion->delete_status = 0;
@@ -67,9 +70,10 @@ class UserOccasionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserOccasion $userOccasion)
+    public function edit(Request $request)
     {
-        //
+        $occasion = UserOccasion::where('id',$request->id)->first();
+        return response()->json($occasion, 200);
     }
 
     /**

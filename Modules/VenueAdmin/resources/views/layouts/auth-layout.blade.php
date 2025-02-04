@@ -15,6 +15,8 @@
            
           </div>
            <div class="col-xl-5 col-xxl-4">
+
+            @include('venueadmin::layouts.flash-messages')
            	 @yield('content')
            </div>
         </div>

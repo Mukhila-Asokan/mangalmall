@@ -8,8 +8,8 @@
             <h6>Mangal Mall</h6>
         </div>
         <ul>
-            <li><a href="#">Profile</a></li>
-            <li><a href="{{ route('home/venue/search') }}">Venue</a></li>
+            <li><a href="#">Profile</a></li>            
+            <li><a href="{{ route('venuereact.search') }}">Venue</a></li>
             <li><a href="#">Invitation Design </a></li>
             <li><a href="#">Video Making </a></li>
             <li><a href="#">Search Vendor</a></li>
@@ -39,6 +39,6 @@
         <div class="widget-title">
             <h6>Tags</h6>
         </div>
-        <div class="tag-cloud"><a href="#">e-commerce</a><a href="#">portfolio</a><a href="#">responsive</a><a href="#">bootstrap</a><a href="#">business</a><a href="#">corporate</a></div>
+        <div class="tag-cloud"><a href="#">Occasion</a><a href="#">vendor</a><a href="#">Venue</a><a href="#">Calendor</a></div>
     </aside>
 </div>

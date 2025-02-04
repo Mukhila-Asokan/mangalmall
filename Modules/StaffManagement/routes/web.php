@@ -45,6 +45,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/staff/ajaxdocuments',[StaffManagementController::class,'ajaxdocuments'])->name('staff.ajaxdocuments');
     
     Route::any('/staff/ajaxphotoadd',[StaffManagementController::class,'ajaxphotoadd'])->name('staff.ajaxphotoadd');
+    Route::any('/staff/profile',[StaffManagementController::class, 'profile'])->name('staff/profile');
     
     Route::any('/staff/departments',[DepartmentsController::class, 'index'])->name('staff/departments');
 

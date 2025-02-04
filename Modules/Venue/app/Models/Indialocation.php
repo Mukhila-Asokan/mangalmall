@@ -15,6 +15,8 @@ class indialocation extends Model
      */
     protected $fillable = [];
 
+    protected $table = "indialocation";
+
     // protected static function newFactory(): IndialocationFactory
     // {
     //     // return IndialocationFactory::new();

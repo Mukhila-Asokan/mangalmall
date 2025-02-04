@@ -11,11 +11,11 @@
      <link rel="stylesheet" href="{{ asset('frontassets/css/main.css'); }}">
     <!-- endbuild -->
     <link rel="stylesheet" href="{{ asset('frontassets/css/custom.css'); }}">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
     </head>
     <body>
           <!--loader start-->
-    <div id="preloader">
+    <!--div id="preloader">
         <div class="loader1">
             <span></span>
             <span></span>
@@ -23,7 +23,7 @@
             <span></span>
             <span></span>
         </div>
-    </div>
+    </div-->
          @include('profile-layouts.menubar')
          <div class="main">
          <!--breadcrumb bar start-->
@@ -52,7 +52,7 @@
                      </div>
                       @yield('content')
                   </div>
-            </div>
+				</div>
         </section>
 
 
@@ -66,21 +66,23 @@
         <span class="ti-rocket"></span>
     </button>
     <!--bottom to top button end-->
+
+
     </body>
 
     <!--build:js-->
-    <script src="{{ asset('frontassets/js/vendors/jquery-3.5.1.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/bootstrap.bundle.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/bootstrap-slider.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/jquery.countdown.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/jquery.easing.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/owl.carousel.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/validator.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/jquery.waypoints.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/jquery.rcounterup.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/magnific-popup.min.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/vendors/hs.megamenu.js'); }}"></script>
-    <script src="{{ asset('frontassets/js/app.js'); }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/bootstrap-slider.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/validator.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/jquery.rcounterup.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('frontassets/js/vendors/hs.megamenu.js') }}"></script>
+    <script src="{{ asset('frontassets/js/app.js') }}"></script>
 
 @stack('scripts') 
 

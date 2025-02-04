@@ -9,18 +9,20 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\OtpController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\FlashMessageMiddleware;
 
 Route::prefix('home')->middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register/add', [RegisteredUserController::class, 'store'])->name('register/add');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('logincheck');
+    Route::post('login', [AuthenticatedSessionController::class, 'logincheck'])->name('logincheck');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -33,9 +35,13 @@ Route::prefix('home')->middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
+    Route::get('/verify-otp', [OtpController::class, 'showVerifyForm'])->name('otp.verify');
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('otp.verify.submit');    
+        
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth',FlashMessageMiddleware::class)->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -50,10 +56,11 @@ Route::middleware('auth')->group(function () {
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('home/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('home/password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::any('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
+    Route::any('home/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('home/logout');
 });
+

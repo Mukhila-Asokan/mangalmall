@@ -18,7 +18,7 @@ Route::prefix('admin')->middleware('guest:admin')->group(function () {
  
 
     Route::get('login', [LoginController::class, 'create'])->name('admin.login');
-   Route::any('authcheck', [LoginController::class, 'authcheck'])->name('admin.authcheck');
+    Route::any('authcheck', [LoginController::class, 'authcheck'])->name('admin.authcheck');
 
 });
 

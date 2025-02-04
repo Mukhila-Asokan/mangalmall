@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use App\AdminUser;
-
 
 class LoginController extends Controller
 {
@@ -75,10 +75,16 @@ class LoginController extends Controller
 
          $credentials = $request->only('email', 'password');
 
+         \Log::info('Admin credentials:', [$credentials]);
+
         if (Auth::guard('admin')->attempt($credentials)) {
            
-           $request->session()->regenerate();
+          
 
+          $session = $request->session()->regenerate();
+
+           \Log::info('Admin session:', [$session]);
+           
             return redirect(route('adminrole'));
      
          //return redirect(route('admin/dashboard'));

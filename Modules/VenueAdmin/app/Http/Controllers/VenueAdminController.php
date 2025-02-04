@@ -6,8 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\VenueAdmin\Models\VenueUser;
+use Modules\VenueAdmin\Models\UserVenue;
+use Modules\VenueAdmin\Models\VenueBookingContact;
+
+use Modules\Venue\Models\VenueType;
+use Modules\Venue\Models\VenueAmenities;
+Use Modules\Venue\Models\VenueDataField;
+Use Modules\Venue\Models\VenueDataFieldDetails;
+use Modules\Venue\Models\indialocation;
+use Modules\Venue\Models\VenueGalleryImage;
+use Modules\Venue\Models\VenueThemeBuilder;
+use Modules\Venue\Models\VenueDetails;
+use Modules\Venue\Models\VenueCampaigns;
+use Modules\Venue\Models\Imagelibrary;
+
 use Illuminate\Support\Facades\Validator;
-use session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
+use DataTables;
+use Session;
 use Auth;
 
 
@@ -99,6 +119,12 @@ class VenueAdminController extends Controller
         if(!empty($mobilenocheck))
         {
              $request->session()->put('mobile_verified', true);
+             $request->session()->put('username', $mobilenocheck->name);
+             $request->session()->put('mobileno', $mobilenocheck->mobileno);
+             $request->session()->put('city', $mobilenocheck->city);
+             $request->session()->put('email', $mobilenocheck->email);
+             $request->session()->put('venueuserid', $mobilenocheck->id);
+             
             if($mobilenocheck->status == "Inactive")
             {
                 return redirect('venueadmin/inactiveuser')->with('success', 'Please contact Mangal Mall team to activate your account');
@@ -119,10 +145,88 @@ class VenueAdminController extends Controller
         return view('venueadmin::auth.inactiveuser');
     }
 
+    public function createvenue()
+    {
+        $pagetitle = "Add New Venue";
+        $pageroot = "Home"; 
+        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
+        $venueamenities = VenueAmenities::where('delete_status',0)->get();
+        $venuedatafield = VenueDataField::where('delete_status',0)->get();
+        $arealocation = indialocation::orderBy('City')->get();
+        return view('venueadmin::venueuser.create',compact('pagetitle','pageroot','venuetypes','venueamenities','venuedatafield','arealocation'));
+    }
+
+
+    public function storevenue(Request $request)
+    {
+        $request->validate([
+           'venuename' => 'required',
+            'venueaddress' => 'required',
+            'locationid' => 'required',
+            'description' => 'required',
+            'contactperson' => 'required',
+            'contactmobile' => 'required', 
+            'venuetypeid' => 'required',
+            'venuesubtypeid' => 'required',
+           
+         ]);
+        
+        $venuedetails = new VenueDetails;
+        $venuedetails->venuename = $request->venuename;
+        $venuedetails->venueaddress = $request->venueaddress;
+        $venuedetails->locationid = $request->locationid;
+        $venuedetails->description = $request->description;
+        $venuedetails->contactperson = $request->contactperson;
+        $venuedetails->contactmobile = $request->contactmobile;
+        $venuedetails->contacttelephone = $request->contacttelephone  ?? '';
+        $venuedetails->contactemail = $request->contactemail ?? '';
+        $venuedetails->websitename = $request->websitename ?? '';
+        $venuedetails->venuetypeid = $request->venuetypeid;
+        $venuedetails->venuesubtypeid = $request->venuesubtypeid;
+        $venuedetails->bookingprice = $request->bookingprice;
+        
+        $venuedetails->googlemap = '-';
+
+         $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
+    $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));
+
+
+
+  $filename = '';
+       if ($request->hasFile('bannerimage')) {
+        $filename = $request->file('bannerimage')->store('venuebannerimage', 'public');
+    }
+    
+      
+       $venuedetails->bannerimage = $filename;
+       $venuedetails->featured = 1;
+       $venuedetails->status = 'Active'; 
+       $venuedetails->delete_status = 0;
+
+
+       try {
+            $venuedetails->save();
+        } catch (Exception $e) {          
+
+             return redirect()->back()->with('error', $e->getMessage());
+        }
+      
+
+
+       $uservenue = new UserVenue;
+       $uservenue->venueid = $venuedetails->id;
+       $uservenue->venueuserid = Session::get('venueuserid');
+       $uservenue->save();
+
+
+       return redirect('venueadmin/venuelist')->with('success', 'Venue Details Successfully updated');
+    }
+
     public function dashboard()
     {
-      
-         return view('venueadmin::auth.dashboard');
+        $pagetitle = "Dashboard";
+        $pageroot = "Home"; 
+        return view('venueadmin::auth.dashboard',compact('pagetitle','pageroot'));
     }  
 
     public function register()
@@ -151,9 +255,26 @@ class VenueAdminController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        return view('venueadmin::show');
+        $venueuserid =  Session::get('venueuserid'); 
+        $pagetitle = "Venue List";
+        $pageroot = "Home"; 
+
+       /* $venues = UserVenue::where('venueuserid',venueuserid)->get();*/
+
+        /* SELECT * FROM `venuedetails` WHERE id = (select venueid from `uservenue` where venueuserid = 1); */
+
+
+        $venues = VenueDetails::whereIn('id', function($query) {
+                                     $query->select('venueid')
+                                        ->from('uservenue')
+                                        ->where('venueuserid','=',Session::get('venueuserid'));
+                                     })->get();
+
+
+         
+        return view('venueadmin::venueuser.list',compact('pagetitle','pageroot','venues'));
     }
 
     /**

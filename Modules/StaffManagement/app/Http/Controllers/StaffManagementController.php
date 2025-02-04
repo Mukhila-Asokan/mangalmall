@@ -22,6 +22,7 @@ use App\Models\AdminUser;
 use DataTables;
 use Session;
 
+
 class StaffManagementController extends Controller
 {
     /**
@@ -61,7 +62,13 @@ class StaffManagementController extends Controller
         $pagetitle = "Staff List";
         $pageroot = "Staff";   
         $staff = Staff::where('id',$id)->first();
-        return view('staffmanagement::staff.detailview',compact('username','userid','pagetitle','pageroot'));
+        $staff_qualification = StaffQualification::where('staffid',$id)->get();
+        $staff_work = StaffWorkHistory::where('staffid',$id)->get();
+        $staff_doc = StaffDocuments::where('staffid',$id)->get();
+        $staff_skill = StaffSkills::where('staffid',$id)->get();
+        $staff_em = StaffEmergency::where('staffid',$id)->get();
+
+        return view('staffmanagement::staff.detailview',compact('username','userid','pagetitle','pageroot','staff','staff_qualification','staff_work','staff_doc','staff_skill','staff_em'));
     }
 
     /**
@@ -74,7 +81,8 @@ class StaffManagementController extends Controller
         $pagetitle = "Staff List";
         $pageroot = "Staff";    
         $department = Departments::where('delete_status','0')->get();
-        $staff = Staff::where('delete_status','0')->get();
+
+        $staff = AdminUser::where('delete_status','0')->where('role','Admin')->orwhere('role','Staff')->get();
         $roles = Roles::where('delete_status','0')->get();
         return view('staffmanagement::staff.create',compact('username','userid','pagetitle','pageroot','department','roles','staff'));
     }
@@ -89,10 +97,21 @@ class StaffManagementController extends Controller
         $emcont->personname = $request->personname;
         $emcont->mobileno = $request->mobileno;
         $emcont->address = $request->address;
+        $emcont->staffid = $staffid;
         $emcont->relationship = $request->relationship;
         $emcont->save();
         return redirect('admin/staff')->with('success', 'New Staff added Successfully,');
 
+    }
+
+    public function profile()
+    {
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Staff List";
+        $pageroot = "Staff";   
+        $staff = Staff::where('delete_status','0')->get();
+        return view('staffmanagement::staff.detailview',compact('username','userid','pagetitle','pageroot','staff'));
     }
 
     /**
@@ -147,7 +166,7 @@ class StaffManagementController extends Controller
         $hire_date = $request->hire_date;
         $roleid = $request->roleid;
         $departmentid = $request->departmentid;
-        $supervisor_id = $request->supervisor_id;
+        $supervisor_id = $request->supervisor_id ?? '';
 
         $validator = Validator::make($request->all(),[
             'phone' => 'required', 'string', 'regex:/^[0-9]{10}$/',
@@ -202,11 +221,14 @@ class StaffManagementController extends Controller
             if($supervisor_id== "")
                 $supervisor_id = 0;
 
-            $staff->supervisor_id =  $supervisor_id;
+            $staff->adminsupervisor_id =  $supervisor_id;
            
             
             $staff->status = "Active";
             $staff->delete_status = 0;
+
+            
+
             $staff->save();
 
             $browserResponse['id']  = $staff->id;
@@ -219,7 +241,7 @@ class StaffManagementController extends Controller
             $browserResponse['message']  = 'Please check your mobile no';
         }
 
-       
+     
         return response()->json($browserResponse, 200);
     }
 
@@ -339,8 +361,7 @@ class StaffManagementController extends Controller
         if($staffid)
         {
             $staff_skills = new StaffSkills;
-            $staff_skills->staffid = $staffid;
-            $staff_skills->employeername = $skill_name;
+            $staff_skills->staffid = $staffid;          
             $staff_skills->desgination = $proficiency_level;
           
             $staff_skills->save();

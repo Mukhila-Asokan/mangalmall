@@ -20,9 +20,16 @@ class FlashMessageMiddleware
        
          if (Session::has('username')) {
             $username =  Session::get('username');           
-            $username = preg_replace('/\s+/', '_', $username);
-            View::share('userpath',$username);
-            Session::forget('username'); 
+            $trimusername = preg_replace('/\s+/', '_', $username);
+            View::share(
+                ['userpath' => $trimusername,
+                'username' => $username, 
+                'mobileno' => Session::get('mobileno'), 
+                'city' => Session::get('city'), 
+                'email' => Session::get('email'), 
+                'venueuserid' => Session::get('venueuserid'), 
+                ]);           
+            Session::forget('trimusername'); 
         }
 
          return $next($request);

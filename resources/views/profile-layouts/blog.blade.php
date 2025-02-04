@@ -13,6 +13,6 @@
     <div class="post-content">
         <p>Just then her head struck against the roof of the hall in fact she was now more than nine feet high </p>
     </div>
-    <div class="post-more pt-4 align-items-center d-flex"><a href="blog-details.html" class="btn primary-solid-btn">Read more <span class="ti-arrow-right"></span></a></div>
+    <div class="post-more pt-4 align-items-center d-flex"><a href="#" class="btn primary-solid-btn" style ="color:white;">Read more <span class="ti-arrow-right"></span></a></div>
 </div>
 </article>

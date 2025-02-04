@@ -14,10 +14,6 @@ use Modules\Merchandiser\Http\Controllers\MerchandiserController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('merchandiser', MerchandiserController::class)->names('merchandiser');
-    
-});
 
 Route::prefix('admin/merchandiser')->middleware('auth:admin')->group(function () {
    
@@ -30,3 +26,4 @@ Route::prefix('admin/merchandiser')->middleware('auth:admin')->group(function ()
     Route::any('/merchandisermodel/{id}/destroy', [MerchandiserController::class,'destroy']);
     Route::any('/merchandisermodel/{id}/updatestatus', [MerchandiserController::class,'updatestatus']);
 });
+

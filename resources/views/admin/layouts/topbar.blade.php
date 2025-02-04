@@ -198,7 +198,7 @@
                                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <img src="{{ asset('adminassets/images/users/avatar-4.png') }}" alt="user-image" class="rounded-circle">
                                 <span class="ms-1 d-none d-md-inline-block">
-                                    {!! $username !!} <i class="mdi mdi-chevron-down"></i>
+                                    {{ $username ?? Session::get('username') }} <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
 
