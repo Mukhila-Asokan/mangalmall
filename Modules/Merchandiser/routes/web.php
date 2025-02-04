@@ -14,11 +14,16 @@ use Modules\Merchandiser\Http\Controllers\MerchandiserController;
 |
 */
 
-/*Route::group([], function () {
-    Route::resource('merchandiser', MerchandiserController::class)->names('merchandiser');
-});*/
 
+Route::prefix('admin/merchandiser')->middleware('auth:admin')->group(function () {
+   
+    Route::any('/merchandisermodel', [MerchandiserController::class, 'index'])->name('merchandiser.merchandisermodel');
+    Route::post('/save', MerchandiserController::class,'store')->names('merchandiser.save');
+    Route::any('/merchandisermodel/{id}/edit', [MerchandiserController::class,'edit']);
+    Route::any('/merchandisermodel/create', MerchandiserController::class,'create')->names('merchandisermodel/create');
+    Route::put('/update', [MerchandiserController::class,'update'])->name('merchandiser.update');
+    Route::any('/show', [MerchandiserController::class,'show'])->name('merchandisermodel/show');
+    Route::any('/merchandisermodel/{id}/destroy', [MerchandiserController::class,'destroy']);
+    Route::any('/merchandisermodel/{id}/updatestatus', [MerchandiserController::class,'updatestatus']);
+});
 
-/*Route::prefix('admin')->middleware('auth:admin')->group(function () {
-    Route::any('/merchandisercategory', [MerchandiserController::class,'index'])->name('admin/merchandisercategory');
-});*/

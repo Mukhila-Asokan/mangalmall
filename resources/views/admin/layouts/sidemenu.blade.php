@@ -144,7 +144,9 @@
                         <div class="collapse" id="menuvendor">
                         <ul class="sub-menu">
 
+                    
                         <li class="menu-item">
+
                             <a href="{{ route('venue.venueportalrequest') }}" class="menu-link">
                                 <span class="menu-text">Vendor List</span>
                             </a>
@@ -156,6 +158,9 @@
                         </li>
                         <li class="menu-item">
                             <a href="#" class="menu-link">
+
+                            <a href="{{ route('merchandiser.merchandisermodel') }}" class="menu-link">
+
                                 <span class="menu-text">Vendor Category</span>
                             </a>
                         </li>
