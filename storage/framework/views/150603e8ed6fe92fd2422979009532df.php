@@ -1,5 +1,4 @@
-@extends('venueadmin::layouts.admin-layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
 	.fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start
 	{
@@ -42,12 +41,12 @@
                 <label class="form-label">Event Type</label>
                 <select name="event_id" id="event_id" class="form-select" required>
                     <option value="">Select Events</option>
-                    @foreach($occasion_types as $type)
-                    <option value="{{ $type->id }}">{{ $type->eventtypename }}</option>
-                    @endforeach
+                    <?php $__currentLoopData = $occasion_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($type->id); ?>"><?php echo e($type->eventtypename); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
-            <input type="hidden" name="venue_id" id="venue_id" value="{{ $venueid }}" />
+            <input type="hidden" name="venue_id" id="venue_id" value="<?php echo e($venueid); ?>" />
             <input type="hidden" name="booking_id" id="booking_id" value="" />
             <div class="col-md-6 mt-2">
                 <label class="form-label">Contact Person Name</label>
@@ -96,7 +95,7 @@
                 <input id="event-end-date" type="date" class="form-control" name="event-end-date" required />
             </div>
 
-            <div id="day-type-containers" class="row">
+            <div id="day-type-containers" class="col-md-12 mt-2">
               
             </div>
 
@@ -125,10 +124,10 @@
 
 </div>
 
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
 	
-  <script src="{{ asset('venueassets/libs/fullcalendar/index.global.min.js') }}"></script>
+  <script src="<?php echo e(asset('venueassets/libs/fullcalendar/index.global.min.js')); ?>"></script>
 
   <script>
     const startDateInput = document.getElementById('event-start-date');
@@ -190,6 +189,8 @@
 
 
 
-  <script src="{{ asset('venueassets/js/apps/calendar-init.js') }}"></script>
-@endpush
+  <script src="<?php echo e(asset('venueassets/js/apps/calendar-init.js')); ?>"></script>
+<?php $__env->stopPush(); ?>
 
+
+<?php echo $__env->make('venueadmin::layouts.admin-layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/VenueAdmin\resources/views/booking/create.blade.php ENDPATH**/ ?>

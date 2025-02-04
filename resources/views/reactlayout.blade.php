@@ -1,5 +1,3 @@
-@extends('admin.layouts.app-admin')
-
 @routes  
 @viteReactRefresh
 @vite('resources/js/app.jsx')
@@ -132,34 +130,8 @@ body {
 }
     
 </style>
-@section('content')
-<style type="text/css"></style>
-         <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                           <div class="text-end">
-                         <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                <span class="tf-icon mdi mdi-eye me-1"></span>List Venue
-                           </a>
-                        </div>
-                        <div class="row">
-                        <div class="col-12">
-                           
-
-                            @inertia
-
-               
-                      </div>
-                     
-                    </div>
-              
-
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-@endsection
+<div class="row">
+<div class="col-12">
+    @inertia
+</div>
+</div>

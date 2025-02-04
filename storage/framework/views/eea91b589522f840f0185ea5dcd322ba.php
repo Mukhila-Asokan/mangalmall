@@ -1,5 +1,5 @@
-@extends('admin.layouts.app-admin')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <style type="text/css">
     
  
@@ -9,7 +9,7 @@
         height:auto;
     }
 </style>
- <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+ <link href="<?php echo e(asset('adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
 
          <div class="row">
             <div class="col-12">
@@ -18,24 +18,24 @@
                         <h4 class="header-title mb-4">Add Venue</h4>
                        
                         <div class="text-end">
-                         <a href = "{{ route('admin/themebuilder') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                         <a href = "<?php echo e(route('admin/themebuilder')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                              <span class="tf-icon mdi mdi-eye me-1"></span>Theme Builder List
                            </a>
                         </div>
                   
-                          <form class="form-horizontal" role="form" method = "post" action="{{ route('venue.themebuilder_add') }}" enctype="multipart/form-data">
-                                        @csrf
+                          <form class="form-horizontal" role="form" method = "post" action="<?php echo e(route('venue.themebuilder_add')); ?>" enctype="multipart/form-data">
+                                        <?php echo csrf_field(); ?>
                                         <div class="col-6">
 
 
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="themename">Theme Builder Name</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="themename" name="themename" class="form-control" placeholder="Enter the venue Theme name" value = "{{ old('themename') }}" required>
-                                                @if($errors->has('themename'))
-                                                <div class="text-danger">{{ $errors->first('themename') }}</div>
+                                                  <input type="text" id="themename" name="themename" class="form-control" placeholder="Enter the venue Theme name" value = "<?php echo e(old('themename')); ?>" required>
+                                                <?php if($errors->has('themename')): ?>
+                                                <div class="text-danger"><?php echo e($errors->first('themename')); ?></div>
                                                 
-                                            @endif
+                                            <?php endif; ?>
                                             </div>
 
                                         </div>
@@ -45,10 +45,10 @@
                                             <label class="col-md-4 col-form-label" for="theme_zipfile">Theme Path</label>
                                             <div class="col-md-8">
                                                   <input type="file"  id="theme_zipfile" name="theme_zipfile" class="form-control" required>
-                                                @if($errors->has('theme_zipfile'))
-                                                <div class="text-danger">{{ $errors->first('theme_zipfile') }}</div>
+                                                <?php if($errors->has('theme_zipfile')): ?>
+                                                <div class="text-danger"><?php echo e($errors->first('theme_zipfile')); ?></div>
                                                 
-                                            @endif
+                                            <?php endif; ?>
                                             </div>
 
                                         </div>
@@ -62,10 +62,10 @@
                                                     <option value = "1">One Page</option>
                                                     <option value = "2">Multi Page</option>     
                                               </select>
-                                                 @if($errors->has('theme_type'))
-                                                <div class="text-danger">{{ $errors->first('theme_type') }}</div>
+                                                 <?php if($errors->has('theme_type')): ?>
+                                                <div class="text-danger"><?php echo e($errors->first('theme_type')); ?></div>
                                                 
-                                            @endif
+                                            <?php endif; ?>
                                             </div>
 
                                          </div>   
@@ -97,8 +97,8 @@
         </div>
 
 
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
 <script type="text/javascript">
 
   $images = $('#categoryiconimage')
@@ -123,4 +123,6 @@ if (input.files && input.files[0]) {
 }
 
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('admin.layouts.app-admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/Venue\resources/views/themebuilder/create.blade.php ENDPATH**/ ?>

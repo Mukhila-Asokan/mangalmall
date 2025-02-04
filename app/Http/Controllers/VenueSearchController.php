@@ -163,5 +163,20 @@ class VenueSearchController extends Controller
         return view('venuedetail',compact('venuedetail','arealocation','venuetype','venuesubtype','venuedatafield','venueamenities','venuedatafielddetails'));
 
     }
+    public function adsrandom(Request $request)
+    {
+        $ads = array(
+            array('id' => 1, 'title' => 'Ad 1', 'description' => 'This is Ad 1', 'url' => 'https://www.google.com', 'image' => 'ads/ads1.jpg'),
+            array('id' => 2, 'title' => 'Ad 2', 'description' => 'This is Ad 2', 'url' => 'https://www.google.com', 'image' => 'ads/ads2.jpg'),
+            array('id' => 3, 'title' => 'Ad 3', 'description' => 'This is Ad 3', 'url' => 'https://www.google.com', 'image' => 'ads/ads1.jpg'),
+            array('id' => 4, 'title' => 'Ad 4', 'description' => 'This is Ad 4','url' => 'https://www.google.com','image' => 'ads/ads2.jpg'),
+            array('id' => 5, 'title' => 'Ad 5', 'description' => 'This is Ad 5', 'url' => 'https://www.google.com','image' => 'ads/ads1.jpg'), 
+            array('id' => 6, 'title' => 'Ad 6', 'description' => 'This is Ad 6','url' => 'https://www.google.com','image' => 'ads/ads2.jpg'),   
+        );
+
+        return response()->json([           
+           'ads' => $ads ?? [],     
+        ], 200);
+    }
 
 }

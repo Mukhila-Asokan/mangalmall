@@ -63,10 +63,11 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
       Route::any('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
 
 
-       Route::any('/venuesyn-search', [VenueSearchController::class, 'syncfushindex'])->name('venuesyn.search');
-
+    Route::any('/venuesyn-search', [VenueSearchController::class, 'syncfushindex'])->name('venuesyn.search');
     Route::any('/venuesearch/{id}/venuedetails',[VenueSearchController::class, 'venuedetails'])->name('venuesearch/venuedetails');
 
+     
+    Route::any('/ads/random', [VenueSearchController::class, 'adsrandom'])->name('venue/adsrandom');
 
 });
 
