@@ -2,6 +2,7 @@
 
 
 <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+
 <script type="text/javascript">
 
 </script>

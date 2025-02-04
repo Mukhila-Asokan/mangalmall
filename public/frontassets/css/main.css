@@ -3154,7 +3154,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-primary {
-  color: #fff;
+  color: #fff!important;
   background-color: #5C2018;
   border-color: #5C2018;
 }
@@ -3162,15 +3162,15 @@ a.btn.disabled, fieldset:disabled a.btn {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #c79c34;
+  border-color: #5c440b;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-primary.focus, .btn-primary:focus {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #c79c34;
+  border-color: #5c440b;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
           box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
@@ -3185,7 +3185,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #0062cc;
+  background-color: #5c440b;
   border-color: #005cbf;
 }
 
@@ -5738,7 +5738,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   -webkit-box-flex: 1;
           flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.25rem;
+  padding: 0.7rem;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -6180,7 +6180,7 @@ a.badge:focus, a.badge:hover {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 a.badge-primary:focus, a.badge-primary:hover {
   color: #fff;
-  background-color: #0062cc;
+  background-color: #5c440b;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -8078,7 +8078,7 @@ a.close.disabled {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
-  background-color: #0062cc !important;
+  background-color: #5c440b !important;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -56429,7 +56429,7 @@ button.scroll-top:focus {
         /* Contact info hover effect */
         .contact-info {
             transition: all 0.3s ease;
-            padding: 5px;
+            /*padding: 5px;*/
             border-radius: 5px;
 			font-size: 14px;
 			line-height: 20px;

@@ -310,32 +310,75 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             <div className="row grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
                 {Array.isArray(venues) && venues.length > 0 ? (
                     venues.map((venue) => (
-                        <div key={venue.id} className="col-md-6 col-lg-6 single-service-plane rounded white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
-                            <div className="features-box p-4">
-                                <div className="features-box-icon">
-                                    <img src={`${baseImageUrl}${venue.bannerimage}`} alt={venue.venuename} style={{ width: "100px" }} />
+                        <div key={venue.id} className="col-md-4 mtb-1">
+                            <div className="card rounded white-bg shadow-sm p-1">
+                            <div className="favorite-icon"> <i className="bi bi-heart"></i> </div> 
+                            <div className="image-container"><img src={`${baseImageUrl}${venue.bannerimage}`} className="venue-img" alt={venue.venuename}/></div>
+                            <div className="label-container"> 
+                                <span className="label-badge trusted single-service-plane">Trusted</span>   
+                                <span className="label-badge new single-service-plane">Premium</span>
+                            </div>
+                            
+                            <div className="card-body"> 
+                                <h5 className="card-title mb-2">{venue.venuename}</h5>
+                                <div className="rating">
+                                    <i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-half"></i>
+                                    <span className="text-muted ms-2">(4.5)</span>
                                 </div>
-                                <div className="features-box-content">
-                                    <h4 className="text-xl font-bold mt-2">{venue.venuename}</h4>
-                                    <p>{venue.venueaddress}</p>
-                                    <p>City {venue.description}</p>
-                                    <p>{venue.description}</p>
-                                    <div className="text-end">
+                            </div>
+                            <div className="contact-info">
+                            <p className="card-text d-inline-flex">
+                                <div className='p-2'><i className="bi bi-geo-alt-fill text-primary"></i></div>   <div className='p-2'>{venue.venueaddress}</div>
+                             </p>
+                            </div>
+                            <div className="contact-info">
+                                <p className="card-text d-inline-flex">
+                                <div className='p-2'> <i className="bi bi-person-fill text-primary"></i></div>   <div className='p-2'>Contact Person: {venue.contactperson}</div>
+                                </p>
+                            </div>
+                            <div className="contact-info">
+                            <p className="card-text d-inline-flex">
+                                <div className='p-2'><i className="bi bi-telephone-fill text-primary"></i></div>   
+                                <div className='p-2'><a href="tel:+1234567890" className="text-decoration-none">   {venue.contactmobile}</a></div>
+                            </p>
+                        </div>   
+                        <hr></hr>
 
-                                     {auth.user ? (
+                        <div className="share-icons d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="#" onclick="shareOnFacebook()">
+                                    <i className="bi bi-facebook fs-5"></i>
+                                </a>
+                                <a href="#" onclick="shareOnTwitter()">
+                                    <i className="bi bi-twitter fs-5"></i>
+                                </a>
+                                <a href="#" onclick="shareOnWhatsApp()">
+                                    <i className="bi bi-whatsapp fs-5"></i>
+                                </a>
+                                <a href="#" onclick="shareOnLinkedIn()">
+                                    <i className="bi bi-linkedin fs-5"></i>
+                                </a>
+                            </div>
+                           
 
-                                        <Link href={`/home/venuesearch/${venue.id}/venuedetails`} className="text-blue-500">
-                                            View Details
-                                        </Link>
-                                       ) : (
-                                        
-                                          <Link href={`/home/${venue.id}/venuedetails`} className="text-blue-500">
-                                            View Details
-                                        </Link>
+                            {auth.user ? (
 
-                                         )}
-                                    </div>
-                                </div>
+                            <Link href={`/home/venuesearch/${venue.id}/venuedetails`} className="btn btn-primary btn-sm">
+                                View Details
+                            </Link>
+                            ) : (
+
+                            <Link href={`/home/${venue.id}/venuedetails`} className="btn btn-primary btn-sm">
+                                View Details
+                            </Link>
+
+                            )}
+                        </div>
+                          
                             </div>
                         </div>
                     ))

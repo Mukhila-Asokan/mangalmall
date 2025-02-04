@@ -11,7 +11,7 @@
      <link rel="stylesheet" href="<?php echo e(asset('frontassets/css/main.css')); ?>">
     <!-- endbuild -->
     <link rel="stylesheet" href="<?php echo e(asset('frontassets/css/custom.css')); ?>">
-  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
     </head>
     <body>
           <!--loader start-->
