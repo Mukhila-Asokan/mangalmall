@@ -1,9 +1,9 @@
-@extends('admin.layouts.app-admin')
 
-@routes  
-@viteReactRefresh
-@vite('resources/js/app.jsx')
-@inertiaHead
+
+<?php echo app('Tighten\Ziggy\BladeRouteGenerator')->generate(); ?>  
+<?php echo app('Illuminate\Foundation\Vite')->reactRefresh(); ?>
+<?php echo app('Illuminate\Foundation\Vite')('resources/js/app.jsx'); ?>
+<?php if (!isset($__inertiaSsrDispatched)) { $__inertiaSsrDispatched = true; $__inertiaSsrResponse = app(\Inertia\Ssr\Gateway::class)->dispatch($page); }  if ($__inertiaSsrResponse) { echo $__inertiaSsrResponse->head; } ?>
 <style type="text/css">
     
 /* Calendar.css */
@@ -132,14 +132,14 @@ body {
 }
     
 </style>
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style type="text/css"></style>
          <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                            <div class="text-end">
-                         <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                         <a href = "<?php echo e(route('venue/index')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                 <span class="tf-icon mdi mdi-eye me-1"></span>List Venue
                            </a>
                         </div>
@@ -147,7 +147,7 @@ body {
                         <div class="col-12">
                            
 
-                            @inertia
+                            <?php if (!isset($__inertiaSsrDispatched)) { $__inertiaSsrDispatched = true; $__inertiaSsrResponse = app(\Inertia\Ssr\Gateway::class)->dispatch($page); }  if ($__inertiaSsrResponse) { echo $__inertiaSsrResponse->body; } else { ?><div id="app" data-page="<?php echo e(json_encode($page)); ?>"></div><?php } ?>
 
                
                       </div>
@@ -162,4 +162,6 @@ body {
                 </div>
             </div>
         </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layouts.app-admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/adminlayout.blade.php ENDPATH**/ ?>

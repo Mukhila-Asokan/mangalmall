@@ -19,7 +19,10 @@ class HandleInertiaRequests extends Middleware
         Log::info('Interia Route is ',[$request->routeIs('admin*')]);
         if ($request->routeIs('admin*')) { // Example: If route starts with admin.
             return 'admin/adminlayout'; //use admin.blade.php
-        } else {
+        } elseif($request->routeIs('*fronthome*')) { // Example: If route starts with user.
+            return 'reactlayout'; //use user.blade.php
+        }
+        else {
             return 'app'; // Default layout (app.blade.php)
         }
     }

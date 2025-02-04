@@ -50,7 +50,7 @@
 
                     	  <!-- Post-->
                         <article class="post">
-                            <div class="post-preview"><img src="{{ $bannerurl }}" alt="article" class="img-fluid" /></div>
+                            <div class="post-preview"><img src="{{ $bannerurl }}" alt="article" class="img-fluid" style="max-height:300px"/></div>
                             <div class="post-wrapper">
                                 <div class="post-header">
                                     <h1 class="post-title">{{ $venuedetail->venuename }}</h1>                                    

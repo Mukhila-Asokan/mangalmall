@@ -1,4 +1,4 @@
-@extends('profile-layouts.profile')
+
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
 <style>
@@ -12,23 +12,23 @@
 
 </style>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-@php 
+<?php 
 
 	$bannerurl =  url('/').Storage::url('/').$venuedetail->bannerimage;
 
-@endphp
+?>
 <div class="col-lg-10 col-md-10">
   <!--page header section start-->
         <section class="page-header-section ptb-100 gradient-overly-right" 
-        style="background: url('{{ $bannerurl }}')no-repeat center center / cover">
+        style="background: url('<?php echo e($bannerurl); ?>')no-repeat center center / cover">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-7 col-lg-6">
                         <div class="page-header-content text-white">
-                            <h1 class="text-white mb-2">{{ $venuedetail->venuename }}</h1>
-                            <p class="lead">{{ $venuedetail->description }}</p>
+                            <h1 class="text-white mb-2"><?php echo e($venuedetail->venuename); ?></h1>
+                            <p class="lead"><?php echo e($venuedetail->description); ?></p>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
                         <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
                         <li class="list-inline-item breadcrumb-item"><a href="#">Venue </a></li>
-                        <li class="list-inline-item breadcrumb-item active">{{ $venuedetail->venuename }}</li>
+                        <li class="list-inline-item breadcrumb-item active"><?php echo e($venuedetail->venuename); ?></li>
                     </ol>
                 </div>
             </div>
@@ -65,14 +65,14 @@
                         <article class="post">
                             <div class="post-preview">
                                 <div class="carousel">
-                                <img src="{{ $bannerurl }}" alt="article" class="img-fluid" style="max-height:400px" />
-                                <img src="{{ $bannerurl }}" alt="article" class="img-fluid" style="max-height:400px" />
+                                <img src="<?php echo e($bannerurl); ?>" alt="article" class="img-fluid" style="max-height:400px" />
+                                <img src="<?php echo e($bannerurl); ?>" alt="article" class="img-fluid" style="max-height:400px" />
                             </div>
 
                             </div>
                             <div class="post-wrapper">
                                 <div class="post-header">
-                                    <h1 class="post-title">{{ $venuedetail->venuename }}</h1>
+                                    <h1 class="post-title"><?php echo e($venuedetail->venuename); ?></h1>
 
                                  <div class="d-inline-flex">
                                      <div class="p-2 justify-content-start"> 
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="post-content">
                                     
-                                        <p>{{ $venuedetail->description }}</p><br> 
+                                        <p><?php echo e($venuedetail->description); ?></p><br> 
 
                                          
 
@@ -164,7 +164,7 @@ height="400"
 style="border:0;"
 loading="lazy"
 allowfullscreen        
-src="{{ $venuedetail->googlemap }}&output=embed">
+src="<?php echo e($venuedetail->googlemap); ?>&output=embed">
 </iframe>
 </div>
 
@@ -228,11 +228,11 @@ src="{{ $venuedetail->googlemap }}&output=embed">
                                     <h5>Contact Details</h5>
                                 </div>
                                 <ul class="pl-2">
-                                    <li>Contact Person - {{ $venuedetail->contactperson }}</li>
-                                    <li>Contact Mobile - {{ $venuedetail->contactmobile }}</li>
-                                    <li>Office Number - {{ $venuedetail->contacttelephone }}</li>
-                                    <li>Email - {{ $venuedetail->contactemail }}</li>
-                                    <li>Website - {{ $venuedetail->websitename }}</li>
+                                    <li>Contact Person - <?php echo e($venuedetail->contactperson); ?></li>
+                                    <li>Contact Mobile - <?php echo e($venuedetail->contactmobile); ?></li>
+                                    <li>Office Number - <?php echo e($venuedetail->contacttelephone); ?></li>
+                                    <li>Email - <?php echo e($venuedetail->contactemail); ?></li>
+                                    <li>Website - <?php echo e($venuedetail->websitename); ?></li>
                                     
                                 </ul>
                             </aside>
@@ -274,8 +274,8 @@ src="{{ $venuedetail->googlemap }}&output=embed">
         </div> 
     </div>  
 </div>
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
 
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -293,7 +293,8 @@ src="{{ $venuedetail->googlemap }}&output=embed">
             });
         });
     </script>
-@viteReactRefresh
-@vite('resources/js/app.jsx')
+<?php echo app('Illuminate\Foundation\Vite')->reactRefresh(); ?>
+<?php echo app('Illuminate\Foundation\Vite')('resources/js/app.jsx'); ?>
 
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('profile-layouts.profile', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/venuedetail.blade.php ENDPATH**/ ?>

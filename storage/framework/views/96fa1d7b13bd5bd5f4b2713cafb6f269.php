@@ -1,5 +1,5 @@
-@extends('admin.layouts.app-admin')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 
 
@@ -13,7 +13,7 @@
                       
                          
                         <div class="text-end">   
-                        <a href = "{{ route('themebuilder/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                        <a href = "<?php echo e(route('themebuilder/create')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                           <span class="tf-icon mdi mdi-plus me-1"></span>Add
                            </a>
                         </div>
@@ -40,10 +40,10 @@
                 </div>
             </div>
         </div>
-@endsection
-<input type="hidden" name="redirecturl" id="redirecturl" value="{{ url('/admin/venue/themebuilder/') }}">  
+<?php $__env->stopSection(); ?>
+<input type="hidden" name="redirecturl" id="redirecturl" value="<?php echo e(url('/admin/venue/themebuilder/')); ?>">  
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
     <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
@@ -54,7 +54,7 @@
     var table = $('.data-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('admin/themebuilder') }}",
+        ajax: "<?php echo e(route('admin/themebuilder')); ?>",
         columns: [
             {data: 'id', name: 'id'},
             {data: 'themename', name: 'themename'},
@@ -66,4 +66,5 @@
         
   });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('admin.layouts.app-admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/Venue\resources/views/themebuilder/index.blade.php ENDPATH**/ ?>

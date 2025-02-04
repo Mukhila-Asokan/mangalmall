@@ -306,11 +306,11 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 </button>
 
 </div>
-</div>
+</div><br  ></br>
             <div className="row grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
                 {Array.isArray(venues) && venues.length > 0 ? (
                     venues.map((venue) => (
-                        <div key={venue.id} className="col-md-4 mtb-1">
+                        <div key={venue.id} className="col-md-4 mtb-2">
                             <div className="card rounded white-bg shadow-sm p-1">
                             <div className="favorite-icon"> <i className="bi bi-heart"></i> </div> 
                             <div className="image-container"><img src={`${baseImageUrl}${venue.bannerimage}`} className="venue-img" alt={venue.venuename}/></div>
@@ -348,8 +348,8 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                         </div>   
                         <hr></hr>
 
-                        <div className="share-icons d-flex justify-content-between align-items-center">
-                            <div>
+                        <div className="share-icons d-flex justify-content-between align-items-center mtb-1">
+                            <div className='p-2'>
                                 <a href="#" onclick="shareOnFacebook()">
                                     <i className="bi bi-facebook fs-5"></i>
                                 </a>
@@ -364,19 +364,10 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                                 </a>
                             </div>
                            
-
-                            {auth.user ? (
-
-                            <Link href={`/home/venuesearch/${venue.id}/venuedetails`} className="btn btn-primary btn-sm">
+                            <a href={`/home/venuesearch/${venue.id}/venuedetails`} className="btn btn-primary btn-sm" target='_new'>
                                 View Details
-                            </Link>
-                            ) : (
-
-                            <Link href={`/home/${venue.id}/venuedetails`} className="btn btn-primary btn-sm">
-                                View Details
-                            </Link>
-
-                            )}
+                            </a>
+                         
                         </div>
                           
                             </div>
@@ -388,17 +379,20 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             </div>
 
             {/* Pagination Buttons */}
-            <div className="pagination-controls row">
+            <div className="pagination-controls row mt-4">
+                <div className="col-md-2">
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="col-md-1 btn primary-solid-btn btn-block btn-not-rounded mt-3"
+                    className="col-1 btn primary-solid-btn btn-block btn-not-rounded mt-3"
                 >
                    <FontAwesomeIcon icon={faArrowLeft} />
                 </button>
-
-                <span className="col-md-4 mt-3"> Page {currentPage} of {lastPage} </span>
-
+                </div>
+                <div className="col-md-8">
+                    <span className=""> <h6 className="mt-3">Page {currentPage} of {lastPage} </h6></span>
+                </div>
+                <div className="col-md-2">
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === lastPage}
@@ -406,7 +400,9 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                 >
                     <FontAwesomeIcon icon={faArrowRight} />
                 </button>
+                </div>
             </div>
+            
         </div>
 
         </div>
