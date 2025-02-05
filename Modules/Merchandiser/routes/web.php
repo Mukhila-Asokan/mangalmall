@@ -15,7 +15,7 @@ use Modules\Merchandiser\Http\Controllers\MerchandiserController;
 */
 
 
-Route::prefix('admin/merchandiser')->middleware('auth:admin')->group(function () {
+/*Route::prefix('admin/merchandiser')->middleware('auth:admin')->group(function () {
    
     Route::any('/merchandisermodel', [MerchandiserController::class, 'index'])->name('merchandiser.merchandisermodel');
     Route::post('/save', MerchandiserController::class,'store')->names('merchandiser.save');
@@ -26,4 +26,4 @@ Route::prefix('admin/merchandiser')->middleware('auth:admin')->group(function ()
     Route::any('/merchandisermodel/{id}/destroy', [MerchandiserController::class,'destroy']);
     Route::any('/merchandisermodel/{id}/updatestatus', [MerchandiserController::class,'updatestatus']);
 });
-
+*/
