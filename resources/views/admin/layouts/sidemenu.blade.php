@@ -156,14 +156,14 @@
                                 <span class="menu-text">Vendor Portal Request</span>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <!--li class="menu-item">
                             <a href="#" class="menu-link">
 
                             <a href="{{ route('merchandiser.merchandisermodel') }}" class="menu-link">
 
                                 <span class="menu-text">Vendor Category</span>
                             </a>
-                        </li>
+                        </li-->
 </ul>
 </div>
 
