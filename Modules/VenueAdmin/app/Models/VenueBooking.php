@@ -21,4 +21,19 @@ class VenueBooking extends Model
     // {
     //     // return VenueBookingFactory::new();
     // }
+
+
+
+    public function contact()
+    {
+        return $this->hasOne(VenueBookingContact::class, 'venuebooking_id');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(VenueBookingDetails::class, 'venuebooking_id');
+    }
+
+
+
 }

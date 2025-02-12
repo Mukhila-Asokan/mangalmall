@@ -6,23 +6,6 @@
         display: none;
     }
 </style>
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
 
          <div class="row">
             <div class="col-12">
@@ -42,17 +25,17 @@
                                               <label class="col-md-4 col-form-label" for="datafieldtype">Select Data Field</label>
                                                <div class="col-md-8">
                                              <select class="form-select" id="datafieldtype" name="datafieldtype">
-                                                <option selected>Open this Data Field</option>
+                                                <option value = '' selected>Open this Data Field</option>
                                                 <option Value ="Text">Text</option>
                                                 <option Value ="Select">Select</option>
                                                 <option Value ="Textarea">Textarea</option>
-                                                <option Value ="Radio">Radio</option>
-                                                <option Value ="Checkbox">Checkbox</option>
+                                                <!--option Value ="Radio">Radio</option>
+                                                <option Value ="Checkbox">Checkbox</option-->
                                             </select>
                                                  @if($errors->has('datafieldtype'))
                                                 <div class="text-danger">{{ $errors->first('datafieldtype') }}</div>
                                                 
-                                            @endif
+                                             @endif
                                             </div>
 
                                          </div>   
@@ -61,7 +44,7 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="venuetypename">Venue Datafield Name</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="datafieldname" name="datafieldname" class="form-control" placeholder="Enter the Venue Datafield name" value = "{{ old('datafieldname') }}" required>
+                                                  <input type="text" id="datafieldname" name="datafieldname" class="form-control" placeholder="Enter the Venue Datafield name" value = "{{ old('datafieldname') }}" >
                                                 @if($errors->has('datafieldname'))
                                                 <div class="text-danger">{{ $errors->first('datafieldname') }}</div>
                                                 
@@ -73,7 +56,7 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="datafieldnametype">Datafield Name Units</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="datafieldnametype" name="datafieldnametype" class="form-control" placeholder="Enter the Venue Datafield Unit name" value = "{{ old('datafieldnametype') }}" required>
+                                                  <input type="text" id="datafieldnametype" name="datafieldnametype" class="form-control" placeholder="Enter the Venue Datafield Unit name" value = "{{ old('datafieldnametype') }}" >
                                                 @if($errors->has('datafieldnametype'))
                                                 <div class="text-danger">{{ $errors->first('datafieldnametype') }}</div>
                                                 

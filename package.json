@@ -18,6 +18,8 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "@fortawesome/free-regular-svg-icons": "^6.7.2",
         "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -26,6 +28,7 @@
         "@inertiajs/inertia-react": "^0.8.1",
         "@inertiajs/progress": "^0.2.7",
         "@inertiajs/react": "^2.0.3",
+        "@mui/material": "^6.4.4",
         "@syncfusion/ej2-react-buttons": "^28.2.3",
         "@syncfusion/ej2-react-calendars": "^28.2.3",
         "@syncfusion/ej2-react-dropdowns": "^28.2.3",

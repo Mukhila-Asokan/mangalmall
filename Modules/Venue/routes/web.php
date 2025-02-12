@@ -7,6 +7,10 @@ use Modules\Venue\Http\Controllers\VenueSubTypeController;
 use Modules\Venue\Http\Controllers\VenueAmenitiesController;
 use Modules\Venue\Http\Controllers\VenueDataFieldController;
 use Modules\Venue\Http\Controllers\ThemeBuilderController;
+use Modules\Venue\Http\Controllers\StateController;
+use Modules\Venue\Http\Controllers\DistrictController;
+Use Modules\Venue\Http\Controllers\CityController;
+use Modules\Venue\Http\Controllers\AreaController;
 
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Support\Facades\Auth;
@@ -48,11 +52,14 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/venue/detailview/{id}', [VenueController::class,'detailview'])->name('venue/detailview');
     Route::any('/venue/{id}/edit', [VenueController::class,'edit']);
     Route::any('/venue/{id}/webpage', [VenueController::class,'webpage']);
-   Route::put('/venue/{id}', [VenueController::class, 'update'])->name('venue.update');
-
-
-  
-
+    Route::put('/venue/{id}', [VenueController::class, 'update'])->name('venue.update');
+    Route::any('/venue/{id}/destroy', [VenueController::class,'destroy']);
+    Route::any('/venue/{id}/updatestatus', [VenueController::class,'updatestatus']);
+    Route::any('/venue/{id}/venuecontent', [VenueController::class,'venuecontent'])->name('venue/venuecontent');
+    Route::any('/venue/content_add', [VenueController::class,'content_add'])->name('venue.content_add');
+    Route::any('/venue/{id}/venueimage', [VenueController::class,'venueimage'])->name('venue/venueimage');
+    Route::any('/venue/venueimage_add', [VenueController::class,'venueimage_add'])->name('venue.venueimage_add');
+    Route::post('/venue/image-delete', [VenueController::class, 'imageDelete'])->name('venue.image_delete');
 
     Route::any('/venue/{id}/themebuilder', [VenueController::class,'themebuilder'])->name('venue/themelistview');
     Route::any('/venue/themebuilder/{venueid}/{id}/editor', [VenueController::class,'themeeditor'])->name('venue/themelistview/editor');
@@ -131,6 +138,50 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
     Route::any('/venueportalrequest',[VenueController::class,'venueportalrequest'])->name('venue.venueportalrequest');
     Route::any('/venueportalrequest/{id}/updatestatus',[VenueController::class,'venueuserupdatestatus']);
+
+
+    /*State*/
+
+    Route::any('/state', [StateController::class,'index'])->name('venue.state');
+    Route::any('/state/create', [StateController::class,'create'])->name('venue.state/create');
+    Route::any('/state/{id}/edit', [StateController::class,'edit']);
+    Route::put('/state/update', [StateController::class,'update'])->name('venue.state.update');
+    Route::post('/state/store', [StateController::class,'store'])->name('venue.state.venuestate_add');   
+    Route::any('/state/{id}/destroy', [StateController::class,'destroy']);
+    Route::any('/state/{id}/updatestatus', [StateController::class,'updatestatus']);
+
+    /*District*/
+    Route::any('/district', [DistrictController::class,'index'])->name('venue.district');
+    Route::any('/district/create', [DistrictController::class,'create'])->name('venue.district/create');
+    Route::any('/district/{id}/edit', [DistrictController::class,'edit']);
+    Route::put('/district/update', [DistrictController::class,'update'])->name('venue.district.update');
+    Route::post('/district/store', [DistrictController::class,'store'])->name('venue.district.venuedistrict_add');   
+    Route::any('/district/{id}/destroy', [DistrictController::class,'destroy']);
+    Route::any('/district/{id}/updatestatus', [DistrictController::class,'updatestatus']);
+
+    /*City*/
+    Route::any('/city', [CityController::class,'index'])->name('venue.city');
+    Route::any('/city/create', [CityController::class,'create'])->name('venue.city/create');
+    Route::any('/city/{id}/edit', [CityController::class,'edit']);
+    Route::put('/city/update', [CityController::class,'update'])->name('venue.city.update');
+    Route::post('/city/store', [CityController::class,'store'])->name('venue.city.venuedistrict_add');   
+    Route::any('/city/{id}/destroy', [CityController::class,'destroy']);
+    Route::any('/city/{id}/updatestatus', [CityController::class,'updatestatus']);
+
+
+    /*Area*/
+    Route::any('/area', [AreaController::class,'index'])->name('venue.area');
+    Route::any('/area/create', [AreaController::class,'create'])->name('venue.area/create');
+    Route::any('/area/{id}/edit', [AreaController::class,'edit']);
+    Route::put('/area/update', [AreaController::class,'update'])->name('venue.area.update');
+    Route::post('/area/store', [AreaController::class,'store'])->name('venue.area.venuedistrict_add');   
+    Route::any('/area/{id}/destroy', [AreaController::class,'destroy']);
+    Route::any('/area/{id}/updatestatus', [AreaController::class,'updatestatus']);
+
+
+    /*Religion*/
+
+
 
 
 });

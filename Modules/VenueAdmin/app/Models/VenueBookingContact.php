@@ -16,8 +16,17 @@ class VenueBookingContact extends Model
     protected $fillable = [];
     protected $table = "venuebookingpersondetails";
 
+     /*protected $fillable = [
+        'venuebooking_id', 'person_name', 'contact_address', 'mobileno'
+    ];*/
+
     // protected static function newFactory(): VenueBookingContactFactory
     // {
     //     // return VenueBookingContactFactory::new();
     // }
+
+    public function booking()
+    {
+        return $this->belongsTo(VenueBooking::class, 'venuebooking_id', 'id');
+    }
 }

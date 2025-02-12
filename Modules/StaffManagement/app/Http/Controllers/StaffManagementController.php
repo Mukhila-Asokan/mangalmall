@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Modules\StaffManagement\Models\Roles;
 use Modules\StaffManagement\Models\Departments;
-Use Modules\StaffManagement\Models\staff;
+Use Modules\StaffManagement\Models\Staff;
 Use Modules\StaffManagement\Models\StaffDocuments;
 Use Modules\StaffManagement\Models\StaffEmergency;
 Use Modules\StaffManagement\Models\StaffQualification;

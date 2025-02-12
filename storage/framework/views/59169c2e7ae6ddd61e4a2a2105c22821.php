@@ -8,7 +8,28 @@
         height: auto;
         border-radius: 10px;
     }
+	.bg-flower-bot {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        opacity: .2;
+        z-index: -1;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+    }
 
+    img {  
+  transition: transform 0.25s ease;
+  cursor: zoom-in;
+}
+
+
+img.zoomed {
+  cursor: zoom-out;
+}
 
 </style>
 
@@ -21,14 +42,13 @@
 ?>
 <div class="col-lg-10 col-md-10">
   <!--page header section start-->
-        <section class="page-header-section ptb-100 gradient-overly-right" 
+        <section class="page-header-section ptb-20 gradient-overly-right" 
         style="background: url('<?php echo e($bannerurl); ?>')no-repeat center center / cover">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-7 col-lg-6">
                         <div class="page-header-content text-white">
-                            <h1 class="text-white mb-2"><?php echo e($venuedetail->venuename); ?></h1>
-                            <p class="lead"><?php echo e($venuedetail->description); ?></p>
+                            <h1 class="text-white mb-2"><?php echo e($venuedetail->venuename); ?></h1>                          
                         </div>
                     </div>
                 </div>
@@ -46,7 +66,7 @@
                 <div class="custom-breadcrumb">
                     <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
                         <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="list-inline-item breadcrumb-item"><a href="#">Venue </a></li>
+                        <li class="list-inline-item breadcrumb-item"><a href="<?php echo e(route('venuereact.search')); ?>">Venue </a></li>
                         <li class="list-inline-item breadcrumb-item active"><?php echo e($venuedetail->venuename); ?></li>
                     </ol>
                 </div>
@@ -59,21 +79,51 @@
   <div class="module ptb-100">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 col-md-8">
-
-                    	  <!-- Post-->
-                        <article class="post">
+                    <div class="col-lg-6 col-md-6">
                             <div class="post-preview">
                                 <div class="carousel">
                                 <img src="<?php echo e($bannerurl); ?>" alt="article" class="img-fluid" style="max-height:400px" />
                                 <img src="<?php echo e($bannerurl); ?>" alt="article" class="img-fluid" style="max-height:400px" />
-                            </div>
+								</div>
+							</div>
+					</div>
 
-                            </div>
-                            <div class="post-wrapper">
-                                <div class="post-header">
-                                    <h1 class="post-title"><?php echo e($venuedetail->venuename); ?></h1>
-
+                    <div class="col-lg-6 col-md-6">
+                        <div class="post-wrapper">
+                            <div class="post-header">
+                                <h1 class="post-title"><?php echo e($venuedetail->venuename); ?></h1><br>
+								<p><small><?php echo e($venuedetail->venueaddress); ?> ,  <br> <?php echo e($venuedetail->indianlocation->Areaname); ?> <?php echo e($venuedetail->indianlocation->City); ?>, <?php echo e($venuedetail->indianlocation->District); ?><br><?php echo e($venuedetail->indianlocation->State); ?></small></p>
+								
+								 
+								
+								 
+								  <div class="d-inline-flex">
+								
+									<div class="p-2 justify-content-start"> 
+									<h5> <i class = "fa fa-indian-rupee-sign"></i> <?php echo e($venuedetail->bookingprice); ?> </h5>
+									</div>
+								 </div>
+								 <br>
+									
+								
+								 
+								 <div class="d-inline-flex">
+									<div class="p-2 justify-content-start"> 
+										<h6>Capacity</h6>
+									</div>
+									<div class="p-2 justify-content-start"> 
+									<h6><?php echo e($venuedetail->capacity); ?></h6>
+									</div>
+									<div class="p-2 justify-content-end"> 
+										<h6>Food Type</h6>
+									</div>
+									<div class="p-2 justify-content-start"> 
+									<h6><?php echo e($venuedetail->food_type); ?></h6>
+									</div>
+								 </div>
+								 <br>
+								 
+									<hr>
                                  <div class="d-inline-flex">
                                      <div class="p-2 justify-content-start"> 
                                         <div class="rating">
@@ -84,91 +134,172 @@
                                             <i class="bi bi-star-half"></i>
                                             <span class="text-muted ms-2">(4.5)</span>
                                         </div> 
-                                    </div> 
-                                    <div class="p-2 justify-content-end"> 
-                                       
-                                            <a href="#" onclick="shareOnFacebook()">
-                                                <i class="bi bi-facebook fs-5"></i>
-                                            </a>
-                                            <a href="#" onclick="shareOnTwitter()">
-                                                <i class="bi bi-twitter fs-5"></i>
-                                            </a>
-                                            <a href="#" onclick="shareOnWhatsApp()">
-                                                <i class="bi bi-whatsapp fs-5"></i>
-                                            </a>
-                                            <a href="#" onclick="shareOnLinkedIn()">
-                                                <i class="bi bi-linkedin fs-5"></i>
-                                            </a>
-                                         
-                                    </div>                                    
+                                    </div>                                                                       
                                 </div>
-                                <div class="post-content">
+								
+								 
+								
+							</div>
+						</div>
+						<div class="bg-flower-bot">
+                      <img src="<?php echo e(asset('frontassets/img/flower.png')); ?>">
+            </div>
+					</div>
+					</div>
+				<div class="row">
+                     <div class="col-lg-12 col-md-12"> 
+						<div class="post-content">
                                     
-                                        <p><?php echo e($venuedetail->description); ?></p><br> 
 
-                                         
+                                <ul class="nav nav-tabs feature-tab feature-new-tab justify-content-center mb-3 border-bottom-0" data-tabs="tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center active" href="#feature-tab-1" data-toggle="tab">
+                                        <h6 class="mb-0">Contact Details</h6>
+                                    </a>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="#feature-tab-2" data-toggle="tab">
+                                        <h6 class="mb-0">Key Features</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="#feature-tab-3" data-toggle="tab">
+                                        <h6 class="mb-0">Amenities</h6>
+                                    </a>
+                                </li>
+								 <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" href="#feature-tab-4" data-toggle="tab">
+                                        <h6 class="mb-0">Description</h6>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content feature-tab-content">
+                                  <div class="tab-pane active" id="feature-tab-1">  
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12">
+
+                                        <ul class="list-unstyled tech-feature-list">
+                                            <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Contact Person - <?php echo e($venuedetail->contactperson); ?></li>
+                                            <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Contact Mobile - <?php echo e($venuedetail->contactmobile); ?></li>
+                                            <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Office Number - <?php echo e($venuedetail->contacttelephone); ?></li>
+                                            <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Email - <?php echo e($venuedetail->contactemail); ?></li>
+                                            <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Website - <?php echo e($venuedetail->websitename); ?></li>
+                                            
+                                        </ul>
+
+                                        </div>
+                                    </div>
+                                  </div>
+                                    <div class="tab-pane" id="feature-tab-2">  
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12">
+                                          
+
+                                          
+                                            <ul class="list-unstyled tech-feature-list">
+                                                <?PHP
+                                                $venuedataarray = json_decode($venuedetail->venuedata, true); 
+                                                $i=0;
+                                                foreach($venuedatafield as $datafield):
+
+                                                    $value = $venuedatafielddetails->firstWhere('id',$venuedataarray[$i])->optionname ?? $venuedataarray[$i];
+                                                    
+                                                    echo '<li class="py-1"> <span class="ti-control-forward mr-2 color-primary"></span>'.$datafield->datafieldname.' - '.$value.' '.$datafield->datafieldnametype.'</li>';
+
+                                                
+                                                $i++;
+                                                endforeach;
+
+                                            ?>
+                                                
+                                            </ul>
+                                       
+                                            </div>
+                                        </div>
+
+                                    </div>   
+									
+									 <div class="tab-pane" id="feature-tab-3">  
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12">
+											
+												<ul class="list-unstyled tech-feature-list">
+                                                        <?PHP
+
+                                                        $amenitiesarray = json_decode($venuedetail->venueamenities, true); 
+                                                        
+
+                                                        foreach($venueamenities as $amenities):
+                                                            
+                                                            if(in_array($amenities->id, $amenitiesarray))
+                                                            {
+                                                                echo '<li class="py-1"> <span class="ti-control-forward mr-2 color-primary"></span>'.$amenities->amenities_name.'</li>';
+                                                            }
+                                                        endforeach;
+
+                                                    ?>
+                                                        
+                                                    </ul>
+											
+											</div>
+										</div>
+									</div>
+									
+									 <div class="tab-pane" id="feature-tab-4">  
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12">
+											
+										 <?php echo $venuedetail->venuecontent->first()->description; ?>	
+												 <h6>Key Features</h6>
+                                    <?php echo $venuedetail->venuecontent->first()->key_features; ?><br> 
+                                    <h6>Ambience</h6>
+                                    <?php echo $venuedetail->venuecontent->first()->ambience; ?>
+
+                                    <br>
+                                     <h6>Event Sustability</h6>
+                                    <?php echo $venuedetail->venuecontent->first()->event_sustability; ?>
+
+                                    <br>
+                                    <h6>Amenities</h6>
+                                    <?php echo $venuedetail->venuecontent->first()->amenities; ?>
+
+                                    
+											</div>
+										</div>
+									</div>
 
 
+                                    
+								</div>
 
+                                   
                                   
                                   <br>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6" >
-                                        <div id="calendar-component" class="shadow-lg"></div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
+                              
+						</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-6 col-lg-6">
+						  <div id="calendar-component"></div>
+					</div>
+					<div class="col-md-6 col-lg-6">
+						<h6>Image Gallery</h6>
 
-
-                                        <aside class="widget widget-categories shadow-lg p-2">
-                                <div class="widget-title p-2 text-center">
-                                    <h5>Features</h5>
-                                </div>
-                                <ul class="pl-2">
-                                    <?PHP
-                                    $venuedataarray = json_decode($venuedetail->venuedata, true); 
-                                    $i=0;
-                                     foreach($venuedatafield as $datafield):
-
-                                        $value = $venuedatafielddetails->firstWhere('id',$venuedataarray[$i])->optionname ?? $venuedataarray[$i];
-                                        
-                                        echo '<li>'.$datafield->datafieldname.' - '.$value.' '.$datafield->datafieldnametype.'</li>';
-
-                                      
-                                      $i++;
-                                    endforeach;
-
-                                ?>
-                                    
-                                </ul>
-                            </aside> 
-
-
-                            </div>
-                            </div>
-
-
-                                <div class="post-footer">
-                                    <div class="post-tags"><a href="#">Venue </a><a href="#">City</a><a href="#">State</a></div>
-
-
-
-                                    <div class="row">
-
-<div class="col-12">
-    
-                                         <div class="map-container">
-<iframe 
-width="100%" 
-height="400" 
-style="border:0;"
-loading="lazy"
-allowfullscreen        
-src="<?php echo e($venuedetail->googlemap); ?>&output=embed">
-</iframe>
-</div>
-
-</div>
+                        <?php $__currentLoopData = $venuedetail->venueimage->where('image_type', 'gallery'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <img src="<?php echo e(asset('storage/' . $image->image_path)); ?>" class="img-thumbnail gallery" width="150">               
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						
+						<div class="bg-flower-bot">
+                      <img src="<?php echo e(asset('frontassets/img/palanquim.png')); ?>">
+					</div>
+					</div>
+					
+				</div>
+				<div class="row">
+                             
 
     
 
@@ -176,21 +307,21 @@ src="<?php echo e($venuedetail->googlemap); ?>&output=embed">
 <div class="col-12 pt-4">
       
 <div class="comments-area">
-    <h5 class="comments-title">Comments - </h5>
+    <h5 class="comments-title">Comments</h5>
     <div class="comment-list">
-        
+        <!-- List Venue Comments -->
     </div>
 
     
     <!-- Star Rating -->
     <div class="mb-3">
-        <label class="form-label"><strong>Rate this Blog:</strong></label>
+        <label class="form-label"><strong>Rate this Venue :</strong></label>
         <div class="star-rating">
-            <i class="fa fa-star" data-value="1"></i>
-            <i class="fa fa-star" data-value="2"></i>
-            <i class="fa fa-star" data-value="3"></i>
-            <i class="fa fa-star" data-value="4"></i>
-            <i class="fa fa-star" data-value="5"></i>
+            <i class="fa fa-star overall-star" data-value="1"></i>
+            <i class="fa fa-star overall-star" data-value="2"></i>
+            <i class="fa fa-star overall-star" data-value="3"></i>
+            <i class="fa fa-star overall-star" data-value="4"></i>
+            <i class="fa fa-star overall-star" data-value="5"></i>
         </div>
         <p class="mt-1">Your Rating: <span id="rating-value">0</span>/5</p>
     </div>
@@ -217,63 +348,15 @@ src="<?php echo e($venuedetail->googlemap); ?>&output=embed">
 
 
 
-                                </div>
-                            </div>
-                        </article>
-               </div> 
-                  <div class="col-lg-4 col-md-4">
-                        <div class="sidebar-right pl-4">
-                        	 <aside class="widget widget-categories shadow-lg p-2">
-                                <div class="widget-title p-2 text-center">
-                                    <h5>Contact Details</h5>
-                                </div>
-                                <ul class="pl-2">
-                                    <li>Contact Person - <?php echo e($venuedetail->contactperson); ?></li>
-                                    <li>Contact Mobile - <?php echo e($venuedetail->contactmobile); ?></li>
-                                    <li>Office Number - <?php echo e($venuedetail->contacttelephone); ?></li>
-                                    <li>Email - <?php echo e($venuedetail->contactemail); ?></li>
-                                    <li>Website - <?php echo e($venuedetail->websitename); ?></li>
-                                    
-                                </ul>
-                            </aside>
-                            <br>
-                            <aside class="widget widget-categories shadow-lg p-2">
-                                <div class="widget-title p-2 text-center">
-                                    <h5>Amenities</h5>
-                                </div>
-                                <ul class="pl-2">
-                                	<?PHP
-
-                                    $amenitiesarray = json_decode($venuedetail->venueamenities, true); 
-                                    
-
-                                    foreach($venueamenities as $amenities):
-                                        
-                                        if(in_array($amenities->id, $amenitiesarray))
-                                        {
-                                            echo '<li>'.$amenities->amenities_name.'</li>';
-                                        }
-                                    endforeach;
-
-                                ?>
-                                    
-                                </ul>
-                            </aside>
-                            <br>
-                           
-                            <div id="adsslider-component" style="height:350px"></div>        
-
-
-
-
-                        </div>
-                   </div>	
-
-             </div>  
-            
-        </div> 
-    </div>  
-</div>
+      </div>
+   </div>
+   <div class="bg-flower-bot">
+        <img src="<?php echo e(asset('frontassets/img/flower1.png')); ?>">
+	</div>
+                     
+ </div> 
+   
+  
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('scripts'); ?>
 
@@ -292,6 +375,24 @@ src="<?php echo e($venuedetail->googlemap); ?>&output=embed">
                 autoplaySpeed: 2000, // Auto-play speed in milliseconds
             });
         });
+
+        document.querySelectorAll('img').forEach(i => {
+        i.addEventListener('click', evt => {
+            if (i.classList.contains('zoomed'))
+            i.style.transform = ''
+            else {
+            const myScale = 500 / i.clientWidth
+            i.style.transform = `scale(${myScale})`
+            }
+            i.classList.toggle('zoomed')
+        });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+        });
+
+
     </script>
 <?php echo app('Illuminate\Foundation\Vite')->reactRefresh(); ?>
 <?php echo app('Illuminate\Foundation\Vite')('resources/js/app.jsx'); ?>

@@ -52,8 +52,8 @@
                                         <span class="menu-text">Invoice</span>
                                     </a>
                                 </li>
-                                <li class="menu-item">
-                                    <a href="{{ route('admin/venuetype') }}" class="menu-link">
+                                <!--li class="menu-item">
+                                    <a href="{{-- route('admin/venuetype') --}}" class="menu-link">
                                         <span class="menu-text">Venue Categories</span>
                                     </a>
                                 </li>
@@ -61,22 +61,18 @@
                                     <a href="{{ route('venue/venueamenities') }}" class="menu-link">
                                         <span class="menu-text">Venue Amenities</span>
                                     </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="{{ route('admin/themebuilder') }}" class="menu-link">
-                                        <span class="menu-text">Venue Builder</span>
+                                </li-->                              
+                                  
+                                 <li class="menu-item">
+                                    <a href="{{ route('admin/venuethemes') }}" class="menu-link">
+                                        <span class="menu-text">Venue Themes</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
                                     <a href="{{ route('venuesettings') }}" class="menu-link">
                                         <span class="menu-text">Venue Settings</span>
                                     </a>
-                                </li>     
-                                 <li class="menu-item">
-                                    <a href="{{ route('admin/venuethemes') }}" class="menu-link">
-                                        <span class="menu-text">Venue Themes</span>
-                                    </a>
-                                </li>                            
+                                </li>                              
                             </ul>
                         </div>
                     </li>
@@ -156,14 +152,7 @@
                                 <span class="menu-text">Vendor Portal Request</span>
                             </a>
                         </li>
-                        <!--li class="menu-item">
-                            <a href="#" class="menu-link">
-
-                            <a href="{{ route('merchandiser.merchandisermodel') }}" class="menu-link">
-
-                                <span class="menu-text">Vendor Category</span>
-                            </a>
-                        </li-->
+                      
 </ul>
 </div>
 

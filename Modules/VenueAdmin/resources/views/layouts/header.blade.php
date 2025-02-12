@@ -1,30 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Blue_Theme" data-layout="horizontal">
+<html lang="en">
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="UTF-8" />
-  <title>{{ config('app.name') }}</title>
-  <meta content="Mangal Mall - Venue Admin" name="description" />
-  <meta content="Rel Del Mercado" name="author" />
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ config('app.name') }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Mangal Mall - Venue Admin" name="description" />
+        <meta content="Rel Del Mercado" name="author" />
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <meta name="_token" content="{{ csrf_token() }}" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{ asset('venueassets/images/logo-light.png') }}">
+        
+        <!-- Theme Config Js -->
+        <script src="{{ asset('venueasset/js/config.js') }}"></script>
 
-  <!-- Favicon icon-->
-  <link rel="shortcut icon" type="image/png" href="{{ asset('venueassets/images/logo-light.png') }}" />
+        <!-- App css -->
+        <link href="{{ asset('venueasset/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
 
-  <meta name="_token" content="{{ csrf_token() }}" />
+        <!-- Icons css -->
+        <link href="{{ asset('venueasset/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    </head>
 
-
-  <!-- Core Css -->
-  <link rel="stylesheet" href="{{ asset('venueassets/css/styles.css') }}" />
-
-  <title>Venue Admin</title>
-</head>
-<body>
-
-  <!-- Preloader -->
-  <div class="preloader">
-    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="loader" class="lds-ripple img-fluid" />
-  </div>

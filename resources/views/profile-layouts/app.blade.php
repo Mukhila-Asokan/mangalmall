@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('frontassets/css/main.css'); }}">
     <!-- endbuild -->
     <link rel="stylesheet" href="{{ asset('frontassets/css/custom.css'); }}">
-       
+    
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

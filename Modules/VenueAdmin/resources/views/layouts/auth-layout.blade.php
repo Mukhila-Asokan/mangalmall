@@ -1,29 +1,27 @@
 @include('venueadmin::layouts.header')
-<div id="main-wrapper" class="auth-customizer-none">
-	<div class="position-relative overflow-hidden radial-gradient min-vh-100 w-100">
-      <div class="position-relative z-index-5">
-        <div class="row">
-        	@php
+    @php 
 
-        	$bgurl = asset('venueassets/images/authbg.jpg');
-        	@endphp
-        	<div class="col-xl-7 col-xxl-8" style = "background: url('{{ $bgurl }}'); no-repeat center center / cover">
-            <a href="#" class="text-nowrap logo-img d-block px-4 py-9 w-100">
-              <img src="{{ asset('venueassets/images/logo-light.png') }}" class="dark-logo" alt="Logo-Dark" />
-              <img src="{{ asset('venueassets/images/logo-light.png') }}" class="light-logo" alt="Logo-light" />
-            </a>
-           
-          </div>
-           <div class="col-xl-5 col-xxl-4">
+$url1 = asset("venueasset/images/bg-auth.jpg");
 
-            @include('venueadmin::layouts.flash-messages')
-           	 @yield('content')
-           </div>
+@endphp
+<body style="background-image: url('{{ $url1 }}'); background-repeat: no-repeat;background-size: cover;">
+
+ <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
+      <div class="container">
+          <div class="row justify-content-center">
+
+              @include('venueadmin::layouts.flash-messages')
+              @yield('content')
+            </div>
+              <!-- end row -->
         </div>
-       </div>
-      </div>
-</div>	
+          <!-- end container -->
+ </div>
+      <!-- end page -->
+
 @include('venueadmin::layouts.footer')
+
+
 @stack('scripts')
 
 </body>

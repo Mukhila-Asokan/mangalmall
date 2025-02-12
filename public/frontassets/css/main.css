@@ -11,6 +11,10 @@ Author: https://themeforest.net/user/themetags
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
+body {
+  cursor: none;
+}
+
 :root {
   --blue:#5C2018;
   --indigo:#6610f2;
@@ -2380,7 +2384,7 @@ pre code {
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .table .thead-light th {
-  color: #495057;
+  color: #694e52;
   background-color: #e9ecef;
   border-color: #dee2e6;
 }
@@ -2490,7 +2494,7 @@ pre code {
   font-size: 0.8rem!important;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #694e52;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
@@ -2518,12 +2522,12 @@ pre code {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .form-control:-moz-focusring {
   color: transparent;
-  text-shadow: 0 0 0 #495057;
+  text-shadow: 0 0 0 #694e52;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .form-control:focus {
-  color: #495057;
+  color: #694e52;
   background-color: #fff;
   border-color: #80bdff;
   outline: 0;
@@ -2592,7 +2596,7 @@ input[type=date].form-control, input[type=datetime-local].form-control, input[ty
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 select.form-control:focus::-ms-value {
-  color: #495057;
+  color: #694e52;
   background-color: #fff;
 }
 
@@ -4437,7 +4441,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #694e52;
   text-align: center;
   white-space: nowrap;
   background-color: #e9ecef;
@@ -4694,7 +4698,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #694e52;
   vertical-align: middle;
   background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") right 0.75rem center/8px 10px no-repeat;
   border: 1px solid #ced4da;
@@ -4714,7 +4718,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .custom-select:focus::-ms-value {
-  color: #495057;
+  color: #694e52;
   background-color: #fff;
 }
 
@@ -4739,7 +4743,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .custom-select:-moz-focusring {
   color: transparent;
-  text-shadow: 0 0 0 #495057;
+  text-shadow: 0 0 0 #694e52;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -4814,7 +4818,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   overflow: hidden;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #694e52;
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: .25rem;
@@ -4831,7 +4835,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
   height: calc(1.5em + .75rem);
   padding: .375rem .75rem;
   line-height: 1.5;
-  color: #495057;
+  color: #694e52;
   content: "Browse";
   background-color: #e9ecef;
   border-left: inherit;
@@ -5103,7 +5107,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-  color: #495057;
+  color: #694e52;
   background-color: #fff;
   border-color: #dee2e6 #dee2e6 #fff;
 }
@@ -6629,14 +6633,14 @@ a.badge-dark.focus, a.badge-dark:focus {
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .list-group-item-action {
   width: 100%;
-  color: #495057;
+  color: #694e52;
   text-align: inherit;
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .list-group-item-action:focus, .list-group-item-action:hover {
   z-index: 1;
-  color: #495057;
+  color: #694e52;
   text-decoration: none;
   background-color: #f8f9fa;
 }
@@ -51475,7 +51479,8 @@ select.form-control.has-value {
 
 /* line 465, src/assets/scss/custom/_style.scss */
 .topbar-text ul li a:hover {
-  color: #5C2018;
+  color: #ffffff;
+  font-style: italic;
 }
 
 /* line 469, src/assets/scss/custom/_style.scss */
@@ -55312,7 +55317,7 @@ a.view-details-link:hover span {
 a.detail-link {
   display: inline-block;
   text-decoration: none;
-  color: #495057;
+  color: #694e52;
   font-weight: 600;
   font-size: 13px;
   font-family: 'Poppins', sans-serif;
@@ -55406,7 +55411,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 /* line 3719, src/assets/scss/custom/_style.scss */
 .post-meta a, .post-meta li {
-  color: #495057;
+  color: #694e52;
   font-weight: 600;
 }
 
@@ -55975,8 +55980,19 @@ button.scroll-top:focus {
 /*new update gallery css*/
 /* line 4163, src/assets/scss/custom/_style.scss */
 .gallery-img {
-  margin: 15px 0;
+  margin: 20px 15px;  
 }
+
+.gallery-imgborder {
+  width: 350px;  /* Set width */
+  height: 350px; /* Set height */
+  background-image: url('../img/galleryborder.png'); /* Path to image */
+  background-position: center; /* Center the image */
+  background-size: cover; /* Cover entire div */
+  background-repeat: no-repeat; /* Prevent tiling */
+  margin:15px 0px;
+}
+
 
 /* line 4166, src/assets/scss/custom/_style.scss */
 .gallery-img a {
@@ -55990,7 +56006,10 @@ button.scroll-top:focus {
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
   display: block;
-  border:10px solid rgba(250, 232, 210, 0.5);
+  /*border:10px solid rgba(250, 232, 210, 0.5);*/
+  border-radius: 50%!important;
+  height:320px;
+  
 }
 
 .gallery-text
@@ -56307,7 +56326,7 @@ button.scroll-top:focus {
     font-size: 0.8rem !important;
     font-weight: 400 !important;
     line-height: 1.5 !important;
-    color: #495057 !important;              
+    color: #694e52 !important;              
 }
 .dropdown-toggle_cat
 {
@@ -56320,7 +56339,7 @@ button.scroll-top:focus {
   font-size: 0.8rem !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
-  color: #495057 !important;     
+  color: #694e52 !important;     
   background-color: #fff!important;       
   text-align: left;
 }            
@@ -56491,4 +56510,44 @@ button.scroll-top:focus {
   .star-rating .fa:hover, 
   .star-rating .fa:hover ~ .fa {
       color: #FFA500;
+  }
+
+  #custom-cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    background: url("../img/cursor.png") no-repeat center/contain;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: normal;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 20px;
+  }
+  #custom-cursor::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    pointer-events: none;
+    opacity: 0;
+    animation: none;
+  }
+
+  /* Hover Effect */
+.hover-effect #custom-cursor::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+  .card-body .card-text
+  {
+      font-size: 12px!important;
+      color: #000;
   }
