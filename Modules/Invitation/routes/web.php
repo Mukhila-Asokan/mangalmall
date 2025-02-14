@@ -7,6 +7,8 @@ use Modules\Invitation\Http\Controllers\InvitationSizeController;
 use Modules\Invitation\Http\Controllers\InvitationColorController;
 use Modules\Invitation\Http\Controllers\InvitationPrintingMaterialController;
 use Modules\Invitation\Http\Controllers\InvitationPrintingMethodController;
+use Modules\Invitation\Http\Controllers\InvitationBudgetController;
+use Modules\Invitation\Http\Controllers\InvitationSilhoutteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,14 +74,22 @@ Route::prefix('admin/invitation')->middleware('auth:admin')->group(function () {
     Route::any('/printingmaterial/{id}/destroy', [InvitationPrintingMaterialController::class,'destroy']);
     Route::any('/printingmaterial/{id}/updatestatus', [InvitationPrintingMaterialController::class,'updatestatus']);
 
-    Route::any('/budget', [InvitationModelController::class,'index'])->name('invitation.budget');
-    Route::any('/budget/create', [InvitationPrintingMaterialController::class,'create'])->name('budget.create');
-    Route::any('/budget/{id}/edit', [InvitationPrintingMaterialController::class,'edit']);
-    Route::put('/budget/update/{id}', [InvitationPrintingMaterialController::class,'update'])->name('budget.update');
-    Route::post('/budget/store', [InvitationPrintingMaterialController::class,'store'])->name('budget.add');    
-    Route::any('/budget/{id}/destroy', [InvitationPrintingMaterialController::class,'destroy']);
-    Route::any('/budget/{id}/updatestatus', [InvitationPrintingMaterialController::class,'updatestatus']);
+    Route::any('/budget', [InvitationBudgetController::class,'index'])->name('invitation.budget');
+    Route::any('/budget/create', [InvitationBudgetController::class,'create'])->name('budget.create');
+    Route::any('/budget/{id}/edit', [InvitationBudgetController::class,'edit']);
+    Route::put('/budget/update/{id}', [InvitationBudgetController::class,'update'])->name('budget.update');
+    Route::post('/budget/store', [InvitationBudgetController::class,'store'])->name('budget.add');    
+    Route::any('/budget/{id}/destroy', [InvitationBudgetController::class,'destroy']);
+    Route::any('/budget/{id}/updatestatus', [InvitationBudgetController::class,'updatestatus']);
 
     /*invitation.silhouette*/
+
+    Route::any('/silhouette', [InvitationSilhoutteController::class,'index'])->name('invitation.silhouette');
+    Route::any('/silhouette/create', [InvitationSilhoutteController::class,'create'])->name('silhouette.create');
+    Route::any('/silhouette/{id}/edit', [InvitationSilhoutteController::class,'edit']);
+    Route::put('/silhouette/update/{id}', [InvitationSilhoutteController::class,'update'])->name('silhouette.update');
+    Route::post('/silhouette/store', [InvitationSilhoutteController::class,'store'])->name('silhouette.add');    
+    Route::any('/silhouette/{id}/destroy', [InvitationSilhoutteController::class,'destroy']);
+    Route::any('/silhouette/{id}/updatestatus', [InvitationSilhoutteController::class,'updatestatus']);
 
 });

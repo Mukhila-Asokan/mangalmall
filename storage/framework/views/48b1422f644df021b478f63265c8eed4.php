@@ -99,7 +99,7 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.silhouette')); ?>" class="menu-link">
                                         <span class="menu-text">Silhouette</span>
                                     </a>
                                 </li>
@@ -120,7 +120,7 @@
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/budget')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.budget')); ?>" class="menu-link">
                                         <span class="menu-text">Budget</span>
                                     </a>
                                 </li>     
