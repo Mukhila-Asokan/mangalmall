@@ -1,23 +1,6 @@
 @extends('admin.layouts.app-admin')
 @section('content')
 
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
 
          <div class="row">
             <div class="col-12">
@@ -31,8 +14,20 @@
                                     <div class="card-body">
                                         
                                         <h5 class="card-title">Create a new state for Venue Location</h5><br>
-                                        <a href="{{ route('venuetype/create') }}" class="btn btn-primary waves-effect waves-light">Add</a>
-                                        <a href="{{ route('venuetype/show') }}" class="btn btn-primary waves-effect waves-light">View</a>
+                                        <a href="{{ route('venue.state/create') }}" class="btn btn-primary waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venue.state') }}" class="btn btn-primary waves-effect waves-light">View</a>
+                                    </div>
+                                </div>
+                                <!-- end card-box-->
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border border-danger">
+                                    <h5 class="card-header border-bottom">Add District</h5>
+                                    <div class="card-body">
+                                        
+                                        <h5 class="card-title">Create a new District for Venue Loction</h5><br>
+                                        <a href="{{ route('venue.district/create') }}" class="btn btn-danger waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venue.district') }}" class="btn btn-danger waves-effect waves-light">View</a>
                                     </div>
                                 </div>
                                 <!-- end card-box-->
@@ -43,24 +38,25 @@
                                     <div class="card-body">
                                         
                                         <h5 class="card-title">Create a new city for Venue Loction</h5><br>
-                                        <a href="{{ route('venuesubtype/create') }}" class="btn btn-warning waves-effect waves-light">Add</a>
-                                        <a href="{{ route('venuesubtype/show') }}" class="btn btn-warning waves-effect waves-light">View</a>
+                                        <a href="{{ route('venue.city/create') }}" class="btn btn-warning waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venue.city') }}" class="btn btn-warning waves-effect waves-light">View</a>
                                     </div>
                                 </div>
                                 <!-- end card-box-->
                             </div>
+                            
                               <div class="col-md-4">
                                 <div class="card border border-info">
                                     <h5 class="card-header border-bottom">Add Area</h5>
                                     <div class="card-body">
                                         
                                         <h5 class="card-title">Create a new area for city in Venue Loction</h5><br>
-                                        <a href="{{ route('venuesubtype/create') }}" class="btn btn-info waves-effect waves-light">Add</a>
-                                        <a href="{{ route('venuesubtype/show') }}" class="btn btn-info waves-effect waves-light">View</a>
+                                        <a href="{{ route('venue.area/create') }}" class="btn btn-info waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venue.area') }}" class="btn btn-info waves-effect waves-light">View</a>
                                     </div>
                                 </div>
                             </div>
-                                  <div class="col-md-4">
+                            <div class="col-md-4">
                                 <div class="card border border-success">
                                     <h5 class="card-header border-bottom">Add Data Fields</h5>
                                     <div class="card-body">
@@ -68,6 +64,33 @@
                                         <h5 class="card-title">Create a new fields to Venue Details</h5><br>
                                         <a href="{{ route('venuesettings/datafield/create') }}" class="btn btn-success waves-effect waves-light">Add</a>
                                         <a href="{{ route('venuesettings/datafield') }}" class="btn btn-success waves-effect waves-light">View</a>
+                                    </div>
+                                </div>
+                                <!-- end card-box-->
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card border border-dark">
+                                    <h5 class="card-header border-bottom">Venue Type</h5>
+                                    <div class="card-body">
+                                        
+                                        <h5 class="card-title">Create a new Venue type</h5><br>
+                                        <a href="{{ route('venuetype/show') }}" class="btn btn-dark waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venuetype/create') }}" class="btn btn-dark waves-effect waves-light">View</a>
+                                    </div>
+                                </div>
+                                <!-- end card-box-->
+                            </div>
+
+                            
+                            <div class="col-md-4">
+                                <div class="card border border-secondary">
+                                    <h5 class="card-header border-bottom">Venue Amenities</h5>
+                                    <div class="card-body">
+                                        
+                                        <h5 class="card-title">Create a new Venue Amenities</h5><br>
+                                        <a href="{{ route('venue/venueamenities') }}" class="btn btn-secondary waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venueamenities/create') }}" class="btn btn-secondary waves-effect waves-light">View</a>
                                     </div>
                                 </div>
                                 <!-- end card-box-->

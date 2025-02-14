@@ -27,7 +27,7 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
-    // ✅ Custom Handling for Expired Sessions
+  
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {

@@ -4,7 +4,7 @@ namespace Modules\Venue\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 use Session;
 use Modules\Venue\Models\VenueType;
 
@@ -41,9 +41,15 @@ class VenueTypeController extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
+        $validator = Validator::make($request->all(),[
             'venuetype_name' => 'required|unique:venuetype'
-         ]);
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
 
          $venuetypename = new VenueType;
          $venuetypename->venuetype_name  = $request->venuetype_name;
@@ -87,9 +93,16 @@ class VenueTypeController extends Controller
     public function update(Request $request)
     {
         $id = $request->id;
-          $request->validate([
+        
+        $validator = Validator::make($request->all(),[
             'venuetype_name' => 'required|unique:venuetype,venuetype_name,'.$id.'|max:255',           
         ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
 
         $venuetypename = VenueType::find($id);
         $venuetypename->venuetype_name = $request->venuetype_name;

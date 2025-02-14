@@ -35,14 +35,21 @@ class VenueDetails extends Model
     {
         return $this->hasOne(indialocation::class,'id','locationid');
     }
-
     public function venueamenities()
     {
-    return $this->belongsToMany(VenueAmenities::class, 'venueamenities', 'venue_id', 'id');
+         return $this->belongsToMany(VenueAmenities::class, 'venueamenities', 'venue_id', 'id');
     }
     public function venueamenitiesapi()
     {
-        return $this->hasMany(VenueAmenities::class, 'venue_id', 'id'); // Adjust table & keys
+        return $this->hasMany(VenueAmenities::class, 'venue_id', 'id'); 
+    }
+    public function venueimage()
+    {
+        return $this->hasMany(VenueImage::class, 'venue_id', 'id');
+    }
+    public function venuecontent()
+    {
+        return $this->hasMany(VenueContent::class, 'venue_id', 'id');
     }
 
 }

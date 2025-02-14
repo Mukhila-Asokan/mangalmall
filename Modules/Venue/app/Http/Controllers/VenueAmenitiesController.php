@@ -4,7 +4,7 @@ namespace Modules\Venue\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 use Modules\Venue\Models\VenueAmenities;
 use Session;
 
@@ -41,9 +41,16 @@ class VenueAmenitiesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'amenities_name' => 'required|unique:venueamenities'
          ]);
+
+         if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
 
          $venueamenities = new VenueAmenities;
          $venueamenities->amenities_name  = $request->amenities_name;        
@@ -85,10 +92,19 @@ class VenueAmenitiesController extends Controller
      */
     public function update(Request $request)
     {
-         $id = $request->id;
-          $request->validate([
+        $id = $request->id;
+         
+        $validator = Validator::make($request->all(),[
             'amenities_name' => 'required|unique:venueamenities,amenities_name,'.$id.'|max:255',           
         ]);
+
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
 
         $venueamenities = VenueAmenities::find($id);
         $venueamenities->amenities_name = $request->amenities_name;       

@@ -15,7 +15,7 @@
     </head>
     <body>
           <!--loader start-->
-    <!--div id="preloader">
+    <div id="preloader">
         <div class="loader1">
             <span></span>
             <span></span>
@@ -23,7 +23,7 @@
             <span></span>
             <span></span>
         </div>
-    </div-->
+    </div>
          @include('profile-layouts.menubar')
          <div class="main">
          <!--breadcrumb bar start-->

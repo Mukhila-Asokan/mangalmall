@@ -46,52 +46,78 @@
                           <div class="row">
                                   <div class="col-6">                    
                                           <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuetypename">Venue Name</label>
+                                            <label class="col-md-4 col-form-label required" for="venuetypename">Venue Name <span class="text-danger">*</span></label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="venuename" name="venuename" class="form-control" placeholder="Enter the venue name" value = "<?php echo e(old('venuename')); ?>" required>
-                                                <?php if($errors->has('venuename')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('venuename')); ?></div>
+                                                  <input type="text" id="venuename" name="venuename" class="form-control " placeholder="Enter the venue name" value = "<?php echo e(old('venuename')); ?>" #a32206>
+                                                <?php $__errorArgs = ['venuename'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
                                                 
-                                            <?php endif; ?>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                         </div>
                                          <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venueaddress">Venue Location</label>
+                                            <label class="col-md-4 col-form-label" for="venueaddress">Venue Address <span class="text-danger">*</span></label>
                                             <div class="col-md-8">
                                                   
 
-                                                 <textarea class="form-control" placeholder="Enter the venue location" id="venueaddress" name = "venueaddress" style="height: 100px"><?php echo e(old('venueaddress')); ?></textarea>
-                                                  <?php if($errors->has('venueaddress')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('venuelocation')); ?></div>
-                                                 <?php endif; ?>
+                                                 <textarea class="form-control" placeholder="Enter the venue Address" id="venueaddress" name = "venueaddress" style="height: 100px"><?php echo e(old('venueaddress')); ?></textarea>
+                                                 <?php $__errorArgs = ['venueaddress'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
 
                                             </div>
 
                                         </div>
                                           <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuearea">Area</label>
+                                            <label class="col-md-4 col-form-label" for="venuearea">Area <span class="text-danger">*</span></label>
                                             <div class="col-md-8">
-                                                  <select id="venuearea" name="venuearea"  placeholder="Enter the Area name" required></select>
-                                                <?php if($errors->has('venuearea')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('venuearea')); ?></div>
-                                                
-                                            <?php endif; ?>
+                                                  <select id="venuearea" name="venuearea"  placeholder="Enter the Area name" ></select>
+                                                  <?php $__errorArgs = ['venuearea'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div>
                                     </div>
 
                                    <div class="col-6">
                                         <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="venuecity">City</label>
+                                            <label class="col-md-4 col-form-label" for="venuecity">City </label>
                                             <div class="col-md-8">
                                                 <input type = "hidden" name = "locationid" id = "locationid" value = "" />
-                                                  <input type="text" id="venuecity" name="venuecity" class="form-control" placeholder="Enter the city name" value = "<?php echo e(old('venuecity')); ?>" required>
-                                                <?php if($errors->has('venuecity')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('venuecity')); ?></div>
-                                                
-                                            <?php endif; ?>
+                                                  <input type="text" id="venuecity" name="venuecity" class="form-control" placeholder="Enter the city name" value = "<?php echo e(old('venuecity')); ?>" >
+                                                  <?php $__errorArgs = ['venuecity'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div>
 
@@ -99,32 +125,53 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="venuestate">State</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="venuestate" name="venuestate" class="form-control" placeholder="Enter the state name" value = "<?php echo e(old('venuestate')); ?>" required>
-                                                <?php if($errors->has('venuestate')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('venuestate')); ?></div>              
-                                            <?php endif; ?>
+                                                  <input type="text" id="venuestate" name="venuestate" class="form-control" placeholder="Enter the state name" value = "<?php echo e(old('venuestate')); ?>" >
+                                                  <?php $__errorArgs = ['venuestate'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div> 
 
                                          <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="venuepincode">Pincode</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="venuepincode" name="venuepincode" class="form-control" placeholder="Enter the pincode name" value = "<?php echo e(old('venuepincode')); ?>" required>
-                                                <?php if($errors->has('venuepincode')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('venuepincode')); ?></div>              
-                                            <?php endif; ?>
+                                                  <input type="text" id="venuepincode" name="venuepincode" class="form-control" placeholder="Enter the pincode name" value = "<?php echo e(old('venuepincode')); ?>" >
+                                                  <?php $__errorArgs = ['venuepincode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div> 
 
                                     </div> 
 
-                                      <div class="mb-4 row">
-                                            <label class="col-md-2 col-form-label" for="description">Description</label>
+                                    <div class="mb-4 row">
+                                            <label class="col-md-2 col-form-label" for="description">Description <span class="text-danger">*</span></label>
                                             <div class="col-md-10">
-                                                  <textarea class="form-control" placeholder="Enter the venue location" id="description" name = "description" style="height: 100px"><?php echo e(old('description')); ?></textarea>
-                                                  <?php if($errors->has('description')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('description')); ?></div>
-                                                 <?php endif; ?>
+                                                  <textarea class="form-control" placeholder="Enter the Description" id="description" name = "description" style="height: 100px"><?php echo e(old('description')); ?></textarea>
+                                                  <?php $__errorArgs = ['description'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                     </div>
 
@@ -132,21 +179,35 @@
                                     <div class="row">
                                         <div class="col-6">
                                              <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactperson">Contact Person</label>
+                                            <label class="col-md-4 col-form-label" for="contactperson">Contact Person <span class="text-danger">*</span></label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value = "<?php echo e(old('contactperson')); ?>" required>
-                                                <?php if($errors->has('contactperson')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('contactperson')); ?></div>              
-                                            <?php endif; ?>
+                                                  <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value = "<?php echo e(old('contactperson')); ?>" >
+                                                  <?php $__errorArgs = ['contactperson'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div> 
                                         <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactmobile">Mobile No</label>
+                                            <label class="col-md-4 col-form-label" for="contactmobile">Mobile No <span class="text-danger">*</span></label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value = "<?php echo e(old('contactmobile')); ?>" required>
-                                                <?php if($errors->has('contactmobile')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('contactmobile')); ?></div>              
-                                            <?php endif; ?>
+                                                  <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value = "<?php echo e(old('contactmobile')); ?>" >
+                                                  <?php $__errorArgs = ['contactmobile'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div> 
                                         
@@ -155,9 +216,7 @@
                                             <label class="col-md-4 col-form-label" for="contacttelephone">Telephone No</label>
                                             <div class="col-md-8">
                                                   <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value = "<?php echo e(old('contacttelephone')); ?>" >
-                                                <?php if($errors->has('contacttelephone')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('contacttelephone')); ?></div>              
-                                            <?php endif; ?>
+                                               
                                             </div>
                                         </div> 
 
@@ -170,9 +229,7 @@
                                             <label class="col-md-4 col-form-label" for="contactemail">Email Id</label>
                                             <div class="col-md-8">
                                                   <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value = "<?php echo e(old('contactemail')); ?>" >
-                                                <?php if($errors->has('contactemail')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('contactemail')); ?></div>              
-                                            <?php endif; ?>
+                                                 
                                             </div>
                                         </div> 
 
@@ -180,9 +237,24 @@
                                             <label class="col-md-4 col-form-label" for="contactemail">Website</label>
                                             <div class="col-md-8">
                                                   <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the websitename" value = "<?php echo e(old('websitename')); ?>" >
-                                                <?php if($errors->has('websitename')): ?>
-                                                <div class="text-danger"><?php echo e($errors->first('websitename')); ?></div>              
-                                            <?php endif; ?>
+                                                
+                                            </div>
+                                        </div> 
+
+                                        <div class="mb-4 row">
+                                            <label class="col-md-4 col-form-label" for="bookingprice">Booking Rate <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                            <input type="text" id="bookingprice" name="bookingprice" class="form-control" placeholder="Enter the Booking Price" value = "<?php echo e(old('bookingprice')); ?>" >
+											   <?php $__errorArgs = ['bookingprice'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+													<div class="text-danger"><?php echo e($message); ?></div>
+                                               <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div> 
 
@@ -192,33 +264,90 @@
 <div class ="row">
     <div class="col-6">
              <div class="mb-4 row">
-                  <label class="col-md-4 col-form-label" for="venuetypeid">Select Venue Type</label>
+                  <label class="col-md-4 col-form-label" for="venuetypeid">Select Venue Type <span class="text-danger">*</span></label>
                    <div class="col-md-8">
                  <select class="form-select" id="venuetypeid" name="venuetypeid" aria-label="Floating label select example">
-                                <option selected>Open this Venue Type</option>
+                                <option selected>Choose Venue Type</option>
                                 <?php $__currentLoopData = $venuetypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value = "<?php echo e($type->id); ?>"><?php echo e($type->venuetype_name); ?></option>
+                                <option value = "<?php echo e($type->id); ?>" <?php echo e(old('venuetypeid') == $type->id ? 'selected' : ''); ?> ><?php echo e($type->venuetype_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                     <?php if($errors->has('venuetypeid')): ?>
-                    <div class="text-danger"><?php echo e($errors->first('venuetypeid')); ?></div>
-                    
-                <?php endif; ?>
+                            <?php $__errorArgs = ['venuetypeid'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+								<div class="text-danger"><?php echo e($message); ?></div>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
 
              </div>   
+
+             <div class="mb-4 row">
+                  <label class="col-md-4 col-form-label" for="budgetperplate">Budget Per Plate </label>
+                   <div class="col-md-8">
+                 
+                        <input type="text" id="budgetperplate" name="budgetperplate" class="form-control" placeholder="Enter the budget per plate" value = "<?php echo e(old('budgetperplate')); ?>" >
+                    <?php $__errorArgs = ['budgetperplate'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>              
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        
+                </div>
+
+             </div>
 </div>
     <div class="col-6">
            <div class="mb-4 row">
-                  <label class="col-md-4 col-form-label" for="venuesubtypeid">Select Venue Subtype</label>
+                  <label class="col-md-4 col-form-label" for="capacity">Seating Capacity <span class="text-danger">*</span></label>
                    <div class="col-md-8">
-                 <select class="form-select" id="venuesubtypeid" name="venuesubtypeid" aria-label="Floating label select example">
-                    <option selected>Open this Venue Subtype</option>
-                  </select>
-                     <?php if($errors->has('venuesubtypeid')): ?>
-                    <div class="text-danger"><?php echo e($errors->first('venuesubtypeid')); ?></div>
-                    
-                <?php endif; ?>
+                 
+                        <input type="text" id="capacity" name="capacity" class="form-control" placeholder="Enter the capacity" value = "<?php echo e(old('capacity')); ?>" >
+                    <?php $__errorArgs = ['capacity'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>              
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        
+                </div>
+
+             </div>
+
+             <div class="mb-4 row">
+                  <label class="col-md-4 col-form-label" for="food_type">Food Type <span class="text-danger">*</span></label>
+                   <div class="col-md-8">
+                 
+                        <select id="food_type" name="food_type" class="form-control" >
+                            <option selected>Select Food Type</option>
+                            <option value="Veg" <?php echo e(old('food_type') == 'Veg' ? 'selected' : ''); ?>>Veg</option>
+                            <option value = "Non-Veg" <?php echo e(old('food_type') == 'Non-Veg' ? 'selected' : ''); ?>>Non-Veg</option>
+                            <option value = "Both" <?php echo e(old('food_type') == 'Both' ? 'selected' : ''); ?>>Both (Veg & Non-Veg) </option>
+                        </select>
+                    <?php $__errorArgs = ['food_type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="text-danger"><?php echo e($message); ?></div>              
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+        
                 </div>
 
              </div>
@@ -266,135 +395,72 @@
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div class="accordion-body">
                                                         
-                                                <?php $__currentLoopData = $venuedatafield; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $datafield): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <?php if($datafield->datafieldtype == "Text"): ?>
-                                                             <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="datafieldvalue<?php echo e($datafield->id); ?>"><?php echo e($datafield->datafieldname); ?></label>
-                                            <div class="col-md-8">
-                                                <input type="hidden" name = "datafieldid[]" value = "<?php echo e($datafield->id); ?>" />
-                                                  <input type="text" id="datafieldvalue<?php echo e($datafield->id); ?>" name="datafieldvalue[]" class="form-control" placeholder="Enter the <?php echo e($datafield->datafieldname); ?> value" value = "<?php echo e(old('datafieldvalue.$datafield->id')); ?>" >
-                                             
-                                            </div>
-                                            </div>
+                                                    <?php $__currentLoopData = $venuedatafield; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $datafield): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php if($datafield->datafieldtype == "Text"): ?>
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue<?php echo e($datafield->id); ?>"><?php echo e($datafield->datafieldname); ?></label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="<?php echo e($datafield->id); ?>" />
+                <input type="text" id="datafieldvalue<?php echo e($datafield->id); ?>" name="datafieldvalue[]" class="form-control" placeholder="Enter the <?php echo e($datafield->datafieldname); ?> value" value="<?php echo e(old('datafieldvalue.' . $loop->index)); ?>">
+            </div>
+        </div>
 
-                                             <?php elseif($datafield->datafieldtype == "Select"): ?>
+    <?php elseif($datafield->datafieldtype == "Select"): ?>
+        <?php
+            $data = $datafield->datafieldvalues;
+            if($data!="") {
+                $jsonData = json_decode($data, true);
+            }
+        ?>
 
-                                             <?php
-                                             $data = $datafield->datafieldvalues;
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue<?php echo e($datafield->id); ?>"><?php echo e($datafield->datafieldname); ?></label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="<?php echo e($datafield->id); ?>" />
+                <select class="form-select" id="datafieldvalue<?php echo e($datafield->id); ?>" name="datafieldvalue[]">
+                    <option selected>Select this <?php echo e($datafield->datafieldname); ?></option>
+                    <?php $__currentLoopData = $jsonData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($item['id']); ?>" <?php if(old('datafieldvalue.' . $loop->parent->index) == $item['id']): ?> selected <?php endif; ?>><?php echo e($item['optionname']); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+            </div>
+        </div>
 
-                                                if($data!="")
-                                                {
-                                                    $jsonData = json_decode($data, true); 
-                                               
-                                                ?>
+    <?php elseif($datafield->datafieldtype == "Textarea"): ?>
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue<?php echo e($datafield->id); ?>"><?php echo e($datafield->datafieldname); ?></label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="<?php echo e($datafield->id); ?>" />
+                <textarea id="datafieldvalue<?php echo e($datafield->id); ?>" name="datafieldvalue[]" class="form-control" placeholder="Enter the <?php echo e($datafield->datafieldname); ?> value"><?php echo e(old('datafieldvalue.' . $loop->index)); ?></textarea>
+            </div>
+        </div>
 
+    <?php elseif($datafield->datafieldtype == "Radio"): ?>
+        <?php
+            $data = $datafield->datafieldvalues;
+            if($data!="") {
+                $jsonData = json_decode($data, true);
+            }
+        ?>
 
-                                                   <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="datafieldvalue"><?php echo e($datafield->datafieldname); ?></label>
-                                            <div class="col-md-8">
-                                                  <input type="hidden" name = "datafieldid[]" value = "<?php echo e($datafield->id); ?>" /> 
-                                                  <select class="form-select" id="datafieldvalue<?php echo e($datafield->id); ?>" name="datafieldvalue[]">
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue<?php echo e($datafield->id); ?>"><?php echo e($datafield->datafieldname); ?></label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="<?php echo e($datafield->id); ?>" />
+                <div class="form-check">
+                    <?php $__currentLoopData = $jsonData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <input class="form-check-input" type="radio" name="datafieldvalue[]" id="datafieldvalue<?php echo e($datafield->id); ?>" value="<?php echo e($item['id']); ?>" <?php if(old('datafieldvalue.' . $loop->parent->index) == $item['id']): ?> checked <?php endif; ?>>
+                        <label class="form-check-label" for="datafieldvalue<?php echo e($datafield->id); ?>">
+                            <?php echo e($item['optionname']); ?>
 
-                                                    <option selected>Select this <?php echo e($datafield->datafieldname); ?></option>
+                        </label>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+        </div>
 
-                                                     <?php $__currentLoopData = $jsonData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                     <option value="<?php echo e($item['id']); ?>"><?php echo e($item['optionname']); ?></option>
-                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                                  </select>
-
-
-                                                
-                                               
-                                                </div>
-                                            </div>
-                                           <?php
-
-                                            }
-                                                
-                                            ?>
-
-                                            <?php elseif($datafield->datafieldtype == "Textarea"): ?>
-
-                                             <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield"><?php echo e($datafield->datafieldname); ?></label>
-                                            <div class="col-md-8">
-                                                 <input type="hidden" name = "datafieldid[]" value = "<?php echo e($datafield->id); ?>" />
-                                                  <textarea id="datafieldvalue<?php echo e($datafield->id); ?>" name="datafieldvalue[]" class="form-control" placeholder="Enter the <?php echo e($datafield->datafieldname); ?> value"><?php echo e(old('datafieldvalue.$datafield->id')); ?></textarea>
-                                             
-                                            </div>
-                                            </div>
-
-                                            <?php elseif($datafield->datafieldtype == "Radio"): ?>
-
-                                            <?php
-                                             $data = $datafield->datafieldvalues;
-
-                                                if($data!="")
-                                                {
-                                                    $jsonData = json_decode($data, true); 
-                                               
-                                                ?>
-
-                                            <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield"><?php echo e($datafield->datafieldname); ?></label>
-                                            <div class="col-md-8">
-                                                 <input type="hidden" name = "datafieldid[]" value = "<?php echo e($datafield->id); ?>" />
-                                                 <div class="form-check">
-                                                    <?php $__currentLoopData = $jsonData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                                                        <input class="form-check-input" type="radio" name="datafieldvalue[]" id="datafieldvalue<?php echo e($datafield->id); ?>" value = "<?php echo e($item['id']); ?>">
-                                                        <label class="form-check-label" for="flexRadioDefault1">
-                                                            <?php echo e($item['optionname']); ?>
-
-                                                        </label>
-                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                 </div>
-                                                
-                                            </div>
-                                             <?php
-
-                                            }
-                                                
-                                            ?>
-
-                                            <?php else: ?>
-                                               
-                                            <?php
-                                             $data = $datafield->datafieldvalues;
-
-                                                if($data!="")
-                                                {
-                                                    $jsonData = json_decode($data, true); 
-                                               
-                                                ?>
-
-                                            <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield"><?php echo e($datafield->datafieldname); ?></label>
-                                            <div class="col-md-8">
-                                                 <input type="hidden" name = "datafieldid[]" value = "<?php echo e($datafield->id); ?>" />
-                                                 <div class="form-check">
-                                                    <?php $__currentLoopData = $jsonData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                                                         <input class="form-check-input" type="checkbox" value="<?php echo e($item['id']); ?>" name = "datafieldvalue[]"id="datafieldvalue<?php echo e($datafield->id); ?>">
-                                                        <label class="form-check-label" for="flexRadioDefault1">
-                                                            <?php echo e($item['optionname']); ?>
-
-                                                        </label>
-                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </div>
-                                                 
-                                              
-                                            </div>
-                                             <?php
-
-                                            }
-                                                
-                                            ?>
-
-                                            <?php endif; ?>
-                                        
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    <?php endif; ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
                                                     </div>
@@ -405,7 +471,7 @@
                                                 <h2 class="accordion-header" id="flush-headingFour">
                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                                         data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                                        Image
+                                                        Image <span class="text-danger">*</span>
                                                     </button>
                                                 </h2>
                                                 <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
@@ -434,7 +500,7 @@
                                                 <h2 class="accordion-header" id="flush-headingFour">
                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                                         data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                                                        Google Map & Budget
+                                                        Google Map
                                                     </button>
                                                 </h2>
                                                 <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
@@ -445,37 +511,12 @@
                                           
                                             <div class="col-md-10">
                                                   <textarea class="form-control" placeholder="Enter the venue location" id="googlemap" name = "googlemap" style="height: 100px"><?php echo e(old('googlemap')); ?></textarea>
-                                                  <?php $__errorArgs = ['googlemap'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-													<div class="text-danger"><?php echo e($message); ?></div>
-                                                 <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                              
                                             </div>
                                   
 
                                         </div>
-									 <div class="mb-4 row">
-									 <label for="formFile" class="form-label">Booking Rate</label>
-									  
-										<div class="col-md-10">
-											  <input type="text" id="bookingprice" name="bookingprice" class="form-control" placeholder="Enter the Booking Price" value = "<?php echo e(old('bookingprice')); ?>" required>
-											   <?php $__errorArgs = ['bookingprice'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-													<div class="text-danger"><?php echo e($message); ?></div>
-                                               <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-										</div>
-									</div>
+								
 										
                                     
 
@@ -607,7 +648,7 @@ if (input.files && input.files[0]) {
 
 
 
-      $("#venuetypeid").change(function(e) {
+      /*$("#venuetypeid").change(function(e) {
 
 
       
@@ -641,7 +682,7 @@ if (input.files && input.files[0]) {
           
         });
            
-     });
+     });*/
 
 
 

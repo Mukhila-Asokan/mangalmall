@@ -33,7 +33,7 @@
                 <div class="custom-breadcrumb">
                     <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
                         <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="list-inline-item breadcrumb-item"><a href="#">Venue </a></li>
+                        <li class="list-inline-item breadcrumb-item"><a href="{{ route('venuereact.search') }}">Venue </a></li>
                         <li class="list-inline-item breadcrumb-item active">{{ $venuedetail->venuename }}</li>
                     </ol>
                 </div>
@@ -56,16 +56,16 @@
                                     <h1 class="post-title">{{ $venuedetail->venuename }}</h1>                                    
                                 </div>
                                 <div class="post-content">
-                                    
+                               
                                         <p>{{ $venuedetail->description }}</p><br>
                                         
-                                   	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a malesuada risus. Praesent accumsan libero vitae tincidunt congue. Phasellus sagittis ante nec mi finibus, eget congue purus finibus. Pellentesque maximus pretium congue. Quisque sit amet risus est. Donec pharetra elementum nulla, in volutpat diam gravida eu. Fusce sagittis ornare augue ac pharetra.</p><br>
+                                        <p>{{ $venuedetail->address }}</p><br>
 
-<p>Nulla in nulla vitae eros pharetra volutpat. In aliquet aliquam rhoncus. Pellentesque maximus feugiat sollicitudin. Pellentesque sed nunc sollicitudin, interdum sapien sed, malesuada ex. Cras condimentum nibh et cursus commodo. Nunc nec eleifend sem. Donec lobortis enim id blandit laoreet.</p><br>
+                                        {{ $venuedetail->venuecontent->first()->description }}
 
-<p>Fusce ac lacinia purus. Maecenas eleifend lectus nulla, nec consectetur orci placerat sed. Phasellus id bibendum nulla. Aliquam pellentesque tempor dictum. In hac habitasse platea dictumst. Nulla blandit convallis massa, nec pretium mi volutpat eu. Pellentesque mauris sem, pharetra sed est eget, mattis fermentum erat. Maecenas sapien nibh, semper id sem non, tempus faucibus purus. Sed et sem gravida, molestie ligula euismod, aliquet erat. Phasellus commodo at sem sit amet facilisis. Cras porta laoreet leo, nec mattis lorem porta quis. Aliquam sem lectus, efficitur vel neque non, iaculis consequat enim. Cras vel suscipit orci, ut fermentum metus. Sed cursus velit at mollis pulvinar. Praesent imperdiet sed erat in placerat.</p><br>
+                                        {!! purify($venuedetail->venuecontent->first()->description) !!}
                                     
-                                  
+
                                    
                                 </div>
                                 <div class="post-footer">

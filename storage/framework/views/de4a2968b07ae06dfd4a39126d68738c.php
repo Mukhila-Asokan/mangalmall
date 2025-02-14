@@ -19,16 +19,14 @@ $(document).ready(function() {
     });
 
     $('.statusid').click(function() { 
-
-        var id = $(this).data("id");  
-
+        
+        var id = $(this).data("id"); 
         $('#statusselectedid').val(id);   
           
     });
 
     $('#confirmstatus').click(function() {       
-        var id = $('#statusselectedid').val();     
-       
+        var id = $('#statusselectedid').val(); 
         var redirecturl = $('#redirecturl').val();       
         window.location = redirecturl+"/"+id+"/updatestatus";
     });

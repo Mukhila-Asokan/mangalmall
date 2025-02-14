@@ -27,7 +27,7 @@
 				<th>Location</th>
 				<th>Contact Person</th>
 				<th>Mobile No</th>
-				<th width="100px">Action</th>
+				<th width="200px">Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,6 +38,7 @@
 		</div>
 	</div>
 </div>
+<input type="hidden" name="redirecturl" id="redirecturl" value="{{ url('/admin/venue/') }}">  
 @endsection
 @push('scripts')
     <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">

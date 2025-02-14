@@ -1,25 +1,6 @@
 @extends('admin.layouts.app-admin')
 @section('content')
-
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
-         <div class="row">
+ <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -44,12 +25,12 @@
 
                                               
 
-                                                <option selected>Open this Data Field</option>
+                                                <option value = '' selected>Open this Data Field</option>
                                                 <option Value ="Text" {{ $venuedatafield->datafieldtype == "Text" ? 'Selected' : ''}} >Text</option>
                                                 <option Value ="Select" {{ $venuedatafield->datafieldtype == 'Select' ? 'Selected' : ''}}>Select</option>
                                                 <option Value ="Textarea" {{ $venuedatafield->datafieldtype == 'Textarea' ? 'Selected' : ''}}>Textarea</option>
-                                                <option Value ="Radio" {{ $venuedatafield->datafieldtype == 'Radio' ? 'Selected' : ''}}>Radio</option>
-                                                <option Value ="Checkbox" {{ $venuedatafield->datafieldtype == 'Checkbox' ? 'Selected' : ''}}>Checkbox</option>
+                                                <!--option Value ="Radio">Radio</option>
+                                                <option Value ="Checkbox">Checkbox</option-->
                                             </select>
                                                  @if($errors->has('datafieldtype'))
                                                 <div class="text-danger">{{ $errors->first('datafieldtype') }}</div>

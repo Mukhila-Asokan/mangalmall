@@ -1,14 +1,39 @@
 @extends('venueadmin::layouts.auth-layout')
 @section('content')
-<div class="authentication-login min-vh-100 bg-body row justify-content-center align-items-center p-4">
-  <div class="auth-max-width col-sm-8 col-md-6 col-xl-7 px-4">
-    <h2 class="mb-1 fs-7 fw-bolder text-center">Welcome to Mangal Mall</h2>
-    <h5 class="mb-7 text-center">Venue Admin</h5>
-   
- 
-    <form name = "login" method = "post" action="{{ route('venue/logincheck') }}">
-      @csrf
-      <div class="mb-3">
+
+@php 
+
+$url = asset("venueasset/images/flower.png");
+
+@endphp
+
+<div class="col-xxl-4 col-lg-4" style="background-color: #f9efe1;">
+                        <div class="position-relative rounded-3 overflow-hidden">
+                            <div class="card bg-transparent mb-0">
+                            <!-- Logo-->
+                            <div class="auth-brand text-center">
+                                <a href="#" class="logo-light">
+                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="logo" height="75">
+                                </a>
+                                <a href="#" class="logo-dark">
+                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="dark logo" height="75">
+                                </a>
+                            </div>
+                            
+              
+              
+              
+              
+                            <div class="card-body p-4">
+                                <div class="w-100 text-center">
+                                    <h4 class="pb-0 fw-bold">Welcome to Mangal Mall</h4>
+                                    <p class="fw-semibold mb-4">Venue Admin</p>
+                                </div>
+
+                               <form name = "login" method = "post" action="{{ route('venue/logincheck') }}">
+                                 @csrf
+
+                                      <div class="mb-3">
         <label for="mobileno" class="form-label">Mobile No</label>
         <input type="text" class="form-control" id="mobileno" name="mobileno" aria-describedby="mobileno">
 
@@ -53,9 +78,35 @@
         <p class="fs-4 mb-0 fw-medium">New to Mangal Mall?</p>
         <a class="text-primary fw-medium ms-2" href="{{ route('venueadmin/register') }}">Register Here</a>
       </div>
-    </form>
-  </div>
-</div>
+                                </form>
+                            </div> <!-- end card-body -->
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                        </div>
+                        <!-- end card -->
+                    </div>
+
+            
+            
+            
+            
+
+                    </div> <!-- end col -->
+          
+          
+          
+
+
+
+
 @endsection
 
 @push('scripts')

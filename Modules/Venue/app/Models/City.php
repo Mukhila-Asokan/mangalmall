@@ -17,7 +17,12 @@ class City extends Model
     protected $fillable = [];
 
     // protected static function newFactory(): CityFactory
-    // {
-    //     // return CityFactory::new();
-    // }
+    public function state()
+    {
+        return $this->belongsTo(State::class,'stateid');
+    }
+    public function district()
+    {
+        return $this->belongsTo(District::class,'districtid');
+    }
 }

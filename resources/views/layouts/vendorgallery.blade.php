@@ -11,125 +11,69 @@
                     </div>
                 </div>
                 <div class="row image-gallery">
-                    <div class="col-md-6 col-lg-3">
+                 
+                <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
-                            <a href="assets/img/hero-bg1.jpg" title="The Cleaner">
+                            <a href="#" title="Winter Dance">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-                            <div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
-                        </div>
-
-                    </div>  					
-					<div class="col-md-6 col-lg-3">
-                        <div class="gallery-img">
-                            <a href="assets/img/hero-bg1.jpg" title="The Cleaner">
-                                <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
-                            </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
-                        </div>
-                    </div>  
-					<div class="col-md-6 col-lg-3">
-                        <div class="gallery-img">
-                            <a href="assets/img/hero-bg1.jpg" title="The Cleaner">
-                                <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
-                            </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
-                        </div>
-                    </div>  
-					<div class="col-md-6 col-lg-3">
-                        <div class="gallery-img">
-                            <a href="assets/img/hero-bg1.jpg" title="The Cleaner">
-                                <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
-                            </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+					
                         </div>
                     </div>
-					<div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
-                            <a href="assets/img/hero-bg1.jpg" title="The Cleaner">
+                            <a href="#" title="Winter Dance">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+					
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
-                            <a href="assets/img/hero-bg2.jpg" title="Winter Dance">
+                            <a href="#" title="The Uninvited Guest">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+							
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
-                            <a href="assets/img/hero-bg3.jpg" title="The Uninvited Guest">
+                            <a href="#" title="Oh no, not again!">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+							
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="gallery-img">
-                            <a href="assets/img/hero-bg4.jpg" title="Oh no, not again!">
-                                <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
-                            </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
                             <a href="assets/img/hero-bg5.jpg" title="Swan Lake">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+							
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
                             <a href="assets/img/hero-bg6.jpg" title="The Shake">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+						
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
                             <a href="assets/img/hero-bg7.jpg" title="Who's that, mommy?">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+							
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 gallery-imgborder">
                         <div class="gallery-img">
                             <a href="assets/img/hero-bg8.jpg" title="Who's that, mommy?">
                                 <img src="{{ asset('frontassets/img/vendor.jpg') }}" class="img-fluid rounded" alt="gallery image">
                             </a>
-							<div class="gallery-text">
-                                <h5>Vendor</h5>
-                             </div>
+						
                         </div>
                     </div>
                 </div>

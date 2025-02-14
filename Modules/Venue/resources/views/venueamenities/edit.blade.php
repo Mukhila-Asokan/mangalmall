@@ -1,23 +1,6 @@
 @extends('admin.layouts.app-admin')
 @section('content')
 
-<!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4 class="page-title mb-0">{!! $pagetitle !!}</h4>
-                </div>
-                <div class="col-lg-6">
-                   <div class="d-none d-lg-block">
-                    <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot }}</a></li>
-                        <li class="breadcrumb-item active">{!! $pagetitle !!}</li>
-                    </ol>
-                   </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
 
          <div class="row">
             <div class="col-12">
@@ -45,11 +28,10 @@
                                         <div class="mb-2 row">
                                             <label class="col-md-4 col-form-label" for="amenities_name">Venue Amenities Name</label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="amenities_name" name="amenities_name" class="form-control" placeholder="Enter the venue Amenities name" value = "{{ $venueamenities->amenities_name }}" required>
-                                                @if($errors->has('amenities_name'))
-                                                <div class="text-danger">{{ $errors->first('amenities_name') }}</div>
-                                                
-                                            @endif
+                                                <input type="text" id="amenities_name" name="amenities_name" class="form-control" placeholder="Enter the venue Amenities name" value = "{{ $venueamenities->amenities_name }}" >
+                                                  @error('amenities_name')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                  @enderror
                                             </div>
 
                                         </div>

@@ -55,9 +55,42 @@
    
    
 @endphp
+
+
+
+<div class="modal fade" id="onload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> <!-- Add this line to your code -->
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Do You Want Cookie? We Want Yours! 🍪</h5>
+            </div>
+            <div class="modal-body">
+                This site uses cookies to personalies the content for you.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> <!-- And the relavant closing div tag -->
+
+
+
+
+
+
+
+
 @push('scripts')
 
 <script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+<script type="text/javascript">
+    alert('This is the onload event');
+    window.onload = () => {
+        alert('This is the onload event');
+        $('#onload').modal('show');
+    }
+</script>
 <script type="text/javascript">
     
   

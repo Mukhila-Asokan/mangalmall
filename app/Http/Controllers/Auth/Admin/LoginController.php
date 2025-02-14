@@ -69,7 +69,7 @@ class LoginController extends Controller
     {
 
        $request->validate([
-            'email' => 'required|email|exists:admin_users,email',
+           'email' => 'required|email',
             'password' => 'required'
         ]);
 
@@ -87,14 +87,6 @@ class LoginController extends Controller
            
             return redirect(route('adminrole'));
      
-         //return redirect(route('admin/dashboard'));
-
-            /*$request->session()->regenerate();
- 
-             return redirect(route('admin/admindashboard'))->with([
-                'success' => "Welcome to dashboard"
-            ]);*/
-
         }else{
             return redirect(route('admin.login'))->with([
                 'error' => "Invalid Credentials."

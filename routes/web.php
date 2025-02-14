@@ -32,6 +32,11 @@ Route::any('/ajaxcvenuesubtypelist',[HomeController::class, 'ajaxcvenuesubtypeli
 Route::any('/venuesearchresults',[HomeController::class, 'venuesearchresults'])->name('home/venuesearchresults');
 Route::any('/home/{id}/venuedetails',[HomeController::class, 'venuedetails'])->name('home/venuedetails');
 
+Route::any('/home/ajaxstate',[HomeController::class, 'ajaxstate'])->name('home/ajaxstate');
+Route::any('/home/chooselocation',[HomeController::class, 'chooselocation'])->name('home/chooselocation');
+Route::post('/home/ajaxcitysearch', [HomeController::class, 'ajaxCitySearch'])->name('home/ajaxcitysearch');
+
+
 Route::get('/home/venue-search', [VenueSearchController::class, 'index'])->name('venue.search');
 
 Route::get('/dashboard', function () {
@@ -60,20 +65,27 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
 
      Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
 
-      Route::any('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
-
+    Route::any('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
+    Route::any('/venuesearch', [VenueSearchController::class, 'index'])->name('venuereact.search');
 
     Route::any('/venuesyn-search', [VenueSearchController::class, 'syncfushindex'])->name('venuesyn.search');
     Route::any('/venuesearch/{id}/venuedetails',[VenueSearchController::class, 'venuedetails'])->name('venuesearch/venuedetails');
 
      
     Route::any('/ads/random', [VenueSearchController::class, 'adsrandom'])->name('venue/adsrandom');
+    Route::post('/venue-ratings', [VenueRatingController::class, 'store']);
+    Route::get('/venue-ratings/{id}', [VenueRatingController::class, 'getVenueRatings']);
 
 });
 
 
 Route::middleware(['auth'])->group(function () {
    
+});
+
+Route::get('/test-purifier', function () {
+    $html = "<p>This is a <strong>test</strong>.</p>"; // Simple HTML
+    return view('test-purifier', ['html' => $html]);
 });
 
 

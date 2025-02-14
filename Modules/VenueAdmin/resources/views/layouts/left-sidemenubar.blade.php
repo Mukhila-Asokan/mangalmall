@@ -1,91 +1,168 @@
-<aside class="left-sidebar with-vertical">
-    <div><!-- ---------------------------------- -->
-        <!-- Start Vertical Layout Sidebar -->
-        <!-- ---------------------------------- -->
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="#" class="text-nowrap logo-img">
-            <img src="{{ asset('venueassets/images/logo-light.png') }}" class="dark-logo" alt="Logo-Dark" />
-            <img src="{{ asset('venueassets/images/logo-light.png') }}" class="light-logo" alt="Logo-light" />
-          </a>
-          <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
-            <i class="ti ti-x"></i>
-          </a>
-        </div>
-      </div>
-       <nav class="sidebar-nav scroll-sidebar" data-simplebar>
-          <ul id="sidebarnav">
-
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">Home</span>
-              </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link" href="#" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-home-2"></i>
-                  </span>
-                  <span class="hide-menu">Dashboard</span>
+    <!-- Brand Logo Light -->
+                <a href="#" class="logo logo-light">
+                    <span class="logo-lg">
+                        <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="logo">
+                    </span>
+                    <span class="logo-sm">
+                        <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="small logo">
+                    </span>
                 </a>
-            </li>
 
-           <li class="sidebar-item">
-              <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
-                <span class="d-flex">
-                  <i class="ti ti-layout-grid"></i>
-                </span>
-                <span class="hide-menu">Venue Management</span>
-              </a>
-               <ul aria-expanded="false" class="collapse first-level">
-                <li class="sidebar-item">
-                  <a href="{{ route('venueadmin/venuelist') }}" class="sidebar-link">
-                    <div class="round-16 d-flex align-items-center justify-content-center">
-                      <i class="ti ti-circle"></i>
+                <!-- Brand Logo Dark -->
+                <a href="#" class="logo logo-dark">
+                    <span class="logo-lg">
+                        <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="dark logo">
+                    </span>
+                    <span class="logo-sm">
+                        <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="small logo">
+                    </span>
+                </a>
+                <!-- Full Sidebar Menu Close Button -->
+                <div class="button-close-fullsidebar">
+                    <i class="ri-close-fill align-middle"></i>
+                </div>
+
+                <!-- Sidebar -left -->
+                <div class="h-100" id="leftside-menu-container" data-simplebar>
+                    <!-- Leftbar User -->
+                    <div class="leftbar-user">
+                        <a href="#">
+                            <img src="{{ asset('venueasset/images/users/avatar-1.jpg') }}" alt="user-image" height="42" class="rounded-circle shadow-sm">
+                            <span class="leftbar-user-name mt-2">Michael Berndt</span>
+                        </a>
                     </div>
-                    <span class="hide-menu">List</span>
-                  </a>
-                </li>
-                <li class="sidebar-item">
-                  <a href="{{ route('venueadmin/create') }}" class="sidebar-link">
-                    <div class="round-16 d-flex align-items-center justify-content-center">
-                      <i class="ti ti-plus"></i>
-                    </div>
-                    <span class="hide-menu">Add</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
 
-           <li class="sidebar-item">
-              <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
-                <span class="d-flex">
-                  <i class="ti ti-layout-cog"></i>
-                </span>
-                <span class="hide-menu">Settings</span>
-              </a>
-               <ul aria-expanded="false" class="collapse first-level">
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">
-                    <div class="round-16 d-flex align-items-center justify-content-center">
-                      <i class="ti ti-circle"></i>
-                    </div>
-                    <span class="hide-menu">Profile</span>
-                  </a>
-                </li>
-                <li class="sidebar-item">
-                  <a href="{{ route('venueadmin/venueadd') }}" class="sidebar-link">
-                    <div class="round-16 d-flex align-items-center justify-content-center">
-                      <i class="ti ti-plus"></i>
-                    </div>
-                    <span class="hide-menu">Change Password</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
+                    <!--- Sidemenu -->
+                    <ul class="side-nav">
+
+                       
+                        <li class="side-nav-title">Main</li>
+
+                        <li class="side-nav-item">
+                            <a href="#" class="side-nav-link">
+                                <i class="ri-dashboard-2-fill"></i>
+                                <span> Dashboard </span>
+                            </a>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a href="#" class="side-nav-link">
+                                <i class="ri-calendar-event-fill"></i>
+                                <span> Calendar </span>
+                            </a>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a href="#" class="side-nav-link">
+                                <i class="ri-message-3-fill"></i>
+                                <span> Chat </span>
+                            </a>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail" class="side-nav-link">
+                                <i class="ri-mail-fill"></i>
+                                <span> Email </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarEmail">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="#">Inbox</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Read Email</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-title">Venue Mangament</li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarBaseUI" aria-expanded="false" aria-controls="sidebarBaseUI" class="side-nav-link">
+                                <i class="ri-home-heart-fill"></i>
+                                <span>Venues </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarBaseUI">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{ route('venueadmin/create')}}">Add Venue</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('venueadmin/venuelist') }}">List Venue</a>
+                                    </li>                                  
+                                    <li>
+                                        <a href="{{ route('venuebooking.eventslist') }}">Booking Details</a>
+                                    </li>
+                                   
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarExtendedUI" aria-expanded="false" aria-controls="sidebarExtendedUI" class="side-nav-link">
+                                <i class="ri-price-tag-2-fill"></i>
+                                <span> Venue Pricing</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarExtendedUI">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="#">Invoice Generator</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Booking Adds</a>
+                                    </li>                                  
+                                </ul>
+                            </div>
+                        </li>
+            
+            <li class="side-nav-title">Staff Mangament</li>
+            
+               <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarStaff" aria-expanded="false" aria-controls="sidebarStaff" class="side-nav-link">
+                                <i class="ri-team-fill"></i>
+                                <span> Staff</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarStaff">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="#">Add Staff</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">List</a>
+                                    </li>                                  
+                                </ul>
+                            </div>
+                        </li>
+            
+             <li class="side-nav-item">
+                            <a href="#" class="side-nav-link">
+                                <i class="ri-smartphone-fill"></i>
+                                <span> Change Mobile No </span>
+                            </a>
+                        </li>
+            
+            <li class="side-nav-item">
+                            <a href="{{ route('venueadmin/logout') }}" class="side-nav-link">
+                                <i class="ri-logout-circle-r-fill"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+
+                        
 
 
+                    </ul>
+                    <!--- End Sidemenu -->
 
-          </ul>
-        </nav>
+                     <div class="bg-flower-bot">
+                      <img src="{{ asset('venueasset/images/flowers/img-4.png') }}">
+                  </div>
 
 
-</aside>
+                    <div class="clearfix"></div>
+                </div>

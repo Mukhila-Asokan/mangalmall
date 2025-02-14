@@ -8,6 +8,8 @@
     "require": {
         "php": "^8.2",
         "astra-techno/data-forge": "^1.4",
+        "barryvdh/laravel-dompdf": "^3.1",
+        "ezyang/htmlpurifier": "^4.18",
         "guzzlehttp/guzzle": "^7.9",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^11.31",
@@ -15,9 +17,11 @@
         "laravel/scout": "^10.12",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "maatwebsite/excel": "^1.1",
         "meilisearch/meilisearch-php": "^1.12",
         "mhmiton/laravel-modules-livewire": "^4.3",
         "nwidart/laravel-modules": "^11.1",
+        "php-flasher/flasher-laravel": "^2.1",
         "tightenco/ziggy": "^2.5",
         "tymon/jwt-auth": "^2.1",
         "yajra/laravel-datatables-oracle": "11.0"

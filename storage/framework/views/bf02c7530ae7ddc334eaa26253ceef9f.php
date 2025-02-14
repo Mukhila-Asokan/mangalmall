@@ -13,6 +13,18 @@
         border-top-right-radius: 100px!important;
         border-bottom-left-radius: 100px!important;
     }
+    .bg-flower-bot {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        opacity: .2;
+        z-index: -1;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+    }
  </style>
   
 
@@ -72,9 +84,19 @@ $url = "frontassets/img/hero-bg-4.jpg";
    
    
 ?>
+
+
+
+
+
+
+
+
 <?php $__env->startPush('scripts'); ?>
 
 <script src="<?php echo e(asset('adminassets/libs/selectize/js/standalone/selectize.min.js')); ?>"></script>
+
+
 <script type="text/javascript">
     
   
@@ -90,51 +112,15 @@ $url = "frontassets/img/hero-bg-4.jpg";
 
 
 
-      $("#venuetypeid").change(function(e) {
-
-
-      
-        e.preventDefault();   
-        var venuetypeid = $(this).val();
-
-        $.ajax({
-           type:'POST',
-           url:"<?php echo e(route('home/ajaxcvenuesubtypelist')); ?>",
-           dataType: 'json',
-           data:{ "_token": "<?php echo e(csrf_token()); ?>", "venuetypeid" :venuetypeid},
-           success:function(response){  
-            $("#venuesubtypeid").empty();   
-            var returnData = response;   
-            if(returnData.length>0)
-            {
-                let casestr = '<option>Select Venue Sub Type</option>';
-                for(i=0;i<returnData.length;i++)
-                {
-                    casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['venuetype_name'] + '</option>';
-                }
-             console.log(casestr);       
-           
-             $("#venuesubtypeid").append(casestr);
-            }
-            else
-            {
-                alert("No Data")
-            }
-         }        
-          
-        });
-           
-     });
-
-
 
       $("#searchbutton").click(function(e) {
          e.preventDefault();   
 
             var venuearea = $('#venuearea').val();
-            var venuetype = $('#venuetypeid').val();
-            var venusubtype = $('#venuesubtypeid').val();
-          
+            /*var venuetype = $('#venuetypeid').val();*/
+         
+          var venuearea = 1;
+          var venusubtype = 1;
 
         $.ajax({
            type:'POST',
@@ -177,6 +163,131 @@ $url = "frontassets/img/hero-bg-4.jpg";
         });
 
       });
+
+
+</script>
+<script type="text/javascript">
+  /*  
+document.addEventListener("DOMContentLoaded", function () {
+    const cursor = document.getElementById("custom-cursor");
+
+    document.addEventListener("mousemove", (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+    });
+
+    // Add hover effect on links & buttons
+    document.querySelectorAll("a, button").forEach((element) => {
+        element.addEventListener("mouseenter", () => {
+            cursor.classList.add("hover-effect");
+        });
+
+        element.addEventListener("mouseleave", () => {
+            cursor.classList.remove("hover-effect");
+        });
+    });
+});
+
+*/
+document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('state').addEventListener('change', function(e) {
+            e.preventDefault();   
+            var state = $(this).val();
+            $.ajax({
+            type:'POST',
+            url:"<?php echo e(route('home/ajaxstate')); ?>",
+            dataType: 'json',
+            data:{ "_token": "<?php echo e(csrf_token()); ?>", "state" :state},
+            success:function(response){  
+                $("#city").empty();   
+                var returnData = response;   
+                if(returnData.length>0)
+                {
+                    let casestr = '<option>Select City</option>';
+                    for(i=0;i<returnData.length;i++)
+                    {
+                        casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['cityname'] + '</option>';
+                    }
+                console.log(casestr);       
+            
+                $("#city").append(casestr);
+                }
+                else
+                {
+                    alert("No Data")
+                }
+            }        
+            
+            });
+            
+            });
+
+
+        document.getElementById('chooselocation').addEventListener('click', function(e) {
+            e.preventDefault();   
+            var city = $('#city').val();
+            var state = $('#state').val();
+            $.ajax({
+            type:'POST',
+            url:"<?php echo e(route('home/chooselocation')); ?>",
+            dataType: 'json',
+            data:{ "_token": "<?php echo e(csrf_token()); ?>", "city" :city,"state" :state},
+            success:function(response){  
+                $("#citySearch").empty();
+                $("#citySearch").autocomplete({
+                minLength: 2, // Minimum characters before search starts
+                select: function(event, ui) {
+                $("#citySearch").val(ui.item.label); // Set the selected value
+                console.log("Selected City:", ui.item.label);
+                return false; // Prevent default behavior
+        }
+    });
+                console.log(response);
+                $('#onload').modal('hide');
+            }        
+            
+            });
+            
+            }); 
+
+
+
+
+
+            
+
+
+        });
+
+
+
+        $(document).ready(function() {
+    $("#citySearch").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "<?php echo e(route('home/ajaxcitysearch')); ?>", // Replace with your backend route
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>", // CSRF Token for security
+                    "query": request.term // User input
+                },
+                success: function(data) {
+                    response(data); // Send the data to autocomplete
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching autocomplete data:", error);
+                }
+            });
+        },
+        minLength: 2, // Minimum characters before search starts
+        select: function(event, ui) {
+            $("#citySearch").val(ui.item.label); // Set the selected value
+            console.log("Selected City:", ui.item.label);
+            return false; // Prevent default behavior
+        }
+    });
+});
 
 
 </script>

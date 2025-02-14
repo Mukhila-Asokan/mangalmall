@@ -56,6 +56,9 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuebooking/events',[VenueBookingController::class, 'getevents']);
     Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'edit']);
     
+    Route::any('/venuebooking/eventslist',[VenueBookingController::class, 'index'])->name('venuebooking.eventslist');
+
+    
 
      Route::any('/logout',[VenueAdminController::class, 'destroy'])->name('venueadmin/logout');
 

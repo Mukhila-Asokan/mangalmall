@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { usePage, Head, Link } from "@inertiajs/react";
 import { Inertia } from '@inertiajs/inertia';
 
-import Select from "react-select";
 import AsyncSelect from "react-select/async";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -16,12 +15,17 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     const [venues, setVenues] = useState(initialVenuelist); // Manage venuelist as state
     const [searchArea, setSearchArea] = useState(filters?.searchArea || '');
     const [searchType, setSearchType] = useState(filters?.searchType || '');
-    const [searchSubtype, setSearchSubtype] = useState(filters?.searchSubtype || '');
+   /* const [searchSubtype, setSearchSubtype] = useState(filters?.searchSubtype || '');*/
     const [selectedAmenities, setSelectedAmenities] = useState(filters?.selectedAmenities || []);
     const [sortBy, setSortBy] = useState(filters?.sortBy || '');
-    const [venueSubtypes, setVenueSubtypes] = useState([]);
+    const [capacity, setcapacity] = useState(filters?.capacity || '');
+    /*const [venueSubtypes, setVenueSubtypes] = useState([]);*/
     const [currentPage, setCurrentPage] = useState(1); // Default to page 1
     const [lastPage, setLastPage] = useState(1); // Default to 1 page available
+    const [budgetPerPlate, setBudgetPerPlate] = useState(filters?.budgetPerPlate || '');
+    const [budgetPerDay, setBudgetPerDay] = useState(filters?.budgetPerDay || '');
+    const  [ratings, setRatings] = useState(filters?.ratings || '');    
+    const  [foodtype, setFoodtype] = useState(filters?.foodtype || '');
 
       const { auth } = usePage().props; // Get auth data
       console.log('Auth data:', auth); 
@@ -30,6 +34,8 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
   
     useEffect(() => {
         setVenues(initialVenuelist['data']);
+        setCurrentPage(initialVenuelist['current_page'] || 1);
+        setLastPage(initialVenuelist['last_page'] || 1);
     }, [initialVenuelist]);
 
     const loadOptions = async (inputValue, callback) => {
@@ -73,7 +79,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
         console.log("Fetching venues with filters:", {
             searchArea,
             searchType,
-            searchSubtype,
+            capacity,
             selectedAmenities,
             sortBy,
             currentPage,
@@ -83,7 +89,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             const queryParams = new URLSearchParams({
                 searchArea: searchArea?.value || "",
                 searchType,
-                searchSubtype,
+                capacity,
                 selectedAmenities: selectedAmenities.join(","),
                 sortBy,
                 page: currentPage,
@@ -126,7 +132,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     const handlePageChange = (newPage) => {
         if (newPage >= 1 && newPage <= lastPage) {
             setCurrentPage(newPage);
-            handleFilterChange(); // Fetch new page data
+           // handleFilterChange(); // Fetch new page data
         }
     };
 
@@ -135,7 +141,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 
         setSearchArea('');
         setSearchType('');
-        setSearchSubtype('');
+       
         setSelectedAmenities([]);
         setSortBy('');
 
@@ -144,17 +150,6 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             replace: true,
         });
     };
-
-    useEffect(() => {
-        if (searchType) {
-            fetch(`/get-subtypes/${searchType}`)
-                .then(response => response.json())
-                .then(data => setVenueSubtypes(data))
-                .catch(error => console.error("Error fetching subtypes:", error));
-        } else {
-            setVenueSubtypes([]);
-        }
-    }, [searchType]);
 
     return (
         <div className="mx-auto p-1" style={{ width: "100%" }}>
@@ -200,22 +195,21 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
          <div className="col-lg-3 col-md-3">
             <div className="form-group">
                 <select
-                    value={searchSubtype}                  
+                    value={capacity}                  
 
                     onChange={(e) => {
-        console.log("setSearchSubtype:", e.target.value);
-        setSearchSubtype(e.target.value);
+        console.log("capacity:", e.target.value);
+        setcapacity(e.target.value);
 
           handleFilterChange();
 
-    }}
-                    className="aysncselecttag">
-                    <option value="">Select Venue Subtype</option>
-                    {venueSubtypes.map((subtype) => (
-                                <option key={subtype.id} value={subtype.id}>
-                                    {subtype.venuetype_name}
-                                </option>
-                            ))}
+    }}   className="aysncselecttag">
+                    <option value="">Select capacity</option>
+                    <option value="100">Upto 100</option>  
+                    <option value="100-300">100 - 300</option>
+                    <option value="300-600">300 - 600</option>
+                    <option value="600-1000">600 - 1000</option>
+                    <option value="1000">Above 1000</option>                   
                 </select>
              </div>
         </div>
@@ -239,11 +233,86 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                 </select>
             </div>
           </div>
-        </div>
+       
+        
+
+            <div className="col-lg-3 col-md-3">
+            <div className="form-group">
+
+                <select
+                    value={budgetPerPlate}
+
+                    onChange={(e) => {  }}
+                    className="aysncselecttag" >
+                    <option value="">Budget per Plate</option>
+                    <option value="Upto 250">Upto 250</option>
+                    <option value="251 - 500">251 - 500</option>
+                    <option value="501 - 1000">501 - 1000</option>
+                    <option value="Above 1000">Above 1000</option>
+                 
+                </select>
+            </div>
+          </div>
 
 
+          <div className="col-lg-3 col-md-3">
+            <div className="form-group">
+
+                <select
+                    value={budgetPerDay}
+
+                    onChange={(e) => {  }}
+                    className="aysncselecttag" >
+                    <option value="">Budget per Day</option>
+                    <option value="Upto 10000">Upto 10000</option>
+                    <option value="10001 -20000">10001 -20000</option>
+                    <option value="20001 - 50000">20001 - 50000</option>
+                    <option value="Above 50000">Above 50000</option>
+                 
+                </select>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-3">
+            <div className="form-group">
+
+                <select
+                    value={ratings}
+
+                    onChange={(e) => {  }}
+                    className="aysncselecttag" >
+                    <option value="">Ratings</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  
+                 
+                </select>
+            </div>
+          </div>
+
+          
+          <div className="col-lg-3 col-md-3">
+            <div className="form-group">
+                <select
+                    value={foodtype}
+                    onChange={(e) => {  }}
+                    className="aysncselecttag">
+                    <option value="">Food Type</option>
+                    <option value="veg">Veg</option>
+                    <option value="nonveg">Non-Veg</option>
+                    <option value="both">Veg & Non-Veg</option>
+                </select>
+            </div>
+          </div>
+
+            </div>
+      
         <div className="row pt-2 col-12">
             <div className="col-md-12 col-lg-12">
+
+        
+
                 <div id="accordion-one" className="accordion accordion-faq">
                     <div className="card mb-0 px-4">
                         <a className="card-header collapsed" data-toggle="collapse" href="#collapseTwo-one">
@@ -272,6 +341,10 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                                         </div>
                                     ))}
                                 </div>
+                                <div className="row pt-5 col-12">
+                                    
+                                </div>    
+
                             </div>
                         </div>
                     </div>
@@ -302,7 +375,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     }} 
     className="btn primary-solid-btn btn-block btn-not-rounded mt-3"
 >
-    Reset
+    Clear All
 </button>
 
 </div>
@@ -315,37 +388,44 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                             <div className="favorite-icon"> <i className="bi bi-heart"></i> </div> 
                             <div className="image-container"><img src={`${baseImageUrl}${venue.bannerimage}`} className="venue-img" alt={venue.venuename}/></div>
                             <div className="label-container"> 
-                                <span className="label-badge trusted single-service-plane">Trusted</span>   
-                                <span className="label-badge new single-service-plane">Premium</span>
+                                <span className="label-badge trusted single-service-plane">Trusted</span>  
+                               
                             </div>
                             
                             <div className="card-body"> 
-                                <h5 className="card-title mb-2">{venue.venuename}</h5>
-                                <div className="rating">
-                                    <i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-half"></i>
-                                    <span className="text-muted ms-2">(4.5)</span>
+                                <h6 className="card-title mb-2">{venue.venuename}</h6>
+                                <p className="card-text d-flex align-items-center">
+                                    <div style={{ verticalAlign: 'middle' }}>{venue.venueaddress}</div> 
+                                 </p>
+                               
+                                <div className='d-flex justify-content-between'>
+                                <div className="rating d-inline-flex" style={{ verticalAlign: 'middle' }}>
+                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
+                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
+                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
+                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
+                                    <i className="bi bi-star-half" style={{ verticalAlign: 'middle' }}></i>
+                                    <span className="text-muted" style={{ verticalAlign: 'top' }}>(4.5)</span>
                                 </div>
-                            </div>
-                            <div className="contact-info">
-                            <p className="card-text d-inline-flex">
-                                <div className='p-2'><i className="bi bi-geo-alt-fill text-primary"></i></div>   <div className='p-2'>{venue.venueaddress}</div>
-                             </p>
-                            </div>
+                                <div className="price d-flex flex-column">
+                                    <div>Price Per Day</div>
+                                    <div className="text-muted">₹ {venue.bookingprice}</div>
+                                    </div>
+                                </div>
+
+                                <div className='d-flex justify-content-between'>                         
                             <div className="contact-info">
                                 <p className="card-text d-inline-flex">
-                                <div className='p-2'> <i className="bi bi-person-fill text-primary"></i></div>   <div className='p-2'>Contact Person: {venue.contactperson}</div>
+                                <div className="p-2"><i className="bi bi-person-fill text-primary" style={{ verticalAlign: 'middle' }}></i> <span style={{ verticalAlign: 'middle' }}>{venue.contactperson}</span> 
+</div>
                                 </p>
                             </div>
                             <div className="contact-info">
                             <p className="card-text d-inline-flex">
-                                <div className='p-2'><i className="bi bi-telephone-fill text-primary"></i></div>   
-                                <div className='p-2'><a href="tel:+1234567890" className="text-decoration-none">   {venue.contactmobile}</a></div>
+                                <div className='p-2'><i className="bi bi-telephone-fill text-primary" style={{ verticalAlign: 'middle' }}></i> <a href="tel:+1234567890" className="text-decoration-none"> <span style={{ verticalAlign: 'middle' }}> {venue.contactmobile}</span></a></div>
                             </p>
-                        </div>   
+                        </div>  
+                        </div> 
                         <hr></hr>
 
                         <div className="share-icons d-flex justify-content-between align-items-center mtb-1">
@@ -369,7 +449,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                             </a>
                          
                         </div>
-                          
+                        </div>    
                             </div>
                         </div>
                     ))

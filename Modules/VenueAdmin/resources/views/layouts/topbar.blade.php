@@ -1,237 +1,187 @@
- <!--  Header Start -->
-      <header class="topbar shadow-sm">
-        <div class="with-vertical">
-        	<nav class="navbar navbar-expand-lg p-0">
-        	
-          <ul class="navbar-nav">
-              <li class="nav-item nav-icon-hover-bg rounded-circle ms-n2">
-                <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
-                  <i class="ti ti-menu-2"></i>
-                </a>
-              </li>
-              <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-lg-flex">
-                <a class="nav-link" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  <i class="ti ti-search"></i>
-                </a>
-              </li>
-            </ul>
+ <div class="topbar container-fluid">
+                    <div class="d-flex align-items-center gap-lg-2 gap-1">
 
-            <ul class="navbar-nav quick-links d-none d-lg-flex align-items-center">
-               <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="#">Support</a>
-              </li>
-              <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="#">Calendar</a>
-              </li>
-              
-            </ul>
+                        <!-- Topbar Brand Logo -->
+                        <div class="logo-topbar">
+                            <!-- Logo light -->
+                            <a href="#" class="logo-light">
+                                <span class="logo-lg">
+                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="logo">
+                                </span>
+                                <span class="logo-sm">
+                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="small logo">
+                                </span>
+                            </a>
 
-          <div class="d-block d-lg-none py-4">
-              <a href="#" class="text-nowrap logo-img">
-                <img src="{{ asset('venueassets/images/logo-light.png') }}" class="dark-logo" alt="Logo-Dark" />
-                <img src="{{ asset('venueassets/images/logo-light.png') }}" class="light-logo" alt="Logo-light" />
-              </a>
-            </div>
-            <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <i class="ti ti-dots fs-7"></i>
-            </a>
+                            <!-- Logo Dark -->
+                            <a href="#" class="logo-dark">
+                                <span class="logo-lg">
+                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="dark logo">
+                                </span>
+                                <span class="logo-sm">
+                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="small logo">
+                                </span>
+                            </a>
+                        </div>
 
-              <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <div class="d-flex align-items-center justify-content-between">
-                <a href="javascript:void(0)" class="nav-link nav-icon-hover-bg rounded-circle mx-0 ms-n1 d-flex d-lg-none align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar" aria-controls="offcanvasWithBothOptions">
-                  <i class="ti ti-align-justified fs-7"></i>
-                </a>
-                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-               
-                	<li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
-                    <a class="nav-link position-relative" href="javascript:void(0)" id="drop2" aria-expanded="false">
-                      <i class="ti ti-bell-ringing"></i>
-                      <div class="notification bg-primary rounded-circle"></div>
-                    </a>
-                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                      <div class="d-flex align-items-center justify-content-between py-3 px-7">
-                        <h5 class="mb-0 fs-5 fw-semibold">Notifications</h5>
-                        <span class="badge text-bg-primary rounded-4 px-3 py-1 lh-sm">5 new</span>
-                      </div>
-                      <div class="message-body" data-simplebar>
+                        <!-- Sidebar Menu Toggle Button -->
+                        <button class="button-toggle-menu">
+                            <i class="ri-menu-2-fill"></i>
+                        </button>
+
+                        <!-- Topbar Search Form -->
+                        <div class="app-search dropdown d-none d-lg-block">
+                            <form>
+                                <div class="input-group">
+                                    <input type="search" class="form-control dropdown-toggle" placeholder="Search..." id="top-search">
+                                    <span class="ri-search-line search-icon"></span>
+                                </div>
+                            </form>
+
+                            <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
+                                <!-- item-->
+                                <div class="dropdown-header noti-title">
+                                    <h5 class="text-overflow mb-1">Found <b class="text-decoration-underline">08</b> results</h5>
+                                </div>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="ri-file-chart-line fs-16 me-1"></i>
+                                    <span>Booking Details</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="ri-lifebuoy-line fs-16 me-1"></i>
+                                    <span>Staff List</span>
+                                </a>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="topbar-menu d-flex align-items-center gap-3">
+                        <li class="dropdown d-lg-none">
+                            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <i class="ri-search-line fs-22"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
+                                <form class="p-3">
+                                    <input type="search" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                </form>
+                            </div>
+                        </li>
+
                      
-                        <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
-                          <span class="me-3">
-                            <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="user" class="rounded-circle" width="48" height="48" />
-                          </span>
-                          <div class="w-100">
-                            <h6 class="mb-1 fw-semibold lh-base">New message</h6>
-                            <span class="fs-2 d-block text-body-secondary">Mangal Mall sent you new message</span>
-                          </div>
-                        </a>
-                  
-                  
-                      </div>
-                      <div class="py-6 px-7 mb-1">
-                        <button class="btn btn-outline-primary w-100">See All Notifications</button>
-                      </div>
-                    </div>
-                  </li>
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <i class="ri-notification-3-line fs-22"></i>
+                                <span class="noti-icon-badge"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
+                                <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-0 fs-16 fw-semibold"> Notification</h6>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="javascript: void(0);" class="text-dark text-decoration-underline">
+                                                <small>Clear All</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
 
-                     <li class="nav-item dropdown">
-                    <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
-                      <div class="d-flex align-items-center">
-                        <div class="user-profile-img">
-                          <img src="{{ asset('venueassets/images/logo-light.png') }}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
-                        </div>
-                      </div>
-                    </a>
-                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
-                      <div class="profile-dropdown position-relative" data-simplebar>
-                        <div class="py-3 px-7 pb-0">
-                          <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
-                        </div>
-                        <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                          <img src="{{ asset('venueassets/images/logo-light.png') }}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
-                          <div class="ms-3">
-                            <h5 class="mb-1 fs-3">{{ $username }}</h5>
-                            <span class="mb-1 d-block">Venue Administrator</span>
-                            <p class="mb-0 d-flex align-items-center gap-2">
-                              <i class="ti ti-mail fs-4"></i> {{ $email }}
-                            </p>
-                          </div>
-                        </div>                       
-                        <div class="d-grid py-4 px-7 pt-8">
-                         
-                          <a href="{{ route('venueadmin/logout') }}" class="btn btn-outline-primary">Log Out</a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+                                <div style="max-height: 300px;" data-simplebar>
 
-               	</ul>
+                                    <h5 class="text-muted fs-12 fw-bold p-2 text-uppercase mb-0">Today</h5>
+                                    <!-- item-->
+
+                                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item unread-noti card m-0 shadow-none">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <div class="notify-icon bg-primary">
+                                                        <i class="ri-message-3-line fs-18"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1 text-truncate ms-2">
+                                                    <h5 class="noti-item-title fw-semibold fs-14">Datacorp <small class="fw-normal text-muted float-end ms-1">1 min ago</small></h5>
+                                                    <small class="noti-item-subtitle text-muted">Venue commented on Admin</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                  
+                                  
+                                </div>
+
+                                <!-- All-->
+                                <a href="javascript:void(0);" class="dropdown-item text-center text-primary text-decoration-underline fw-bold notify-item border-top border-light py-2">
+                                    View All
+                                </a>
+
+                            </div>
+                        </li>
+
+                        
+
+                        <li class="d-none d-sm-inline-block">
+                            <div class="nav-link" id="light-dark-mode">
+                                <i class="ri-moon-line fs-22"></i>
+                            </div>
+                        </li>
 
 
-        </div>
-    </div>
-</nav>
-</div>
+                        <li class="d-none d-md-inline-block">
+                            <a class="nav-link" href="" data-toggle="fullscreen">
+                                <i class="ri-fullscreen-line fs-22"></i>
+                            </a>
+                        </li>
 
+                        <li class="dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">                              
+                                <span class="d-lg-flex flex-column gap-1 d-none">
+                                    <h5 class="my-0">{{ $username }}</h5>
+                                    <h6 class="my-0 fw-normal">Venue Administrator</h6>
+                                     <p class="mb-0 d-flex align-items-center gap-2">
+                                      <i class="ri-mail-fill"></i> {{ $email }}
+                                    </p>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
+                                <!-- item-->
+                                <div class=" dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                </div>
 
- <div class="app-header with-horizontal">
+                                <!-- item-->
+                                <a href="#" class="dropdown-item">
+                                    <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
+                                    <span>My Account</span>
+                                </a>
 
-  <nav class="navbar navbar-expand-xl container-fluid p-0">
+                                <!-- item-->
+                                <a href="#" class="dropdown-item">
+                                    <i class="ri-settings-4-line fs-18 align-middle me-1"></i>
+                                    <span>Settings</span>
+                                </a>
 
-    <ul class="navbar-nav align-items-center">
-      <li class="nav-item nav-icon-hover-bg rounded-circle d-flex d-xl-none ms-n2">
-        <a class="nav-link sidebartoggler" id="sidebarCollapse" href="javascript:void(0)">
-          <i class="ti ti-menu-2"></i>
-        </a>
-      </li>
-      <li class="nav-item d-none d-xl-block">
-        <a href="#" class="text-nowrap nav-link">
-          <img src="{{ asset('venueassets/images/logo-light.png') }}" class="dark-logo" width="120" alt="modernize-img" />
-          <img src="{{ asset('venueassets/images/logo-light.png') }}" class="light-logo" width="120" alt="modernize-img" />
-        </a>
-      </li>
-      <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-xl-flex">
-        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <i class="ti ti-search"></i>
-        </a>
-      </li>
-    </ul>
-    <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
-     <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="#">Support</a>
-              </li>
-              <li class="nav-item dropdown-hover d-none d-lg-block">
-                <a class="nav-link" href="#">Calendar</a>
-              </li>
+                                <!-- item-->
+                                <a href="#" class="dropdown-item">
+                                    <i class="ri-customer-service-2-line fs-18 align-middle me-1"></i>
+                                    <span>Support</span>
+                                </a>
 
-      </ul>
-
-        <div class="d-block d-xl-none">
-              <a href="#" class="text-nowrap nav-link">
-                <img src="{{ asset('venueassets/images/logo-light.png') }}" width="120" alt="modernize-img" />
-              </a>
-       </div>
-        <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="p-2">
-            <i class="ti ti-dots fs-7"></i>
-          </span>
-        </a>
-
-         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <div class="d-flex align-items-center justify-content-between px-0 px-xl-8">
-                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-                       <li class="nav-item nav-icon-hover-bg rounded-circle">
-                    <a class="nav-link moon dark-layout" href="javascript:void(0)">
-                      <i class="ti ti-moon moon"></i>
-                    </a>
-                    <a class="nav-link sun light-layout" href="javascript:void(0)">
-                      <i class="ti ti-sun sun"></i>
-                    </a>
-                  </li>
-
-                    <li class="nav-item nav-icon-hover-bg rounded-circle dropdown">
-                    <a class="nav-link position-relative" href="javascript:void(0)" id="drop2" aria-expanded="false">
-                      <i class="ti ti-bell-ringing"></i>
-                      <div class="notification bg-primary rounded-circle"></div>
-                    </a>
-                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                      <div class="d-flex align-items-center justify-content-between py-3 px-7">
-                        <h5 class="mb-0 fs-5 fw-semibold">Notifications</h5>
-                        <span class="badge text-bg-primary rounded-4 px-3 py-1 lh-sm">5 new</span>
-                      </div>
-                      <div class="message-body" data-simplebar>
-                        <a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
-                          <span class="me-3">
-                            <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="user" class="rounded-circle" width="48" height="48" />
-                          </span>
-                          <div class="w-100">
-                            <h6 class="mb-1 fw-semibold lh-base">Mangal Mall!</h6>
-                            <span class="fs-2 d-block text-body-secondary">Congratulate you</span>
-                          </div>
-                        </a>
-
-                      </div>
-                    </div>
-                  </li>
-
-                   <li class="nav-item dropdown">
-                    <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
-                      <div class="d-flex align-items-center">
-                        <div class="user-profile-img">
-                          <img src="{{ asset('venueassets/images/logo-light.png') }}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
-                        </div>
-                      </div>
-                    </a>
-                    <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
-                      <div class="profile-dropdown position-relative" data-simplebar>
-                        <div class="py-3 px-7 pb-0">
-                          <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
-                        </div>
-                        <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                          <img src="{{ asset('venueassets/images/logo-light.png') }}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
-                          <div class="ms-3">
-                            <h5 class="mb-1 fs-3">{{ $username }}</h5>
-                            <span class="mb-1 d-block">Venue Administrator</span>
-                            <p class="mb-0 d-flex align-items-center gap-2">
-                              <i class="ti ti-mail fs-4"></i> {{ $email }}
-                            </p>
-                          </div>
-                        </div>
-                       
-                        <div class="d-grid py-4 px-7 pt-8">
-                         
-                          <a href="{{ route('venueadmin/logout') }}" class="btn btn-outline-primary">Log Out</a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-
+                              
+                                <!-- item-->
+                                <a href="{{ route('venueadmin/logout') }}" class="dropdown-item">
+                                    <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </li>
                     </ul>
-
-              </div>
-          </div>
-
-              <div>
-</nav>
-
- </div>
-</header>
+                </div>

@@ -8,8 +8,7 @@
         width:200px;
         height:auto;
     }
-</style>
- <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+</style> 
 
          <div class="row">
             <div class="col-12">

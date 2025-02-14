@@ -52,8 +52,8 @@
                                         <span class="menu-text">Invoice</span>
                                     </a>
                                 </li>
-                                <li class="menu-item">
-                                    <a href="<?php echo e(route('admin/venuetype')); ?>" class="menu-link">
+                                <!--li class="menu-item">
+                                    <a href="" class="menu-link">
                                         <span class="menu-text">Venue Categories</span>
                                     </a>
                                 </li>
@@ -61,22 +61,19 @@
                                     <a href="<?php echo e(route('venue/venueamenities')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Amenities</span>
                                     </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="<?php echo e(route('admin/themebuilder')); ?>" class="menu-link">
-                                        <span class="menu-text">Venue Builder</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="<?php echo e(route('venuesettings')); ?>" class="menu-link">
-                                        <span class="menu-text">Venue Settings</span>
-                                    </a>
-                                </li>     
+                                </li-->                              
+                                  
                                  <li class="menu-item">
                                     <a href="<?php echo e(route('admin/venuethemes')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Themes</span>
                                     </a>
-                                </li>                            
+                                </li>
+                           
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('venuesettings')); ?>" class="menu-link">
+                                        <span class="menu-text">Venue Settings</span>
+                                    </a>
+                                </li>                              
                             </ul>
                         </div>
                     </li>
@@ -102,28 +99,28 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/invitationcolor')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.silhouette')); ?>" class="menu-link">
                                         <span class="menu-text">Silhouette</span>
                                     </a>
                                 </li>
                                 
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/invitationcolor')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.invitationcolor')); ?>" class="menu-link">
                                         <span class="menu-text">Color</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/printingmethod')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.printingmethod')); ?>" class="menu-link">
                                         <span class="menu-text">Printing Method</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/material')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.printingmaterial')); ?>" class="menu-link">
                                         <span class="menu-text">Material</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/budget')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.budget')); ?>" class="menu-link">
                                         <span class="menu-text">Budget</span>
                                     </a>
                                 </li>     
@@ -144,7 +141,9 @@
                         <div class="collapse" id="menuvendor">
                         <ul class="sub-menu">
 
+                    
                         <li class="menu-item">
+
                             <a href="<?php echo e(route('venue.venueportalrequest')); ?>" class="menu-link">
                                 <span class="menu-text">Vendor List</span>
                             </a>
@@ -154,11 +153,7 @@
                                 <span class="menu-text">Vendor Portal Request</span>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="#" class="menu-link">
-                                <span class="menu-text">Vendor Category</span>
-                            </a>
-                        </li>
+                      
 </ul>
 </div>
 
@@ -236,6 +231,9 @@
                     <p class="mb-0 font-size-13"><span class="font-weight-bold">Call:</span> <br> (+123) 123 456 789</p>
                 </div>
             </div>
+
+        
+
         </div>
 
         <?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/sidemenu.blade.php ENDPATH**/ ?>

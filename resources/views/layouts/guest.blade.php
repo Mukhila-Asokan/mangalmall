@@ -11,9 +11,9 @@
      <link rel="stylesheet" href="{{ asset('frontassets/css/main.css'); }}">
     <!-- endbuild -->
     <link rel="stylesheet" href="{{ asset('frontassets/css/custom.css'); }}">
-
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     </head>
-    <body>
+    <body >
           <!--loader start-->
     <div id="preloader">
         <div class="loader1">
@@ -24,6 +24,7 @@
             <span></span>
         </div>
     </div>
+    <!--div id = "custom-cursor"></div-->
          @include('layouts.menubar')
          <div class="main">
              @yield('content')
@@ -38,7 +39,12 @@
     </body>
 
     <!--build:js-->
+    
+
+
+
     <script src="{{ asset('frontassets/js/vendors/jquery-3.5.1.min.js'); }}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('frontassets/js/vendors/bootstrap.bundle.min.js'); }}"></script>
     <script src="{{ asset('frontassets/js/vendors/bootstrap-slider.min.js'); }}"></script>
     <script src="{{ asset('frontassets/js/vendors/jquery.countdown.min.js'); }}"></script>

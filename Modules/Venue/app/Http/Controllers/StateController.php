@@ -4,6 +4,9 @@ namespace Modules\Venue\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+Use Modules\Venue\Models\State;
+use Session;
 
 class StateController extends Controller
 {
@@ -12,7 +15,12 @@ class StateController extends Controller
      */
     public function index()
     {
-        return view('venue::index');
+        $username = Session::get('username');
+         $userid = Session::get('userid');       
+         $pagetitle = "State";
+         $pageroot = "Venue";
+        $states = State::where('delete_status',0)->paginate(20);
+        return view('venue::state.index',compact('states','pagetitle','pageroot','username'));
     }
 
     /**
@@ -20,7 +28,11 @@ class StateController extends Controller
      */
     public function create()
     {
-        return view('venue::create');
+        $username = Session::get('username');
+         $userid = Session::get('userid');       
+         $pagetitle = "State";
+         $pageroot = "Venue";
+        return view('venue::state.create',compact('pagetitle','pageroot','username'));
     }
 
     /**
@@ -28,7 +40,23 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'statename' => 'required|unique:state'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
+            $statename = new State;
+            $statename->statename  = $request->statename;
+            $statename->status = 'Active';
+            $statename->delete_status = 0;
+            $statename->save();
+
+        return redirect('admin/state')->with('success', 'State details successfully added');    
     }
 
     /**
@@ -44,7 +72,12 @@ class StateController extends Controller
      */
     public function edit($id)
     {
-        return view('venue::edit');
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "State";
+        $pageroot = "Venue";
+        $state = State::where('id',$id)->first();
+        return view('venue::state.edit',compact('state','pagetitle','pageroot','username'));
     }
 
     /**
@@ -52,7 +85,23 @@ class StateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'statename' => 'required|unique:state,statename,'.$id.'|max:255',
+        ]);
+       
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
+            $statename = State::find($id);
+            $statename->statename  = $request->statename;
+            $statename->status = 'Active';
+            $statename->delete_status = 0;
+            $statename->save();
+
+        return redirect('admin/state')->with('success', 'State details successfully added');   
     }
 
     /**
@@ -60,6 +109,18 @@ class StateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        State::where('id', '=', $id)->update(['delete_status' => 1]);        
+        return redirect('admin/state')->with('success', 'State details successfully deleted');
+    }
+    public function updatestatus($id) {    
+      
+        $state = State::find($id);   
+        if (!$state) {
+            return redirect('admin/state')->with('error', 'State not found.');
+        } 
+        $state->status = ($state->status === 'Active') ? 'Inactive' : 'Active';
+        $state->save();
+
+        return redirect('admin/state')->with('success', 'State status successfully updated.');
     }
 }

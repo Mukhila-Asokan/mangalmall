@@ -1,59 +1,78 @@
 @include('venueadmin::layouts.header')
-<div id="main-wrapper">
-@include('venueadmin::layouts.left-sidemenubar')
+<style>
+  .side-nav-item
+  {
+    color:#ffffff!important;
+  }
+  .side-nav .side-nav-link
+  {
+    color:#ffffff!important;
+  }
+  .side-nav-second-level li a{
+    color:#ffffff!important;
+  }
+  .side-nav
+  {
+    color:#ffffff!important;
+  }
+</style>
+<body>
+<div class="wrapper">
+   <div class="navbar-custom">
+      @include('venueadmin::layouts.topbar')
+   </div>
+     <div class="leftside-menu" style="background: #40161C;color:#ffffff!important">
+         @include('venueadmin::layouts.left-sidemenubar')
+     </div>
 
-<div class="page-wrapper">
-     
-@include('venueadmin::layouts.topbar')
-@include('venueadmin::layouts.sidemenubar')
 
- <div class="body-wrapper">
-        <div class="container-fluid">
-          <div class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4">
-            <div class="card-body px-4">
-              <div class="row align-items-center">
-                <div class="col-12">
-                  <h4 class="fw-semibold mb-8">{{ $pagetitle }}</h4>
-                  <nav aria-label="breadcrumb">
-                    <!--ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                        <a class="text-muted text-decoration-none" href="#">{{ $pageroot }}</a>
-                      </li>
-                      <li class="breadcrumb-item" aria-current="page">{{ $pagetitle }}</li>
-                    </ol-->
-                  </nav>
-                </div>
+  <div class="content-page">
+      <div class="content">
+
+          <!-- Start Content-->
+          <div class="container-fluid">
+
+          <div class="row">
+              <div class="col-12">
+                  <div class="bg-flower">
+                      <img src="{{ asset('venueasset/images/girl.png') }}">
+                  </div>
+
+                  <div class="bg-flower-2">
+                      <img src="{{ asset('venueasset/images/flowers/img-1.png') }}">
+                  </div>
                 
               </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                      <ol class="breadcrumb mb-0 p-2">
+                          <li class="breadcrumb-item"><a href="#"><i class="ri-home-4-line"></i> Home</a></li>
+                          <li class="breadcrumb-item" active><a href="#">{{ $pagetitle }}</a></li>
+                         
+                      </ol>
+                  </nav>
             </div>
+        </div>
+               @yield('content')
+
           </div>
-
-          <div class="row justify-content-center">
-            <div class="col-lg-12">
-            
-            		 @yield('content')
-            </div>
-          </div>
-
-
-
-
-
-
-    </div>
- </div>
-
-
-
+      </div>
+  </div>
 
 
 
 </div>
-
-</div>
-
 @include('venueadmin::layouts.footer')
 @stack('scripts')
 </body>
 
 </html>
+
+
+
+
+

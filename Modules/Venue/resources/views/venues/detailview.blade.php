@@ -18,7 +18,7 @@
                         <tbody>
                             <tr>
                                 <td><h4 class="header-title">Venue Type</h4></td>
-                                <td colspan="2">{{ $venuedetails->venuettype->venuetype_name }} -> {{ $venuedetails->venuetsubtype->venuetype_name }}</td>
+                                <td colspan="2">{{ $venuedetails->venuettype->venuetype_name }} -> {{ $venuedetails->venuetsubtype->venuetype_name ?? ''}}</td>
                             </tr>
 
                             <tr>
@@ -120,6 +120,15 @@
                     </table>
                       </div>
                       <div class="col-4">
+
+                            <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/venueimage') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end" target="_new">
+                                <span class="tf-icon mdi mdi-file-image me-1"></span>Venue Gallery
+                           </a>
+
+                           <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/venuecontent') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end" target="_new">
+                                <span class="tf-icon mdi mdi-note-text me-1"></span>Venue Content
+                           </a>
+
 
                             <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/webpage') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end" target="_new">
                                 <span class="tf-icon mdi mdi-webpack me-1"></span>Webpage Design
