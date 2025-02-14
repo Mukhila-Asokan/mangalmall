@@ -1854,7 +1854,7 @@ span.close_editor svg path {
     letter-spacing: 1px;
     margin-bottom: 10px;
     text-transform: capitalize;
-    color: #212529;
+    color: #1b1113;
 }
 
 .mt_select_editor>h5 {
@@ -4683,7 +4683,7 @@ a.mt_btn.custom_js_css span{
     letter-spacing: 1px;
     margin-bottom: 10px;
     text-transform: capitalize;
-    color: #212529;
+    color: #1b1113;
     font-family: 'Outfit', sans-serif !important;
     font-weight: 400;
 }
@@ -4774,7 +4774,7 @@ a.mt_btn.custom_js_css span{
     letter-spacing: 1px;
     margin-bottom: 10px;
     text-transform: capitalize;
-    color: #212529;
+    color: #1b1113;
 }
 .mt-switch-wrapper .mt-switch-toggle {
     position: relative;
@@ -4872,7 +4872,7 @@ input.switch-inpt:checked+.switch-slider:before {
     letter-spacing: 1px;
     margin-bottom: 10px;
     text-transform: capitalize;
-    color: #212529;
+    color: #1b1113;
 }
 
 /* copy section end */

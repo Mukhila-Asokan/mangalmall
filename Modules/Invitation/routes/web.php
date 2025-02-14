@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Modules\Invitation\Http\Controllers\InvitationController;
 use Modules\Invitation\Http\Controllers\InvitationModelController;
 use Modules\Invitation\Http\Controllers\InvitationSizeController;
+use Modules\Invitation\Http\Controllers\InvitationColorController;
+use Modules\Invitation\Http\Controllers\InvitationPrintingMaterialController;
+use Modules\Invitation\Http\Controllers\InvitationPrintingMethodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,24 +35,51 @@ Route::prefix('admin/invitation')->middleware('auth:admin')->group(function () {
     Route::any('/invitationmodel/{id}/destroy', [InvitationModelController::class,'destroy']);
     Route::any('/invitationmodel/{id}/updatestatus', [InvitationModelController::class,'updatestatus']);
 
-     Route::any('/invitationsize', [InvitationSizeController::class,'index'])->name('invitation/invitationsize');
-      Route::any('/invitationsize/create', [InvitationSizeController::class,'create'])->name('invitationsize/create');
+    Route::any('/invitationsize', [InvitationSizeController::class,'index'])->name('invitation/invitationsize');
+    Route::any('/invitationsize/create', [InvitationSizeController::class,'create'])->name('invitationsize.create');
     Route::any('/invitationsize/{id}/edit', [InvitationSizeController::class,'edit']);
-    Route::put('/invitationsize/update', [InvitationSizeController::class,'update'])->name('invitationsize.update');
-    Route::post('/invitationsize/store', [InvitationSizeController::class,'store'])->name('invitationsize.model_add');
+    Route::put('/invitationsize/update/{id}', [InvitationSizeController::class,'update'])->name('invitation.size_update');
+    Route::post('/invitationsize/store', [InvitationSizeController::class,'store'])->name('invitation.size_add');
     Route::any('/invitationsize/show', [InvitationSizeController::class,'show'])->name('invitationsize/show');
     Route::any('/invitationsize/{id}/destroy', [InvitationSizeController::class,'destroy']);
     Route::any('/invitationsize/{id}/updatestatus', [InvitationSizeController::class,'updatestatus']);
 
+    Route::any('/invitationcolor', [InvitationColorController::class,'index'])->name('invitation.invitationcolor');
+    Route::any('/invitationcolor/create', [InvitationColorController::class,'create'])->name('invitationcolor.create');
+    Route::any('/invitationcolor/{id}/edit', [InvitationColorController::class,'edit']);
+    Route::put('/invitationcolor/update/{id}', [InvitationColorController::class,'update'])->name('invitation.color_update');
+    Route::post('/invitationcolor/store', [InvitationColorController::class,'store'])->name('invitation.color_add');
+    Route::any('/invitationcolor/show', [InvitationColorController::class,'show'])->name('invitationcolor/show');
+    Route::any('/invitationcolor/{id}/destroy', [InvitationColorController::class,'destroy']);
+    Route::any('/invitationcolor/{id}/updatestatus', [InvitationColorController::class,'updatestatus']);
 
 
 
-     Route::any('/invitationcolor', [InvitationModelController::class,'index'])->name('invitation/invitationcolor');
+    Route::any('/printingmethod', [InvitationPrintingMethodController::class,'index'])->name('invitation.printingmethod');
+    Route::any('/printingmethod/create', [InvitationPrintingMethodController::class,'create'])->name('printingmethod.create');
+    Route::any('/printingmethod/{id}/edit', [InvitationPrintingMethodController::class,'edit']);
+    Route::put('/printingmethod/update/{id}', [InvitationPrintingMethodController::class,'update'])->name('printingmethod.update');
+    Route::post('/printingmethod/store', [InvitationPrintingMethodController::class,'store'])->name('printingmethod.add');
+    Route::any('/printingmethod/{id}/destroy', [InvitationPrintingMethodController::class,'destroy']);
+    Route::any('/printingmethod/{id}/updatestatus', [InvitationPrintingMethodController::class,'updatestatus']);
 
-     Route::any('/printingmethod', [InvitationModelController::class,'index'])->name('invitation/printingmethod');
 
-     Route::any('/material', [InvitationModelController::class,'index'])->name('invitation/material');
+    Route::any('/printingmaterial', [InvitationPrintingMaterialController::class,'index'])->name('invitation.printingmaterial');
+    Route::any('/printingmaterial/create', [InvitationPrintingMaterialController::class,'create'])->name('printingmaterial.create');
+    Route::any('/printingmaterial/{id}/edit', [InvitationPrintingMaterialController::class,'edit']);
+    Route::put('/printingmaterial/update/{id}', [InvitationPrintingMaterialController::class,'update'])->name('printingmaterial.update');
+    Route::post('/printingmaterial/store', [InvitationPrintingMaterialController::class,'store'])->name('printingmaterial.add');    
+    Route::any('/printingmaterial/{id}/destroy', [InvitationPrintingMaterialController::class,'destroy']);
+    Route::any('/printingmaterial/{id}/updatestatus', [InvitationPrintingMaterialController::class,'updatestatus']);
 
-     Route::any('/budget', [InvitationModelController::class,'index'])->name('invitation/budget');
+    Route::any('/budget', [InvitationModelController::class,'index'])->name('invitation.budget');
+    Route::any('/budget/create', [InvitationPrintingMaterialController::class,'create'])->name('budget.create');
+    Route::any('/budget/{id}/edit', [InvitationPrintingMaterialController::class,'edit']);
+    Route::put('/budget/update/{id}', [InvitationPrintingMaterialController::class,'update'])->name('budget.update');
+    Route::post('/budget/store', [InvitationPrintingMaterialController::class,'store'])->name('budget.add');    
+    Route::any('/budget/{id}/destroy', [InvitationPrintingMaterialController::class,'destroy']);
+    Route::any('/budget/{id}/updatestatus', [InvitationPrintingMaterialController::class,'updatestatus']);
+
+    /*invitation.silhouette*/
 
 });

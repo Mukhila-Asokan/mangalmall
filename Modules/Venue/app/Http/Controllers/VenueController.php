@@ -26,6 +26,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 
+Use Modules\Venue\Models\State;
+Use Modules\Venue\Models\District;
+Use Modules\Venue\Models\City;
+use Modules\Venue\Models\Area;
+
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -149,8 +154,24 @@ class VenueController extends Controller
         $venuedetails->is_worth = 'none';
         $venuedetails->googlemap = '-';
 
-        $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
-        $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));
+       /* $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
+        $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));*/
+
+
+        $venueamenities = $request->venueamenities ?? [];
+        $venuedata = $request->datafieldvalue ?? [];
+
+        if (!empty($venueamenities) && is_array($venueamenities)) {
+            $venuedetails->venueamenities = json_encode(array_map('intval', $venueamenities));
+        } else {
+            $venuedetails->venueamenities = json_encode([]);
+        }
+
+        if (!empty($venuedata) && is_array($venuedata)) {
+            $venuedetails->venuedata = json_encode(array_map('intval', $venuedata));
+        } else {
+            $venuedetails->venuedata = json_encode([]);
+        }
 
 
 
@@ -705,5 +726,16 @@ class VenueController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Image not found!']);
     }
+
+    
+    public function getDistricts(Request $request)
+    {
+        $districts = District::where('stateid', $request->state_id)
+                            ->where('delete_status', 0)
+                            ->get();
+        
+        return response()->json($districts);
+    }
+
 
 }

@@ -68,6 +68,7 @@
                                         <span class="menu-text">Venue Themes</span>
                                     </a>
                                 </li>
+                           
                                 <li class="menu-item">
                                     <a href="<?php echo e(route('venuesettings')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Settings</span>
@@ -98,23 +99,23 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/invitationcolor')); ?>" class="menu-link">
+                                    <a href="#" class="menu-link">
                                         <span class="menu-text">Silhouette</span>
                                     </a>
                                 </li>
                                 
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/invitationcolor')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.invitationcolor')); ?>" class="menu-link">
                                         <span class="menu-text">Color</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/printingmethod')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.printingmethod')); ?>" class="menu-link">
                                         <span class="menu-text">Printing Method</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="<?php echo e(route('invitation/material')); ?>" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.printingmaterial')); ?>" class="menu-link">
                                         <span class="menu-text">Material</span>
                                     </a>
                                 </li>
@@ -230,6 +231,9 @@
                     <p class="mb-0 font-size-13"><span class="font-weight-bold">Call:</span> <br> (+123) 123 456 789</p>
                 </div>
             </div>
+
+        
+
         </div>
 
         <?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/sidemenu.blade.php ENDPATH**/ ?>

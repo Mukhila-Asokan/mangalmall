@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\OccasionTypeController;
+use App\Http\Controllers\ReligionController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -41,7 +42,13 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
      Route::any('/occasion/{id}/edit', [OccasionTypeController::class,'edit']);
      Route::put('/occasion/update', [OccasionTypeController::class,'update'])->name('admin/occasion/update');
 
-     Route::any('/religion', [OccasionTypeController::class, 'index'])->name('admin/religion');
+     Route::any('/religion', [ReligionController::class, 'index'])->name('admin/religion');
+     Route::any('/religion/create', [ReligionController::class, 'create'])->name('religion.create');
+     Route::any('/religion/store', [ReligionController::class, 'store'])->name('religion.store');
+     Route::any('/religion/{id}/destroy', [ReligionController::class,'destroy']);
+     Route::any('/religion/{id}/updatestatus', [ReligionController::class,'updatestatus']);
+     Route::any('/religion/{id}/edit', [ReligionController::class,'edit']);
+     Route::put('/religion/update/{id}', [ReligionController::class,'update'])->name('religion.update');
 
      
      Route::any('staff/dashboard', [StaffController::class, 'index'])->name('admin/staff/dashboard');

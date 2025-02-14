@@ -85,51 +85,6 @@ $url = "frontassets/img/hero-bg-4.jpg";
    
 ?>
 
-<div class="modal fade" id="onload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="background-color:rgba(250, 216, 186, 0.6)!important">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Select Your Locations </h5>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                   
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="state" style="color:black">Select State</label>
-                            <select id="state" name="state" class="form-control">
-                                <option value="">Select State</option>
-                                <?php $__currentLoopData = $state; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $state): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($state->id); ?>"><?php echo e($state->statename); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>   
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >    
-                            <label for="city" style="color:black">Select City</label>
-                            <select id="city" name="city" class="form-control">
-                                <option value="">Select City</option>
-                                <?php $__currentLoopData = $city; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($city->id); ?>"><?php echo e($city->cityname); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
-                        </div>
-                    </div>
-                    </div>
-                
-            </div>
-            
-            <div class="modal-footer">
-            <button type="button" class="btn info-solid-btn" data-bs-dismiss="modal">Close</button>
-            <button type="button" id = "chooselocation" class="btn primary-solid-btn">Choose Location</button>
-            </div>
-            <div class="bg-flower-bot">
-                      <img src="<?php echo e(asset('venueasset/images/flowers/img-4.png')); ?>">
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -141,15 +96,6 @@ $url = "frontassets/img/hero-bg-4.jpg";
 
 <script src="<?php echo e(asset('adminassets/libs/selectize/js/standalone/selectize.min.js')); ?>"></script>
 
-<script type="text/javascript">
- 
-    window.onload = () => {    
-        
-        $('#onload').modal('show');
-    }
-  
-
-</script>
 
 <script type="text/javascript">
     
@@ -164,43 +110,6 @@ $url = "frontassets/img/hero-bg-4.jpg";
   create: false
 });
 
-
-
-      $("#venuetypeid").change(function(e) {
-
-
-      
-        e.preventDefault();   
-        var venuetypeid = $(this).val();
-
-        $.ajax({
-           type:'POST',
-           url:"<?php echo e(route('home/ajaxcvenuesubtypelist')); ?>",
-           dataType: 'json',
-           data:{ "_token": "<?php echo e(csrf_token()); ?>", "venuetypeid" :venuetypeid},
-           success:function(response){  
-            $("#venuesubtypeid").empty();   
-            var returnData = response;   
-            if(returnData.length>0)
-            {
-                let casestr = '<option>Select Venue Sub Type</option>';
-                for(i=0;i<returnData.length;i++)
-                {
-                    casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['venuetype_name'] + '</option>';
-                }
-             console.log(casestr);       
-           
-             $("#venuesubtypeid").append(casestr);
-            }
-            else
-            {
-                alert("No Data")
-            }
-         }        
-          
-        });
-           
-     });
 
 
 

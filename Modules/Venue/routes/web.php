@@ -145,8 +145,8 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/state', [StateController::class,'index'])->name('venue.state');
     Route::any('/state/create', [StateController::class,'create'])->name('venue.state/create');
     Route::any('/state/{id}/edit', [StateController::class,'edit']);
-    Route::put('/state/update', [StateController::class,'update'])->name('venue.state.update');
-    Route::post('/state/store', [StateController::class,'store'])->name('venue.state.venuestate_add');   
+    Route::put('/state/update/{id}', [StateController::class,'update'])->name('state.update');
+    Route::post('/state/store', [StateController::class,'store'])->name('venue.state_add');   
     Route::any('/state/{id}/destroy', [StateController::class,'destroy']);
     Route::any('/state/{id}/updatestatus', [StateController::class,'updatestatus']);
 
@@ -154,8 +154,8 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/district', [DistrictController::class,'index'])->name('venue.district');
     Route::any('/district/create', [DistrictController::class,'create'])->name('venue.district/create');
     Route::any('/district/{id}/edit', [DistrictController::class,'edit']);
-    Route::put('/district/update', [DistrictController::class,'update'])->name('venue.district.update');
-    Route::post('/district/store', [DistrictController::class,'store'])->name('venue.district.venuedistrict_add');   
+    Route::put('/district/update/{id}', [DistrictController::class,'update'])->name('districts.update');
+    Route::post('/district/store', [DistrictController::class,'store'])->name('venue.district_add');   
     Route::any('/district/{id}/destroy', [DistrictController::class,'destroy']);
     Route::any('/district/{id}/updatestatus', [DistrictController::class,'updatestatus']);
 
@@ -163,8 +163,8 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/city', [CityController::class,'index'])->name('venue.city');
     Route::any('/city/create', [CityController::class,'create'])->name('venue.city/create');
     Route::any('/city/{id}/edit', [CityController::class,'edit']);
-    Route::put('/city/update', [CityController::class,'update'])->name('venue.city.update');
-    Route::post('/city/store', [CityController::class,'store'])->name('venue.city.venuedistrict_add');   
+    Route::put('/city/update/{id}', [CityController::class,'update'])->name('venue.city_update');
+    Route::post('/city/store', [CityController::class,'store'])->name('venue.city_add');   
     Route::any('/city/{id}/destroy', [CityController::class,'destroy']);
     Route::any('/city/{id}/updatestatus', [CityController::class,'updatestatus']);
 
@@ -174,7 +174,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/area/create', [AreaController::class,'create'])->name('venue.area/create');
     Route::any('/area/{id}/edit', [AreaController::class,'edit']);
     Route::put('/area/update', [AreaController::class,'update'])->name('venue.area.update');
-    Route::post('/area/store', [AreaController::class,'store'])->name('venue.area.venuedistrict_add');   
+    Route::post('/area/store', [AreaController::class,'store'])->name('venue.area_add');   
     Route::any('/area/{id}/destroy', [AreaController::class,'destroy']);
     Route::any('/area/{id}/updatestatus', [AreaController::class,'updatestatus']);
 
@@ -185,6 +185,8 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
 
 });
+
+Route::get('/get-districts', [VenueController::class, 'getDistricts'])->name('get.districts');
 
 
 /*Route::prefix('admin')->middleware('auth:admin', HandleInertiaRequests::class)->group(function () {

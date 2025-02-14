@@ -75,8 +75,8 @@
                                     <div class="card-body">
                                         
                                         <h5 class="card-title">Create a new Venue type</h5><br>
-                                        <a href="{{ route('venuetype/create') }}" class="btn btn-dark waves-effect waves-light">Add</a>
-                                        <a href="{{ route('venuetype/show') }}" class="btn btn-dark waves-effect waves-light">View</a>
+                                        <a href="{{ route('venuetype/show') }}" class="btn btn-dark waves-effect waves-light">Add</a>
+                                        <a href="{{ route('venuetype/create') }}" class="btn btn-dark waves-effect waves-light">View</a>
                                     </div>
                                 </div>
                                 <!-- end card-box-->

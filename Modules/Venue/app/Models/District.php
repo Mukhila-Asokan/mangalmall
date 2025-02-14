@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Modules\Venue\Database\Factories\DistrictFactory;
 
+
 class District extends Model
 {
     use HasFactory;
@@ -20,4 +21,9 @@ class District extends Model
     // {
     //     // return DistrictFactory::new();
     // }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class,'stateid');
+    }
 }

@@ -198,9 +198,9 @@
                   <label class="col-md-4 col-form-label" for="venuetypeid">Select Venue Type <span class="text-danger">*</span></label>
                    <div class="col-md-8">
                  <select class="form-select" id="venuetypeid" name="venuetypeid" aria-label="Floating label select example">
-                                <option selected>Open this Venue Type</option>
+                                <option selected>Choose Venue Type</option>
                                 @foreach($venuetypes as $type)
-                                <option value = "{{ $type->id }}">{{ $type->venuetype_name }}</option>
+                                <option value = "{{ $type->id }}" {{ old('venuetypeid') == $type->id ? 'selected' : '' }} >{{ $type->venuetype_name }}</option>
                                 @endforeach
                             </select>
                             @error('venuetypeid')
@@ -225,7 +225,7 @@
 </div>
     <div class="col-6">
            <div class="mb-4 row">
-                  <label class="col-md-4 col-form-label" for="capacity">Capacity <span class="text-danger">*</span></label>
+                  <label class="col-md-4 col-form-label" for="capacity">Seating Capacity <span class="text-danger">*</span></label>
                    <div class="col-md-8">
                  
                         <input type="text" id="capacity" name="capacity" class="form-control" placeholder="Enter the capacity" value = "{{ old('capacity') }}" >
@@ -297,133 +297,71 @@
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div class="accordion-body">
                                                         
-                                                @foreach($venuedatafield as $datafield)
-                                                        @if($datafield->datafieldtype == "Text")
-                                                             <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="datafieldvalue{{ $datafield->id }}">{{ $datafield->datafieldname }}</label>
-                                            <div class="col-md-8">
-                                                <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
-                                                  <input type="text" id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value" value = "{{ old('datafieldvalue.$datafield->id') }}" >
-                                             
-                                            </div>
-                                            </div>
+                                                    @foreach($venuedatafield as $datafield)
+    @if($datafield->datafieldtype == "Text")
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue{{ $datafield->id }}">{{ $datafield->datafieldname }}</label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="{{ $datafield->id }}" />
+                <input type="text" id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value" value="{{ old('datafieldvalue.' . $loop->index) }}">
+            </div>
+        </div>
 
-                                             @elseif($datafield->datafieldtype == "Select")
+    @elseif($datafield->datafieldtype == "Select")
+        @php
+            $data = $datafield->datafieldvalues;
+            if($data!="") {
+                $jsonData = json_decode($data, true);
+            }
+        @endphp
 
-                                             @php
-                                             $data = $datafield->datafieldvalues;
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue{{ $datafield->id }}">{{ $datafield->datafieldname }}</label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="{{ $datafield->id }}" />
+                <select class="form-select" id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]">
+                    <option selected>Select this {{ $datafield->datafieldname }}</option>
+                    @foreach($jsonData as $item)
+                        <option value="{{ $item['id'] }}" @if(old('datafieldvalue.' . $loop->parent->index) == $item['id']) selected @endif>{{ $item['optionname'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
-                                                if($data!="")
-                                                {
-                                                    $jsonData = json_decode($data, true); 
-                                               
-                                                @endphp
+    @elseif($datafield->datafieldtype == "Textarea")
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue{{ $datafield->id }}">{{ $datafield->datafieldname }}</label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="{{ $datafield->id }}" />
+                <textarea id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value">{{ old('datafieldvalue.' . $loop->index) }}</textarea>
+            </div>
+        </div>
 
+    @elseif($datafield->datafieldtype == "Radio")
+        @php
+            $data = $datafield->datafieldvalues;
+            if($data!="") {
+                $jsonData = json_decode($data, true);
+            }
+        @endphp
 
-                                                   <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="datafieldvalue">{{ $datafield->datafieldname }}</label>
-                                            <div class="col-md-8">
-                                                  <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" /> 
-                                                  <select class="form-select" id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]">
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="datafieldvalue{{ $datafield->id }}">{{ $datafield->datafieldname }}</label>
+            <div class="col-md-8">
+                <input type="hidden" name="datafieldid[]" value="{{ $datafield->id }}" />
+                <div class="form-check">
+                    @foreach($jsonData as $item)
+                        <input class="form-check-input" type="radio" name="datafieldvalue[]" id="datafieldvalue{{ $datafield->id }}" value="{{ $item['id'] }}" @if(old('datafieldvalue.' . $loop->parent->index) == $item['id']) checked @endif>
+                        <label class="form-check-label" for="datafieldvalue{{ $datafield->id }}">
+                            {{ $item['optionname'] }}
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+        </div>
 
-                                                    <option selected>Select this {{ $datafield->datafieldname }}</option>
-
-                                                     @foreach($jsonData as $item)
-                                                     <option value="{{ $item['id'] }}">{{ $item['optionname'] }}</option>
-                                                     @endforeach
-
-                                                  </select>
-
-
-                                                
-                                               
-                                                </div>
-                                            </div>
-                                           @php
-
-                                            }
-                                                
-                                            @endphp
-
-                                            @elseif($datafield->datafieldtype == "Textarea")
-
-                                             <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
-                                            <div class="col-md-8">
-                                                 <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
-                                                  <textarea id="datafieldvalue{{ $datafield->id }}" name="datafieldvalue[]" class="form-control" placeholder="Enter the {{ $datafield->datafieldname }} value">{{ old('datafieldvalue.$datafield->id') }}</textarea>
-                                             
-                                            </div>
-                                            </div>
-
-                                            @elseif($datafield->datafieldtype == "Radio")
-
-                                            @php
-                                             $data = $datafield->datafieldvalues;
-
-                                                if($data!="")
-                                                {
-                                                    $jsonData = json_decode($data, true); 
-                                               
-                                                @endphp
-
-                                            <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
-                                            <div class="col-md-8">
-                                                 <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
-                                                 <div class="form-check">
-                                                    @foreach($jsonData as $item)
-
-                                                        <input class="form-check-input" type="radio" name="datafieldvalue[]" id="datafieldvalue{{ $datafield->id }}" value = "{{ $item['id'] }}">
-                                                        <label class="form-check-label" for="flexRadioDefault1">
-                                                            {{ $item['optionname'] }}
-                                                        </label>
-                                                     @endforeach
-                                                 </div>
-                                                
-                                            </div>
-                                             @php
-
-                                            }
-                                                
-                                            @endphp
-
-                                            @else
-                                               
-                                            @php
-                                             $data = $datafield->datafieldvalues;
-
-                                                if($data!="")
-                                                {
-                                                    $jsonData = json_decode($data, true); 
-                                               
-                                                @endphp
-
-                                            <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="extradatafield">{{ $datafield->datafieldname }}</label>
-                                            <div class="col-md-8">
-                                                 <input type="hidden" name = "datafieldid[]" value = "{{ $datafield->id }}" />
-                                                 <div class="form-check">
-                                                    @foreach($jsonData as $item)
-
-                                                         <input class="form-check-input" type="checkbox" value="{{ $item['id'] }}" name = "datafieldvalue[]"id="datafieldvalue{{ $datafield->id }}">
-                                                        <label class="form-check-label" for="flexRadioDefault1">
-                                                            {{ $item['optionname'] }}
-                                                        </label>
-                                                     @endforeach
-                                                    </div>
-                                                 
-                                              
-                                            </div>
-                                             @php
-
-                                            }
-                                                
-                                            @endphp
-
-                                            @endif
-                                        
-                                            @endforeach
+    @endif
+@endforeach
 
 
                                                     </div>

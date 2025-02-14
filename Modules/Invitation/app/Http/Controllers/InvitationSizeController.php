@@ -5,6 +5,8 @@ namespace Modules\Invitation\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Invitation\Models\InvitationSize;
+use Illuminate\Support\Facades\Validator;
+use Session;
 
 class InvitationSizeController extends Controller
 {
@@ -13,10 +15,10 @@ class InvitationSizeController extends Controller
      */
     public function index()
     {
-       $pageroot = "Home";
+        $pageroot = "Invitaion";
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Invitation Model";
+        $pagetitle = "Invitation Size";
         $invitationsize = InvitationSize::where('delete_status','0')->paginate(10);
         return view('invitation::invitationsize.index', compact('pagetitle','pageroot','invitationsize','username'));
     }
@@ -26,7 +28,11 @@ class InvitationSizeController extends Controller
      */
     public function create()
     {
-        return view('invitation::create');
+        $pageroot = "Invitaion";
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Invitation Size";
+        return view('invitation::invitationsize.create',compact('pagetitle','pageroot','username'));
     }
 
     /**
@@ -34,7 +40,27 @@ class InvitationSizeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'sizename' => 'required|unique:invitationsize'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {           
+                $invitationsize = new InvitationSize();
+                $invitationsize->sizename = $request->sizename;
+                $invitationsize->status = 'Active';
+                $invitationsize->delete_status = 0;
+                $invitationsize->save();
+                return redirect('admin/invitation/invitationsize')->with('success', 'Invitation Size added successfully.');  
+       
+            } catch (\Exception $e) {     
+            return redirect('admin/invitation/invitationsize')->with('error', $e->getMessage());  
+         }
     }
 
     /**
@@ -50,7 +76,12 @@ class InvitationSizeController extends Controller
      */
     public function edit($id)
     {
-        return view('invitation::edit');
+        $pageroot = "Invitaion";
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Edit Invitation Size";
+        $invitationsize = InvitationSize::find($id);
+        return view('invitation::invitationsize.edit', compact('pagetitle', 'pageroot', 'invitationsize', 'username'));
     }
 
     /**
@@ -58,7 +89,26 @@ class InvitationSizeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'sizename' => 'required|unique:invitationsize,sizename,' . $id
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $invitationsize = InvitationSize::find($id);
+            $invitationsize->sizename = $request->sizename;
+            $invitationsize->status = 'Active';
+            $invitationsize->delete_status = 0;
+            $invitationsize->save();
+            return redirect('admin/invitation/invitationsize')->with('success', 'Invitation Size updated successfully.');
+        } catch (\Exception $e) {
+            return redirect('admin/invitation/invitationsize')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -66,6 +116,25 @@ class InvitationSizeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $invitationsize = InvitationSize::find($id);
+            $invitationsize->delete_status = 1;
+            $invitationsize->save();
+            return redirect('admin/invitation/invitationsize')->with('success', 'Invitation Size deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect('admin/invitation/invitationsize')->with('error', $e->getMessage());
+        }
+    }
+
+    public function updatestatus($id)
+    {
+        $invitationsize = InvitationSize::find($id);
+        if (!$invitationsize) {
+            return redirect('admin/invitation/invitationsize')->with('error', 'Invitation Size not found.');
+        }
+        $invitationsize->status = ($invitationsize->status === 'Active') ? 'Inactive' : 'Active';
+        $invitationsize->save();
+
+        return redirect('admin/invitation/invitationsize')->with('success', 'Invitation Size status successfully updated.');
     }
 }
