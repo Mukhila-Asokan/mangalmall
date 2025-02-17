@@ -33,17 +33,25 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title mb-2">District</h4>
-                    
-                <div class="text-end">   
+                 
+                
+                <div class="row mt-4">
+                <div class="col-6">
+                                 <a href = "<?php echo e(route('venuesettings')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                          <span class="tf-icon mdi mdi-arrow-left-thick me-1"></span>Back
+                           </a>
+                             </div>            
+
+                <div class="col-6 text-end">   
                 <a href = "<?php echo e(route('venue.district/create')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                     <span class="tf-icon mdi mdi-plus me-1"></span>Add
                     </a>
                 </div>
-                    
+                </div>    
 
 
      <!-- Filter and Search Form -->
-     <form method="GET" action="<?php echo e(route('venue.district')); ?>" class="mb-3">
+     <form method="GET" action="<?php echo e(route('venue.district')); ?>" class="mb-4">
         <div class="row">
             <div class="col-md-3">
                 <input type="text" name="search" class="form-control" placeholder="Search District" value="<?php echo e(request('search')); ?>">
@@ -93,10 +101,12 @@
         </thead>
         <tbody>
       
-        <?php $i=1; ?>
+        <?php
+    $start = ($district->currentPage() - 1) * $district->perPage() + 1;
+?>
             <?php $__currentLoopData = $district; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dist): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
-                <td><?php echo e($dist->id); ?></td>
+                <td><?php echo e($start++); ?></td>
                 <td><?php echo e($dist->districtname); ?></td>
                 <td><?php echo e($dist->state->statename ?? ''); ?></td>
                 <td><?php if($dist->status == 'Active'): ?>

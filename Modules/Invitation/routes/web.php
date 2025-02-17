@@ -9,6 +9,7 @@ use Modules\Invitation\Http\Controllers\InvitationPrintingMaterialController;
 use Modules\Invitation\Http\Controllers\InvitationPrintingMethodController;
 use Modules\Invitation\Http\Controllers\InvitationBudgetController;
 use Modules\Invitation\Http\Controllers\InvitationSilhoutteController;
+use Modules\Invitation\Http\Controllers\InvitationCardThicknessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,5 +92,16 @@ Route::prefix('admin/invitation')->middleware('auth:admin')->group(function () {
     Route::post('/silhouette/store', [InvitationSilhoutteController::class,'store'])->name('silhouette.add');    
     Route::any('/silhouette/{id}/destroy', [InvitationSilhoutteController::class,'destroy']);
     Route::any('/silhouette/{id}/updatestatus', [InvitationSilhoutteController::class,'updatestatus']);
+
+
+    /*invitation.cardthickness */
+    Route::any('/cardthickness', [InvitationCardThicknessController::class,'index'])->name('invitation.cardthickness');
+    Route::any('/cardthickness/create', [InvitationCardThicknessController::class,'create'])->name('cardthickness.create');
+    Route::any('/cardthickness/{id}/edit', [InvitationCardThicknessController::class,'edit']);
+    Route::put('/cardthickness/update/{id}', [InvitationCardThicknessController::class,'update'])->name('cardthickness.update');
+    Route::post('/cardthickness/store', [InvitationCardThicknessController::class,'store'])->name('cardthickness.add');    
+    Route::any('/cardthickness/{id}/destroy', [InvitationCardThicknessController::class,'destroy']);
+    Route::any('/cardthickness/{id}/updatestatus', [InvitationCardThicknessController::class,'updatestatus']);
+
 
 });

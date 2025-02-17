@@ -33,18 +33,26 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mb-2">City</h4>
-                    
-                <div class="text-end">   
+                <h4 class="header-title mb-4">List of City</h4>
+
+                <div class="row mt-4">
+                <div class="col-6">
+                                 <a href = "{{ route('venuesettings') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                          <span class="tf-icon mdi mdi-arrow-left-thick me-1"></span>Back
+                           </a>
+                             </div>
+
+                <div class="col-6 text-end">   
                 <a href = "{{ route('venue.city/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                     <span class="tf-icon mdi mdi-plus me-1"></span>Add
                     </a>
                 </div>
-                    
+                </div>
 
-
+                <div class="row mt-4">
+                <div class="col-12">
      <!-- Filter and Search Form -->
-     <form method="GET" action="{{ route('venue.city') }}" class="mb-3">
+     <form method="GET" action="{{ route('venue.city') }}" class="mb-4">
         <div class="row">
             <div class="col-md-2">
                 <input type="text" name="search" class="form-control" placeholder="Search City" value="{{ request('search') }}">
@@ -81,8 +89,8 @@
             </div>
         </div>
     </form>
-
-
+                </div>
+                </div>
 
 
 
@@ -103,10 +111,12 @@
         </thead>
         <tbody>
       
-        @php $i=1; @endphp
+        @php
+    $start = ($city->currentPage() - 1) * $city->perPage() + 1;
+@endphp
             @foreach($city as $dist)
             <tr>
-                <td>{{ $dist->id }}</td>
+                <td>{{ $start++ }}</td>
                 <td>{{ $dist->cityname }}</td>
                 <td>{{ $dist->district->districtname }}</td>
                 <td>{{ $dist->state->statename ?? ''}}</td>

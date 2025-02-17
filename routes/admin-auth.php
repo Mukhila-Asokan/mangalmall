@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\OccasionTypeController;
 use App\Http\Controllers\ReligionController;
+Use App\Http\Controllers\OccasionDataFieldController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,19 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
      Route::any('/occasion/{id}/updatestatus', [OccasionTypeController::class,'updatestatus']);
      Route::any('/occasion/{id}/edit', [OccasionTypeController::class,'edit']);
      Route::put('/occasion/update', [OccasionTypeController::class,'update'])->name('admin/occasion/update');
+
+
+    /*occasiondatafield*/
+
+    Route::any('/occasiondatafield', [OccasionDataFieldController::class, 'index'])->name('admin/occasiondatafield');
+    Route::any('/occasiondatafield/create', [OccasionDataFieldController::class, 'create'])->name('admin/occasiondatafield/create');
+    Route::any('/occasiondatafield/store', [OccasionDataFieldController::class, 'store'])->name('admin/occasiondatafield/store');
+    Route::any('/occasiondatafield/{id}/destroy', [OccasionDataFieldController::class,'destroy']);
+    Route::any('/occasiondatafield/{id}/updatestatus', [OccasionDataFieldController::class,'updatestatus']);
+    Route::any('/occasiondatafield/{id}/edit', [OccasionDataFieldController::class,'edit']);
+    Route::put('/occasiondatafield/update/{id}', [OccasionDataFieldController::class,'update'])->name('admin/occasiondatafield/update');
+
+
 
      Route::any('/religion', [ReligionController::class, 'index'])->name('admin/religion');
      Route::any('/religion/create', [ReligionController::class, 'create'])->name('religion.create');

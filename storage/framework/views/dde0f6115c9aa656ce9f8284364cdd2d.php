@@ -45,7 +45,10 @@
                                    
               
             </tr>
+
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+            </table>
             <?php echo e($states->links('pagination::bootstrap-4')); ?>
 
             
@@ -53,8 +56,7 @@
             <?php else: ?>
                 No Records Found
         <?php endif; ?>
-        </tbody>
-    </table>
+       
 </div>
 </div> 
                     </div>
