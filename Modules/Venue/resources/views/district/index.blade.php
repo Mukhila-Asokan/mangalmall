@@ -32,18 +32,26 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mb-2">District</h4>
-                    
-                <div class="text-end">   
+                <h4 class="header-title mb-2">List of District</h4>
+                 
+                
+                <div class="row mt-4">
+                <div class="col-6">
+                                 <a href = "{{ route('venuesettings') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                          <span class="tf-icon mdi mdi-arrow-left-thick me-1"></span>Back
+                           </a>
+                             </div>            
+
+                <div class="col-6 text-end">   
                 <a href = "{{ route('venue.district/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                     <span class="tf-icon mdi mdi-plus me-1"></span>Add
                     </a>
                 </div>
-                    
+                </div>    
 
 
      <!-- Filter and Search Form -->
-     <form method="GET" action="{{ route('venue.district') }}" class="mb-3">
+     <form method="GET" action="{{ route('venue.district') }}" class="mb-4">
         <div class="row">
             <div class="col-md-3">
                 <input type="text" name="search" class="form-control" placeholder="Search District" value="{{ request('search') }}">
@@ -93,16 +101,18 @@
         </thead>
         <tbody>
       
-        @php $i=1; @endphp
+        @php
+    $start = ($district->currentPage() - 1) * $district->perPage() + 1;
+@endphp
             @foreach($district as $dist)
             <tr>
-                <td>{{ $dist->id }}</td>
+                <td>{{ $start++ }}</td>
                 <td>{{ $dist->districtname }}</td>
                 <td>{{ $dist->state->statename ?? ''}}</td>
                 <td>@if($dist->status == 'Active')
-                    <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal"  data-bs-target=".statusModal"  data-id="{{ $dist->id }}" title="Status"><i class="fa fa-eye action_icon"></i></button>
+                    <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal"  data-bs-target=".statusModal"  data-id="{{ $dist->id }}" title="Active"><i class="fa fa-eye action_icon"></i></button>
                 @else 
-                <button type="button" class="btn-info btn statusid" data-bs-toggle="modal"  data-bs-target=".statusModal" data-id="{{ $dist->id }}" title="Status"><i class="fa fa-eye-slash action_icon"></i></button>
+                <button type="button" class="btn-info btn statusid" data-bs-toggle="modal"  data-bs-target=".statusModal" data-id="{{ $dist->id }}" title="Inactive"><i class="fa fa-eye-slash action_icon"></i></button>
                 @endif
                 <a href="{{ url('/admin/district/'.$dist->id.'/edit') }}" class="btn-warning btn" title="Edit"><i class="fa fa-pencil action_icon"></i>
                 </a>

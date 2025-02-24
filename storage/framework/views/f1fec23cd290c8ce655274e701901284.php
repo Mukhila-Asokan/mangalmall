@@ -11,6 +11,7 @@
             <li><a href="#">Profile</a></li>            
             <li><a href="<?php echo e(route('venuereact.search')); ?>">Venue</a></li>
             <li><a href="#">Invitation Design </a></li>
+            <li><a href="<?php echo e(route('user.webpage')); ?>">Web Page Design </a></li>
             <li><a href="#">Video Making </a></li>
             <li><a href="#">Search Vendor</a></li>
             <li><a href="#">Gift Repository </a></li>

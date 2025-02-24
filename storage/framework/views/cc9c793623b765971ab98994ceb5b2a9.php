@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mb-4">List of Event Type</h4>
+                        <h4 class="header-title mb-4">List of Occasion Type</h4>
 
                           
                         <div class="text-end">
@@ -15,7 +15,11 @@
                    
 
                          <div class="table-responsive">
-                             <?php $i=1; ?>
+                            
+                             <?php
+    $start = ($occasion->currentPage() - 1) * $occasion->perPage() + 1;
+?>
+                             <?php if(count($occasion) > 0): ?>
                             <table class="table mb-0">
                                 <thead class="table-light">
                                     <tr>
@@ -25,10 +29,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if(count($occasion) > 0): ?>
+                                  
                                     <?php $__currentLoopData = $occasion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $typename): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <th scope="row"><?php echo e($i++); ?></th>
+                                        <th scope="row"><?php echo e($start++); ?></th>
                                         <td><?php echo e($typename->eventtypename); ?></td>           
                                         
                                         
@@ -43,15 +47,19 @@
                     <i class="fa fa-trash action_icon"></i>
                 </button>
            </td>
-                                    </tr>                                             
+                                    </tr>     
+                                    
+                                
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                    </tbody>
+                                    </table>
                                        <?php echo e($occasion->links('pagination::bootstrap-4')); ?>
 
            <?php else: ?>
                 No Records Found
         <?php endif; ?>
-                                </tbody>
-                            </table>
+                           
                         </div> 
                     </div>
                 </div>

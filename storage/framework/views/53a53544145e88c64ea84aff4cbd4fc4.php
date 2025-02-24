@@ -33,18 +33,26 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mb-2">City</h4>
-                    
-                <div class="text-end">   
+                <h4 class="header-title mb-4">List of City</h4>
+
+                <div class="row mt-4">
+                <div class="col-6">
+                                 <a href = "<?php echo e(route('venuesettings')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                          <span class="tf-icon mdi mdi-arrow-left-thick me-1"></span>Back
+                           </a>
+                             </div>
+
+                <div class="col-6 text-end">   
                 <a href = "<?php echo e(route('venue.city/create')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                     <span class="tf-icon mdi mdi-plus me-1"></span>Add
                     </a>
                 </div>
-                    
+                </div>
 
-
+                <div class="row mt-4">
+                <div class="col-12">
      <!-- Filter and Search Form -->
-     <form method="GET" action="<?php echo e(route('venue.city')); ?>" class="mb-3">
+     <form method="GET" action="<?php echo e(route('venue.city')); ?>" class="mb-4">
         <div class="row">
             <div class="col-md-2">
                 <input type="text" name="search" class="form-control" placeholder="Search City" value="<?php echo e(request('search')); ?>">
@@ -81,8 +89,8 @@
             </div>
         </div>
     </form>
-
-
+                </div>
+                </div>
 
 
 
@@ -103,10 +111,12 @@
         </thead>
         <tbody>
       
-        <?php $i=1; ?>
+        <?php
+    $start = ($city->currentPage() - 1) * $city->perPage() + 1;
+?>
             <?php $__currentLoopData = $city; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dist): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
-                <td><?php echo e($dist->id); ?></td>
+                <td><?php echo e($start++); ?></td>
                 <td><?php echo e($dist->cityname); ?></td>
                 <td><?php echo e($dist->district->districtname); ?></td>
                 <td><?php echo e($dist->state->statename ?? ''); ?></td>

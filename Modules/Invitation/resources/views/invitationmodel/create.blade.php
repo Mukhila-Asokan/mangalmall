@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mb-4">Add Invitation Model</h4>
+                        <h4 class="header-title mb-4">Add Design & Style</h4>
                        
                         <div class="text-end">
                          <a href = "{{ route('invitation/invitationmodel') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">

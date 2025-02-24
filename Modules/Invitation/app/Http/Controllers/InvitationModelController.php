@@ -4,6 +4,7 @@ namespace Modules\Invitation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Modules\Invitation\Models\InvitationModel;
 use Session;
 
@@ -17,7 +18,7 @@ class InvitationModelController extends Controller
         $pageroot = "Home";
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Invitation Model";
+        $pagetitle = "Design and Style";
         $invitationmodel = InvitationModel::where('delete_status','0')->paginate(10);
         return view('invitation::invitationmodel.index', compact('pagetitle','pageroot','invitationmodel','username'));
     }
@@ -30,7 +31,7 @@ class InvitationModelController extends Controller
         $pageroot = "Home";
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Invitation Model";
+        $pagetitle = "Design and Style";
         return view('invitation::invitationmodel.create',compact('pagetitle','pageroot','username'));
     }
 
@@ -39,17 +40,27 @@ class InvitationModelController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'modelname' => 'required|unique:invitationmodel'
-         ]);
+        $validator = Validator::make($request->all(), [
+            'modelname' => 'required|string|max:255|unique:invitationmodel',
+        ]);
 
-        $invitationmodel = new InvitationModel;
-        $invitationmodel->modelname = $request->modelname;
-        $invitationmodel->status = 'Active';
-        $invitationmodel->delete_status = 0;
-        $invitationmodel->save();  
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
 
-         return redirect('admin/invitation/invitationmodel')->with('success', 'Invitation Model successfully created');
+        try {
+            $invitationmodel = new InvitationModel;
+            $invitationmodel->modelname = $request->input('modelname');
+            $invitationmodel->status = 'Active';
+            $invitationmodel->delete_status = 0;
+            $invitationmodel->save();
+
+            return redirect('admin/invitation/invitationmodel')->with('success', 'Invitation Model successfully created');
+        } catch (\Exception $e) {
+            return redirect('admin/invitation/invitationmodel')->with('error', $e->getMessage());
+        }
 
     }
 
@@ -81,18 +92,27 @@ class InvitationModelController extends Controller
     public function update(Request $request)
     {
         
-        $id = $request->id;
-        $request->validate([
-            'modelname' => 'required|unique:invitationmodel,modelname,'.$id.'|max:255',
+        $validator = Validator::make($request->all(), [
+            'modelname' => 'required|string|max:255|unique:invitationmodel,modelname,'.$request->id,
         ]);
 
-         $invitationmodel = InvitationModel::find($id);
-         $invitationmodel->modelname = $request->modelname;
-         $invitationmodel->status = 'Active';
-         $invitationmodel->delete_status = 0;
-         $invitationmodel->save();  
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
 
-        return redirect('admin/invitation/invitationmodel')->with('success', 'Invitation Model successfully Updated');
+        try {
+            $invitationmodel = InvitationModel::find($request->id);
+            $invitationmodel->modelname = $request->input('modelname');
+            $invitationmodel->status = 'Active';
+            $invitationmodel->delete_status = 0;
+            $invitationmodel->save();
+
+            return redirect('admin/invitation/invitationmodel')->with('success', 'Invitation Model successfully updated');
+        } catch (\Exception $e) {
+            return redirect('admin/invitation/invitationmodel')->with('error', $e->getMessage());
+        }
 
     }
 

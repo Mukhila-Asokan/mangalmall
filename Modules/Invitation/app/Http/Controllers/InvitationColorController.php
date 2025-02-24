@@ -19,7 +19,7 @@ class InvitationColorController extends Controller
         $pageroot = "Invitaion";
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Invitation Size";
+        $pagetitle = "Invitation Color";
         $invitationcolor = InvitationColor::where('delete_status','0')->paginate(10);
         return view('invitation::invitationcolor.index', compact('pagetitle','pageroot','invitationcolor','username'));
     }
@@ -32,7 +32,7 @@ class InvitationColorController extends Controller
         $pageroot = "Invitaion";
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Invitation Size";
+        $pagetitle = "Invitation Color";
         return view('invitation::invitationcolor.create',compact('pagetitle','pageroot','username'));
     }
 
@@ -78,7 +78,7 @@ class InvitationColorController extends Controller
         $pageroot = "Invitaion";
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Invitation Size";
+        $pagetitle = "Invitation Color";
         $color = InvitationColor::where('id',$id)->first();
         return view('invitation::invitationcolor.edit',compact('pagetitle','pageroot','username','color'));
        

@@ -103,6 +103,13 @@
                                         <span class="menu-text">Silhouette</span>
                                     </a>
                                 </li>
+
+                                
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('invitation.cardthickness')); ?>" class="menu-link">
+                                        <span class="menu-text">Card Thickness</span>
+                                    </a>
+                                </li>
                                 
                                 <li class="menu-item">
                                     <a href="<?php echo e(route('invitation.invitationcolor')); ?>" class="menu-link">
@@ -210,15 +217,21 @@
                                     </a>
                                 </li>   
                                 <li class="menu-item">
+                                    <a href="<?php echo e(route('admin/occasiondatafield')); ?>" class="menu-link">
+                                        <span class="menu-text">Occasion Data Field</span>
+                                    </a>
+                                </li>   
+                                <li class="menu-item">
                                     <a href="<?php echo e(route('admin/religion')); ?>" class="menu-link">
                                         <span class="menu-text">Religion</span>
                                     </a>
                                 </li>  
-                                 <li class="menu-item">
+                                <li class="menu-item">
                                     <a href="<?php echo e(route('admin/religion')); ?>" class="menu-link">
                                         <span class="menu-text">Menu</span>
                                     </a>
                                 </li>    
+                               
                             </ul>
                          </div>   
                     </li>

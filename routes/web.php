@@ -14,6 +14,9 @@ use Modules\Venue\Models\VenueType;
 use Illuminate\Http\Request;
 use App\Http\Middleware\HandleInertiaRequests;
 
+use App\Http\Controllers\UserWebPageController;
+use App\Http\Controllers\VenueRatingController;
+
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
 
     $venuesubtypes = VenueType::where('delete_status', 0)
@@ -75,6 +78,14 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::any('/ads/random', [VenueSearchController::class, 'adsrandom'])->name('venue/adsrandom');
     Route::post('/venue-ratings', [VenueRatingController::class, 'store']);
     Route::get('/venue-ratings/{id}', [VenueRatingController::class, 'getVenueRatings']);
+
+
+    Route::any('/webpage',[UserWebPageController::class, 'index'])->name('user.webpage');
+    
+    Route::get('/webpage/occasion/{id}',[UserWebPageController::class, 'getoccasionfields'])->name('user.webpage.occasion');
+    Route::post('/webpage/submit', [UserWebPageController::class, 'store'])->name('user.webpage.store');
+    Route::any('/webpage/template',[UserWebPageController::class, 'index'])->name('user.webpage.template');
+
 
 });
 

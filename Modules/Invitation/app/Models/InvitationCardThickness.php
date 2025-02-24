@@ -15,6 +15,8 @@ class InvitationCardThickness extends Model
      */
     protected $fillable = [];
 
+    protected $table ='invitationcardthickness';
+
     // protected static function newFactory(): InvitationCardThicknessFactory
     // {
     //     // return InvitationCardThicknessFactory::new();
