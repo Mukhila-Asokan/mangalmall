@@ -69,9 +69,9 @@
                                         
                                         
                                         <td><?php if($datafield->status == 'Active'): ?>
-                    <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal"  data-bs-target=".statusModal"  data-id="<?php echo e($datafield->id); ?>" title="Status"><i class="fa fa-eye action_icon"></i></button>
+                    <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal"  data-bs-target=".statusModal"  data-id="<?php echo e($datafield->id); ?>" title="Active"><i class="fa fa-eye action_icon"></i></button>
                 <?php else: ?> 
-                <button type="button" class="btn-info btn statusid" data-bs-toggle="modal"  data-bs-target=".statusModal" data-id="<?php echo e($datafield->id); ?>" title="Status"><i class="fa fa-eye-slash action_icon"></i></button>
+                <button type="button" class="btn-info btn statusid" data-bs-toggle="modal"  data-bs-target=".statusModal" data-id="<?php echo e($datafield->id); ?>" title="Inactive"><i class="fa fa-eye-slash action_icon"></i></button>
                 <?php endif; ?>
                 <a href="<?php echo e(url('/admin/occasiondatafield/'.$datafield->id.'/edit')); ?>" class="btn-warning btn" title="Edit"><i class="fa fa-pencil action_icon"></i>
                 </a>
@@ -99,4 +99,4 @@
         </div>
 <?php $__env->stopSection(); ?>
 <input type="hidden" name="redirecturl" id="redirecturl" value="<?php echo e(url('/admin/occasiondatafield/')); ?>">  
-<?php echo $__env->make('admin.layouts.app-admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/occasiondatafields/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layouts.app-admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/occasiondatafields/index.blade.php ENDPATH**/ ?>

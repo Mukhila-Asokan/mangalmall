@@ -1,7 +1,7 @@
 :root{--background-color:#fff;--text-color:#4b5563;--dark-background-color:#0f172a;--dark-text-color:#fff;--success-color:#10b981;--info-color:#3b82f6;--warning-color:#f59e0b;--error-color:#ef4444;--success-color-light:#d4f7eb;--info-color-light:#d4e1f7;--warning-color-light:#fce8cf;--error-color-light:#f9d2d2}
 .fl-wrapper{
 	position:fixed;-webkit-transition:all 1s ease-in-out;-moz-transition:all 1s ease-in-out;
-	transition:all 1s ease-in-out;width:24em;z-index:10005
+	transition:all 1s ease-in-out;width:30em;z-index:10005
 	}
 	@media only screen and (width <= 480px){.fl-wrapper{left:5%;right:5%;width:90%}}
 	.fl-wrapper[data-position^=top-]

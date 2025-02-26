@@ -10,6 +10,8 @@ use Modules\Invitation\Http\Controllers\InvitationPrintingMethodController;
 use Modules\Invitation\Http\Controllers\InvitationBudgetController;
 use Modules\Invitation\Http\Controllers\InvitationSilhoutteController;
 use Modules\Invitation\Http\Controllers\InvitationCardThicknessController;
+Use Modules\Invitation\Http\Controllers\InvitationWebpageController;
+Use Modules\Invitation\Http\Controllers\CardTemplateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,5 +105,24 @@ Route::prefix('admin/invitation')->middleware('auth:admin')->group(function () {
     Route::any('/cardthickness/{id}/destroy', [InvitationCardThicknessController::class,'destroy']);
     Route::any('/cardthickness/{id}/updatestatus', [InvitationCardThicknessController::class,'updatestatus']);
 
+    
+    /*invitation.Webpage */
+    Route::any('/webpage', [InvitationWebpageController::class,'index'])->name('invitation.webpage');
+    Route::any('/webpage/create', [InvitationWebpageController::class,'create'])->name('webpage.create');
+    Route::any('/webpage/{id}/edit', [InvitationWebpageController::class,'edit']);
+    Route::put('/webpage/update/{id}', [InvitationWebpageController::class,'update'])->name('webpage.update');
+    Route::post('/webpage/store', [InvitationWebpageController::class,'store'])->name('webpage.add');    
+    Route::any('/webpage/{id}/destroy', [InvitationWebpageController::class,'destroy']);
+    Route::any('/webpage/{id}/updatestatus', [InvitationWebpageController::class,'updatestatus']);
+
+
+     /*invitation.Card Design */
+     Route::any('/cardtemplate', [CardTemplateController::class,'index'])->name('invitation.cardtemplate');
+    Route::any('/cardtemplate/create', [CardTemplateController::class,'create'])->name('cardtemplate.create');
+    Route::any('/cardtemplate/{id}/edit', [CardTemplateController::class,'edit']);
+    Route::put('/cardtemplate/update/{id}', [CardTemplateController::class,'update'])->name('cardtemplate.update');
+    Route::post('/cardtemplate/store', [CardTemplateController::class,'store'])->name('cardtemplate.add');    
+    Route::any('/cardtemplate/{id}/destroy', [CardTemplateController::class,'destroy']);
+    Route::any('/cardtemplate/{id}/updatestatus', [CardTemplateController::class,'updatestatus']);
 
 });

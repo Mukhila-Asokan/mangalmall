@@ -4,7 +4,6 @@ namespace Modules\StaffManagement\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\StaffManagement\Livewire\RoleComponent;
 use Modules\StaffManagement\Models\Departments;
 use Session;
 

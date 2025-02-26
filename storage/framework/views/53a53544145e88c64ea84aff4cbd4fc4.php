@@ -187,4 +187,4 @@ $(document).ready(function () {
 </script>
 
 <?php $__env->stopPush(); ?>
-<?php echo $__env->make('admin.layouts.app-admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/Venue\resources/views/city/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layouts.app-admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/Venue\resources/views/city/index.blade.php ENDPATH**/ ?>

@@ -34,7 +34,7 @@
         <tbody>
         @if(count($states) > 0)
         @php
-    $start = ($district->currentPage() - 1) * $district->perPage() + 1;
+    $start = ($states->currentPage() - 1) * $states->perPage() + 1;
 @endphp
             @foreach($states as $state)
             <tr>

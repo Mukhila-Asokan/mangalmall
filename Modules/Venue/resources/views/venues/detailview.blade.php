@@ -11,14 +11,14 @@
                            </a>
                         </div>
                         <div class="row">
-                        <div class="col-8">
+                        <div class="col-8" id = "printableTable">
 
 
                         <table class="table table-bordered border-primary mb-0 font-weight-bold">
                         <tbody>
                             <tr>
                                 <td><h4 class="header-title">Venue Type</h4></td>
-                                <td colspan="2">{{ $venuedetails->venuettype->venuetype_name }} -> {{ $venuedetails->venuetsubtype->venuetype_name ?? ''}}</td>
+                                <td colspan="2">{{ $venuedetails->venuettype->venuetype_name }}</td>
                             </tr>
 
                             <tr>
@@ -66,6 +66,22 @@
                             <tr>
                                 <td>Website</td>
                                 <td>{{ $venuedetails->websitename }}</td>                              
+                            </tr>
+                            <tr>
+                                <td><h4 class="header-title">Booking Rate</h4></td>
+                                <td colspan="2">{{ $venuedetails->bookingprice }}</td>                              
+                            </tr>
+                            <tr>
+                                <td><h4 class="header-title">Seating Capacity</h4></td>
+                                <td colspan="2">{{ $venuedetails->capacity }}</td>                              
+                            </tr>
+                            <tr>
+                                <td><h4 class="header-title">Budget Per Plate</h4></td>
+                                <td colspan="2">{{ $venuedetails->budgetperplate }}</td>                              
+                            </tr>
+                            <tr>
+                                <td><h4 class="header-title">Food Type</h4></td>
+                                <td colspan="2">{{ $venuedetails->food_type }}</td>                              
                             </tr>
                              <tr>
                                 <td><h4 class="header-title">Amenities</h4></td>
@@ -146,9 +162,9 @@
 
 
                      
-                         <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                         <button class="btn btn-primary waves-effect waves-light mb-4 text-end" onclick="printTable();">
                                 <span class="tf-icon mdi mdi-printer me-1"></span>Print
-                           </a>
+                           </button>
                             <a href = "{{ url('/admin/venue/'.$venuedetails->id.'/themebuilder') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                                 <span class="tf-icon mdi mdi-file me-1"></span>Theme Builder
                            </a>
@@ -167,3 +183,25 @@
             </div>
         </div>
 @endsection
+@push('scripts')
+
+<script>
+   
+function printTable() {
+    // Get the HTML of div
+    var divElements = document.getElementById("printableTable").innerHTML;
+    // Get the HTML of whole page
+    var oldPage = document.body.innerHTML;
+
+    // Reset the page's HTML with div's HTML only
+    document.body.innerHTML =  divElements ;
+
+    // Print Page
+    window.print();
+
+    // Restore orignal HTML
+    document.body.innerHTML = oldPage;
+}
+
+</script>
+@endpush

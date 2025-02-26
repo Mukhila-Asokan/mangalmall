@@ -66,14 +66,14 @@ class VenueController extends Controller
                         $btn = '';
                         if($row->status == 'Active') 
                         {
-                            $btn .= '<a href="'.url('admin/venue/'.$row->id.'/updatestatus').'" class="btn btn-primary btn-sm" title="Status"><i class="tf-icon mdi mdi-eye"></i></a>';
+                            $btn .= '<a href="'.url('admin/venue/'.$row->id.'/updatestatus').'" class="btn btn-primary btn-sm" title="Active Status"><i class="tf-icon mdi mdi-eye"></i></a>';
                         }
                         else
                         {
-                            $btn .= ' <a href="'.url('admin/venue/'.$row->id.'/updatestatus').'" class="btn-info btn btn-sm" title="Status"><i class="tf-icon mdi mdi-eye-off"></i></a>';
+                            $btn .= ' <a href="'.url('admin/venue/'.$row->id.'/updatestatus').'" class="btn-info btn btn-sm" title="Inactive Status"><i class="tf-icon mdi mdi-eye-off"></i></a>';
                         } 
        
-                            $btn .= ' <a href="'.url('admin/venue/detailview/'.$row->id).'" class="edit btn btn-warning btn-sm"><i class="tf-icon mdi mdi-file-presentation-box"></i></a>';
+                            $btn .= ' <a href="'.url('admin/venue/detailview/'.$row->id).'" class="edit btn btn-warning btn-sm" title = "View Detailed"><i class="tf-icon mdi mdi-file-presentation-box"></i></a>';
 
                             $btn .= ' <a href="'.url('admin/venue/'.$row->id.'/destroy').'" class="btn-danger btn-sm btn" title="Delete"><i class="fa fa-trash action_icon"></i></a>';
       
@@ -107,7 +107,7 @@ class VenueController extends Controller
         $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
-        $arealocation = indialocation::orderBy('City')->get();
+        $arealocation = Area::orderBy('cityid')->get();
         return view('venue::venues.create',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation'));
     }
 
@@ -276,7 +276,7 @@ class VenueController extends Controller
         $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
-        $arealocation = indialocation::orderBy('City')->get();
+        $arealocation = Area::orderBy('cityid')->get();
         $venue = VenueDetails::where('id',$id)->first();
         return view('venue::venues.edit',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue'));
       
@@ -287,61 +287,80 @@ class VenueController extends Controller
      */
     public function update(Request $request,$id)
     {
+
+
+        
+
+        $contactMobile = ltrim($request->input('contactmobile'), '0'); 
+        $request->merge(['contactmobile' => $contactMobile]);
         $validator = Validator::make($request->all(),[
             'venuename' => 'required',
-            'venueaddress' => 'required',
-            'locationid' => 'required',
+            'venueaddress' => 'required',        
             'description' => 'required',
             'contactperson' => 'required',
-            'contactmobile' => 'required|unique:venuedetails', 
+            'contactmobile' => 'required|digits:10|unique:venuedetails,contactmobile,' . $id, 
             'venuetypeid' => 'required',         
-           
-         ]);
+        ]);
 
-         if ($validator->fails()) {
+        if ($validator->fails()) {
             return redirect(url()->previous())
-                    ->withErrors($validator)
-                    ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
-   
+
+       
+
         $venuedetails = VenueDetails::findOrFail($id);
         $venuedetails->venuename = $request->venuename;
         $venuedetails->venueaddress = $request->venueaddress;
-        $venuedetails->locationid = $request->venuearea;
+        $venuedetails->locationid = $request->locationid;
         $venuedetails->description = $request->description;
         $venuedetails->contactperson = $request->contactperson;
         $venuedetails->contactmobile = $request->contactmobile;
-        $venuedetails->contacttelephone = $request->contacttelephone  ?? '';
+        $venuedetails->contacttelephone = $request->contacttelephone ?? '';
         $venuedetails->contactemail = $request->contactemail ?? '';
         $venuedetails->websitename = $request->websitename ?? '';
         $venuedetails->venuetypeid = $request->venuetypeid;
         $venuedetails->venuesubtypeid = 0;
         $venuedetails->bookingprice = $request->bookingprice;
+        $venuedetails->budgetperplate = $request->budgetperplate ?? '';
         $venuedetails->capacity = $request->capacity;
-        
+        $venuedetails->food_type = $request->food_type;
+        $venuedetails->is_worth = 'none';
         $venuedetails->googlemap = '-';
 
-        $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
-        $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));
+        $venueamenities = $request->venueamenities ?? [];
+        $venuedata = $request->datafieldvalue ?? [];
 
-        
+        if (!empty($venueamenities) && is_array($venueamenities)) {
+            $venuedetails->venueamenities = json_encode(array_map('intval', $venueamenities));
+        } else {
+            $venuedetails->venueamenities = json_encode([]);
+        }
+
+        if (!empty($venuedata) && is_array($venuedata)) {
+            $venuedetails->venuedata = json_encode(array_map('intval', $venuedata));
+        } else {
+            $venuedetails->venuedata = json_encode([]);
+        }
+
         if ($request->hasFile('bannerimage')) {
-           $venuedetails->bannerimage = $request->file('bannerimage')->store('venuebannerimage', 'public_uploads'); 
-           
+            $filename = $request->file('bannerimage')->store('venuebannerimage', 'public_uploads');
+            $venuedetails->bannerimage = $filename;
         }
 
         $venuedetails->featured = 1;
         $venuedetails->status = 'Active'; 
         $venuedetails->delete_status = 0;
 
-
-       try {
+        try {
             $venuedetails->save();
         } catch (Exception $e) {          
+            Log::error($e); // Log the entire exception object
+            return redirect()->back()->with('error', $e->getMessage());
+        }
 
-             return redirect()->back()->with('error', $e->getMessage());
-        } 
-       return redirect('admin/venue/show')->with('success', 'Venue  Details successfully updated');
+        return redirect('admin/venue/show')->with('success', 'Venue Details successfully updated');
 
     }
 
@@ -357,9 +376,26 @@ class VenueController extends Controller
     public function ajaxcitylist(Request $request)
     {
         $area_id = $request->area_id;
-        $arealocation = indialocation::where('id','=',$area_id)->get();
+        $arealocation = Area::where('id', $area_id)->first();
 
-        return response()->json($arealocation, 200);
+        if ($arealocation) {
+            $city = $arealocation->city->cityname;
+            $district = $arealocation->district->districtname;
+            $state = $arealocation->state->statename;
+
+            $response = [
+            'area' => $arealocation->areaname,
+            'city' => $city,
+            'district' => $district,
+            'state' => $state,
+            'id' => $arealocation->id,
+            'pincode' => $arealocation->pincode
+            ];
+        } else {
+            $response = ['error' => 'Area not found'];
+        }
+
+        return response()->json($response, 200);
     }
     public function ajaxcvenuesubtypelist(Request $request)
     {
@@ -557,10 +593,23 @@ class VenueController extends Controller
         $username = Session::get('username');
         $userid = Session::get('userid');       
         $pagetitle = "Venue User Request";
-        $pageroot = "Venue";        
-        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser'));
+        $pageroot = "Venue";  
+        $id = 2;      
+        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id'));
 
     }
+    public function venueadminlist()
+    {
+        $venueuser = VenueUser::where('delete_status','0')->paginate(20);
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue Admin List";
+        $pageroot = "Venue";     
+        $id = 1;   
+        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id'));
+
+    }
+
     public function venueuserupdatestatus($id)
     {
         $venueuser = VenueUser::where('id', '=', $id)->select('status')->first();
@@ -736,6 +785,40 @@ class VenueController extends Controller
         
         return response()->json($districts);
     }
+
+    public function getCities(Request $request)
+    {
+        $cities = City::where('districtid', $request->district_id)
+                      ->where('delete_status', 0)
+                      ->get();
+        
+        return response()->json($cities);
+    }
+
+          
+    public function ajaxarealist(Request $request)
+    {
+        $searchTerm = $request->input('q', '');
+    
+        $arealocation = Area::where('delete_status', '0')
+            ->when($searchTerm, function ($query) use ($searchTerm) {
+                $query->where('areaname', 'LIKE', "%{$searchTerm}%");
+            })
+            ->orderBy('cityid')
+            ->get();
+    
+        // Transform data to Select2 format
+        $formattedData = [];
+        foreach ($arealocation as $area) {
+            $formattedData[] = [
+                'id' => $area->id,
+                'text' => $area->areaname,  // 'text' is required for Select2
+            ];
+        }
+    
+        return response()->json(['results' => $formattedData]);
+    }
+    
 
 
 }

@@ -131,7 +131,17 @@
                                         <span class="menu-text">Budget</span>
                                     </a>
                                 </li>     
-                                                            
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation.webpage') }}" class="menu-link">
+                                        <span class="menu-text">Webpage</span>
+                                    </a>
+                                </li>     
+                                <li class="menu-item">
+                                    <a href="{{ route('invitation.cardtemplate') }}" class="menu-link">
+                                        <span class="menu-text">Card Template</span>
+                                    </a>
+                                </li>    
+                                                                      
                             </ul>
                         </div>
 

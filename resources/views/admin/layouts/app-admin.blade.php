@@ -33,7 +33,7 @@
                 <div class="col-lg-6">
                    <div class="d-none d-lg-block">
                     <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $pageroot ?? ' Home ' }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin/dashboard') }}">{{ $pageroot ?? ' Home ' }}</a></li>
                         <li class="breadcrumb-item active">{{  $pagetitle ?? ' Home ' }}</li>
                     </ol>
                    </div>

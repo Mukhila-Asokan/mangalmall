@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\StaffManagement\Http\Controllers\StaffManagementController;
-Use Modules\StaffManagement\Livewire\RoleComponent;
 Use Modules\StaffManagement\Http\Controllers\DepartmentsController;
 Use Modules\StaffManagement\Http\Controllers\RolesController;
 
@@ -24,7 +23,7 @@ Use Modules\StaffManagement\Http\Controllers\RolesController;
 
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
-    Route::any('/role', RoleComponent::class)->name('admin/roles');
+
 
 
     Route::any('/staff',[StaffManagementController::class, 'index'])->name('admin/staff');

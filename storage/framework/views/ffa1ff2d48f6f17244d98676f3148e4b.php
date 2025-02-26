@@ -25,11 +25,11 @@
         </div>
     </div>
     <!--div id = "custom-cursor"></div-->
-         <?php echo $__env->make('layouts.menubar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+         <?php echo $__env->make('layouts.menubar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
          <div class="main">
              <?php echo $__env->yieldContent('content'); ?>
          </div>
-          <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+          <?php echo $__env->make('layouts.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
      </div>
      <!--bottom to top button start-->
     <button class="scroll-top scroll-to-target" data-target="html">

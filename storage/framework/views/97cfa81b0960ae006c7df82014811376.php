@@ -1,4 +1,4 @@
-<?php echo $__env->make('admin.layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('admin.layouts.header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <style>
     .navbar-custom
     {
@@ -12,11 +12,11 @@
    <!-- Begin page -->
     <div class="layout-wrapper">
     	
-    	<?php echo $__env->make('admin.layouts.sidemenu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>	
+    	<?php echo $__env->make('admin.layouts.sidemenu', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>	
     	   
     	   <div class="page-content">
     	   		
-    	   		<?php echo $__env->make('admin.layouts.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    	   		<?php echo $__env->make('admin.layouts.topbar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
 
                 <div class="px-3">
@@ -33,7 +33,7 @@
                 <div class="col-lg-6">
                    <div class="d-none d-lg-block">
                     <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);"><?php echo e($pageroot ?? ' Home '); ?></a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e(route('admin/dashboard')); ?>"><?php echo e($pageroot ?? ' Home '); ?></a></li>
                         <li class="breadcrumb-item active"><?php echo e($pagetitle ?? ' Home '); ?></li>
                     </ol>
                    </div>
@@ -51,20 +51,20 @@
 
 
 
-    	<?php echo $__env->make('admin.layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    	<?php echo $__env->make('admin.layouts.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     	</div>	
     </div>
 
-<?php echo $__env->make('admin.layouts.scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('admin.layouts.scripts', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
 
 
 
 
 
-<?php echo $__env->make('admin.layouts.popup', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('admin.layouts.popup', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <?php echo $__env->yieldPushContent('scripts'); ?> 
-<?php echo $__env->make('admin.layouts.popupscripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('admin.layouts.popupscripts', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 
 </html><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/app-admin.blade.php ENDPATH**/ ?>

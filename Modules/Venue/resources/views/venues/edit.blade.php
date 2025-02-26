@@ -3,24 +3,23 @@
 @section('content')
 
 <style type="text/css">
-    
-    .form-check-input[type=checkbox]
-    {
-        border:1px solid black;
+    .form-check-input[type=checkbox] {
+        border: 1px solid black;
     }
 
-    .imageOutput img
-    {
-        width:200px;
-        height:auto;
+    .imageOutput img {
+        width: 200px;
+        height: auto;
     }
-    #venuearea-selectized
-    {
-        width:100% !important;
-        border:none !important;
+
+    #venuearea-selectized {
+        width: 100% !important;
+        border: none !important;
     }
 </style>
 
+<link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -32,7 +31,7 @@
                         <span class="tf-icon mdi mdi-eye me-1"></span> Venue List
                     </a>
                 </div>
-
+                <br>
                 <form action="{{ route('venue.update', $venue->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -61,157 +60,155 @@
                                             </div>
                                             <div class="mb-4">
                                                 <label class="form-label">Area</label>
-
-
-
-                                                <select id="venuearea" name="venuearea" placeholder="Enter the Area name" class="form-select">
-                                                  <option value="{{ $venue->locationid }}" selected>{{ $venue->locationid }}</option> 
-                                                    </select>
-
-                                                    @error('locationid')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-
-
+                                                <select id="venuearea" name="venuearea" placeholder="Enter the Area name" class="form-control">
+                                                    <option value="{{ $venue->locationid }}">{{ $venue->area->areaname ?? '' }}</option>
+                                                </select>
+                                                <input type="hidden" name="locationid" id="locationid" value="{{ $venue->locationid }}">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-4">
                                                 <label class="form-label">City</label>
-                                                <input type="text" name="venuecity" class="form-control" value="{{ $venue->indianlocation->City }}" required>
+                                                <input type="text" name="venuecity" id = "venuecity" class="form-control" value="{{ $venue->city->cityname ?? '' }}" >
                                             </div>
                                             <div class="mb-4">
                                                 <label class="form-label">State</label>
-                                                <input type="text" name="venuestate" class="form-control" value="{{ $venue->indianlocation->State }}" required>
+                                                <input type="text" name="venuestate" id = "venuestate"  class="form-control" value="{{ $venue->state->statname  ?? '' }}" >
                                             </div>
-                                            <br>
                                             <div class="mb-4">
                                                 <label class="form-label">Pincode</label>
-                                                <input type="text" name="venuepincode" class="form-control" value="{{ $venue->indianlocation->Pincode }}" required>
+                                                <input type="text" name="venuepincode" id = "venuepincode" class="form-control" value="{{ $venue->indianlocation->pincode ?? '' }}" >
                                             </div>
                                         </div>
                                     </div>
-									
-									
                                     <div class="mb-4 row">
-                                            <label class="col-md-2 col-form-label" for="description">Description</label>
-                                            <div class="col-md-10">
-                                                  <textarea class="form-control" placeholder="Enter the descritption about venue" id="description" name = "description" style="height: 100px">{{ $venue->description }}</textarea>
-                                                  @error('description')
-                                                <div class="text-danger">{{ $message }}</div>
-                                                 @enderror
-                                            </div>
+                                        <label class="col-md-2 col-form-label" for="description">Description</label>
+                                        <div class="col-md-10">
+                                            <textarea class="form-control" placeholder="Enter the description about venue" id="description" name="description" style="height: 100px">{{ $venue->description }}</textarea>
+                                            @error('description')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-									
-									
-									
-									
                                     <div class="row">
                                         <div class="col-6">
-                                             <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactperson">Contact Person</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value = "{{ $venue->contactperson }}" required>
-                                                @error('contactperson')
-                                                <div class="text-danger">{{ $message }}</div>              
-                                            @enderror
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="contactperson">Contact Person</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value="{{ $venue->contactperson }}" required>
+                                                    @error('contactperson')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div> 
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactmobile">Mobile No</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value = "{{ $venue->contactmobile }}" required>
-                                               @error('contactmobile')
-                                                <div class="text-danger">{{ $message }}</div>              
-                                            @enderror
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="contactmobile">Mobile No</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value="{{ $venue->contactmobile }}" required>
+                                                    @error('contactmobile')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div> 
-                                        
-
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contacttelephone">Telephone No</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value = "{{ $venue->contacttelephone }}" >
-                                                 @error('contacttelephone')
-													<div class="text-danger">{{ $message }}</div>              
-												@enderror
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="contacttelephone">Telephone No</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value="{{ $venue->contacttelephone }}">
+                                                    @error('contacttelephone')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div> 
-
-
-
                                         </div>
                                         <div class="col-6">
-
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactemail">Email Id</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value = "{{ $venue->contactemail }}" >
-                                              @error('contactemail')
-													<div class="text-danger">{{ $message }}</div>              
-												@enderror
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="contactemail">Email Id</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value="{{ $venue->contactemail }}">
+                                                    @error('contactemail')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div> 
-
-                                        <div class="mb-4 row">
-                                            <label class="col-md-4 col-form-label" for="contactemail">Website</label>
-                                            <div class="col-md-8">
-                                                  <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the websitename" value = "{{ $venue->websitename }}" >
-                                                @error('websitename')
-													<div class="text-danger">{{ $message }}</div>              
-												@enderror
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="websitename">Website</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the website name" value="{{ $venue->websitename }}">
+                                                    @error('websitename')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div> 
+                                                <div class="mb-4 row">
+                                                    <label class="col-md-4 col-form-label" for="bookingprice">Booking Rate <span class="text-danger">*</span></label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="bookingprice" name="bookingprice" class="form-control" placeholder="Enter the Booking Price" value="{{ old('bookingprice', $venue->bookingprice) }}">
+                                                        @error('bookingprice')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
 
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="venuetypeid">Select Venue Type <span class="text-danger">*</span></label>
+                                                <div class="col-md-8">
+                                                <select class="form-select" id="venuetypeid" name="venuetypeid" aria-label="Floating label select example">
+                                                    <option value="">Choose Venue Type</option>
+                                                    @foreach($venuetypes as $type)
+                                                        <option value="{{ $type->id }}" {{ old('venuetypeid', $venue->venuetypeid) == $type->id ? 'selected' : '' }}>
+                                                            {{ $type->venuetype_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
+                                                    @error('venuetypeid')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="budgetperplate">Budget Per Plate</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="budgetperplate" name="budgetperplate" class="form-control" placeholder="Enter the budget per plate" value="{{ old('budgetperplate', $venue->budgetperplate) }}">
+                                                    @error('budgetperplate')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
-									
-									
-									
-							
-						
-						<div class ="row">
-    <div class="col-6">
-             <div class="mb-4 row">
-                  <label class="col-md-4 col-form-label" for="venuetypeid">Select Venue Type</label>
-                   <div class="col-md-8">
-                 <select class="form-select" id="venuetypeid" name="venuetypeid" aria-label="Floating label select example">
-                                <option selected>Open this Venue Type</option>
-                                @foreach($venuetypes as $type)
-                                <option value = "{{ $type->id }}" {!! ($type->id == $venue->venuetypeid) ? 'Selected' : '' !!} >{{ $type->venuetype_name }}</option>
-                                @endforeach
-                            </select>
-                     @if($errors->has('venuetypeid'))
-                    <div class="text-danger">{{ $errors->first('venuetypeid') }}</div>
-                    
-                @endif
-                </div>
-
-             </div>   
-</div>
-    <div class="col-6">
-           <div class="mb-4 row">
-                  <label class="col-md-4 col-form-label" for="venuesubtypeid">Select Venue Subtype</label>
-                   <div class="col-md-8">
-                 <select class="form-select" id="venuesubtypeid" name="venuesubtypeid" aria-label="Floating label select example">
-                    <option value = "{{ $venue->venuetsubtype->id}}" selected>{{ $venue->venuetsubtype->venuetype_name}}</option>
-                  </select>
-                     @if($errors->has('venuesubtypeid'))
-                    <div class="text-danger">{{ $errors->first('venuesubtypeid') }}</div>
-                    
-                @endif
-                </div>
-
-             </div>
-</div>
-</div>
-
-		
+                                        <div class="col-6">
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="capacity">Seating Capacity <span class="text-danger">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="capacity" name="capacity" class="form-control" placeholder="Enter the capacity" value="{{ old('capacity', $venue->capacity) }}">
+                                                    @error('capacity')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="mb-4 row">
+                                                <label class="col-md-4 col-form-label" for="food_type">Food Type <span class="text-danger">*</span></label>
+                                                <div class="col-md-8">
+                                                    <select id="food_type" name="food_type" class="form-control">
+                                                        <option>Select Food Type</option>
+                                                        <option value="Veg" {{ old('food_type', $venue->food_type) == 'Veg' ? 'selected' : '' }}>Veg</option>
+                                                        <option value="Non-Veg" {{ old('food_type', $venue->food_type) == 'Non-Veg' ? 'selected' : '' }}>Non-Veg</option>
+                                                        <option value="Both" {{ old('food_type', $venue->food_type) == 'Both' ? 'selected' : '' }}>Both (Veg & Non-Veg)</option>
+                                                    </select>
+                                                    @error('food_type')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-
 
                         <!-- Select Amenities -->
                         <div class="accordion-item">
@@ -225,12 +222,12 @@
                                 <div class="accordion-body">
                                     <div class="col-6" style="margin-left: 30px;">
                                         @foreach($venueamenities as $amenity)
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="venueamenities[]"
-                                                    value="{{ $amenity->id }}" 
-                                                    {{ in_array($amenity->id, json_decode($venue->venueamenities, true) ?? []) ? 'checked' : '' }}>
-                                                <label class="form-check-label">{{ $amenity->amenities_name }}</label>
-                                            </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="venueamenities[]"
+                                                value="{{ $amenity->id }}" 
+                                                {{ in_array($amenity->id, json_decode($venue->venueamenities, true) ?? []) ? 'checked' : '' }}>
+                                            <label class="form-check-label">{{ $amenity->amenities_name }}</label>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -248,23 +245,21 @@
                             <div id="flush-collapseThree" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <div class="row">
-                                    
-									@php
-										$venueDataArray = json_decode($venue->venuedata, true); // Convert JSON to array
-									@endphp
-									
-                                    @foreach($venuedatafield as  $index => $datafield)
-                                        <div class="col-6"> 
-                                        <div class="mb-4">
-                                            <label class="col-md-4 col-form-label">{{ $datafield->datafieldname }}</label>
-                                              <div class="col-md-8">
-                                            <input type="text" name="datafieldvalue[{{ $datafield->id }}]" class="form-control"
-                                                value="{{ $venueDataArray[$index] ?? '' }}">
+                                        @php
+                                            $venueDataArray = json_decode($venue->venuedata, true); // Convert JSON to array
+                                        @endphp
+                                        @foreach($venuedatafield as $index => $datafield)
+                                        <div class="col-6">
+                                            <div class="mb-4">
+                                                <label class="col-md-4 col-form-label">{{ $datafield->datafieldname }}</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" name="datafieldvalue[{{ $datafield->id }}]" class="form-control"
+                                                        value="{{ $venueDataArray[$index] ?? '' }}">
+                                                </div>
                                             </div>
                                         </div>
-                                        </div>
-                                    @endforeach
-                                </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -283,9 +278,9 @@
                                         <label class="form-label">Upload Banner Image</label>
                                         <input class="form-control" type="file" name="bannerimage">
                                         @if($venue->bannerimage)
-                                            <div class="imageOutput mt-2">
-                                                <img src="{{ asset('storage/' . $venue->bannerimage) }}" alt="Venue Banner">
-                                            </div>
+                                        <div class="imageOutput mt-2">
+                                            <img src="{{ asset('storage/' . $venue->bannerimage) }}" alt="Venue Banner">
+                                        </div>
                                         @endif
                                     </div>
                                 </div>
@@ -297,7 +292,7 @@
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseFive">
-                                    Google Map & Budget
+                                    Google Map
                                 </button>
                             </h2>
                             <div id="flush-collapseFive" class="accordion-collapse collapse">
@@ -305,11 +300,7 @@
                                     <div class="mb-4">
                                         <label class="form-label">Google Map Location Code</label>
                                         <textarea name="googlemap" class="form-control">{{ $venue->googlemap }}</textarea>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="form-label">Booking Rate</label>
-                                        <input type="text" name="bookingprice" class="form-control" value="{{ $venue->bookingprice }}" required>
-                                    </div>
+                                    </div>                                  
                                 </div>
                             </div>
                         </div>
@@ -328,145 +319,128 @@
     </div>
 </div>
 
-
-<?php 
-    $areaContent = ''; 
-
-    foreach ($arealocation as $key => $area) {
-        $areaContent .= '{id: '.$area['id'].', title: "' . $area['Areaname'] . '"},'; 
-    }
-
-    // Remove the trailing comma
-    $areaContent = rtrim($areaContent, ','); 
-
-   
-?>
-
-
+@php
+    $areaOptions = $arealocation->map(function($area) {
+        return [
+            'id' => $area->id,
+            'title' => $area->areaname  // or $area->Areaname depending on your attribute name
+        ];
+    });
+@endphp
 
 @endsection
 
 @push('scripts')
 <script type="text/javascript">
 
-  $images = $('#categoryiconimage')
+    $images = $('#categoryiconimage')
     $(".imageUpload").change(function(event){
         readURL(this);
-       
     });
- 
-    function readURL(input) {
 
-if (input.files && input.files[0]) {
-    
-    $.each(input.files, function() {
-        var reader = new FileReader();
-        reader.onload = function (e) {           
-            $images.html('<img src="'+ e.target.result+'" />')
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            $.each(input.files, function() {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $images.html('<img src="'+ e.target.result+'" />')
+                }
+                reader.readAsDataURL(this);
+            });
         }
-        reader.readAsDataURL(this);
-    });
-    
-}
-}
+    }
 
 </script>
-<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
-    
-  
-
+/*
+    var areaOptions = {!! json_encode($areaOptions) !!};
     $('#venuearea').selectize({
- 
-  valueField: 'id',
-  labelField: 'title',
-  searchField: 'title',
-  options: [<?PHP echo $areaContent; ?> 
-  ],
-  create: false
+        valueField: 'id',
+        labelField: 'title',
+        searchField: 'title',
+        options: areaOptions,
+        create: false
+    });*/
+
+
+    $('#venuearea').select2({
+    placeholder: 'Search for an area',
+    allowClear: true,
+    ajax: {
+        url: "{{ route('venue/create/ajaxarealist') }}", // Route to fetch data
+        dataType: 'json',
+        delay: 250,
+        data: function (params) {
+            return {
+                q: params.term, // Send search term to backend
+            };
+        },
+        processResults: function (data) {
+            console.log(data.results); // Debug API response
+            return {
+                results: data.results // Use 'results' key from API response
+            };
+        },
+        cache: true,
+    },
+    minimumInputLength: 1,
 });
 
-var selectize = $select[0].selectize;
-selectize.setValue("{{ $venue->locationid }}");
 
 
-   $.ajaxSetup({
+
+    $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
         }
     });
-   
 
-
-
-      $("#venuearea").change(function(e) {
-
-
-      
-        e.preventDefault();   
+    $("#venuearea").change(function(e) {
+        e.preventDefault();
         var area_id = $(this).val();
 
         $.ajax({
-           type:'POST',
-           url:"{{ route('venue/create/ajaxcitylist') }}",
-           dataType: 'json',
-           data:{ "_token": "{{ csrf_token() }}", "area_id" :area_id},
-           success:function(response){     
-            var returnData = response;          
-            $("#venuecity").val(returnData[0]['City']);
-            $("#venuestate").val(returnData[0]['State']);
-            $("#venuepincode").val(returnData[0]['Pincode']);
-            $("#locationid").val(returnData[0]['id']);
-                   
-         }        
-          
+            type: 'POST',
+            url: "{{ route('venue/create/ajaxcitylist') }}",
+            dataType: 'json',
+            data: { "_token": "{{ csrf_token() }}", "area_id": area_id },
+            success: function(response) {
+                var returnData = response;              
+                
+                $("#venuecity").val(returnData['city']);
+                $("#venuestate").val(returnData['state']);
+                $("#venuedistrict").val(returnData['district']);
+                $("#venuepincode").val(returnData['pincode']);
+                $("#locationid").val(returnData['id']);
+            }
         });
-           
-     });
+    });
 
-
-
-      $("#venuetypeid").change(function(e) {
-
-
-      
-        e.preventDefault();   
+    $("#venuetypeid").change(function(e) {
+        e.preventDefault();
         var venuetypeid = $(this).val();
 
         $.ajax({
-           type:'POST',
-           url:"{{ route('venue/create/ajaxcvenuesubtypelist') }}",
-           dataType: 'json',
-           data:{ "_token": "{{ csrf_token() }}", "venuetypeid" :venuetypeid},
-           success:function(response){  
-            $("#venuesubtypeid").empty();   
-            var returnData = response;   
-            if(returnData.length>0)
-            {
-                let casestr = '<option>Select Venue Sub Type</option>';
-                for(i=0;i<returnData.length;i++)
-                {
-                    casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['venuetype_name'] + '</option>';
+            type: 'POST',
+            url: "{{ route('venue/create/ajaxcvenuesubtypelist') }}",
+            dataType: 'json',
+            data: { "_token": "{{ csrf_token() }}", "venuetypeid": venuetypeid },
+            success: function(response) {
+                $("#venuesubtypeid").empty();
+                var returnData = response;
+                if (returnData.length > 0) {
+                    let casestr = '<option>Select Venue Sub Type</option>';
+                    for (i = 0; i < returnData.length; i++) {
+                        casestr += '<option value="' + returnData[i]['id'] + '">' + returnData[i]['venuetype_name'] + '</option>';
+                    }
+                    $("#venuesubtypeid").append(casestr);
+                } else {
+                    alert("No Data");
                 }
-             console.log(casestr);       
-           
-             $("#venuesubtypeid").append(casestr);
             }
-            else
-            {
-                alert("No Data")
-            }
-         }        
-          
         });
-           
-     });
-
-
-
-
-
-
+    });
 
 </script>
 @endpush

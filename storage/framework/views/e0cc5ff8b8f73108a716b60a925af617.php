@@ -84,11 +84,11 @@
  <br>
  <hr>
 
-                <?php echo $__env->make('profile-layouts.blog', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('profile-layouts.blog', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             </div>
       
 
 
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('profile-layouts.profile', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/dashboard.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('profile-layouts.profile', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/dashboard.blade.php ENDPATH**/ ?>

@@ -20,4 +20,17 @@ class Area extends Model
     // {
     //     // return AreaFactory::new();
     // }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'cityid', 'id');
+    }
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'districtid', 'id');
+    }
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'stateid', 'id');
+    }
 }

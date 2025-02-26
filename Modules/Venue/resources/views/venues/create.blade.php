@@ -94,6 +94,15 @@
                                             </div>
                                         </div>
 
+                                        
+                                        <div class="mb-4 row">
+                                            <label class="col-md-4 col-form-label" for="venuedistrict">District</label>
+                                            <div class="col-md-8">
+                                                  <input type="text" id="venuedistrict" name="venuedistrict" class="form-control" placeholder="Enter the District name" value = "{{ old('venuedistrict') }}" >
+                                             
+                                            </div>
+                                        </div> 
+
 
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="venuestate">State</label>
@@ -456,18 +465,15 @@
 </div>
           
 
-<?php 
-    $areaContent = ''; 
+@php
+    $areaOptions = $arealocation->map(function($area) {
+        return [
+            'id' => $area->id,
+            'title' => $area->areaname  // or $area->Areaname depending on your attribute name
+        ];
+    });
+@endphp
 
-    foreach ($arealocation as $key => $area) {
-        $areaContent .= '{id: '.$area['id'].', title: "' . $area['Areaname'] . '"},'; 
-    }
-
-    // Remove the trailing comma
-    $areaContent = rtrim($areaContent, ','); 
-
-   
-?>
 
 
 @endsection
@@ -501,15 +507,18 @@ if (input.files && input.files[0]) {
     
   
 
-    $('#venuearea').selectize({
- 
-  valueField: 'id',
-  labelField: 'title',
-  searchField: 'title',
-  options: [<?PHP echo $areaContent; ?> 
-  ],
-  create: false
+    var areaOptions = {!! json_encode($areaOptions) !!};
+$('#venuearea').selectize({
+    valueField: 'id',
+    labelField: 'title',
+    searchField: 'title',
+    options: areaOptions,
+    create: false
 });
+
+
+
+
 
 
 
@@ -535,11 +544,13 @@ if (input.files && input.files[0]) {
            dataType: 'json',
            data:{ "_token": "{{ csrf_token() }}", "area_id" :area_id},
            success:function(response){     
-            var returnData = response;          
-            $("#venuecity").val(returnData[0]['City']);
-            $("#venuestate").val(returnData[0]['State']);
-            $("#venuepincode").val(returnData[0]['Pincode']);
-            $("#locationid").val(returnData[0]['id']);
+            var returnData = response;     
+            console.log($("#venuecity"));     
+            $("#venuecity").val(returnData['city']);
+            $("#venuestate").val(returnData['state']);
+            $("#venuedistrict").val(returnData['district']);
+            $("#venuepincode").val(returnData['pincode']);
+            $("#locationid").val(returnData['id']);
                    
          }        
           

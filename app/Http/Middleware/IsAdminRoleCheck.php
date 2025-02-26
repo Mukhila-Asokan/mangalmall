@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class IsAdminRoleCheck
 {
@@ -15,19 +16,31 @@ class IsAdminRoleCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
+    
 
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login')->with([
+                'success' => false,
+                'status' => 'error',
+                'message' => 'Admin authentication failed',
+            ], 403);
+        }
        
-        if(Auth::check() && Auth::user()->isRole() == 'Admin')
+        if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->role == 'Admin')
         {
             return $next($request);
         }
-        elseif(Auth::user() && Auth::user()->isRole() == 'Super Admin')
+        elseif(Auth::guard('admin')->user() && Auth::guard('admin')->user()->role == 'Super Admin')
         {
             return $next($request);
         }
         else
         {
-            return redirect(route('admin/login'));
+            return redirect()->route('admin.login')->with([
+                'success' => false,
+                'status' => 'error',
+                'message' => 'Admin authentication failed',
+            ], 403);
         }
     }
 }

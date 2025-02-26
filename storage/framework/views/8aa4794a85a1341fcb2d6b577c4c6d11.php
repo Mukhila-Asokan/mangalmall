@@ -24,7 +24,7 @@
             <span></span>
         </div>
     </div>
-         <?php echo $__env->make('profile-layouts.menubar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+         <?php echo $__env->make('profile-layouts.menubar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
          <div class="main">
          <!--breadcrumb bar start-->
         <div class="breadcrumb-bar py-3 gray-light-bg border-bottom">
@@ -48,7 +48,7 @@
               <div class="container">
                   <div class="row">
                      <div class="col-lg-2 col-md-2">
-                        <?php echo $__env->make('profile-layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        <?php echo $__env->make('profile-layouts.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                      </div>
                       <?php echo $__env->yieldContent('content'); ?>
                   </div>
@@ -59,7 +59,7 @@
 
             
          </div>
-          <?php echo $__env->make('profile-layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+          <?php echo $__env->make('profile-layouts.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
      </div>
      <!--bottom to top button start-->
     <button class="scroll-top scroll-to-target" data-target="html">

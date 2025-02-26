@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\indialocation;
 use Modules\Venue\Models\VenueType;
+use Modules\Venue\Models\City;
 use Modules\Venue\Models\VenueAmenities;
 use Modules\Venue\Models\VenueDataField;
 use Modules\Venue\Models\VenueDataFieldDetails;
@@ -19,8 +20,9 @@ class VenueSearchController extends Controller
     {
 
     if (!Auth::check()) {
-        return response()->json(['error' => 'User is not authenticated'], 401);
+        return redirect()->route('login')->withErrors(['error' => 'User is not authenticated']);
     }
+    
 
  
         $venuetypes = VenueType::where('delete_status',0)->where('roottype','=',0)->get();
@@ -76,9 +78,7 @@ class VenueSearchController extends Controller
         $query = $request->query('query', '');
 
         // Fetch areas with a case-insensitive search on Areaname or City
-        $areas = indialocation::where('Areaname', 'LIKE', "%{$query}%")
-                      ->orWhere('City', 'LIKE', "%{$query}%")
-                      ->limit(10) // Load only 10 results to optimize performance
+        $areas = City::where('City', 'LIKE', "%{$query}%")->limit(10) // Load only 10 results to optimize performance
                       ->get();
 
         return response()->json($areas);

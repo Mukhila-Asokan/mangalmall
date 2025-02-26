@@ -7,18 +7,24 @@
         <div class="widget-title">
             <h6>Mangal Mall</h6>
         </div>
-        <ul>
-            <li><a href="#">Profile</a></li>            
-            <li><a href="<?php echo e(route('venuereact.search')); ?>">Venue</a></li>
-            <li><a href="#">Invitation Design </a></li>
-            <li><a href="<?php echo e(route('user.webpage')); ?>">Web Page Design </a></li>
-            <li><a href="#">Video Making </a></li>
-            <li><a href="#">Search Vendor</a></li>
-            <li><a href="#">Gift Repository </a></li>
-            <li><a href="#">Todo list </a></li>
-            <li><a href="#">Plan Details </a></li>
-            <li><a href="#">Blog Writing</a></li>
-        </ul>
+        <div class="sidebar">
+            <a href="#">Profile</a>  
+            <a href="<?php echo e(route('venuereact.search')); ?>">Venue</a>
+           
+            <a href="#taskSubmenu" data-toggle="collapse"> <i class="ti-layers"></i> Invitation  <i class="fas fa-chevron-down toggle-icon"></i></a>
+            <div id="taskSubmenu" class="collapse submenu">
+                <a href="<?php echo e(route('user.carddesign')); ?>"><i class="ti-id-badge"></i> Card Desgin </a>
+                <a href="<?php echo e(route('user.webpage')); ?>">Web Page Design</a>
+                <a href="<?php echo e(route('user.showtemplate')); ?>">Design Own Page</a>
+                <a href="#">Video Making </a>
+            </div>
+          
+        
+            <a href="#">Gift Repository </a>
+            <a href="#">Todo list </a>
+            <a href="#">Plan Details </a>
+           <a href="#">Blog Writing</a>
+        </div>
     </aside>
 
   

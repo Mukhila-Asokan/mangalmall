@@ -10,7 +10,8 @@ Use App\Models\OccasionType;
 use App\Models\OccasionDataField;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-
+use Modules\Invitation\Models\InvitationWebpage;
+use Svg\Tag\Rect;
 
 class UserWebPageController extends Controller
 {
@@ -42,7 +43,7 @@ class UserWebPageController extends Controller
         $userwebpage = new UserWebPage();
         $userwebpage->userid = Auth::user()->id;
         $userwebpage->occasion_id = $request->occasion_type;
-        $userwebpage->validupto = '';
+        $userwebpage->validupto = now()->addDays(30);
         $userwebpage->status = 'Active';
         $userwebpage->delete_status = 0;
         $userwebpage->save();
@@ -51,20 +52,21 @@ class UserWebPageController extends Controller
             $userpagedata = new UserWebPageData();
             $userpagedata->userid = Auth::user()->id;
             $userpagedata->webpage_id = $userwebpage->id;
-            $userpagedata->data_field_id = $key;
-            $userpagedata->data_value = $value;
+            $userpagedata->datafield_id = $key;
+            $userpagedata->datafield_value = $value;
             $userpagedata->save();
         }
 
-        return redirect()->route('user.webpage.template')->with('')
+        return redirect()->route('user.webpage.template')->with('Success','Web Page Data successfully added');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UserWebPage $userWebPage)
+    public function template(Request $request)
     {
-        //
+        $userwebpages = UserWebPage::where('userid', Auth::user()->id)->get();
+        return view('home.userwebpage_template',compact('userwebpages'));
     }
 
     /**
@@ -101,6 +103,30 @@ class UserWebPageController extends Controller
     
         return response()->json($datafield, 200);
     }
-    
+
+    public function showtemplate()
+    {
+        $template = InvitationWebpage::where('delete_status', 0)->get();
+        return view('home.userwebpage_template', compact('template'));
+    }
+
+    public function preview($id)
+    {       
+        $template = InvitationWebpage::where('id', $id)->first();
+        $themefullpath = $template->pathname;
+        $pathurl = url('/').$themefullpath.'/index.html'; 
+        $url = url('/').$themefullpath;
+        return redirect()->away($pathurl); 
+    }
+    public function themeeditor($userid,$id)  
+    {
+        $theme = InvitationWebpage::where('id', $id)->first();
+        $userWebPage = UserWebPage::where('userid', $userid)->where('occasion_id', '40')->first();
+        $occasiondata = OccasionDataField::where('occasion_id', '40')->get();
+        $webpagedata = UserWebPageData::where('webpage_id', $id)->get();
+        $themefullpath = $theme->pathname;  
+        $pathurl = url('/').$themefullpath.'/index.html';
+        return view('home.showwebpage',compact('pathurl','userid','id','theme','themefullpath','webpagedata','userWebPage'));
+    }
 
 }

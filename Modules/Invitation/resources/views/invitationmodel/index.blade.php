@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mb-4">List of Invitation Model</h4>
+                        <h4 class="header-title mb-4">List of Design and Style</h4>
 
                           
                         <div class="text-end">
@@ -15,7 +15,10 @@
                    
 
                          <div class="table-responsive">
-                             @php $i=1; @endphp
+                         @php
+    $start = ($invitationmodel->currentPage() - 1) * $invitationmodel->perPage() + 1;
+@endphp
+                             @if(count($invitationmodel) > 0)
                             <table class="table mb-0">
                                 <thead class="table-light">
                                     <tr>
@@ -25,10 +28,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(count($invitationmodel) > 0)
+                                  
                                     @foreach($invitationmodel as $typename)
                                     <tr>
-                                        <th scope="row">{{  $i++ }}</th>
+                                        <th scope="row">{{  $start++ }}</th>
                                         <td>{{ $typename->modelname }}</td>           
                                         
                                         
@@ -45,12 +48,14 @@
            </td>
                                     </tr>                                             
                                     @endforeach
-                                       {{ $invitationmodel->links('pagination::bootstrap-4') }}
+                                      
+                                </tbody>
+                            </table>
+
+                            {{ $invitationmodel->links('pagination::bootstrap-4') }}
            @else
                 No Records Found
         @endif
-                                </tbody>
-                            </table>
                         </div> 
                     </div>
                 </div>

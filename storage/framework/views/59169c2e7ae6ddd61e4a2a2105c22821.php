@@ -250,7 +250,7 @@ img.zoomed {
                                         <div class="row">
                                             <div class="col-md-12 col-lg-12">
 											
-										 <?php echo $venuedetail->venuecontent->first()->description; ?>	
+										 <?php echo $venuedetail->venuecontent->first()->description ?? ''; ?>	
 												 <h6>Key Features</h6>
                                     <?php echo $venuedetail->venuecontent->first()->key_features; ?><br> 
                                     <h6>Ambience</h6>
@@ -398,4 +398,4 @@ img.zoomed {
 <?php echo app('Illuminate\Foundation\Vite')('resources/js/app.jsx'); ?>
 
 <?php $__env->stopPush(); ?>
-<?php echo $__env->make('profile-layouts.profile', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/venuedetail.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('profile-layouts.profile', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/venuedetail.blade.php ENDPATH**/ ?>

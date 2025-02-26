@@ -51,5 +51,44 @@ class VenueDetails extends Model
     {
         return $this->hasMany(VenueContent::class, 'venue_id', 'id');
     }
+    public function area()
+    {
+        return $this->hasOne(Area::class,'id','locationid');
+    }
+    public function city()
+    {
+        return $this->hasOneThrough(
+            City::class,
+            Area::class,
+            'id', // Foreign key on the areas table...
+            'id', // Foreign key on the cities table...
+            'areaid', // Local key on the venues table...
+            'cityid' // Local key on the areas table...
+        );
+    }
+    public function state()
+    {
+        return $this->hasOneThrough(
+            State::class,
+            District::class,
+            'id', // Foreign key on the districts table...
+            'id', // Foreign key on the states table...
+            'districtid', // Local key on the venues table...
+            'stateid' // Local key on the districts table...
+        );
+    }
+
+    public function district()
+    {
+        return $this->hasOneThrough(
+            District::class,
+            Area::class,
+            'id', // Foreign key on the areas table...
+            'id', // Foreign key on the districts table...
+            'areaid', // Local key on the venues table...
+            'districtid' // Local key on the areas table...
+        );
+    }
+   
 
 }

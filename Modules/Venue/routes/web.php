@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
-
+use App\Http\Middleware\IsAdminRoleCheck;
 /*VenueAmenitiesController
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,9 +40,11 @@ Route::group([], function () {
 
 
 Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
-    Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
+Route::any('/venue/create/ajaxarealist', [VenueController::class,'ajaxarealist'])->name('venue/create/ajaxarealist');
 
-Route::prefix('admin')->middleware('auth:admin')->group(function () {
+Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
+
+Route::prefix('admin')->middleware('admin.role')->group(function () {
 
     Route::any('/venue', [VenueController::class,'index'])->name('venue');
     Route::any('/venue/create', [VenueController::class,'create'])->name('venue/create');
@@ -138,6 +140,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
     Route::any('/venueportalrequest',[VenueController::class,'venueportalrequest'])->name('venue.venueportalrequest');
     Route::any('/venueportalrequest/{id}/updatestatus',[VenueController::class,'venueuserupdatestatus']);
+    Route::any('/venueadminlist',[VenueController::class,'venueadminlist'])->name('venue.venueadminlist');
 
 
     /*State*/
@@ -173,7 +176,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/area', [AreaController::class,'index'])->name('venue.area');
     Route::any('/area/create', [AreaController::class,'create'])->name('venue.area/create');
     Route::any('/area/{id}/edit', [AreaController::class,'edit']);
-    Route::put('/area/update', [AreaController::class,'update'])->name('venue.area.update');
+    Route::put('/area/update/{id}', [AreaController::class,'update'])->name('venue.area_update');
     Route::post('/area/store', [AreaController::class,'store'])->name('venue.area_add');   
     Route::any('/area/{id}/destroy', [AreaController::class,'destroy']);
     Route::any('/area/{id}/updatestatus', [AreaController::class,'updatestatus']);
@@ -188,6 +191,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
 Route::get('/get-districts', [VenueController::class, 'getDistricts'])->name('get.districts');
 
+Route::get('/get-cities', [VenueController::class, 'getCities'])->name('get.cities');
 
 /*Route::prefix('admin')->middleware('auth:admin', HandleInertiaRequests::class)->group(function () {
 

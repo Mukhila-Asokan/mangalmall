@@ -110,4 +110,4 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </section>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.guest', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/auth/login.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.guest', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/auth/login.blade.php ENDPATH**/ ?>

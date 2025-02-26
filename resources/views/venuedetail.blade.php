@@ -250,7 +250,7 @@ img.zoomed {
                                         <div class="row">
                                             <div class="col-md-12 col-lg-12">
 											
-										 {!! $venuedetail->venuecontent->first()->description !!}	
+										 {!! $venuedetail->venuecontent->first()->description ?? '' !!}	
 												 <h6>Key Features</h6>
                                     {!! $venuedetail->venuecontent->first()->key_features !!}<br> 
                                     <h6>Ambience</h6>

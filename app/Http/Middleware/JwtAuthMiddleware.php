@@ -9,6 +9,7 @@ use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Auth\AuthenticationException;
 
 
 class JwtAuthMiddleware extends BaseMiddleware

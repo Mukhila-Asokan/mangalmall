@@ -1,3 +1,124 @@
+:root
+{
+    --bs-blue: #0d6efd;
+    --bs-indigo: #6610f2;
+    --bs-purple: #6f42c1;
+    --bs-pink: #d63384;
+    --bs-red: #dc3545;
+    --bs-orange: #fd7e14;
+    --bs-yellow: #ffc107;
+    --bs-green: #198754;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-black: #000;
+    --bs-white: #fff;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-gray-100: #f8f9fa;
+    --bs-gray-200: #e9ecef;
+    --bs-gray-300: #dee2e6;
+    --bs-gray-400: #ced4da;
+    --bs-gray-500: #adb5bd;
+    --bs-gray-600: #6c757d;
+    --bs-gray-700: #495057;
+    --bs-gray-800: #343a40;
+    --bs-gray-900: #212529;
+    --bs-primary: #0d6efd;
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+    --bs-primary-rgb: 13, 110, 253;
+    --bs-secondary-rgb: 108, 117, 125;
+    --bs-success-rgb: 25, 135, 84;
+    --bs-info-rgb: 13, 202, 240;
+    --bs-warning-rgb: 255, 193, 7;
+    --bs-danger-rgb: 220, 53, 69;
+    --bs-light-rgb: 248, 249, 250;
+    --bs-dark-rgb: 33, 37, 41;
+    --bs-primary-text-emphasis: #052c65;
+    --bs-secondary-text-emphasis: #2b2f32;
+    --bs-success-text-emphasis: #0a3622;
+    --bs-info-text-emphasis: #055160;
+    --bs-warning-text-emphasis: #664d03;
+    --bs-danger-text-emphasis: #58151c;
+    --bs-light-text-emphasis: #495057;
+    --bs-dark-text-emphasis: #495057;
+    --bs-primary-bg-subtle: #cfe2ff;
+    --bs-secondary-bg-subtle: #e2e3e5;
+    --bs-success-bg-subtle: #d1e7dd;
+    --bs-info-bg-subtle: #cff4fc;
+    --bs-warning-bg-subtle: #fff3cd;
+    --bs-danger-bg-subtle: #f8d7da;
+    --bs-light-bg-subtle: #fcfcfd;
+    --bs-dark-bg-subtle: #ced4da;
+    --bs-primary-border-subtle: #9ec5fe;
+    --bs-secondary-border-subtle: #c4c8cb;
+    --bs-success-border-subtle: #a3cfbb;
+    --bs-info-border-subtle: #9eeaf9;
+    --bs-warning-border-subtle: #ffe69c;
+    --bs-danger-border-subtle: #f1aeb5;
+    --bs-light-border-subtle: #e9ecef;
+    --bs-dark-border-subtle: #adb5bd;
+    --bs-white-rgb: 255, 255, 255;
+    --bs-black-rgb: 0, 0, 0;
+    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    --bs-body-font-family: var(--bs-font-sans-serif);
+    --bs-body-font-size: 1rem;
+    --bs-body-font-weight: 400;
+    --bs-body-line-height: 1.5;
+    --bs-body-color: #212529;
+    --bs-body-color-rgb: 33, 37, 41;
+    --bs-body-bg: #fff;
+    --bs-body-bg-rgb: 255, 255, 255;
+    --bs-emphasis-color: #000;
+    --bs-emphasis-color-rgb: 0, 0, 0;
+    --bs-secondary-color: rgba(33, 37, 41, 0.75);
+    --bs-secondary-color-rgb: 33, 37, 41;
+    --bs-secondary-bg: #e9ecef;
+    --bs-secondary-bg-rgb: 233, 236, 239;
+    --bs-tertiary-color: rgba(33, 37, 41, 0.5);
+    --bs-tertiary-color-rgb: 33, 37, 41;
+    --bs-tertiary-bg: #f8f9fa;
+    --bs-tertiary-bg-rgb: 248, 249, 250;
+    --bs-heading-color: inherit;
+    --bs-link-color: #0d6efd;
+    --bs-link-color-rgb: 13, 110, 253;
+    --bs-link-decoration: underline;
+    --bs-link-hover-color: #0a58ca;
+    --bs-link-hover-color-rgb: 10, 88, 202;
+    --bs-code-color: #d63384;
+    --bs-highlight-color: #212529;
+    --bs-highlight-bg: #fff3cd;
+    --bs-border-width: 1px;
+    --bs-border-style: solid;
+    --bs-border-color: #dee2e6;
+    --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
+    --bs-border-radius: 0.375rem;
+    --bs-border-radius-sm: 0.25rem;
+    --bs-border-radius-lg: 0.5rem;
+    --bs-border-radius-xl: 1rem;
+    --bs-border-radius-xxl: 2rem;
+    --bs-border-radius-2xl: var(--bs-border-radius-xxl);
+    --bs-border-radius-pill: 50rem;
+    --bs-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+    --bs-focus-ring-width: 0.25rem;
+    --bs-focus-ring-opacity: 0.25;
+    --bs-focus-ring-color: rgba(13, 110, 253, 0.25);
+    --bs-form-valid-color: #198754;
+    --bs-form-valid-border-color: #198754;
+    --bs-form-invalid-color: #dc3545;
+    --bs-form-invalid-border-color: #dc3545;
+}
+
 .rating 
 {
     font-size: 12px;
@@ -5,4 +126,532 @@
 .price
 {
     font-size: 12px;
+}
+
+.sidebar {
+    height: 50vh;   
+    color: rgb(7, 0, 0);
+
+    width: 100%;
+    overflow-y: auto;
+}
+.sidebar a {
+    color: #010c11;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+    border-bottom: 1px dotted #e3d1d4;
+}
+.sidebar a i {
+    margin-right: 10px;
+}
+.sidebar a:hover, .sidebar .active {
+    background-color: #5C2018;
+    color: #ffffff;
+}
+.submenu {
+    padding-left: 20px;
+}
+.submenu a {
+    font-size: 13px;
+}
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+.sidebar h4 {
+    padding: 15px;
+    text-align: center;
+    background-color: #23272b;
+}
+.toggle-icon {
+    margin-left: auto;
+}
+
+.fs-7 {
+    font-size: .875rem!important
+}
+
+.mb-8 {
+    margin-bottom: 4.5rem!important
+}
+
+.mb-9 {
+    margin-bottom: 5rem!important
+}
+
+.mb-auto {
+    margin-bottom: auto!important
+}
+
+.py-8 {
+    padding-bottom: 4.5rem!important;
+    padding-top: 4.5rem!important
+}
+
+.py-9 {
+    padding-bottom: 5rem!important;
+    padding-top: 5rem!important
+}
+
+@media(min-width: 576px) {
+    .mb-sm-8 {
+        margin-bottom:4.5rem!important
+    }
+
+    .mb-sm-9 {
+        margin-bottom: 5rem!important
+    }
+
+    .mb-sm-auto {
+        margin-bottom: auto!important
+    }
+
+    .py-sm-8 {
+        padding-bottom: 4.5rem!important;
+        padding-top: 4.5rem!important
+    }
+
+    .py-sm-9 {
+        padding-bottom: 5rem!important;
+        padding-top: 5rem!important
+    }
+}
+
+@media(min-width: 768px) {
+    .mb-md-8 {
+        margin-bottom:4.5rem!important
+    }
+
+    .mb-md-9 {
+        margin-bottom: 5rem!important
+    }
+
+    .mb-md-auto {
+        margin-bottom: auto!important
+    }
+
+    .py-md-8 {
+        padding-bottom: 4.5rem!important;
+        padding-top: 4.5rem!important
+    }
+
+    .py-md-9 {
+        padding-bottom: 5rem!important;
+        padding-top: 5rem!important
+    }
+}
+
+@media(min-width: 992px) {
+    .mb-lg-8 {
+        margin-bottom:4.5rem!important
+    }
+
+    .mb-lg-9 {
+        margin-bottom: 5rem!important
+    }
+
+    .mb-lg-auto {
+        margin-bottom: auto!important
+    }
+
+    .py-lg-8 {
+        padding-bottom: 4.5rem!important;
+        padding-top: 4.5rem!important
+    }
+
+    .py-lg-9 {
+        padding-bottom: 5rem!important;
+        padding-top: 5rem!important
+    }
+}
+
+@media(min-width: 1200px) {
+    .mb-xl-8 {
+        margin-bottom:4.5rem!important
+    }
+
+    .mb-xl-9 {
+        margin-bottom: 5rem!important
+    }
+
+    .mb-xl-auto {
+        margin-bottom: auto!important
+    }
+
+    .py-xl-8 {
+        padding-bottom: 4.5rem!important;
+        padding-top: 4.5rem!important
+    }
+
+    .py-xl-9 {
+        padding-bottom: 5rem!important;
+        padding-top: 5rem!important
+    }
+}
+
+@media(min-width: 1400px) {
+    .mb-xxl-8 {
+        margin-bottom:4.5rem!important
+    }
+
+    .mb-xxl-9 {
+        margin-bottom: 5rem!important
+    }
+
+    .mb-xxl-auto {
+        margin-bottom: auto!important
+    }
+
+    .py-xxl-8 {
+        padding-bottom: 4.5rem!important;
+        padding-top: 4.5rem!important
+    }
+
+    .py-xxl-9 {
+        padding-bottom: 5rem!important;
+        padding-top: 5rem!important
+    }
+}
+
+.bsb-animated {
+    --bsb-animation-duration: 1s;
+    animation-duration: var(--bsb-animation-duration);
+    animation-fill-mode: both
+}
+
+@keyframes bsb-fadeIn {
+    0% {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.bsb-fadeIn {
+    animation-name: bsb-fadeIn
+}
+
+@keyframes bsb-fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translate3d(0,100%,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateZ(0)
+    }
+}
+
+.bsb-fadeInUp {
+    animation-name: bsb-fadeInUp
+}
+
+@keyframes bsb-fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0,-100%,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateZ(0)
+    }
+}
+
+.bsb-fadeInDown {
+    animation-name: bsb-fadeInDown
+}
+
+@keyframes bsb-fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(-100%,0,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateZ(0)
+    }
+}
+
+.bsb-fadeInLeft {
+    animation-name: bsb-fadeInLeft
+}
+
+@keyframes bsb-fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translate3d(100%,0,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateZ(0)
+    }
+}
+
+.bsb-fadeInRight {
+    animation-name: bsb-fadeInRight
+}
+
+@keyframes bsb-fadeOut {
+    0% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0
+    }
+}
+
+.bsb-fadeOut {
+    animation-name: bsb-fadeOut
+}
+
+@keyframes bsb-fadeOutUp {
+    0% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(0,-100%,0)
+    }
+}
+
+.bsb-fadeOutUp {
+    animation-name: bsb-fadeOutUp
+}
+
+@keyframes bsb-fadeOutDown {
+    0% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(0,100%,0)
+    }
+}
+
+.bsb-fadeOutDown {
+    animation-name: bsb-fadeOutDown
+}
+
+@keyframes bsb-fadeOutLeft {
+    0% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(-100%,0,0)
+    }
+}
+
+.bsb-fadeOutLeft {
+    animation-name: bsb-fadeOutLeft
+}
+
+@keyframes bsb-fadeOutRight {
+    0% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(100%,0,0)
+    }
+}
+
+.bsb-fadeOutRight {
+    animation-name: bsb-fadeOutRight
+}
+
+@keyframes bsb-zoomIn {
+    0% {
+        opacity: 0;
+        transform: scale3d(.3,.3,.3)
+    }
+
+    50% {
+        opacity: 1
+    }
+}
+
+.bsb-zoomIn {
+    animation-name: bsb-zoomIn
+}
+
+.bsb-overlay {
+    --bsb-overlay-opacity: 0.5;
+    --bsb-overlay-bg-color: var(--bs-black-rgb);
+    position: relative
+}
+
+.bsb-overlay:after {
+    background-color: rgba(var(--bsb-overlay-bg-color),var(--bsb-overlay-opacity));
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 0
+}
+
+.bsb-overlay>* {
+    position: relative;
+    z-index: 1
+}
+
+.bsb-overlay-figure {
+    --bsb-overlay-figure-opacity: 0.5;
+    --bsb-overlay-figure-bg-color: var(--bs-black-rgb);
+    position: relative
+}
+
+.bsb-overlay-figure:after {
+    background-color: rgba(var(--bsb-overlay-figure-bg-color),var(--bsb-overlay-figure-opacity));
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0
+}
+
+.bsb-overlay-hover {
+    --bsb-overlay-hover-opacity: 0.5;
+    --bsb-overlay-hover-bg-color: var(--bs-black-rgb);
+    position: relative
+}
+
+.bsb-overlay-hover>a {
+    bottom: 0;
+    display: block;
+    left: 0;
+    position: relative;
+    right: 0;
+    top: 0
+}
+
+.bsb-overlay-hover>a>img.bsb-scale {
+    --bsb-scale: 1
+}
+
+.bsb-overlay-hover>a>img.bsb-scale,.bsb-overlay-hover>a>img.bsb-scale-up {
+    transform: scale3d(var(--bsb-scale),var(--bsb-scale),var(--bsb-scale));
+    transform-style: preserve-3d;
+    transition: transform .5s
+}
+
+.bsb-overlay-hover>a>img.bsb-scale-up {
+    --bsb-scale: 1.2
+}
+
+.bsb-overlay-hover>a:after {
+    background-color: rgba(var(--bsb-overlay-hover-bg-color),var(--bsb-overlay-hover-opacity));
+    content: "";
+    cursor: pointer!important;
+    display: block;
+    z-index: 0
+}
+
+.bsb-overlay-hover>a:after,.bsb-overlay-hover>figcaption {
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0
+}
+
+.bsb-overlay-hover>figcaption {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  /*  pointer-events: none;*/
+    z-index: 1
+}
+
+.bsb-overlay-hover>figcaption>* {
+    opacity: 0
+}
+
+.bsb-overlay-hover:hover>a>img.bsb-hover-scale {
+    --bsb-scale-hover: 1;
+    transform: scale3d(var(--bsb-scale-hover),var(--bsb-scale-hover),var(--bsb-scale-hover))
+}
+
+.bsb-overlay-hover:hover>a>img.bsb-hover-scale-up {
+    --bsb-scale-hover: 1.2;
+    transform: scale3d(var(--bsb-scale-hover),var(--bsb-scale-hover),var(--bsb-scale-hover))
+}
+
+.bsb-overlay-hover:hover>a:after {
+    opacity: 1;
+    transition: opacity .15s linear
+}
+
+.bsb-overlay-hover:hover>figcaption {
+    opacity: 1;
+    transition: opacity .15s linear .1s
+}
+
+.bsb-overlay-hover:hover>figcaption>.bsb-hover-fadeIn {
+    --bsb-animation-duration: 500ms;
+    animation-duration: var(--bsb-animation-duration);
+    animation-fill-mode: both;
+    animation-name: bsb-fadeIn
+}
+
+.bsb-overlay-hover:hover>figcaption>.bsb-hover-fadeInUp {
+    --bsb-animation-duration: 500ms;
+    animation-duration: var(--bsb-animation-duration);
+    animation-fill-mode: both;
+    animation-name: bsb-fadeInUp
+}
+
+.bsb-overlay-hover:hover>figcaption>.bsb-hover-fadeInDown {
+    --bsb-animation-duration: 500ms;
+    animation-duration: var(--bsb-animation-duration);
+    animation-fill-mode: both;
+    animation-name: bsb-fadeInDown
+}
+
+.bsb-overlay-hover:hover>figcaption>.bsb-hover-fadeInLeft {
+    --bsb-animation-duration: 500ms;
+    animation-duration: var(--bsb-animation-duration);
+    animation-fill-mode: both;
+    animation-name: bsb-fadeInLeft
+}
+
+.bsb-overlay-hover:hover>figcaption>.bsb-hover-fadeInRight {
+    --bsb-animation-duration: 500ms;
+    animation-duration: var(--bsb-animation-duration);
+    animation-fill-mode: both;
+    animation-name: bsb-fadeInRight
+}
+
+.bsb-overlay-hover:hover>figcaption>.bsb-hover-zoomIn {
+    --bsb-animation-duration: 500ms;
+    animation-duration: var(--bsb-animation-duration);
+    animation-fill-mode: both;
+    animation-name: bsb-zoomIn
+}
+.bsb-project-1-item
+{
+    padding-left: 5px!important;
+    padding-right: 5px!important;
 }

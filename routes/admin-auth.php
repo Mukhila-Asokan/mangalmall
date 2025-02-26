@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\OccasionTypeController;
 use App\Http\Controllers\ReligionController;
 Use App\Http\Controllers\OccasionDataFieldController;
+use App\Http\Middleware\IsAdminRoleCheck;
 
 
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ Route::prefix('admin')->middleware('guest:admin')->group(function () {
 
 Route::get('/adminrole', [RoleController::class, 'redirectRoutes'])->name('adminrole');
 
-Route::prefix('admin')->middleware('auth:admin')->group(function () {
+Route::prefix('admin')->middleware('auth:admin',IsAdminRoleCheck::class)->group(function () {
 
  /*   Route::get('/dashboard', function () {
         return view('admin/dashboard');

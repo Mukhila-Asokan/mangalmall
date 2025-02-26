@@ -17,7 +17,7 @@ use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\VenueCampaigns;
 use Modules\Venue\Models\Imagelibrary;
-use App\Livewire\VenueSearch;
+
 
 
 use Session;

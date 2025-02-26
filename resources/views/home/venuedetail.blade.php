@@ -57,11 +57,11 @@
                                 </div>
                                 <div class="post-content">
                                
-                                        <p>{{ $venuedetail->description }}</p><br>
+                                        <p>{{ $venuedetail->description ?? '' }}</p><br>
                                         
-                                        <p>{{ $venuedetail->address }}</p><br>
+                                        <p>{{ $venuedetail->address  ?? ''  }}</p><br>
 
-                                        {{ $venuedetail->venuecontent->first()->description }}
+                                        {{ $venuedetail->venuecontent->first()->description  ?? ''  }}
 
                                         {!! purify($venuedetail->venuecontent->first()->description) !!}
                                     
