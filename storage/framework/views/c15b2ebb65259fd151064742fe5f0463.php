@@ -1,32 +1,37 @@
 
- 
- 
- <section id="features" class="feature-tab-section shadow-sm" style="background-color: rgba(255, 236, 219, 0.7);">
+ <section id="features" class="feature-tab-section shadow-sm p-4" style="background-color: rgba(255, 236, 219, 0.7);">
  <div class="container">
-	<div class="row p-4">
-		
-        <div class="mb-3 col-md-6 col-6">         
-			<select id="venuetypeid" name="venuetypeid"  placeholder="Enter the Venue Type" class=" has-value border-width-5">
-					<option>Select Venue Type</option>
-				<?php $__currentLoopData = $venuetypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $venuetype): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-					<option> <?php echo e($venuetype->venuetype_name); ?></option>
-				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-			</select>
+ <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="row g-3 align-items-end">
+                
+                <!-- Venue Type Dropdown -->
+                <div class="col-md-5">
+                    <label for="venuetypeid" class="form-label fw-bold">Venue Type</label>
+                    <select id="venuetypeid" name="venuetypeid" class="form-select">
+                        <option>Select Venue Type</option>
+                        <?php $__currentLoopData = $venuetypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $venuetype): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option><?php echo e($venuetype->venuetype_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </div>
 
-			
+                <!-- City Search Input -->
+                <div class="col-md-5">
+                    <label for="citySearch" class="form-label fw-bold">City</label>
+                    <input type="text" id="citySearch" name="venuearea" class="form-control" placeholder="Enter City Name">
+                </div>
+
+                <!-- Search Button -->
+                <div class="col-md-2 text-end">
+                    <button id="searchbutton" type="button" class="btn btn-primary w-100">
+                        <i class="fas fa-search me-1"></i> Search
+                    </button>
+                </div>
+
+            </div>
         </div>
-
-        <div class="mb-3 col-md-4 col-4">
-			<input type="text" id="citySearch" class="form-control has-value border-width-5" name="venuearea" placeholder="Enter City Name">	
-        </div>
-		<div class="mb-3 col-md-2 col-2">
-			<div class="action-btns">
-				<button href="#" class="btn primary-solid-btn mr-2" id="searchbutton" type = "button" >Search</button>
-			</div>
-		</div>
-
-		
-	</div>
+    </div>
 </div>
  
  </section>

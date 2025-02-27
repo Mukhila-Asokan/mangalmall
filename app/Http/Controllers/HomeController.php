@@ -44,11 +44,7 @@ class HomeController extends Controller
         if($request->venuetype != "")
         {
             $query->where('venuetypeid','=',$request->venuetype);
-        }
-        if($request->venusubtype != "")
-        {
-            $query->where('venuesubtypeid','=',$request->venusubtype);
-        }
+        }      
         
         $venue = $query->get();
         if ($venue->isEmpty()) {
@@ -116,7 +112,7 @@ class HomeController extends Controller
 {
     $query = $request->input('query');
     
-    $aarea = indialocation::where('Areaname', 'LIKE', "%{$query}%")->pluck('Areaname')->toArray();
+    $aarea = City::where('cityname', 'LIKE', "%{$query}%")->pluck('cityname')->toArray();
 
     return response()->json($aarea);
 }
