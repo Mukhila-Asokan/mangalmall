@@ -30,20 +30,12 @@
                     <div class="pg-header-options-wrap">
 						<div class="pg-action-btns">
 							<ul>
-							<a href="javascript:void(0);" class="has-tooltip btn"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
+								<li><a href = "#" >Welcome <?php echo e(Auth::user()->name ?? ''); ?></a></li>
+							<li><a href="javascript:void(0);" class="has-tooltip btn"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
 								<i class="ti ti-download" data-bs-toggle="modal" data-bs-target="#templateDownloadModal" ></i>	
 									</a>
-								<li>
-                                    <a href="javascript:void(0);" class="btn" id="saveCard">
-                                        <i class="ti ti-save"></i>                                        
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="btn" id="saveAsTemplate">
-									<i class="ti ti-save-alt"></i>    
-                                        <span> Save As Template </span>
-                                    </a>
-                                </li>
+							</li>
+							
                             </ul>
                         </div>  
                     </div>
@@ -176,21 +168,19 @@
 							<div class="mangalmall-template-formate">
 								<ul>
 									<li>
-										<a class="get_canvas_image" data-format="image/png">
-											<span>
-                                                <img src="<?php echo e(asset('assets/images/png.png')); ?>" alt="">
-											</span>
-											Download PNG Format
-										</a>
+										<a class="get_canvas_image" data-format="image/png"><i class="ti ti-save"></i>
+										</a><span>PNG</span>
 									</li>
 									<li>
-										<a class="get_canvas_image" data-format="image/jpeg">
-											<span>
-                                                <img src="<?php echo e(asset('assets/images/jpg.png')); ?>" alt="">
-											</span>
-											Download JPG Format
-										</a>
+										<a class="get_canvas_image" data-format="image/jpeg"><i class="ti ti-save"></i> 
+										</a><span>JPG</span>
 									</li>
+									<li>
+                                    <a href="javascript:void(0);" class="get_canvas_image" id="saveCard"><i class="ti ti-save"></i></a><span> Save </span>      
+                             </li>
+							 <li> <a href="javascript:void(0);" class="get_canvas_image" id="saveCard">
+								<i class="fa fa-whatsapp"></i></a><span> Share </span> </li>
+                             
 								</ul>
 							</div>
 

@@ -3,6 +3,14 @@
 		   		<div class="pg-editor-aside-nav">
 					<ul>
 						<li>
+							<a href="#" id = "" data-element = "pg_design" title="Design"> <div><i class="ti-palette" style="font-size: 25px;"></i></div>
+								<span>Design</span></a>
+						</li>
+						<li>
+							<a href="#" id = "" data-element = "pg_crop" title="Crop"> <div><i class="fa-solid fa-crop" style="font-size: 25px;"></i></div>
+								<span>Crop</span></a>
+						</li>
+						<li>
 						<a class="active" id="main_tab_text" data-element="pg_element_text" title="Text"> 
 							<div>
 							<svg xmlns="http://www.w3.org/2000/svg"  width="25" height="25" viewBox="0 0 24 24"><g data-name="40.Text">
@@ -968,8 +976,7 @@
 								<div class="pg-editor-tab">
 									<div class="nav nav-tabs" role="tablist">
 										<button class="nav-link active" id="pg_my_images_bg" data-bs-toggle="tab" data-bs-target="#my_images_tab" type="button" role="tab" aria-controls="nav-home" aria-selected="true">My Images</button>
-										<button class="nav-link" id="pg_library_load_bg" data-bs-toggle="tab" data-bs-target="#system_images_tab" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Library</button>
-										<button class="nav-link" id="pg_pixabay_load_bg" data-bs-toggle="tab" data-bs-target="#pixabay_tab" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Pixabay</button>
+										<button class="nav-link" id="pg_library_load_bg" data-bs-toggle="tab" data-bs-target="#system_images_tab" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Library</button>			
 										<!-- AI IMAGES OPTION -->
 										<button class="nav-link" id="pg_ai_images_bg_load_im" data-bs-toggle="tab" data-bs-target="#ai_image_bg_tab_main" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">AI images</button>
 										<!-- AI IMAGES OPTION -->
@@ -1087,7 +1094,7 @@
                                     <div class="pg-image-list pg-recent-uploaded image">
                                         <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="pg-imglist-item">
-                                               <div class="ed_image pg_canvas_add_image" data-url="<?php echo e(asset('storage/'.$image->image_url)); ?>"><img src="<?php echo e(asset('storage/'.$image->image_url)); ?>" alt="canvas add image"></div>
+                                               <div class="ed_image pg_canvas_add_image" data-url="<?php echo e(asset('/'.$image->image_url)); ?>"><img src="<?php echo e(asset('/'.$image->image_url)); ?>" alt="canvas add image"></div>
                                                <span class="pg-remove-image pg_canvas_add_remove_image" data-id="<?php echo e($image->id); ?>"></span>
                                            </div>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
