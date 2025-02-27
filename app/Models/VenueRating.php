@@ -16,6 +16,17 @@ class VenueRating extends Model
 
     use SoftDeletes;
 
+    protected $table = 'venue_ratings';
+
+    protected $fillable = [
+        'venue_id',
+        'user_id',
+        'rating',
+        'review',
+        'is_verified',
+        'booking_reference',
+    ];
+
     public function venue(): BelongsTo
     {
         return $this->belongsTo(VenueDetails::class);

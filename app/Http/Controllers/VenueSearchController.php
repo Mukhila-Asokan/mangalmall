@@ -13,6 +13,7 @@ use Modules\Venue\Models\VenueDataFieldDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\VenueRating;
 
 class VenueSearchController extends Controller
 {
@@ -159,8 +160,9 @@ class VenueSearchController extends Controller
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafielddetails = VenueDataFieldDetails::where('delete_status',0)->get();
+        $venueRating = VenueRating::where('venue_id',$id)->where('user_id', auth()->id())->first();
 
-        return view('venuedetail',compact('venuedetail','arealocation','venuetype','venuesubtype','venuedatafield','venueamenities','venuedatafielddetails'));
+        return view('venuedetail',compact('venuedetail','arealocation','venuetype','venuesubtype','venuedatafield','venueamenities','venuedatafielddetails', 'venueRating'));
 
     }
     public function adsrandom(Request $request)
