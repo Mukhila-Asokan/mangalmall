@@ -19,10 +19,17 @@ textarea {
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                           <div class="text-end">
-                         <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                <span class="tf-icon mdi mdi-eye me-1"></span>List Venue
-                           </a>
+                        <div class="row">
+                            <div class="col-6 text-start">
+                                <a href ="{{ route('venue/detailview', ['id' => $venue->id]) }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                    <span class="tf-icon mdi mdi-arrow-left me-1"></span>Back
+                                </a>
+                            </div>
+                            <div class="col-6 text-end">
+                                <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                    <span class="tf-icon mdi mdi-eye me-1"></span>List Venue
+                                </a>
+                            </div>
                         </div>
                         <div class="row">
                       

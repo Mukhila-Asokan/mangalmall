@@ -33,4 +33,9 @@ class Area extends Model
     {
         return $this->belongsTo(State::class, 'stateid', 'id');
     }
+
+    public function venueDetails()
+    {
+        return $this->belongsTo(VenueDetails::class, 'locationid', 'id');
+    }
 }

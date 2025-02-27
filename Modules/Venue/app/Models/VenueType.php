@@ -22,4 +22,9 @@ class VenueType extends Model
     //     // return VenueTypeFactory::new();
     // }
 
+    public function venueDetails()
+    {
+        return $this->belongsTo(VenueDetails::class, 'venuetypeid', 'id');
+    }
+
 }

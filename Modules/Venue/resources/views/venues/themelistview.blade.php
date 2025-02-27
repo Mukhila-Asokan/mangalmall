@@ -13,22 +13,26 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title mb-4">Venue List</h4>
-                       
-                        <div class="text-end">
-                         <a href = "{{ route('venue/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                          <span class="tf-icon mdi mdi-plus me-1"></span>Add Venue
-                           </a>
+                        <div class="row">
+                            <div class="col-6 text-start">
+                                <a href ="{{ route('venue/detailview', ['id' => $venueid]) }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                    <span class="tf-icon mdi mdi-arrow-left me-1"></span>Back
+                                </a>
+                            </div>
+                            <div class="col-6 text-end">
+                                <a href = "{{ route('venue/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                    <span class="tf-icon mdi mdi-plus me-1"></span>Add Venue
+                                </a>
+                                <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                                    <span class="tf-icon mdi mdi-eye me-1"></span>List Venue
+                                </a>
+                            </div>
                         </div>
                     
                      <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                           <div class="text-end">
-                         <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                                <span class="tf-icon mdi mdi-eye me-1"></span>List Venue
-                           </a>
-                        </div>
                         <div class="row">
                         <div class="col-12">
                               <div class="row row-cols-1 row-cols-md-3 g-3">
