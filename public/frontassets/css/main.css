@@ -56436,6 +56436,7 @@ button.scroll-top:focus {
             transition: all 0.3s ease;
             border-top: 5px solid #58111A;
 			border-bottom: 5px solid #58111A;
+      box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #f5ecf1 !important;  
         }
         .card:hover {
             transform: translateY(-5px);
@@ -56577,4 +56578,16 @@ button.scroll-top:focus {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  }
+
+  .venuedetailslist
+  {
+    max-width: 99%;
+    margin: 0 auto;
+  }
+
+  .image-gallery
+  {
+    max-width: 99%;
+    margin: 0 auto;
   }

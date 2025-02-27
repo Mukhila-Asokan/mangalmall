@@ -8,7 +8,7 @@ use App\Http\Controllers\OccasionTypeController;
 use App\Http\Controllers\ReligionController;
 Use App\Http\Controllers\OccasionDataFieldController;
 use App\Http\Middleware\IsAdminRoleCheck;
-
+Use Modules\Venue\Http\Controllers\MenuController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +64,17 @@ Route::prefix('admin')->middleware('auth:admin',IsAdminRoleCheck::class)->group(
      Route::any('/religion/{id}/updatestatus', [ReligionController::class,'updatestatus']);
      Route::any('/religion/{id}/edit', [ReligionController::class,'edit']);
      Route::put('/religion/update/{id}', [ReligionController::class,'update'])->name('religion.update');
+
+
+     Route::any('/menu', [MenuController::class, 'index'])->name('admin.menu');
+     Route::any('/menu/create', [MenuController::class, 'create'])->name('menu.create');
+     Route::any('/menu/store', [MenuController::class, 'store'])->name('menu.store');
+     Route::any('/menu/{id}/destroy', [MenuController::class,'destroy']);
+     Route::any('/menu/{id}/updatestatus', [MenuController::class,'updatestatus']);
+     Route::any('/menu/{id}/edit', [MenuController::class,'edit']);
+     Route::put('/menu/update/{id}', [MenuController::class,'update'])->name('menu.update');
+    
+    
 
      
      Route::any('staff/dashboard', [StaffController::class, 'index'])->name('admin/staff/dashboard');

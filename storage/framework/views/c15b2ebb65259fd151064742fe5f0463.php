@@ -9,9 +9,9 @@
                 <div class="col-md-5">
                     <label for="venuetypeid" class="form-label fw-bold">Venue Type</label>
                     <select id="venuetypeid" name="venuetypeid" class="form-select">
-                        <option>Select Venue Type</option>
+                        <option value = "">Select Venue Type</option>
                         <?php $__currentLoopData = $venuetypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $venuetype): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option><?php echo e($venuetype->venuetype_name); ?></option>
+                            <option value = "<?php echo e($venuetype->id); ?>"><?php echo e($venuetype->venuetype_name); ?></option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
@@ -36,11 +36,11 @@
  
  </section>
 <!--feature section start-->
-<section class="feature-section search-section ptb-100 gray-light-bg" id = "searchdisplay" style="display: none;">
+<section class="feature-section search-section ptb-50 gray-light-bg" id = "searchdisplay" style="display: none;">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-9 col-lg-8">
-				<div class="section-heading text-center mb-5">
+				<div class="section-heading text-center mb-3">
 					<h2>Venue Details</h2>
 				   
 				</div>

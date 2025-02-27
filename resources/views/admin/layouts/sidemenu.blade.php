@@ -73,7 +73,13 @@
                                     <a href="{{ route('venuesettings') }}" class="menu-link">
                                         <span class="menu-text">Venue Settings</span>
                                     </a>
-                                </li>                              
+                                </li>     
+                                <li class="menu-item">
+                                    <a href="{{ route('venue.deletedrecords') }}" class="menu-link">
+                                        <span class="menu-text">Venue Deleted Records</span>
+                                    </a>
+                                </li>   
+                                                      
                             </ul>
                         </div>
                     </li>
@@ -237,7 +243,7 @@
                                     </a>
                                 </li>  
                                 <li class="menu-item">
-                                    <a href="{{ route('admin/religion') }}" class="menu-link">
+                                    <a href="{{ route('admin.menu') }}" class="menu-link">
                                         <span class="menu-text">Menu</span>
                                     </a>
                                 </li>    

@@ -32,34 +32,34 @@ class HomeController extends Controller
         $venuesubtype = VenueType::where('roottype','=',$venuetypeid)->get();
         return response()->json($venuesubtype, 200);
     }
-    public function venuesearchresults(Request $request)
-    {
-        
-        $query = VenueDetails::query(); 
 
-        if($request->venuearea != "")
-        {
-            $query->where('locationid','=',$request->venuearea);
-        }
-        if($request->venuetype != "")
-        {
-            $query->where('venuetypeid','=',$request->venuetype);
-        }      
-        
-        $venue = $query->get();
-        if ($venue->isEmpty()) {
-            $message = "No Records Found" ;
-            $recordcount = 0;
-            
-    }      
-         else {
-             $recordcount = count($venue);
-             $message = " Total No of Records = ".count($venue);
-  
-        }
-      
-        return response()->json(array('message' => $message, 'venue' => $venue, 'recordcount'=> $recordcount), 200);
+
+public function venuesearchresults(Request $request)
+{
+    $query = VenueDetails::query(); 
+
+    if (!empty($request->venuearea)) {
+        $query->where('locationid', '=', $request->venuearea);
     }
+    if (!empty($request->venuetype)) {
+        $query->where('venuetypeid', '=', $request->venuetype);
+    }
+
+   
+    $perPage = 10;
+    $venues = $query->paginate($perPage);
+
+    
+    return response()->json([
+        'message' => $venues->total() > 0 ? "Total No of Records = " . $venues->total() : "No Records Found",
+        'venue' => $venues->items(),  // Only the current page data
+        'recordcount' => $venues->total(), // Total records count
+        'current_page' => $venues->currentPage(),
+        'last_page' => $venues->lastPage(),
+        'per_page' => $venues->perPage(),
+    ]);
+    }
+
     public function venuedetails(Request $request)
     {
         $id = $request->id;
