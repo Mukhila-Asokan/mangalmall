@@ -44,10 +44,10 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
         try {
             const response = await fetch(`${baseurl}/api/areas?query=${inputValue}`);
             const data = await response.json();
-
+            console.log("Fetched areas:", data);
             const options = data.map((area) => ({
-                value: area.id,
-                label: `${area.Areaname}, ${area.City}`
+                label: area.cityname, // Display name
+                value: area.id // Internal value
             }));
 
             callback(options);
@@ -75,7 +75,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 		
    };
 
-    const handleFilterChange = async () => {
+    const handleFilterChange = async (page = 1) => {
         console.log("Fetching venues with filters:", {
             searchArea,
             searchType,
@@ -92,7 +92,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                 capacity,
                 selectedAmenities: selectedAmenities.join(","),
                 sortBy,
-                page: currentPage,
+                page,
             });
 
             console.log("Query Params:", queryParams.toString());
@@ -132,10 +132,11 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     const handlePageChange = (newPage) => {
         if (newPage >= 1 && newPage <= lastPage) {
             setCurrentPage(newPage);
-           // handleFilterChange(); // Fetch new page data
+            handleFilterChange(newPage);  
+        } else {
+            console.log("No more pages available.");
         }
     };
-
     const handleReset = () => {
         console.log("Resetting all filters...");
 
@@ -150,6 +151,32 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             replace: true,
         });
     };
+
+
+    const shareOnFacebook = () => {
+        const url = window.location.href;
+        const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+        window.open(facebookShareUrl, "_blank");
+    };
+    
+    const shareOnTwitter = () => {
+        const url = window.location.href;
+        const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
+        window.open(twitterShareUrl, "_blank");
+    };
+    
+    const shareOnWhatsApp = () => {
+        const url = window.location.href;
+        const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;
+        window.open(whatsappShareUrl, "_blank");
+    };
+    
+    const shareOnLinkedIn = () => {
+        const url = window.location.href;
+        const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        window.open(linkedInShareUrl, "_blank");
+    };
+    
 
     return (
         <div className="mx-auto p-1" style={{ width: "100%" }}>
@@ -394,9 +421,9 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                             
                             <div className="card-body"> 
                                 <h6 className="card-title mb-2">{venue.venuename}</h6>
-                                <p className="card-text d-flex align-items-center">
+                                <div className="card-text d-flex align-items-center">
                                     <div style={{ verticalAlign: 'middle' }}>{venue.venueaddress}</div> 
-                                 </p>
+                                 </div>
                                
                                 <div className='d-flex justify-content-between'>
                                 <div className="rating d-inline-flex" style={{ verticalAlign: 'middle' }}>
@@ -415,31 +442,31 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 
                                 <div className='d-flex justify-content-between'>                         
                             <div className="contact-info">
-                                <p className="card-text d-inline-flex">
+                                <div className="card-text d-inline-flex">
                                 <div className="p-2"><i className="bi bi-person-fill text-primary" style={{ verticalAlign: 'middle' }}></i> <span style={{ verticalAlign: 'middle' }}>{venue.contactperson}</span> 
 </div>
-                                </p>
+                                </div>
                             </div>
                             <div className="contact-info">
-                            <p className="card-text d-inline-flex">
+                            <div className="card-text d-inline-flex">
                                 <div className='p-2'><i className="bi bi-telephone-fill text-primary" style={{ verticalAlign: 'middle' }}></i> <a href="tel:+1234567890" className="text-decoration-none"> <span style={{ verticalAlign: 'middle' }}> {venue.contactmobile}</span></a></div>
-                            </p>
+                            </div>
                         </div>  
                         </div> 
                         <hr></hr>
 
                         <div className="share-icons d-flex justify-content-between align-items-center mtb-1">
                             <div className='p-2'>
-                                <a href="#" onclick="shareOnFacebook()">
+                                <a href="#" onClick={shareOnFacebook}>
                                     <i className="bi bi-facebook fs-5"></i>
                                 </a>
-                                <a href="#" onclick="shareOnTwitter()">
+                                <a href="#" onClick={shareOnTwitter}>
                                     <i className="bi bi-twitter fs-5"></i>
                                 </a>
-                                <a href="#" onclick="shareOnWhatsApp()">
+                                <a href="#" onClick={shareOnWhatsApp}>
                                     <i className="bi bi-whatsapp fs-5"></i>
                                 </a>
-                                <a href="#" onclick="shareOnLinkedIn()">
+                                <a href="#" onClick={shareOnLinkedIn}>
                                     <i className="bi bi-linkedin fs-5"></i>
                                 </a>
                             </div>
@@ -459,27 +486,28 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             </div>
 
             {/* Pagination Buttons */}
-            <div className="pagination-controls row mt-4">
+           <hr />
+            <div className="pagination-controls row mt-1" style={{ width: "50%", float: "right" }}>
                 <div className="col-md-2">
-                <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="col-1 btn primary-solid-btn btn-block btn-not-rounded mt-3"
-                >
-                   <FontAwesomeIcon icon={faArrowLeft} />
-                </button>
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="col-1 btn primary-solid-btn btn-not-rounded mt-3"
+                    >
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                    </button>
                 </div>
-                <div className="col-md-8">
-                    <span className=""> <h6 className="mt-3">Page {currentPage} of {lastPage} </h6></span>
+                <div className="col-md-3 mt-2">
+                    <span className=""> <p className="mt-3">Page {currentPage} of {lastPage} </p></span>
                 </div>
                 <div className="col-md-2">
-                <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === lastPage}
-                    className="col-md-1 btn primary-solid-btn btn-block btn-not-rounded mt-3"
-                >
-                    <FontAwesomeIcon icon={faArrowRight} />
-                </button>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === lastPage}
+                        className="col-md-1 btn primary-solid-btn btn-not-rounded mt-3"
+                    >
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </button>
                 </div>
             </div>
             
@@ -490,4 +518,3 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
 };
 
 export default VenueSearch;
-

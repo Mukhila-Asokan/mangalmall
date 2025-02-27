@@ -117,16 +117,14 @@ $url = "frontassets/img/hero-bg-4.jpg";
          e.preventDefault();   
 
             var venuearea = $('#venuearea').val();
-            /*var venuetype = $('#venuetypeid').val();*/
-         
-          var venuearea = 1;
-          var venusubtype = 1;
+            var venuetype = $('#venuetypeid').val();         
+        
 
         $.ajax({
            type:'POST',
            url:"<?php echo e(route('home/venuesearchresults')); ?>",
            dataType: 'json',
-           data:{ "_token": "<?php echo e(csrf_token()); ?>", "venuearea" :venuearea,"venuetype" :venuetype,"venusubtype" :venusubtype},
+           data:{ "_token": "<?php echo e(csrf_token()); ?>", "venuearea" :venuearea,"venuetype" :venuetype},
            success:function(response){ 
             $(".venuedetailslist").empty();
             console.log(response['venue'][0]);
@@ -167,101 +165,8 @@ $url = "frontassets/img/hero-bg-4.jpg";
 
 </script>
 <script type="text/javascript">
-  /*  
-document.addEventListener("DOMContentLoaded", function () {
-    const cursor = document.getElementById("custom-cursor");
 
-    document.addEventListener("mousemove", (e) => {
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
-    });
-
-    // Add hover effect on links & buttons
-    document.querySelectorAll("a, button").forEach((element) => {
-        element.addEventListener("mouseenter", () => {
-            cursor.classList.add("hover-effect");
-        });
-
-        element.addEventListener("mouseleave", () => {
-            cursor.classList.remove("hover-effect");
-        });
-    });
-});
-
-*/
-document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('state').addEventListener('change', function(e) {
-            e.preventDefault();   
-            var state = $(this).val();
-            $.ajax({
-            type:'POST',
-            url:"<?php echo e(route('home/ajaxstate')); ?>",
-            dataType: 'json',
-            data:{ "_token": "<?php echo e(csrf_token()); ?>", "state" :state},
-            success:function(response){  
-                $("#city").empty();   
-                var returnData = response;   
-                if(returnData.length>0)
-                {
-                    let casestr = '<option>Select City</option>';
-                    for(i=0;i<returnData.length;i++)
-                    {
-                        casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['cityname'] + '</option>';
-                    }
-                console.log(casestr);       
-            
-                $("#city").append(casestr);
-                }
-                else
-                {
-                    alert("No Data")
-                }
-            }        
-            
-            });
-            
-            });
-
-
-        document.getElementById('chooselocation').addEventListener('click', function(e) {
-            e.preventDefault();   
-            var city = $('#city').val();
-            var state = $('#state').val();
-            $.ajax({
-            type:'POST',
-            url:"<?php echo e(route('home/chooselocation')); ?>",
-            dataType: 'json',
-            data:{ "_token": "<?php echo e(csrf_token()); ?>", "city" :city,"state" :state},
-            success:function(response){  
-                $("#citySearch").empty();
-                $("#citySearch").autocomplete({
-                minLength: 2, // Minimum characters before search starts
-                select: function(event, ui) {
-                $("#citySearch").val(ui.item.label); // Set the selected value
-                console.log("Selected City:", ui.item.label);
-                return false; // Prevent default behavior
-        }
-    });
-                console.log(response);
-                $('#onload').modal('hide');
-            }        
-            
-            });
-            
-            }); 
-
-
-
-
-
-            
-
-
-        });
-
-
-
-        $(document).ready(function() {
+$(document).ready(function() {
     $("#citySearch").autocomplete({
         source: function(request, response) {
             $.ajax({

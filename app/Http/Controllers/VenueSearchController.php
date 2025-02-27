@@ -7,6 +7,7 @@ use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\indialocation;
 use Modules\Venue\Models\VenueType;
 use Modules\Venue\Models\City;
+Use Modules\Venue\Models\Area;
 use Modules\Venue\Models\VenueAmenities;
 use Modules\Venue\Models\VenueDataField;
 use Modules\Venue\Models\VenueDataFieldDetails;
@@ -31,7 +32,10 @@ class VenueSearchController extends Controller
         $currentInstance = VenueDetails::first();
 
         // Filter venues based on request parameters
-        $venuelist = VenueDetails::where('delete_status',0)->paginate(10);
+        $query = VenueDetails::where('delete_status',0);
+        $perPage = 6;
+        $venuelist = $query->paginate($perPage)->appends(request()->query()); 
+       
        
 
         return Inertia::render('VenueSearch', [          
@@ -79,7 +83,7 @@ class VenueSearchController extends Controller
         $query = $request->query('query', '');
 
         // Fetch areas with a case-insensitive search on Areaname or City
-        $areas = City::where('City', 'LIKE', "%{$query}%")->limit(10) // Load only 10 results to optimize performance
+        $areas = City::where('cityname', 'LIKE', "%{$query}%")->limit(10)
                       ->get();
 
         return response()->json($areas);
@@ -91,16 +95,27 @@ class VenueSearchController extends Controller
         $query = VenueDetails::query();
 
         Log::info('Received filters:', $request->all());
-     
+        $currentPage = $request->page; // Default to 1
        
-        if ($request->has('searchArea') && $request->searchArea != '') {
+        $perPage = 6;
 
-            /* $searchAreaId = $request->searchArea;       */    
-
-            $query->where('locationid', $request->searchArea);
-            
-
+        
+        if ($request->has('searchArea') && !empty($request->searchArea)) {
+            // Find the city by ID
+            $city = City::find($request->searchArea);
+        
+            if ($city) {
+                // Get Area IDs that belong to this City
+                $areaIds = Area::where('cityid', $city->id)->pluck('id')->toArray();
+        
+                // If areas exist, filter locations by these area IDs
+                if (!empty($areaIds)) {
+                    $query->whereIn('locationid', $areaIds);
+                }
+            }
         }
+       
+       
 
         if ($request->has('searchType') && $request->searchType != '' ) {
              Log::info('Applying searchType:', [$request->searchType]);
@@ -144,9 +159,16 @@ class VenueSearchController extends Controller
             }
         }
 
-         $venuelist = $query->paginate(10);  
+        
+     $venuelist = $query->paginate($perPage, ['*'], 'page', $currentPage)->appends($request->query());
+
+      
         return response()->json([           
-           'venuelist' => $venuelist ?? [],     
+           'venuelist' => $venuelist ?? [], 
+           'current_page' => $venuelist->currentPage(),
+            'last_page' => $venuelist->lastPage(),
+            'per_page' => $venuelist->perPage(),
+            'total' => $venuelist->total(),    
         ], 200);
     }
 

@@ -38,6 +38,8 @@ class Handler extends ExceptionHandler
             ], 401);
         }
 
-        return redirect()->guest(route('login'))->with('error', 'Your session has expired. Please log in again.');
+       /* return redirect()->guest(route('login'))->with('error', 'Your session has expired. Please log in again.');*/
+       return redirect()->route('login')->with('error', 'Your session has expired. Please log in again.');
+
     }
 }

@@ -91,7 +91,7 @@ class AuthenticatedSessionController extends Controller
 
 
             // Assuming you're using JWT or another library to generate the token:
-            $token = $user->createToken('MangalMall')->plainTextToken;
+            $token = JWTAuth::fromUser($user);
 
             // Store the JWT token in a cookie
             $cookie = cookie('jwt', $token, 60 * 24);  // 24-hour expiration for the cookie
@@ -101,9 +101,7 @@ class AuthenticatedSessionController extends Controller
             }
         }
         else {
-       
-            session()->flash('error', 'Authentication failed. Please check your credentials.');
-            return back();
+           return redirect('/')->with('error', 'Authentication failed. Please check your credentials.');
     }
 
         // If authentication fails, redirect back with an error
@@ -144,6 +142,6 @@ class AuthenticatedSessionController extends Controller
        
        $cookie = Cookie::make('jwt', '', -1); 
         
-        return redirect('/home')->withCookie($cookie);
+        return redirect('/')->withCookie($cookie);
         }
 }
