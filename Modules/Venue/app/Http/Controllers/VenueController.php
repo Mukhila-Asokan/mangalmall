@@ -30,7 +30,8 @@ Use Modules\Venue\Models\State;
 Use Modules\Venue\Models\District;
 Use Modules\Venue\Models\City;
 use Modules\Venue\Models\Area;
-
+use App\Exports\VenueExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -152,7 +153,7 @@ class VenueController extends Controller
         $venuedetails->capacity = $request->capacity;
         $venuedetails->food_type = $request->food_type;
         $venuedetails->is_worth = 'none';
-        $venuedetails->googlemap = '-';
+        $venuedetails->googlemap = $request->googlemap;
 
        /* $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
         $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));*/
@@ -268,7 +269,6 @@ class VenueController extends Controller
      */
     public function edit($id)
     {
-
         $username = Session::get('username');
         $userid = Session::get('userid');       
         $pagetitle = "Venue";
@@ -278,7 +278,7 @@ class VenueController extends Controller
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
         $arealocation = Area::orderBy('cityid')->get();
         $venue = VenueDetails::where('id',$id)->first();
-        return view('venue::venues.edit',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue'));
+        return view('venue::venues.edit', compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue'));
       
     }
 
@@ -287,10 +287,6 @@ class VenueController extends Controller
      */
     public function update(Request $request,$id)
     {
-
-
-        
-
         $contactMobile = ltrim($request->input('contactmobile'), '0'); 
         $request->merge(['contactmobile' => $contactMobile]);
         $validator = Validator::make($request->all(),[
@@ -299,7 +295,11 @@ class VenueController extends Controller
             'description' => 'required',
             'contactperson' => 'required',
             'contactmobile' => 'required|digits:10|unique:venuedetails,contactmobile,' . $id, 
-            'venuetypeid' => 'required',         
+            'venuetypeid' => 'required',      
+            'capacity' => 'required',  
+            'food_type' => 'required',
+            'bookingprice' => 'required',
+            'venuearea' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -327,10 +327,10 @@ class VenueController extends Controller
         $venuedetails->capacity = $request->capacity;
         $venuedetails->food_type = $request->food_type;
         $venuedetails->is_worth = 'none';
-        $venuedetails->googlemap = '-';
+        $venuedetails->googlemap = $request->googlemap;
 
         $venueamenities = $request->venueamenities ?? [];
-        $venuedata = $request->datafieldvalue ?? [];
+        $venuedata = array_values($request->datafieldvalue) ?? [];
 
         if (!empty($venueamenities) && is_array($venueamenities)) {
             $venuedetails->venueamenities = json_encode(array_map('intval', $venueamenities));
@@ -645,9 +645,9 @@ class VenueController extends Controller
         
         $venue = VenueDetails::where('id',$id)->first();
         $venuebooking = VenueBooking::where('venue_id',$id)->get();
+        Session::put('venue', $venue);
 
       /* return view('venue::venues.booking',compact('pagetitle','pageroot','username','venuebooking','venue','page'));*/
-
 
        return Inertia::render('Venue/VenueBookingCalendar', [
         'pagetitle' => $pagetitle,
@@ -715,11 +715,22 @@ class VenueController extends Controller
     {
         $id = $request->venue_id;
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
+            'sliderimage' => 'required_without:galleryimage',
             'sliderimage.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'galleryimage' => 'required_without:sliderimage',
             'galleryimage.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'venue_id' => 'required|exists:venuedetails,id',
+        ], [
+            'galleryimage.required_without' => 'Either slider image or gallery image is required.',
+            'sliderimage.required_without' => 'Either slider image or gallery image is required.',
         ]);
+
+         if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
 
         $venue = VenueDetails::find($request->venue_id);
 
@@ -753,8 +764,6 @@ class VenueController extends Controller
                 ]);
             }
         }
-
-        
        
         return redirect()->back()->with('success', 'Venue Image successfully created');
     }
@@ -819,6 +828,7 @@ class VenueController extends Controller
         return response()->json(['results' => $formattedData]);
     }
     
-
-
+    public function export(){
+        return Excel::download(new VenueExport, 'venues.xlsx');
+    }
 }

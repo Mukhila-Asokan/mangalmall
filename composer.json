@@ -6,7 +6,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^7.0|^8.2",
         "ext-imagick": "*",
         "astra-techno/data-forge": "^1.4",
         "barryvdh/laravel-dompdf": "^3.1",
@@ -19,10 +19,11 @@
         "laravel/scout": "^10.12",
         "laravel/tinker": "^2.9",
         "league/oauth2-client": "*",
-        "maatwebsite/excel": "^1.1",
+        "maatwebsite/excel": "^3.1",
         "meilisearch/meilisearch-php": "^1.12",
         "nwidart/laravel-modules": "^11.1",
         "php-flasher/flasher-laravel": "^2.1",
+        "psr/simple-cache": "1.0",
         "tightenco/ziggy": "^2.5",
         "tymon/jwt-auth": "^2.1",
         "yajra/laravel-datatables-oracle": "11.0"

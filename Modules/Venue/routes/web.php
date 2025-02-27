@@ -52,7 +52,7 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
     Route::post('/venue/store', [VenueController::class,'store'])->name('venue.venue_add');
     Route::any('/venue/show', [VenueController::class,'index'])->name('venue/index');
     Route::any('/venue/detailview/{id}', [VenueController::class,'detailview'])->name('venue/detailview');
-    Route::any('/venue/{id}/edit', [VenueController::class,'edit']);
+    Route::any('/venue/{id}/edit', [VenueController::class,'edit'])->name('venue.edit');
     Route::any('/venue/{id}/webpage', [VenueController::class,'webpage']);
     Route::put('/venue/{id}', [VenueController::class, 'update'])->name('venue.update');
     Route::any('/venue/{id}/destroy', [VenueController::class,'destroy']);
@@ -62,6 +62,7 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
     Route::any('/venue/{id}/venueimage', [VenueController::class,'venueimage'])->name('venue/venueimage');
     Route::any('/venue/venueimage_add', [VenueController::class,'venueimage_add'])->name('venue.venueimage_add');
     Route::post('/venue/image-delete', [VenueController::class, 'imageDelete'])->name('venue.image_delete');
+    Route::get('/venue/export', [VenueController::class,'export'])->name('venue.export');
 
     Route::any('/venue/{id}/themebuilder', [VenueController::class,'themebuilder'])->name('venue/themelistview');
     Route::any('/venue/themebuilder/{venueid}/{id}/editor', [VenueController::class,'themeeditor'])->name('venue/themelistview/editor');

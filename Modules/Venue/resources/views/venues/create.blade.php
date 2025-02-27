@@ -12,9 +12,21 @@
         width:200px;
         height:auto;
     }
+    
+    .select2-selection__clear {
+        margin-top: 5px !important;
+    }
+
+    .select2-selection__rendered {
+        line-height: 40px !important;  /* Adjust text height */
+    }
+
+    .select2-container .select2-selection--single {
+        height: 40px !important;  /* Adjust the select box height */
+    }
 </style>
  <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
-
+ <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
          <div class="row">
             <div class="col-12">
@@ -502,19 +514,42 @@ if (input.files && input.files[0]) {
 }
 
 </script>
-<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
-<script type="text/javascript">
-    
-  
+<!-- <script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    var areaOptions = {!! json_encode($areaOptions) !!};
-$('#venuearea').selectize({
-    valueField: 'id',
-    labelField: 'title',
-    searchField: 'title',
-    options: areaOptions,
-    create: false
-});
+<script type="text/javascript">
+    $('#venuearea').select2({
+        placeholder: 'Search for an area',
+        allowClear: true,
+        ajax: {
+            url: "{{ route('venue/create/ajaxarealist') }}", // Route to fetch data
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term, // Send search term to backend
+                };
+            },
+            processResults: function (data) {
+                console.log(data.results); // Debug API response
+                return {
+                    results: data.results // Use 'results' key from API response
+                };
+            },
+            cache: true,
+        },
+        minimumInputLength: 1,
+    });
+ 
+
+//     var areaOptions = {!! json_encode($areaOptions) !!};
+// $('#venuearea').selectize({
+//     valueField: 'id',
+//     labelField: 'title',
+//     searchField: 'title',
+//     options: areaOptions,
+//     create: false
+// });
 
 
 

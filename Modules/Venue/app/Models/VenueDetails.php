@@ -16,7 +16,7 @@ class VenueDetails extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $guard = [];
 
     // protected static function newFactory(): VenueDetailsFactory
     // {
