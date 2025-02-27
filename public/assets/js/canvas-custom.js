@@ -710,7 +710,7 @@
 			console.log(data);
 			$('.mangalmall-loader').show();			
 			$.ajax({
-				url: ajaxurl + 'editor/save_template', 
+				url: ajaxurl + '/cardinvitation/save_template', 
 				type: "POST",         
 				data: data, 
 				success: function(data){
@@ -1438,8 +1438,8 @@
 					let imgContainer = document.querySelector('.pg-image-list.pg-recent-uploaded.image');
 		
 					result.data.forEach(v => {
-						let imageUrl = ajaxurl+`/storage/${v.image_url}`;
-						let thumbUrl = ajaxurl+`/storage/${v.thumb_url}`;
+						let imageUrl = ajaxurl+`/${v.image_url}`;
+						let thumbUrl = ajaxurl+`/${v.thumb_url}`;
 						console.log(imageUrl);
 						if (bgContainer) {
 							bgContainer.insertAdjacentHTML('beforeend', `

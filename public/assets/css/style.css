@@ -24,7 +24,7 @@ Copyright (c) 2024
 :root {
     --mangalmall-global-color: #221e01;
     --mangalmall-body-bg: #f7f0fd;
-    --mangalmall-primary: #5C2018;
+    --mangalmall-primary: #58111A;
     --mangalmall-primary-rgb: rgb(67, 5, 22);
     --mangalmall-white-color: #ffffff;
     --mangalmall-green-color: #aa9510;
@@ -312,8 +312,9 @@ body.pg-user-login .pg-template-status-center .pg-btn:first-child {
     align-items: center;
     border-bottom: 2px solid rgb(255 255 255 / 78%);
    /* background: rgb(255 255 255 / 98%);*/
- background: rgb(237,155,131);
-background: linear-gradient(19deg, rgba(237,155,131,1) 20%, rgba(242,207,131,1) 100%);
+ /*background: rgb(237,155,131);
+background: linear-gradient(19deg, rgba(237,155,131,1) 20%, rgba(242,207,131,1) 100%);*/
+background: linear-gradient(90deg, #FDBB2D 0%, #22C1C3 100%);
 }
 .pg-header-row {
     display: flex;
@@ -1528,7 +1529,7 @@ div#templateDownloadModal .modal-body {
     cursor: pointer;
     font-weight: 500;
     font-size: 14px;
-    padding: 5px 3px 20px;
+    padding: 10px 3px 20px;
 }
 .pg-editor-aside-nav ul li a svg {
     display: inline-block;
@@ -1615,7 +1616,7 @@ div#templateDownloadModal .modal-body {
     background: rgba(0,0,0,0) url('data:image/gif;base64,R0lGODlhJAAkAIAAAP///83NzSH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczpxPSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMwNjcgNzkuMTU3NzQ3LCAyMDE1LzAzLzMwLTIzOjQwOjQyICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczpxbXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpxdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNSAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBMTM2REE2MjcxNkIxMUU1OTZEMUE3MjBFNzk0Qjg0MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBMTM2REE2MzcxNkIxMUU1OTZEMUE3MjBFNzk0Qjg0MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkExMzZEQTYwNzE2QjExRTU5NkQxQTcyMEU3OTRCODQxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkExMzZEQTYxNzE2QjExRTU5NkQxQTcyMEU3OTRCODQxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAACQAJAAAAlKMj3nA7d+UTLC+iYPdIE9ueRJYiQoJmRTqqAjbugYcyRrd2Xgu7/ZN+/l0OGGRGETuYMZk7/h0uoZRppLVtFaxV1SWu/V2SV9xmDwGldFnta0AADs=') repeat scroll left top;
 }
 .pg-canvas-control-wrap {
-    background-color: #d0a8b2;
+    /*background-color: #d0a8b2;*/
     border: 1px solid var(--mangalmall-border-color);
     padding: 5px 20px;
     text-align: center;
@@ -4448,8 +4449,8 @@ body.pg-editor-body .pg-sidebar-wrapper {
     font-weight: 500;
     border-radius: 5px;
     color: var(--mangalmall-white-color);
-    background: var(--mangalmall-primary);
-    background: var(--mangalmall-gradient);
+    /*background: var(--mangalmall-primary);
+    background: var(--mangalmall-gradient);*/
     filter: drop-shadow(0px 8px 20px rgba(255,59,114,0.2));
     cursor: pointer;
     min-width: 40px;
@@ -4511,7 +4512,7 @@ body.pg-editor-body .pg-sidebar-wrapper {
 }
 
 .mangalmall-template-formate ul {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     grid-gap: 30px;
     text-align: center;
@@ -4523,12 +4524,19 @@ body.pg-editor-body .pg-sidebar-wrapper {
 .mangalmall-template-formate ul li a {
     background: #f2fbff;
     display: inline-block;
-    width: 100%;
-    border-radius: 10px;
-    padding: 30px 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 10px 10px;
     border: 1px solid #aae2f7;
     font-weight: 600;
     color: #50bee8;
+}
+
+.mangalmall-template-formate ul li span {
+    display: block;
+    text-align: center; /* Optional: Center the text */
+    margin-top: 5px; /* Optional: Add spacing */
 }
 .mangalmall-template-formate ul li:first-child a {
     background: #e7d2eb;
@@ -4561,7 +4569,7 @@ body.pg-editor-body .pg-sidebar-wrapper {
 }
 .pg-sidebar-title {
     font-size: 15px;
-    background: #f6d4ca;
+    background: #aabd66;
     padding: 15px 20px;
     border-radius: 6px;
     font-weight: 700;

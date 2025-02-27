@@ -152,6 +152,7 @@ Route::any('/cardinvitation/loadajax/ai_text_generator', [CardImageAjaxLoadContr
 
 Route::any('/cardinvitation/uploadMedia', [CardEditorController::class, 'uploadMedia']);
 Route::any('/cardinvitation/moreImages', [CardEditorController::class, 'moreImages']);
+Route::any('/cardinvitation/save_template', [CardEditorController::class, 'saveTemplate']);
 
 
 

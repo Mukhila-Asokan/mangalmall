@@ -83,7 +83,19 @@ class CardEditorController extends Controller
             $name = uniqid() . '.' . $file->getClientOriginalExtension();
             $path = 'uploads/user_' . $user->id . '/images/';
 
-            $file->storeAs($path, $name, 'public');
+            //$file->storeAs($path, $name, 'public');
+           
+            $destinationPath = public_path($path);
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+        
+            // Move the file to public/uploads/user_{id}/images/
+            $file->move($destinationPath, $name);
+        
+            // Get the public URL
+            $filePath = asset($path . $name);
+
 
             $image = UserImage::create([
                 'user_id' => $user->id,
