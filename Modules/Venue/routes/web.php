@@ -36,8 +36,8 @@ Route::group([], function () {
 
 */
 
- $username = Session::get('username');
-        $userid = Session::get('userid');   
+$username = Session::get('username');
+$userid = Session::get('userid');   
 
 
 Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
@@ -188,7 +188,8 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
 
     Route::any('/deletedrecords', [DeletedRecordsController::class,'index'])->name('venue.deletedrecords');
     Route::any('/menu/restore/{id}', [DeletedRecordsController::class, 'restoredata'])->name('menus.restore');
-    Route::any('/menu/deletepermanent/{id}', [DeletedRecordsController::class, 'deletepermanent'])->name('menus.deletepermanent');
+   
+    Route::any('/menu/bulkAction', [DeletedRecordsController::class, 'bulkAction'])->name('menus.bulkAction');
 
 
 });

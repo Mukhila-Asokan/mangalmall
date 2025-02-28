@@ -23,12 +23,10 @@
                                 <td class="text-center"><?php echo e($menu->id); ?></td>
                                 <td class="text-center"><?php echo e($menu->menuname); ?></td>
                                 <td class="text-center">
-                                    <a href="<?php echo e(route('menus.restore', $menu->id)); ?>" class="btn btn-success btn-sm" title="Restore">
-                                        <i class="fas fa-trash-restore"></i>
-                                    </a>
-                                    <a href="<?php echo e(route('menus.deletepermanent', $menu->id)); ?>" class="btn btn-danger btn-sm" title="Delete Permanently">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                <a href="<?php echo e(route('menus.deletedview', $menu->id)); ?>" class="btn btn-danger btn-sm" title="Restore">                                         
+	<i class="mdi mdi-view-list"> View Deleted List</i>                                     
+</a> 
+                                </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <!-- End loop -->

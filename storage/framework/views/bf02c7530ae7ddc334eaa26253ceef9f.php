@@ -144,7 +144,7 @@ $url = "frontassets/img/hero-bg-4.jpg";
         let venueLink = `<?php echo e(url('/home/')); ?>/${venue.id}/venuedetails`;
 
         let onclickheart = "this.classList.toggle('bi-heart-fill'); this.classList.toggle('text-danger')";
-        let truncatedAddress = venue.venueaddress.length > 30 ? venue.venueaddress.slice(0, 30) + "..." : venue.venueaddress;
+        let truncatedAddress = venue.venueaddress.length > 50 ? venue.venueaddress.slice(0, 50) + "..." : venue.venueaddress;
         content += `
             <div class="col-md-3 mtb-1">
                 <div class="card rounded white-bg shadow-sm p-1">

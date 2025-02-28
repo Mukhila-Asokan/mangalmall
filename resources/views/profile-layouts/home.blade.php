@@ -13,6 +13,7 @@
     {
         border-top-right-radius: 100px!important;
         border-bottom-left-radius: 100px!important;
+        box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #fff!important;
     }
  </style>
   
