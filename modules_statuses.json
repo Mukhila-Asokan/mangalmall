@@ -3,5 +3,6 @@
     "Invitation": true,
     "VenueAdmin": true,
     "StaffManagement": true,
-    "Merchandiser": true
+    "Merchandiser": true,
+    "Subcription": true
 }

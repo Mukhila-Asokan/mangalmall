@@ -181,6 +181,24 @@
 </div>
 
                     </li>
+                    <li class= "menu-item">
+                    <a href="#menusubcriptionpages" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="person-standing"></i></span>
+                            <span class="menu-text">Subcription Mangement</span>
+                             <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="menusubcriptionpages">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a href="{{ route('subcriptionplan') }}" class="menu-link">
+                                        <span class="menu-text">Subcription Plan</span>
+                                    </a>
+                                </li>
+                            </ul>
+                    </div>
+                    </li>
+
+
                     <li class="menu-item">
                         <a href="#menustaffpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                             <span class="menu-icon"><i data-lucide="person-standing"></i></span>

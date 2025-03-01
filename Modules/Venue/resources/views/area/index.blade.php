@@ -118,7 +118,7 @@
                                             <td>{{ $start++ }}</td>
                                             <td>{{ $dist->areaname }}</td>
                                             <td>{{$dist->city->cityname }}</td>
-                                            <td>{{ $dist->district->districtname }}</td>
+                                            <td>{{ $dist->district->districtname ?? '' }}</td>
                                             <td>{{ $dist->state->statename ?? '' }}</td>
                                             <td>
                                                 @if($dist->status == 'Active')

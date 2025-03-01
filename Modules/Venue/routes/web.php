@@ -188,7 +188,8 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
 
     Route::any('/deletedrecords', [DeletedRecordsController::class,'index'])->name('venue.deletedrecords');
     Route::any('/menu/restore/{id}', [DeletedRecordsController::class, 'restoredata'])->name('menus.restore');
-   
+    Route::any('/menu/deletepermanent/{id}', [DeletedRecordsController::class, 'deletepermanent'])->name('menus.deletepermanent');
+    Route::any('/menu/deletedview/{id}', [DeletedRecordsController::class, 'deletedview'])->name('menus.deletedview');
     Route::any('/menu/bulkAction', [DeletedRecordsController::class, 'bulkAction'])->name('menus.bulkAction');
 
 

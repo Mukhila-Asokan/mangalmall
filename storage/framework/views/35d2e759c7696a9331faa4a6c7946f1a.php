@@ -20,8 +20,7 @@
                                 <th class="text-center">#</th>
                                 <?php $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $column): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <th class="text-center"><?php echo e(ucfirst(str_replace('_', ' ', $column))); ?></th>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <th class="text-center">Actions</th>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                             
                             </tr>
                         </thead>
                         <tbody>
@@ -34,11 +33,7 @@
                                     <td class="text-center"><?php echo e($start++); ?></td>
                                     <?php $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $column): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <td class="text-center"><?php echo e($record->$column); ?></td>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <td class="text-center">
-                                        <a href="<?php echo e(route('menus.restore', $record->id)); ?>" class="btn btn-success btn-sm m-1" title="Restore"><i class="fas fa-trash-restore"></i></a>
-                                        <a href="<?php echo e(route('menus.deletepermanent', $record->id)); ?>" class="btn btn-danger btn-sm m-1" title="Delete Permanently"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                                   
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>

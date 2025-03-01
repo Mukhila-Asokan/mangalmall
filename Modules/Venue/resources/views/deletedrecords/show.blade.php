@@ -20,8 +20,7 @@
                                 <th class="text-center">#</th>
                                 @foreach($columns as $column)
                                     <th class="text-center">{{ ucfirst(str_replace('_', ' ', $column)) }}</th>
-                                @endforeach
-                                <th class="text-center">Actions</th>
+                                @endforeach                             
                             </tr>
                         </thead>
                         <tbody>
