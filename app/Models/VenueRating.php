@@ -25,6 +25,8 @@ class VenueRating extends Model
         'review',
         'is_verified',
         'booking_reference',
+        'verified_at',
+        'rejected_at',
     ];
 
     public function venue(): BelongsTo

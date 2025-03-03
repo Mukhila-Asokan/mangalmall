@@ -143,7 +143,9 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
     Route::any('/venueportalrequest',[VenueController::class,'venueportalrequest'])->name('venue.venueportalrequest');
     Route::any('/venueportalrequest/{id}/updatestatus',[VenueController::class,'venueuserupdatestatus']);
     Route::any('/venueadminlist',[VenueController::class,'venueadminlist'])->name('venue.venueadminlist');
-
+    Route::any('/venue/comments',[VenueController::class,'venueComments'])->name('venue.comments');
+    Route::get('/venue/comment/{action}/{venueId}',[VenueController::class,'venueApproveComment'])->name('venue.approve.comments');
+    Route::get('/venue/comments/bulk-action',[VenueController::class,'venueBulkAction'])->name('bulk.comments.action');
 
     /*State*/
 

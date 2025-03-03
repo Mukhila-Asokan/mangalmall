@@ -63,9 +63,9 @@ img.zoomed {
 
 <!--breadcrumb bar start-->
 <div class="breadcrumb-bar py-3 gray-light-bg border-bottom">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
+    <div class="container p-0">
+        <div class="row p-0">
+            <div class="col-12 p-0">
                 <div class="custom-breadcrumb">
                     <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
                         <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
@@ -79,7 +79,7 @@ img.zoomed {
 </div>
 <!--breadcrumb bar end-->
 
-  <div class="module ptb-100">
+  <div class="module ptb-50">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
@@ -101,14 +101,14 @@ img.zoomed {
                                     </div>
                                     <span class="ml-1 mt-2 text-muted" style="font-size:13px;">({{$ratingCount}})</span>
                                 </div>
-								<p><small>{{ $venuedetail->venueaddress }} ,  <br> {{ $venuedetail->indianlocation->Areaname }} {{ $venuedetail->indianlocation->City }}, {{ $venuedetail->indianlocation->District }}<br>{{ $venuedetail->indianlocation->State }}</small></p>
+								<p class="pt-2 mb-1"><small>{{ $venuedetail->venueaddress }} ,  <br> {{ $venuedetail->indianlocation->Areaname }} {{ $venuedetail->indianlocation->City }}, {{ $venuedetail->indianlocation->District }}<br>{{ $venuedetail->indianlocation->State }}</small></p>
 								
 								 
 								
 								 
 								  <div class="d-inline-flex">
 								
-									<div class="p-2 justify-content-start"> 
+									<div class="pt-2 justify-content-start"> 
 									<h5> <i class = "fa fa-indian-rupee-sign"></i> {{ $venuedetail->bookingprice }} </h5>
 									</div>
 								 </div>
@@ -117,23 +117,40 @@ img.zoomed {
 								
 								 
 								 <div class="d-inline-flex">
-									<div class="p-2 justify-content-start"> 
-										<h6>Capacity</h6>
+									<div class="pt-2 justify-content-start"> 
+										<h6>Capacity: </h6>
 									</div>
-									<div class="p-2 justify-content-start"> 
-									<h6>{{ $venuedetail->capacity }}</h6>
+									<div class="pt-1 justify-content-start"> 
+									    <span>&nbsp; {{ $venuedetail->capacity ? $venuedetail->capacity : 'NA' }}</span>
 									</div>
-									<div class="p-2 justify-content-end"> 
-										<h6>Food Type</h6>
+									<div class="pt-2 justify-content-end ml-3"> 
+										<h6>Food Type: </h6>
 									</div>
-									<div class="p-2 justify-content-start"> 
-									<h6>{{ $venuedetail->food_type }}</h6>
+									<div class="pt-1 justify-content-start"> 
+									<span>&nbsp; {{ $venuedetail->food_type ? $venuedetail->food_type : 'NA' }}</span>
 									</div>
 								 </div>
 								 <br>
 								 
 									<hr>
-								
+                                <!-- Star Rating -->
+                                <div class="comments-area">
+                                    <div class="mb-3">
+                                        <div class="d-flex">
+                                            <div class="star-rating">
+                                                <label class="form-label">Rate this Venue :</label>
+                                            </div>
+                                            <div class="star-rating h4">
+                                                &nbsp;<span class="star" data-value="1">&#9733;</span>
+                                                <span class="star" data-value="2">&#9733;</span>
+                                                <span class="star" data-value="3">&#9733;</span>
+                                                <span class="star" data-value="4">&#9733;</span>
+                                                <span class="star" data-value="5">&#9733;</span>
+                                            </div>
+                                        </div>
+                                        <p class="p-0 m-0">Rating: <span id="rating-value">{{$venueRating->rating ?? 0}}</span>/5</p>
+                                    </div>
+                                </div>
 								 
 								
 							</div>
@@ -329,16 +346,8 @@ img.zoomed {
 
     
     <!-- Star Rating -->
-    <div class="mb-3">
+    <!-- <div class="mb-3">
         <label class="form-label"><strong>Rate this Venue :</strong></label>
-        <!-- <div class="star-rating">
-            <i class="fa fa-star overall-star" data-value="1"></i>
-            <i class="fa fa-star overall-star" data-value="2"></i>
-            <i class="fa fa-star overall-star" data-value="3"></i>
-            <i class="fa fa-star overall-star" data-value="4"></i>
-            <i class="fa fa-star overall-star" data-value="5"></i>
-        </div>
-        <p class="mt-1">Your Rating: <span id="rating-value">0</span>/5</p> -->
         <div class="star-rating row">
             <div class="col-2 p-0 m-0">
                 <span class="star" data-value="1">&#9733;</span>
@@ -349,23 +358,45 @@ img.zoomed {
             </div>
         </div>
         <p>Rating: <span id="rating-value">{{$venueRating->rating ?? 0}}</span>/5</p>
-    </div>
+    </div> -->
 
-    <div class="comment-respond">
-        <h5 class="comment-reply-title">Leave your Comments</h5>
-        <p class="comment-notes"></p>
-        <form action="{{ route('venue.post.comments') }}" method="post" class="comment-form row">
-            @csrf
-            <div class="form-group col-md-12">
-                <textarea class="form-control" rows="8" placeholder="Comments" name="comments">{{$venueRating->review ?? null}}</textarea>
+    @if($venueRating->review && ($venueRating->verified_at != null || $venueRating->rejected_at != null))
+        <div class="comment-respond">
+            <h5 class="comment-reply-title">Leave your Comments</h5>
+            <p class="comment-notes"></p>
+            <form action="{{ route('venue.post.comments') }}" method="post" class="comment-form row">
+                @csrf
+                <div class="form-group col-md-12">
+                    <textarea class="form-control" rows="8" placeholder="Comments" name="comments">{{$venueRating->review ?? null}}</textarea>
+                </div>
+                <input type="hidden" id="venue_rating" name="rating" value="{{ $venueRating->rating ?? 0 }}">
+                <input type="hidden" name="venue_id" value="{{ $venuedetail->id }}">
+                <div class="form-submit col-md-12">
+                    <button class="btn primary-solid-btn" type="submit">Post Comment</button>
+                </div>
+            </form>
+        </div>     
+    @endif
+    @if($commentCount > 0)
+        <h5 class="comments-title">Venue Comments</h5>
+        <div class="venue-comments pt-2">
+            <div class="comment-list">
+                @foreach($allComments as $comment)
+                    <div class="comment-section">
+                        <div class="comment-content">
+                            <p class="mb-1" style="font-size: 14px;">{{ $comment->review }}</p>
+                            <span class="comment-author-name text-muted font-weight-bold" style="font-size: 11px;">{{ $comment->user->name == auth()->user()->name ? 'You' : ucfirst($comment->user->name) }}</span>
+                            <span class="comment-date text-muted ml-2" style="font-size: 11px;">{{ $comment->created_at->diffForHumans() }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                @endforeach
+                @if($commentCount > 2)
+                    <a href="" class="btn primary-solid-btn text-center load_more_option">Load More</a>
+                @endif
             </div>
-            <input type="hidden" id="venue_rating" name="rating" value="{{ $venueRating->rating ?? 0 }}">
-            <input type="hidden" name="venue_id" value="{{ $venuedetail->id }}">
-            <div class="form-submit col-md-12">
-                <button class="btn primary-solid-btn" type="submit">Post Comment</button>
-            </div>
-        </form>
-    </div>               
+        </div>
+    @endif
 
 </div>
 
@@ -465,6 +496,79 @@ img.zoomed {
 
         });
 
+        var countComment = 2;
+        $('.load_more_option').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "{{ route('venue.get.comments') }}",
+                type: "GET",
+                data: {
+                    "venue_id": parseInt("{{ $venuedetail->id }}"),
+                    "count": countComment
+                },
+                success: function(response) {
+                    if (response.success) {
+                        let commentsHtml = '';
+
+                        response.data.forEach(comment => {
+                            commentsHtml += `
+                                <div class="comment-section">
+                                    <div class="comment-content">
+                                        <p class="mb-1" style="font-size: 14px;">${comment.review}</p>
+                                        <span class="comment-author-name text-muted font-weight-bold" style="font-size: 11px;">
+                                            ${comment.user.name === "{{ auth()->user()->name }}" ? 'You' : comment.user.name}
+                                        </span>
+                                        <span class="comment-date text-muted ml-2" style="font-size: 11px;">
+                                            ${timeAgo(comment.created_at)}
+                                        </span>
+                                    </div>
+                                </div>
+                                <hr>`;
+                        });
+
+                        $('.venue-comments .comment-list').append(commentsHtml);
+
+                        // Increase count for next load
+                        countComment += response.data.length;
+
+                        // Hide "Load More" if no more comments
+                        if (response.data.length < 2) {
+                            $('.load_more_option').hide();
+                        }
+                    }
+                }
+            })
+        })
+
+        function timeAgo(dateString) {
+            let date = new Date(dateString);
+            let now = new Date();
+            let diffTime = Math.floor((now - date) / 1000); // Difference in seconds
+            let seconds = diffTime;
+            let minutes = Math.floor(seconds / 60);
+            let hours = Math.floor(minutes / 60);
+            let days = Math.floor(hours / 24);
+            let years = Math.floor(days / 365);
+            let months = Math.floor((days % 365) / 30);
+
+            if (diffTime < 60) {
+                return `${diffTime} seconds ago`;
+            } else if (diffTime < 3600) {
+                let minutes = Math.floor(diffTime / 60);
+                return `${minutes} minutes ago`;
+            } else if (diffTime < 86400) {
+                let hours = Math.floor(diffTime / 3600);
+                return `${hours} hours ago`;
+            } else if (diffTime < 30 * 86400) {
+                let days = Math.floor(diffTime / 86400);
+                return `${days} days ago`;
+            } else if (years >= 1) {
+                return `${years} years ago`;
+            }
+            else{
+                return `${months} months ago`;
+            }
+        }
 
     </script>
 @viteReactRefresh

@@ -384,7 +384,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                 </div>
             </div>
             <div className="col-lg-3 col-md-2"></div>
-            <div className="d-flex justify-content-between col-lg-3 col-md-3 form-group">
+            <div className="d-flex justify-content-between col-lg-3 col-md-3 form-group p-0 m-0">
                 <button 
                     onClick={() => {
                         console.log("Button Clicked! Calling handleFilterChange...");
@@ -496,8 +496,8 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                                 <h6 className="card-title mb-2">{venue.venuename}</h6>
                                 <div className="card-text d-flex align-items-center">
                                 <div style={{ verticalAlign: 'middle' }}>
-                                    {venue.venueaddress.length > 50 
-                                    ? venue.venueaddress.slice(0, 50) + "..." 
+                                    {venue.venueaddress.length > 45 
+                                    ? venue.venueaddress.slice(0, 45) + "..." 
                                     : venue.venueaddress}
                                 </div>
 

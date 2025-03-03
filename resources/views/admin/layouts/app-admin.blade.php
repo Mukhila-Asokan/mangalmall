@@ -1,4 +1,5 @@
 @include('admin.layouts.header')
+<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <style>
     .navbar-custom
     {
@@ -64,6 +65,9 @@
 
 @include('admin.layouts.popup')
 @stack('scripts') 
+
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 @include('admin.layouts.popupscripts')
 </body>
 
