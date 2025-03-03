@@ -73,7 +73,13 @@
                                     <a href="{{ route('venuesettings') }}" class="menu-link">
                                         <span class="menu-text">Venue Settings</span>
                                     </a>
-                                </li>                              
+                                </li>     
+                                <li class="menu-item">
+                                    <a href="{{ route('venue.deletedrecords') }}" class="menu-link">
+                                        <span class="menu-text">Venue Deleted Records</span>
+                                    </a>
+                                </li>   
+                                                      
                             </ul>
                         </div>
                     </li>
@@ -175,6 +181,24 @@
 </div>
 
                     </li>
+                    <li class= "menu-item">
+                    <a href="#menusubcriptionpages" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="person-standing"></i></span>
+                            <span class="menu-text">Subcription Mangement</span>
+                             <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="menusubcriptionpages">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a href="{{ route('subcriptionplan') }}" class="menu-link">
+                                        <span class="menu-text">Subcription Plan</span>
+                                    </a>
+                                </li>
+                            </ul>
+                    </div>
+                    </li>
+
+
                     <li class="menu-item">
                         <a href="#menustaffpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                             <span class="menu-icon"><i data-lucide="person-standing"></i></span>
@@ -237,7 +261,7 @@
                                     </a>
                                 </li>  
                                 <li class="menu-item">
-                                    <a href="{{ route('admin/religion') }}" class="menu-link">
+                                    <a href="{{ route('admin.menu') }}" class="menu-link">
                                         <span class="menu-text">Menu</span>
                                     </a>
                                 </li>    

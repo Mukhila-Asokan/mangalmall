@@ -126,36 +126,73 @@ $url = "frontassets/img/hero-bg-4.jpg";
            dataType: 'json',
            data:{ "_token": "<?php echo e(csrf_token()); ?>", "venuearea" :venuearea,"venuetype" :venuetype},
            success:function(response){ 
-            $(".venuedetailslist").empty();
-            console.log(response['venue'][0]);
-             let content = ' <div class="row">';
-            if(response['recordcount'] != 0)
-            {    
-               
-                let venueLink = "";
-                $(".search-section").css("display","block");  
-					
-                for(i=0;i<response['recordcount'];i++)
-                {
-                    venueLink = "<?php echo url('/home/'); ?>" +'/' +response['venue'][i]['id'] +'/venuedetails'; 
-                    /*content += '<div class="col-md-4 col-lg-4 single-service-plane rounded white-bg shadow-sm p-5 mt-md-4 mt-lg-4 "><div class="features-box p-4"><div class="features-box-icon"><img src = "' + <?PHP echo "'".url('/').Storage::url('/')."'"; ?> + response['venue'][i]['bannerimage'] +'" style="width:200px" />  </div><div class="features-box-content">    <h5>'+response['venue'][i]['venuename']+'</h5>  <p>Location - '+response['venue'][i]['venueaddress']+'</p>  <p>'+response['venue'][i]['description']+'</p><p>Contact Person -  '+response['venue'][i]['contactperson']+' - '+response['venue'][i]['contactmobile'] +'</p><p>Contact Email Id - '+response['venue'][i]['contactemail']+'</p><div class="text-end"><a href = "'+venueLink+'">View Venue Details</a></div></div>  </div></div>';*/
-					
-					var onclickheart = "this.classList.toggle('bi-heart-fill'); this.classList.toggle('text-danger')";
-					
-					content += '<div class="col-md-3 mtb-1"><div class="card rounded white-bg shadow-sm p-1">                   		<div class="favorite-icon"> 			<i class="bi bi-heart" onclick="'+onclickheart+'"></i> 		</div> 		 	  		<div class="image-container"> 			<img src="' + <?PHP echo "'".url('/').Storage::url('/')."'"; ?> + response['venue'][i]['bannerimage'] +'" class="venue-img" alt="Venue Image"> 		</div> 		 		<div class="card-body"> 	 			<h5 class="card-title mb-2">'+response['venue'][i]['venuename']+'    </h5> <div class="label-container"> <span class="label-badge trusted single-service-plane">Trusted</span>   <span class="label-badge new single-service-plane">Premium</span></div><div class="rating mb-2"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i> 				<span class="text-muted ms-2">(4.5)</span> </div> <div class="contact-info mb-2"><p class="card-text"><i class="bi bi-geo-alt-fill text-primary"></i> '+response['venue'][i]['venueaddress']+'</p></div><div class="contact-info mb-2"> 				<p class="card-text"><i class="bi bi-person-fill text-primary"></i> Contact: '+response['venue'][i]['contactperson']+'</p> 			</div> <div class="contact-info mb-3"> 				<p class="card-text"><i class="bi bi-telephone-fill text-primary"></i> <a href="tel:'+response['venue'][i]['contactmobile']+'" class="text-decoration-none">+91' +response['venue'][i]['contactmobile']+ '</a></p> 			</div> <hr><div class="share-icons d-flex justify-content-between align-items-center"> 				<div> 					<a href="#" onclick="shareOnFacebook()"> <i class="bi bi-facebook fs-5"></i></a> <a href="#" onclick="shareOnTwitter()"> 	<i class="bi bi-twitter fs-5"></i> </a> <a href="#" onclick="shareOnWhatsApp()"> 	<i class="bi bi-whatsapp fs-5"></i> </a> <a href="#" onclick="shareOnLinkedIn()"><i class="bi bi-linkedin fs-5"></i> </a> </div> <a href="'+venueLink+'" class="btn primary-solid-btn mr-2">View Details</a></div> </div> 	</div></div>';
-					
-					
-                }
-				
-				content += '</div>';
-               
-            }
-            else
-            {
-                content = "No records found </div>";
-            }
+            console.log("Full Response:", response); // Debug the full response
+            console.log("Venues Array:", response.venue); // Check if the array exists
 
-           $(".venuedetailslist").append(content);
+    if (!response.venue || response.venue.length === 0) {
+        console.log("No records found");
+        $(".venuedetailslist").html("<div class='alert alert-warning'>No venues found.</div>");
+        return;
+    }
+
+    $(".venuedetailslist").empty();
+    let content = '';
+    
+    $(".search-section").css("display", "block");
+
+    response.venue.forEach((venue, i) => {
+        let venueLink = `<?php echo e(url('/home/')); ?>/${venue.id}/venuedetails`;
+
+        let onclickheart = "this.classList.toggle('bi-heart-fill'); this.classList.toggle('text-danger')";
+        let truncatedAddress = venue.venueaddress.length > 50 ? venue.venueaddress.slice(0, 50) + "..." : venue.venueaddress;
+        content += `
+            <div class="col-md-3 mtb-1">
+                <div class="card rounded white-bg shadow-sm p-1">
+                    
+                    <div class="image-container">
+                        <img src="<?php echo e(url('/')); ?>/storage/${venue.bannerimage}" class="venue-img" alt="Venue Image">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title mb-2">${venue.venuename}</h5>
+                      
+                        <div class="rating mb-2">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span class="text-muted ms-2">(4.5)</span>
+                        </div>
+                        <div class="contact-info mb-2">
+                            <p class="card-text"><i class="bi bi-geo-alt-fill text-primary"></i> ${truncatedAddress}</p>
+                        </div>
+                        <div class="contact-info mb-2">
+                            <p class="card-text"><i class="bi bi-person-fill text-primary"></i> Contact: ${venue.contactperson}</p>
+                        </div>
+                        <div class="contact-info mb-3">
+                            <p class="card-text">
+                                <i class="bi bi-telephone-fill text-primary"></i> 
+                                <a href="tel:${venue.contactmobile}" class="text-decoration-none">+91 ${venue.contactmobile}</a>
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="share-icons d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="#" onclick="shareOnFacebook()"><i class="bi bi-facebook fs-5"></i></a>
+                                <a href="#" onclick="shareOnTwitter()"><i class="bi bi-twitter fs-5"></i></a>
+                                <a href="#" onclick="shareOnWhatsApp()"><i class="bi bi-whatsapp fs-5"></i></a>
+                                <a href="#" onclick="shareOnLinkedIn()"><i class="bi bi-linkedin fs-5"></i></a>
+                            </div>
+                            <a href="${venueLink}" class="btn primary-solid-btn mr-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    content += '';
+    $(".venuedetailslist").append(content);
          }         
           
         });

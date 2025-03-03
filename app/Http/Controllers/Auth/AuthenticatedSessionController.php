@@ -56,59 +56,39 @@ class AuthenticatedSessionController extends Controller
     {
          
         $validated = $request->validate([
-    'email' => 'required|email',
-    'password' => 'required|min:6',
-], [
-    'email.required' => 'Email address is required!',
-    'password.required' => 'Password is required!',
-]);
-
-       if (Auth::attempt($validated)) {
-            // Generate JWT token after successful authentication
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ], [
+            'email.required' => 'Email address is required!',
+            'password.required' => 'Password is required!',
+        ]);
+    
+        if (Auth::attempt($validated)) {
             $user = Auth::user();
-
-          
-            if (empty($user->email_verified_at) || $user->email_verified_at == '') {
-
-
-                $otp = rand(100000, 999999);  // Generate a 6-character OTP
+    
+            // Check if email is verified
+            if (empty($user->email_verified_at)) {
+                $otp = rand(100000, 999999);  
                 \Log::info("Generated OTP: $otp");
                 $otptime = now()->addMinutes(10);
                 $user->update([
                     'otp' => $otp,
                     'otp_expires_at' => $otptime,  
                 ]);
+    
+                return redirect()->route('otp.verify')->with('success', 'An OTP has been sent to your email.');
+            } else {
+
+
               
-            //Mail::to($user->email)->send(new OtpMail($otp));
-
-            // Redirect to OTP verification page
-             return redirect()->route('otp.verify')->with('success', 'An OTP has been sent to your email address.');
-             }
-            else
-            {
-
-
-
-
-            // Assuming you're using JWT or another library to generate the token:
-            $token = JWTAuth::fromUser($user);
-
-            // Store the JWT token in a cookie
-            $cookie = cookie('jwt', $token, 60 * 24);  // 24-hour expiration for the cookie
-
-            // Redirect to the intended page or dashboard
-            return redirect()->intended(route('dashboard'))->withCookie($cookie);
+                $token = JWTAuth::fromUser($user);
+                $cookie = cookie('jwt', $token, 60 * 24);
+    
+                return redirect()->intended(route('dashboard'))->withCookie($cookie);
             }
         }
-        else {
-           return redirect('/')->with('error', 'Authentication failed. Please check your credentials.');
-    }
-
-        // If authentication fails, redirect back with an error
-        return back()->withErrors([
-            'email' => 'These credentials do not match our records.',
-        ]);
-
+    
+        return redirect('/')->with('error', 'Authentication failed. Please check your credentials.');
     }
 
     /**

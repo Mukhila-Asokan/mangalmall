@@ -118,7 +118,7 @@
                                             <td><?php echo e($start++); ?></td>
                                             <td><?php echo e($dist->areaname); ?></td>
                                             <td><?php echo e($dist->city->cityname); ?></td>
-                                            <td><?php echo e($dist->district->districtname); ?></td>
+                                            <td><?php echo e($dist->district->districtname ?? ''); ?></td>
                                             <td><?php echo e($dist->state->statename ?? ''); ?></td>
                                             <td>
                                                 <?php if($dist->status == 'Active'): ?>

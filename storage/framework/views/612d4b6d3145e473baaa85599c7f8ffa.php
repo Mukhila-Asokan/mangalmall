@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 <style type="text/css">
     table
@@ -11,14 +10,19 @@
 		<div class="card">
 			<div class="card-body">
 				<h4 class="header-title mb-4">Venue List</h4>
-			   
-				<div class="text-end">
-				 <a href = "<?php echo e(route('venue/create')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-								  <span class="tf-icon mdi mdi-plus me-1"></span>Add Venue
-				   </a>
-				</div>
-			
+				<div class="row">
+					<div class="col-6 text-start">
 
+					</div>
+					<div class="col-6 text-end">
+						<a href = "<?php echo e(route('venue/create')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+							<span class="tf-icon mdi mdi-plus me-1"></span>Add Venue
+				   		</a>
+						<a href ="<?php echo e(route('venue.export')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+							<span class="tf-icon mdi mdi-arrow-down me-1"></span>Export
+						</a>
+					</div>
+				</div>
 				<table class="table table-bordered data-table">
 		<thead>
 			<tr>

@@ -11,6 +11,7 @@ use Modules\Venue\Http\Controllers\StateController;
 use Modules\Venue\Http\Controllers\DistrictController;
 Use Modules\Venue\Http\Controllers\CityController;
 use Modules\Venue\Http\Controllers\AreaController;
+Use Modules\Venue\Http\Controllers\DeletedRecordsController;
 
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Support\Facades\Auth;
@@ -35,12 +36,12 @@ Route::group([], function () {
 
 */
 
- $username = Session::get('username');
-        $userid = Session::get('userid');   
+$username = Session::get('username');
+$userid = Session::get('userid');   
 
 
 Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
-Route::any('/venue/create/ajaxarealist', [VenueController::class,'ajaxarealist'])->name('venue/create/ajaxarealist');
+Route::any('/venue/ajaxarealist', [VenueController::class,'ajaxarealist'])->name('venue.ajaxarealist');
 
 Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
 
@@ -183,9 +184,13 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
     Route::any('/area/{id}/updatestatus', [AreaController::class,'updatestatus']);
 
 
-    /*Religion*/
+    /*DeletedRecordsController*/
 
-
+    Route::any('/deletedrecords', [DeletedRecordsController::class,'index'])->name('venue.deletedrecords');
+    Route::any('/menu/restore/{id}', [DeletedRecordsController::class, 'restoredata'])->name('menus.restore');
+    Route::any('/menu/deletepermanent/{id}', [DeletedRecordsController::class, 'deletepermanent'])->name('menus.deletepermanent');
+    Route::any('/menu/deletedview/{id}', [DeletedRecordsController::class, 'deletedview'])->name('menus.deletedview');
+    Route::any('/menu/bulkAction', [DeletedRecordsController::class, 'bulkAction'])->name('menus.bulkAction');
 
 
 });

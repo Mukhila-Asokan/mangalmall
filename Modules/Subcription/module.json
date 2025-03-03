@@ -1,0 +1,11 @@
+{
+    "name": "Subcription",
+    "alias": "subcription",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Subcription\\Providers\\SubcriptionServiceProvider"
+    ],
+    "files": []
+}
