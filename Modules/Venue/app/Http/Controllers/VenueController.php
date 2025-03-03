@@ -38,6 +38,8 @@ use Illuminate\Support\Facades\Log;
 use DataTables;
 use Session;
 use Exception;
+use App\Models\VenueRating;
+use Carbon\Carbon;
 
 class VenueController extends Controller
 {
@@ -830,5 +832,69 @@ class VenueController extends Controller
     
     public function export(){
         return Excel::download(new VenueExport, 'venues.xlsx');
+    }
+
+    public function venueComments(Request $request){
+        if ($request->ajax()) {
+            $comments = VenueRating::with('user', 'venue')
+                ->whereNotNull('review')
+                ->whereNull('verified_at')
+                ->whereNull('rejected_at')
+                ->orderByDesc('created_at')
+                ->get();
+            return Datatables::of($comments)
+                    ->addIndexColumn()
+                    ->addColumn('user_name', function($row) {
+                        return $row->user ? $row->user->name : 'N/A';
+                    })
+                    ->addColumn('venue_name', function($row) {
+                        return $row->venue ? $row->venue->venuename : 'N/A';
+                    })
+                    ->addColumn('created_at', function($row) {
+                        return $row->venue ? Carbon::parse($row->created_at)->format('d-m-Y') : 'N/A';
+                    })
+                    ->addColumn('action', function($row){
+                        $btn = '';
+                        if($row->verified_at == null && $row->rejected_at == null){
+                            $btn .= '<a href="'.route('venue.approve.comments', ['action' => 'approve', 'venueId' => $row->id]).'" class="btn btn-success btn-sm" title="Approve"><i class="tf-icon mdi mdi-check-decagram-outline"></i></a>';
+                            $btn .= '<a href="'.route('venue.approve.comments', ['action' => 'reject', 'venueId' => $row->id]).'" class="btn btn-warning btn-sm" style="margin-left: 10px;" title="Reject"><i class="tf-icon mdi mdi-close-octagon"></i></a>';
+                        }
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        else{
+            $comments = VenueRating::with('user')
+                ->whereNotNull('review')
+                ->orderByDesc('created_at')
+                ->whereNull('verified_at')
+                ->whereNull('rejected_at')
+                ->get()
+                ->toArray();
+            return view('venue::venues.comments', compact('comments'));
+        }
+    }
+
+    public function venueApproveComment($action, $venueId){
+        $comment = VenueRating::find($venueId);
+        $comment->is_verified = $action == 'approve' ? true : false;
+        $comment->verified_at = $action == 'approve' ? Carbon::now() : null;
+        $comment->rejected_at = $action == 'reject' ? Carbon::now() : null;
+        $comment->save();
+        return redirect()->back()->with('success', 'Comment approved successfully');
+    }
+
+    public function venueBulkAction(Request $request){
+        if($request->action == 'reject'){
+            VenueRating::whereIn('id', $request->record_ids)->update(['rejected_at' => Carbon::now(), 'is_verified' => false, 'verified_at' => null]);
+        }
+        elseif($request->action == 'approve'){
+            VenueRating::whereIn('id', $request->record_ids)->update(['verified_at' => Carbon::now(), 'is_verified' => true, 'rejected_at' => null]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Bulk action performed successfully'
+        ]);
     }
 }

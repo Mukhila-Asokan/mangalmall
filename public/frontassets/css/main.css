@@ -56521,7 +56521,7 @@ button.scroll-top:focus {
   .star-rating {
     display: flex;
     gap: 5px;
-    font-size: 30px;
+    /* font-size: 25px; */
     cursor: pointer;
   }
 

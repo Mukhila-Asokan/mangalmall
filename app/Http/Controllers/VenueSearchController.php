@@ -185,8 +185,10 @@ class VenueSearchController extends Controller
         $ratingCount = $overAllVenueRating->count();
         $ratingAvg = $overAllVenueRating->avg('rating');
         $ratingAvg = number_format(round($ratingAvg), 1);
+        $commentCount = $overAllVenueRating->whereNotNull('review')->where('is_verified', true)->count();
+        $allComments = $overAllVenueRating->whereNotNull('review')->where('is_verified', true)->orderByDesc('created_at')->take(2)->get();
 
-        return view('venuedetail',compact('venuedetail','arealocation','venuetype','venuesubtype','venuedatafield','venueamenities','venuedatafielddetails', 'venueRating', 'ratingAvg', 'ratingCount'));
+        return view('venuedetail',compact('venuedetail','arealocation','venuetype','venuesubtype','venuedatafield','venueamenities','venuedatafielddetails', 'venueRating', 'ratingAvg', 'ratingCount', 'allComments', 'commentCount'));
 
     }
     public function adsrandom(Request $request)

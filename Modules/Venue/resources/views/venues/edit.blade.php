@@ -432,7 +432,7 @@
         placeholder: 'Search for an area',
         allowClear: true,
         ajax: {
-            url: "{{ route('venue/create/ajaxarealist') }}", // Route to fetch data
+            url: "{{ route('venue.ajaxarealist') }}", // Route to fetch data
             dataType: 'json',
             delay: 250,
             data: function (params) {

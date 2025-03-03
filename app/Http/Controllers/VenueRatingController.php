@@ -87,7 +87,7 @@ class VenueRatingController extends Controller
     public function storeComments(Request $request){
         $validator = Validator::make($request->all(), [
             'venue_id' => 'required|exists:venuedetails,id',
-            'rating' => 'nullable|integer|min:1|max:5',
+            // 'rating' => 'nullable|integer|min:1|max:5',
             'comments' => 'required|string|max:1000',
         ]);
         if ($validator->fails()) {
@@ -118,5 +118,21 @@ class VenueRatingController extends Controller
                 'message' => 'Error submitting rating'
             ], 500);
         }
+    }
+
+    public function getComments(Request $request){
+        $comments = VenueRating::with('user')
+            ->where('venue_id', $request->venue_id)
+            ->whereNotNull('review')
+            ->where('is_verified', true)
+            ->orderByDesc('created_at')
+            ->skip($request->count)
+            ->take(2)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $comments
+        ]);
     }
 }

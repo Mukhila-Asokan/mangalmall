@@ -176,14 +176,16 @@
                                 <span class="tf-icon mdi mdi-file me-1"></span>Theme Builder
                            </a>
 
-                           <iframe 
-                                src="{{$venuedetails->googlemap}}" 
-                                width="350" 
-                                height="450" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy">
-                            </iframe>
+                           @if($venuedetails->googlemap && $venuedetails->googlemap != '-')
+                            <iframe 
+                                    src="{{$venuedetails->googlemap}}" 
+                                    width="350" 
+                                    height="450" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                                </iframe>
+                            @endif
                         
                       </div>
                     </div>

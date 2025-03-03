@@ -84,6 +84,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::post('/venue-ratings', [VenueRatingController::class, 'store'])->name('venue-ratings.store');
     Route::get('/venue-ratings/{id}', [VenueRatingController::class, 'getVenueRatings']);
     Route::post('/venue-post-comments', [VenueRatingController::class, 'storeComments'])->name('venue.post.comments');
+    Route::get('/venur/get-comments', [VenueRatingController::class, 'getComments'])->name('venue.get.comments');
 
 
     Route::any('/webpage',[UserWebPageController::class, 'index'])->name('user.webpage');
