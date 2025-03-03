@@ -821,7 +821,7 @@ class VenueController extends Controller
         foreach ($arealocation as $area) {
             $formattedData[] = [
                 'id' => $area->id,
-                'text' => $area->areaname,  // 'text' is required for Select2
+                'text' => $area->areaname.' - '.$area->city->cityname,  // 'text' is required for Select2
             ];
         }
     

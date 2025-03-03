@@ -33,11 +33,17 @@
                         <tr>
                             <th scope="row"><?php echo e($i++); ?></th>
                             <td><?php echo e($plan->name); ?></td>
-                            <td><?php echo e($plan->description); ?></td>
-                            <td><?php echo e($plan->price); ?></td>
-                            <td><?php echo e($plan->duration); ?></td>
+                            <td><?php echo $plan->description; ?></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <?php echo e($plan->price); ?> / month</td>
+                            <td><?php echo e($plan->duration); ?> Months</td>
                             <td>
-                                <a href="<?php echo e(url('/admin/subscriptionplan/'.$plan->id.'/edit')); ?>" class="btn-warning btn" title="Edit">
+                            <?php if($plan->status == 'Active'): ?>
+                                <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="<?php echo e($plan->id); ?>" title="Status"><i class="fa fa-eye action_icon"></i></button>
+                            <?php else: ?> 
+                                <button type="button" class="btn-info btn statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="<?php echo e($plan->id); ?>" title="Status"><i class="fa fa-eye-slash action_icon"></i></button>
+                            <?php endif; ?>
+
+                                <a href="<?php echo e(url('/admin/subscription/subscriptionplan/'.$plan->id.'/edit')); ?>" class="btn-warning btn" title="Edit">
                                     <i class="fa fa-pencil action_icon"></i>
                                 </a>
                                 <button type="button" class="btn-danger btn deleteid" data-bs-toggle="modal" data-bs-target="#delModal" data-id="<?php echo e($plan->id); ?>" title="Delete">
@@ -60,5 +66,5 @@
 </div>
 <?php $__env->stopSection(); ?>
 
-<input type="hidden" name="redirecturl" id="redirecturl" value="<?php echo e(url('/admin/subscriptionplan/')); ?>">
+<input type="hidden" name="redirecturl" id="redirecturl" value="<?php echo e(url('/admin/subscription/subscriptionplan/')); ?>">
 <?php echo $__env->make('admin.layouts.app-admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/Subcription\resources/views/subcriptionplan/index.blade.php ENDPATH**/ ?>

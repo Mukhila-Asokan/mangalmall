@@ -621,7 +621,7 @@ if (input.files && input.files[0]) {
         placeholder: 'Search for an area',
         allowClear: true,
         ajax: {
-            url: "<?php echo e(route('venue/create/ajaxarealist')); ?>", // Route to fetch data
+            url: "<?php echo e(route('venue.ajaxarealist')); ?>", // Route to fetch data
             dataType: 'json',
             delay: 250,
             data: function (params) {
@@ -691,50 +691,6 @@ if (input.files && input.files[0]) {
         });
            
      });
-
-
-
-      /*$("#venuetypeid").change(function(e) {
-
-
-      
-        e.preventDefault();   
-        var venuetypeid = $(this).val();
-
-        $.ajax({
-           type:'POST',
-           url:"<?php echo e(route('venue/create/ajaxcvenuesubtypelist')); ?>",
-           dataType: 'json',
-           data:{ "_token": "<?php echo e(csrf_token()); ?>", "venuetypeid" :venuetypeid},
-           success:function(response){  
-            $("#venuesubtypeid").empty();   
-            var returnData = response;   
-            if(returnData.length>0)
-            {
-                let casestr = '<option>Select Venue Sub Type</option>';
-                for(i=0;i<returnData.length;i++)
-                {
-                    casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['venuetype_name'] + '</option>';
-                }
-             console.log(casestr);       
-           
-             $("#venuesubtypeid").append(casestr);
-            }
-            else
-            {
-                alert("No Data")
-            }
-         }        
-          
-        });
-           
-     });*/
-
-
-
-
-
-
 
 </script>
 <?php $__env->stopPush(); ?>

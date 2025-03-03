@@ -33,11 +33,17 @@
                         <tr>
                             <th scope="row">{{ $i++ }}</th>
                             <td>{{ $plan->name }}</td>
-                            <td>{{ $plan->description }}</td>
-                            <td>{{ $plan->price }}</td>
-                            <td>{{ $plan->duration }}</td>
+                            <td>{!! $plan->description !!}</td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> {{ $plan->price }} / month</td>
+                            <td>{{ $plan->duration }} Months</td>
                             <td>
-                                <a href="{{ url('/admin/subscriptionplan/'.$plan->id.'/edit') }}" class="btn-warning btn" title="Edit">
+                            @if($plan->status == 'Active')
+                                <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="{{ $plan->id }}" title="Status"><i class="fa fa-eye action_icon"></i></button>
+                            @else 
+                                <button type="button" class="btn-info btn statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="{{ $plan->id }}" title="Status"><i class="fa fa-eye-slash action_icon"></i></button>
+                            @endif
+
+                                <a href="{{ url('/admin/subscription/subscriptionplan/'.$plan->id.'/edit') }}" class="btn-warning btn" title="Edit">
                                     <i class="fa fa-pencil action_icon"></i>
                                 </a>
                                 <button type="button" class="btn-danger btn deleteid" data-bs-toggle="modal" data-bs-target="#delModal" data-id="{{ $plan->id }}" title="Delete">
@@ -59,4 +65,4 @@
 </div>
 @endsection
 
-<input type="hidden" name="redirecturl" id="redirecturl" value="{{ url('/admin/subscriptionplan/') }}">
+<input type="hidden" name="redirecturl" id="redirecturl" value="{{ url('/admin/subscription/subscriptionplan/') }}">

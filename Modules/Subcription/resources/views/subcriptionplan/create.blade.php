@@ -1,6 +1,18 @@
 @extends('admin.layouts.app-admin')
 @section('content')
+<style type="text/css">
+textarea {
+    width: 100%;
+    height: 250px;
+}
+.ck-content
+{
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
+</style>
 <div class="row">
 <div class="col-12">
     <div class="card">
@@ -14,9 +26,9 @@
             </div>
         <form class="form-horizontal" role="form" method = "post" action="{{ route('subcriptionplan.plan_add') }}">
             @csrf
-            <div class="col-6">
+            <div class="col-12">
             <div class="mb-4 row">
-                <label class="col-md-4 col-form-label" for="name">Name</label>
+                <label class="col-md-2 col-form-label" for="name">Name</label>
                 <div class="col-md-8">
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter the plan name" value = "{{ old('name') }}">
                         @error('name')
@@ -26,7 +38,7 @@
             </div>
 
             <div class="mb-4 row">
-                <label class="col-md-4 col-form-label" for="description">Description</label>
+                <label class="col-md-2 col-form-label" for="description">Description</label>
                 <div class="col-md-8">
                         <textarea id="description" name="description" class="form-control" placeholder="Enter the plan description">{{ old('description') }}</textarea>
                         @error('description')
@@ -36,7 +48,7 @@
             </div>
 
             <div class="mb-4 row">
-                <label class="col-md-4 col-form-label" for="price">Price</label>
+                <label class="col-md-2 col-form-label" for="price">Price</label>
                 <div class="col-md-8">
                         <input type="text" id="price" name="price" class="form-control" placeholder="Enter the plan price" value = "{{ old('price') }}">
                         @error('price')
@@ -46,9 +58,9 @@
             </div>
 
             <div class="mb-4 row">
-                <label class="col-md-4 col-form-label" for="duration">Duration</label>
+                <label class="col-md-2 col-form-label" for="duration">Duration</label>
                 <div class="col-md-8">
-                        <input type="text" id="duration" name="duration" class="form-control" placeholder="Enter the plan duration" value = "{{ old('duration') }}">
+                        <input type="text" id="duration" name="duration" class="form-control" placeholder="Enter the plan duration in month" value = "{{ old('duration') }}">
                         @error('duration')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -68,3 +80,11 @@
 </div>
 </div>
 @endsection
+@push('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+<script>
+       ClassicEditor.create(document.querySelector('#description')).catch(error => {
+            console.error(error);
+        });
+</script>
+@endpush

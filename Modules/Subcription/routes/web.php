@@ -18,16 +18,16 @@ Route::group([], function () {
     Route::resource('subcription', SubcriptionController::class)->names('subcription');
 });
 
-Route::prefix('admin/subcription')->middleware('auth:admin')->group(function () {
+Route::prefix('admin/subscription')->middleware('auth:admin')->group(function () {
 
-    Route::any('/subcriptionplan', [SubscriptionPlanController::class,'index'])->name('subcriptionplan');
-    Route::any('/subcriptionplan/create', [SubscriptionPlanController::class,'create'])->name('subcriptionplan.create');
-    Route::any('/subcriptionplan/{id}/edit', [SubscriptionPlanController::class,'edit']);
-    Route::put('/subcriptionplan/update/{id}', [SubscriptionPlanController::class,'update'])->name('subcriptionplan.plan_update');
-    Route::post('/subcriptionplan/store', [SubscriptionPlanController::class,'store'])->name('subcriptionplan.plan_add');
-    Route::any('/subcriptionplan/show', [SubscriptionPlanController::class,'show'])->name('subcriptionplan/show');
-    Route::any('/subcriptionplan/{id}/destroy', [SubscriptionPlanController::class,'destroy']);
-    Route::any('/subcriptionplan/{id}/updatestatus', [SubscriptionPlanController::class,'updatestatus']);
+    Route::any('/subscriptionplan', [SubscriptionPlanController::class,'index'])->name('subcriptionplan');
+    Route::any('/subscriptionplan/create', [SubscriptionPlanController::class,'create'])->name('subcriptionplan.create');
+    Route::any('/subscriptionplan/{id}/edit', [SubscriptionPlanController::class,'edit']);
+    Route::put('/subscriptionplan/update/{id}', [SubscriptionPlanController::class,'update'])->name('subcriptionplan.plan_update');
+    Route::post('/subscriptionplan/store', [SubscriptionPlanController::class,'store'])->name('subcriptionplan.plan_add');
+    Route::any('/subscriptionplan/show', [SubscriptionPlanController::class,'show'])->name('subcriptionplan/show');
+    Route::any('/subscriptionplan/{id}/destroy', [SubscriptionPlanController::class,'destroy']);
+    Route::any('/subscriptionplan/{id}/updatestatus', [SubscriptionPlanController::class,'updatestatus']);
 
 
 });

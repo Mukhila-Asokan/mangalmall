@@ -41,7 +41,7 @@ $userid = Session::get('userid');
 
 
 Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
-Route::any('/venue/create/ajaxarealist', [VenueController::class,'ajaxarealist'])->name('venue/create/ajaxarealist');
+Route::any('/venue/ajaxarealist', [VenueController::class,'ajaxarealist'])->name('venue.ajaxarealist');
 
 Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
 
