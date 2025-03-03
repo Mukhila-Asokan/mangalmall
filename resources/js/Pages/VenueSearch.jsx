@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePage, Head, Link } from "@inertiajs/react";
 import { Inertia } from '@inertiajs/inertia';
-
+import Select from "react-select";
 import AsyncSelect from "react-select/async";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ const baseImageUrl = window.location.origin + "/storage/";
 const baseurl = window.location.origin;
 console.log(baseurl);
 
+
 const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venuelist: initialVenuelist = [], currentInstance = {}, filters = {} }) => {
     const [venues, setVenues] = useState(initialVenuelist); // Manage venuelist as state
     const [searchArea, setSearchArea] = useState(filters?.searchArea || '');
@@ -19,6 +20,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     const [selectedAmenities, setSelectedAmenities] = useState(filters?.selectedAmenities || []);
     const [sortBy, setSortBy] = useState(filters?.sortBy || '');
     const [capacity, setcapacity] = useState(filters?.capacity || '');
+    const [amenities, setAmenities] = useState(filters?.venueamenities || '');
     /*const [venueSubtypes, setVenueSubtypes] = useState([]);*/
     const [currentPage, setCurrentPage] = useState(1); // Default to page 1
     const [lastPage, setLastPage] = useState(1); // Default to 1 page available
@@ -56,31 +58,31 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
         }
     };
 
-    const handleCheckboxChange = (event) => {
-         const checked = event.target.checked;
+//     const handleCheckboxChange = (event) => {
+//          const checked = event.target.checked;
 		
-        const value = event.target.value;
+//         const value = event.target.value;
 		
-		setSelectedAmenities((prevSelected) => {
-            console.log("Previous selected:", prevSelected); // Check previous state
+// 		setSelectedAmenities((prevSelected) => {
+//             console.log("Previous selected:", prevSelected); // Check previous state
 
-            if (prevSelected.includes(value)) {
-                console.log("Removing:", value);
-                return prevSelected.filter((id) => id !== value); // Uncheck
-            } else {
-                console.log("Adding:", value);
-                return [...prevSelected, value]; // Check
-            }
-        });
+//             if (prevSelected.includes(value)) {
+//                 console.log("Removing:", value);
+//                 return prevSelected.filter((id) => id !== value); // Uncheck
+//             } else {
+//                 console.log("Adding:", value);
+//                 return [...prevSelected, value]; // Check
+//             }
+//         });
 		
-   };
+//    };
 
     const handleFilterChange = async (page = 1) => {
         console.log("Fetching venues with filters:", {
             searchArea,
             searchType,
             capacity,
-            selectedAmenities,
+            selectedValues,
             sortBy,
             currentPage,
         });
@@ -90,7 +92,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                 searchArea: searchArea?.value || "",
                 searchType,
                 capacity,
-                selectedAmenities: selectedAmenities.join(","),
+                selectedAmenities: selectedValues.map(item => item.value).join(','),
                 sortBy,
                 page,
             });
@@ -176,7 +178,30 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
         const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
         window.open(linkedInShareUrl, "_blank");
     };
+    const MultiSelectDropdown = ({ options, selectedAmenities, setSelectedAmenities }) => {
+        const handleChange = (selected) => {
+            console.log("Selected:", selected);
+            setSelectedAmenities(selected || []);
+        };
     
+        return (
+            <Select
+                isMulti
+                options={options}
+                value={selectedAmenities}
+                onChange={handleChange}
+                className="basic-multi-select aysncselecttag"
+                classNamePrefix="select"
+                placeholder="Select Amenities..."
+            />
+        );
+    };
+
+    const options = venueamenities.map((type) => ({
+        value: type.id,
+        label: type.amenities_name,
+    }));
+    const selectedValues = options.filter(option => amenities.includes(option.value));
 
     return (
         <div className="mx-auto p-1" style={{ width: "100%" }}>
@@ -185,157 +210,204 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
             <div className="mx-auto p-1" style={{ width: "100%" }}>
             <Head title="Venue Search" />
 
-           <div className="row pt-2 col-12">
+            <h4>Filters</h4>
+            <div className='border p-2'>
+            <div className="row pt-2 col-12">
+                <div className="col-lg-3 col-md-3">
+                    <div className="form-group">
+                <AsyncSelect
+                    cacheOptions
+                    loadOptions={loadOptions}
+                    onChange={setSearchArea}
+                    placeholder="Search an area..."
+                    defaultOptions // Load initial options
+                    className="aysncselecttag"
+                />
+
+                    
+                </div>
+            </div>
+
             <div className="col-lg-3 col-md-3">
                 <div className="form-group">
-              <AsyncSelect
-                cacheOptions
-                loadOptions={loadOptions}
-                onChange={setSearchArea}
-                placeholder="Search an area..."
-                defaultOptions // Load initial options
-                className="aysncselecttag"
-            />
-
-                
-             </div>
-        </div>
-
-         <div className="col-lg-3 col-md-3">
-            <div className="form-group">
-                <select
-                    value={searchType}
-                   onChange={(e) => {
-        console.log("searchType changed:", e.target.value);
-        setSearchType(e.target.value);
-    }}
-                    className="aysncselecttag" >
-                    <option value="">Select Venue Type</option>
-                    {venuetypes.map((type) => (
-                        <option key={type.id} value={type.id}>
-                            {type.venuetype_name}
-                        </option>
-                    ))}
-                </select>
-              </div>
-        </div>
-         <div className="col-lg-3 col-md-3">
-            <div className="form-group">
-                <select
-                    value={capacity}                  
-
+                    <select
+                        value={searchType}
                     onChange={(e) => {
-        console.log("capacity:", e.target.value);
-        setcapacity(e.target.value);
-
-          handleFilterChange();
-
-    }}   className="aysncselecttag">
-                    <option value="">Select capacity</option>
-                    <option value="100">Upto 100</option>  
-                    <option value="100-300">100 - 300</option>
-                    <option value="300-600">300 - 600</option>
-                    <option value="600-1000">600 - 1000</option>
-                    <option value="1000">Above 1000</option>                   
-                </select>
-             </div>
-        </div>
-         <div className="col-lg-3 col-md-3">
-            <div className="form-group">
-
-                <select
-                    value={sortBy}
-
-                    onChange={(e) => {
-        console.log("setSortBy changed:", e.target.value);
-        setSortBy(e.target.value);
-    }}
-                    className="aysncselecttag" >
-                    <option value="">Sort By</option>
-                    <option value="price_asc">Price Low to High</option>
-                    <option value="price_desc">Price High to Low</option>
-                    <option value="featured">Featured</option>
-                    <option value="alphabetical_asc">Alphabets A - Z</option>
-                    <option value="alphabetical_desc">Alphabets Z - A</option>
-                </select>
+            console.log("searchType changed:", e.target.value);
+            setSearchType(e.target.value);
+        }}
+                        className="aysncselecttag" >
+                        <option value="">Select Venue Type</option>
+                        {venuetypes.map((type) => (
+                            <option key={type.id} value={type.id}>
+                                {type.venuetype_name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
-          </div>
-       
+            <div className="col-lg-3 col-md-3">
+                <div className="form-group">
+                    <select
+                        value={capacity}                  
+
+                        onChange={(e) => {
+            console.log("capacity:", e.target.value);
+            setcapacity(e.target.value);
+
+            handleFilterChange();
+
+        }}   className="aysncselecttag">
+                        <option value="">Select capacity</option>
+                        <option value="100">Upto 100</option>  
+                        <option value="100-300">100 - 300</option>
+                        <option value="300-600">300 - 600</option>
+                        <option value="600-1000">600 - 1000</option>
+                        <option value="1000">Above 1000</option>                   
+                    </select>
+                </div>
+            </div>
+            <div className="col-lg-3 col-md-3">
+                <div className="form-group">
+
+                    <select
+                        value={sortBy}
+
+                        onChange={(e) => {
+            console.log("setSortBy changed:", e.target.value);
+            setSortBy(e.target.value);
+        }}
+                        className="aysncselecttag" >
+                        <option value="">Sort By</option>
+                        <option value="price_asc">Price Low to High</option>
+                        <option value="price_desc">Price High to Low</option>
+                        <option value="featured">Featured</option>
+                        <option value="alphabetical_asc">Alphabets A - Z</option>
+                        <option value="alphabetical_desc">Alphabets Z - A</option>
+                    </select>
+                </div>
+            </div>
         
+            
+
+                <div className="col-lg-3 col-md-3">
+                <div className="form-group">
+
+                    <select
+                        value={budgetPerPlate}
+
+                        onChange={(e) => {  }}
+                        className="aysncselecttag" >
+                        <option value="">Budget per Plate</option>
+                        <option value="Upto 250">Upto 250</option>
+                        <option value="251 - 500">251 - 500</option>
+                        <option value="501 - 1000">501 - 1000</option>
+                        <option value="Above 1000">Above 1000</option>
+                    
+                    </select>
+                </div>
+            </div>
+
 
             <div className="col-lg-3 col-md-3">
-            <div className="form-group">
+                <div className="form-group">
 
-                <select
-                    value={budgetPerPlate}
+                    <select
+                        value={budgetPerDay}
 
-                    onChange={(e) => {  }}
-                    className="aysncselecttag" >
-                    <option value="">Budget per Plate</option>
-                    <option value="Upto 250">Upto 250</option>
-                    <option value="251 - 500">251 - 500</option>
-                    <option value="501 - 1000">501 - 1000</option>
-                    <option value="Above 1000">Above 1000</option>
-                 
-                </select>
+                        onChange={(e) => {  }}
+                        className="aysncselecttag" >
+                        <option value="">Budget per Day</option>
+                        <option value="Upto 10000">Upto 10000</option>
+                        <option value="10001 -20000">10001 -20000</option>
+                        <option value="20001 - 50000">20001 - 50000</option>
+                        <option value="Above 50000">Above 50000</option>
+                    
+                    </select>
+                </div>
             </div>
-          </div>
 
+            <div className="col-lg-3 col-md-3">
+                <div className="form-group">
 
-          <div className="col-lg-3 col-md-3">
-            <div className="form-group">
+                    <select
+                        value={ratings}
 
-                <select
-                    value={budgetPerDay}
-
-                    onChange={(e) => {  }}
-                    className="aysncselecttag" >
-                    <option value="">Budget per Day</option>
-                    <option value="Upto 10000">Upto 10000</option>
-                    <option value="10001 -20000">10001 -20000</option>
-                    <option value="20001 - 50000">20001 - 50000</option>
-                    <option value="Above 50000">Above 50000</option>
-                 
-                </select>
+                        onChange={(e) => {  }}
+                        className="aysncselecttag" >
+                        <option value="">Ratings</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    
+                    
+                    </select>
+                </div>
             </div>
-          </div>
 
-          <div className="col-lg-3 col-md-3">
-            <div className="form-group">
-
-                <select
-                    value={ratings}
-
-                    onChange={(e) => {  }}
-                    className="aysncselecttag" >
-                    <option value="">Ratings</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  
-                 
-                </select>
+            
+            <div className="col-lg-3 col-md-3">
+                <div className="form-group">
+                    <select
+                        value={foodtype}
+                        onChange={(e) => {  }}
+                        className="aysncselecttag">
+                        <option value="">Food Type</option>
+                        <option value="veg">Veg</option>
+                        <option value="nonveg">Non-Veg</option>
+                        <option value="both">Veg & Non-Veg</option>
+                    </select>
+                </div>
             </div>
-          </div>
 
-          
-          <div className="col-lg-3 col-md-3">
-            <div className="form-group">
-                <select
-                    value={foodtype}
-                    onChange={(e) => {  }}
-                    className="aysncselecttag">
-                    <option value="">Food Type</option>
-                    <option value="veg">Veg</option>
-                    <option value="nonveg">Non-Veg</option>
-                    <option value="both">Veg & Non-Veg</option>
-                </select>
+            <div className="col-lg-6 col-md-6">
+                <div className="form-group">
+                    {/* <select
+                        value={amenities}
+                        onChange={(e) => {
+                            console.log("amenities changed:", e.target.value);
+                            setAmenities(e.target.value);
+                        }}
+                        className="selectpicker form-control aysncselecttag" >
+                        <option value="">Select Amenities</option>
+                        {venueamenities.map((type) => (
+                            <option key={type.id} value={type.id}>
+                                {type.amenities_name}
+                            </option>
+                        ))}
+                    </select> */}
+                    <MultiSelectDropdown
+                    options={options}
+                    selectedAmenities={selectedValues}
+                    setSelectedAmenities={(selected) => setAmenities(selected.map(s => s.value))}
+                />
+                </div>
             </div>
-          </div>
+            <div className="col-lg-3 col-md-2"></div>
+            <div className="d-flex justify-content-between col-lg-3 col-md-3 form-group">
+                <button 
+                    onClick={() => {
+                        console.log("Button Clicked! Calling handleFilterChange...");
+                        handleFilterChange();
+                    }} 
+                    className="btn primary-solid-btn btn-not-rounded h-75"
+                >
+                    Search
+                </button>
+                <button 
+                    onClick={() => {
+                        handleReset();
+                    }} 
+                    className="btn primary-solid-btn btn-not-rounded ml-3 h-75"
+                >
+                    Clear All
+                </button>
+            </div>
 
-            </div>
+                </div>
+        </div>
       
-        <div className="row pt-2 col-12">
+        {/* <div className="row pt-2 col-12">
             <div className="col-md-12 col-lg-12">
 
         
@@ -353,8 +425,8 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input"
-                                                /* value={amenity.id}
-                                                checked={selectedAmenities.includes(amenity.id)} */
+                                                value={amenity.id}
+                                                checked={selectedAmenities.includes(amenity.id)}
 												value={amenity.id.toString()} // Convert to string
 										checked={selectedAmenities.includes(amenity.id.toString())}
                                                  onChange={(event) => {
@@ -377,12 +449,12 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
 
-         <div className="row pt-2 col-12">
-            <div className="col-md-2 col-lg-2">
+         {/* <div className="row pt-2 col-12">
+            <div className="col-md-2 col-lg-2"> */}
        
-        <button 
+        {/* <button 
     onClick={() => {
         console.log("Button Clicked! Calling handleFilterChange...");
         handleFilterChange();
@@ -390,50 +462,59 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
     className="btn primary-solid-btn btn-block btn-not-rounded mt-3"
 >
     Search
-</button>
+</button> */}
 
-</div>
+{/* </div>
 
-  <div className="col-md-2 col-lg-2">
+  <div className="col-md-2 col-lg-2"> */}
        
-        <button 
+        {/* <button 
     onClick={() => {
         handleReset();
     }} 
     className="btn primary-solid-btn btn-block btn-not-rounded mt-3"
 >
     Clear All
-</button>
+</button> */}
 
-</div>
-</div><br  ></br>
+{/* </div>
+</div> */}
+<br  ></br>
             <div className="row grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
                 {Array.isArray(venues) && venues.length > 0 ? (
                     venues.map((venue) => (
                         <div key={venue.id} className="col-md-4 mtb-2">
                             <div className="card rounded white-bg shadow-sm p-1">
-                            <div className="favorite-icon"> <i className="bi bi-heart"></i> </div> 
+                            {/* <div className="favorite-icon"> <i className="bi bi-heart"></i> </div>  */}
                             <div className="image-container"><img src={`${baseImageUrl}${venue.bannerimage}`} className="venue-img" alt={venue.venuename}/></div>
-                            <div className="label-container"> 
+                            {/* <div className="label-container"> 
                                 <span className="label-badge trusted single-service-plane">Trusted</span>  
                                
-                            </div>
+                            </div> */}
                             
-                            <div className="card-body"> 
+                            <div className="card-body pb-0"> 
                                 <h6 className="card-title mb-2">{venue.venuename}</h6>
                                 <div className="card-text d-flex align-items-center">
-                                    <div style={{ verticalAlign: 'middle' }}>{venue.venueaddress}</div> 
+                                <div style={{ verticalAlign: 'middle' }}>
+                                    {venue.venueaddress.length > 50 
+                                    ? venue.venueaddress.slice(0, 50) + "..." 
+                                    : venue.venueaddress}
+                                </div>
+
                                  </div>
                                
                                 <div className='d-flex justify-content-between'>
-                                <div className="rating d-inline-flex" style={{ verticalAlign: 'middle' }}>
-                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
-                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
-                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
-                                    <i className="bi bi-star-fill" style={{ verticalAlign: 'middle' }}></i>
-                                    <i className="bi bi-star-half" style={{ verticalAlign: 'middle' }}></i>
-                                    <span className="text-muted" style={{ verticalAlign: 'top' }}>(4.5)</span>
+                                <div className="d-inline-flex" style={{ verticalAlign: 'middle' }}>
+                                    <div className="rating pl-2 pr-2 rounded ml-0 mt-2 mb-3" style={{ backgroundColor: '#58111A' }}>
+                                        <span className="text-white ms-2">
+                                            <i className="bi bi-star-fill" style={{ color: "gold" }}></i> {venue?.ratings_avg_rating ? parseFloat(venue.ratings_avg_rating).toFixed(1) : "0.0"}
+                                        </span>
+                                    </div>
+                                    <span className="ml-1 mt-2 text-muted" style={{ fontSize: "13px" }}>
+                                        ({venue?.ratings_count ?? 0})
+                                    </span>
                                 </div>
+
                                 <div className="price d-flex flex-column">
                                     <div>Price Per Day</div>
                                     <div className="text-muted">₹ {venue.bookingprice}</div>

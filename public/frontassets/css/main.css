@@ -56505,7 +56505,7 @@ button.scroll-top:focus {
     height: 150px;
     object-fit: cover;
 }
-  .star-rating {
+  /* .star-rating {
             font-size: 24px;
             color: #FFD700;
             cursor: pointer;
@@ -56516,6 +56516,22 @@ button.scroll-top:focus {
   .star-rating .fa:hover, 
   .star-rating .fa:hover ~ .fa {
       color: #FFA500;
+  } */
+
+  .star-rating {
+    display: flex;
+    gap: 5px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .star {
+    color: #ccc; /* Default grey color */
+    transition: color 0.3s;
+  }
+
+  .star.active, .star:hover {
+    color: gold;
   }
 
   #custom-cursor {
