@@ -94,7 +94,13 @@ img.zoomed {
                     <div class="col-lg-6 col-md-6">
                         <div class="post-wrapper">
                             <div class="post-header">
-                                <h1 class="post-title">{{ $venuedetail->venuename }}</h1><br>
+                                <h1 class="post-title">{{ $venuedetail->venuename }}</h1>
+                                <div class="d-inline-flex">
+                                    <div class="rating pl-2 pr-2 rounded ml-0 mt-2 mb-2" style="background: #58111A;">
+                                        <span class="text-white ms-2"><i class="bi bi-star-fill" style="color: gold;"></i> {{$ratingAvg}}</span>
+                                    </div>
+                                    <span class="ml-1 mt-2 text-muted" style="font-size:13px;">({{$ratingCount}})</span>
+                                </div>
 								<p><small>{{ $venuedetail->venueaddress }} ,  <br> {{ $venuedetail->indianlocation->Areaname }} {{ $venuedetail->indianlocation->City }}, {{ $venuedetail->indianlocation->District }}<br>{{ $venuedetail->indianlocation->State }}</small></p>
 								
 								 
@@ -127,18 +133,6 @@ img.zoomed {
 								 <br>
 								 
 									<hr>
-                                 <div class="d-inline-flex">
-                                     <div class="p-2 justify-content-start"> 
-                                        <div class="rating">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-half"></i>
-                                            <span class="text-muted ms-2">(4.5)</span>
-                                        </div> 
-                                    </div>                                                                       
-                                </div>
 								
 								 
 								
@@ -363,7 +357,7 @@ img.zoomed {
         <form action="{{ route('venue.post.comments') }}" method="post" class="comment-form row">
             @csrf
             <div class="form-group col-md-12">
-                <textarea class="form-control" rows="8" placeholder="Comments" name="comments">{{$venueRating->review}}</textarea>
+                <textarea class="form-control" rows="8" placeholder="Comments" name="comments">{{$venueRating->review ?? null}}</textarea>
             </div>
             <input type="hidden" id="venue_rating" name="rating" value="{{ $venueRating->rating ?? 0 }}">
             <input type="hidden" name="venue_id" value="{{ $venuedetail->id }}">

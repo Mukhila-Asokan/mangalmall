@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Modules\Venue\Database\Factories\VenueDetailsFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\VenueRating;
 
 class VenueDetails extends Model
 {
@@ -54,6 +55,10 @@ class VenueDetails extends Model
     public function area()
     {
         return $this->hasOne(Area::class,'id','locationid');
+    }
+    public function ratings()
+    {
+        return $this->hasMany(VenueRating::class, 'venue_id');
     }
     public function city()
     {

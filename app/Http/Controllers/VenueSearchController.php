@@ -32,11 +32,9 @@ class VenueSearchController extends Controller
         $currentInstance = VenueDetails::first();
 
         // Filter venues based on request parameters
-        $query = VenueDetails::where('delete_status',0);
+        $query = VenueDetails::where('delete_status',0)->withCount('ratings')->withAvg('ratings', 'rating');
         $perPage = 6;
         $venuelist = $query->paginate($perPage)->appends(request()->query()); 
-       
-       
 
         return Inertia::render('VenueSearch', [          
             'venuetypes' => $venuetypes ?? [],
@@ -45,8 +43,6 @@ class VenueSearchController extends Controller
             'currentInstance' => $currentInstance ?? [],
             'filters' => $request->all(),
         ]);
-
-
     }
 
      public function syncfushindex(Request $request)
@@ -130,11 +126,13 @@ class VenueSearchController extends Controller
               Log::info('Applying selectedAmenities:', [$request->selectedAmenities]);
 
            
-              if ($request->has('selectedAmenities')  && $request->searchSubtype != '') {
-                    $query->whereHas('venueamenitiesapi', function ($query) use ($request) {
-                     $selectedAmenities = explode(',', $request->selectedAmenities);
-                    $query->whereIn('amenity_id', $selectedAmenities); 
-          });
+              if ($request->has('selectedAmenities')  && $request->selectedAmenities != '') {
+                $selectedAmenities = explode(',', $request->selectedAmenities);
+                // $query->whereHas('venueamenities', function ($query) use ($selectedAmenities) {
+                    foreach ($selectedAmenities as $amenity) {
+                        $query->whereRaw("JSON_CONTAINS(venueamenities, ?)", [json_encode((int)$amenity)]);
+                    }
+                // });
         
         }
         if ($request->has('sortBy') && $request->sortBy != '' ) {
@@ -160,7 +158,7 @@ class VenueSearchController extends Controller
         }
 
         
-     $venuelist = $query->paginate($perPage, ['*'], 'page', $currentPage)->appends($request->query());
+     $venuelist = $query->withCount('ratings')->withAvg('ratings', 'rating')->paginate($perPage, ['*'], 'page', $currentPage)->appends($request->query());
 
       
         return response()->json([           
@@ -183,8 +181,12 @@ class VenueSearchController extends Controller
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafielddetails = VenueDataFieldDetails::where('delete_status',0)->get();
         $venueRating = VenueRating::where('venue_id',$id)->where('user_id', auth()->id())->first();
+        $overAllVenueRating = VenueRating::where('venue_id',$id);
+        $ratingCount = $overAllVenueRating->count();
+        $ratingAvg = $overAllVenueRating->avg('rating');
+        $ratingAvg = number_format(round($ratingAvg), 1);
 
-        return view('venuedetail',compact('venuedetail','arealocation','venuetype','venuesubtype','venuedatafield','venueamenities','venuedatafielddetails', 'venueRating'));
+        return view('venuedetail',compact('venuedetail','arealocation','venuetype','venuesubtype','venuedatafield','venueamenities','venuedatafielddetails', 'venueRating', 'ratingAvg', 'ratingCount'));
 
     }
     public function adsrandom(Request $request)
