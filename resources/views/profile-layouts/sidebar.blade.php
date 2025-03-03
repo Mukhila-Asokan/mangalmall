@@ -9,8 +9,10 @@
         </div>
         <div class="sidebar">
             <a href="#">Profile</a>  
+            @can('accessPaidMenus', Auth::user())
             <a href="{{ route('venuereact.search') }}">Venue</a>
-           
+            @endcan
+            @can('accessPaidMenus', Auth::user())
             <a href="#taskSubmenu" data-toggle="collapse"> <i class="ti-layers"></i> Invitation  <i class="fas fa-chevron-down toggle-icon"></i></a>
             <div id="taskSubmenu" class="collapse submenu">
                 <a href="{{ route('user.carddesign') }}"><i class="ti-id-badge"></i> Card Desgin </a>
@@ -18,7 +20,7 @@
                 <a href="{{ route('user.showtemplate') }}">Design Own Page</a>
                 <a href="#">Video Making </a>
             </div>
-          
+            @endcan
         
             <a href="#">Gift Repository </a>
             <a href="#">Todo list </a>
