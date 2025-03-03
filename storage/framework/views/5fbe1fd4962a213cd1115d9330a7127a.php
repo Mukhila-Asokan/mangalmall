@@ -7,26 +7,26 @@
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-10 col-md-10">
                         <!-- Search widget-->
-     <aside class="widget widget-search">
+     <!-- <aside class="widget widget-search">
         <form>
             <input class="form-control" type="search" placeholder="Type Search Words">
             <button class="search-button" type="submit"><span class="ti-search"></span></button>
         </form>
-    </aside>
+    </aside> -->
 
-    <hr>  
+    <!-- <hr>   -->
    
-    <div class="row white-bg shadow-sm p-2 mt-md-4 mt-lg-4">  
+    <!-- <div class="row white-bg shadow-sm p-2 mt-md-4 mt-lg-4">   -->
         
 
-        <div class = "row pt-2 col-12">
-            <div class="col-md-12 col-12">
+        <!-- <div class = "row pt-2 col-12">
+            <div class="col-md-12 col-12"> -->
 
 
              <?php if (!isset($__inertiaSsrDispatched)) { $__inertiaSsrDispatched = true; $__inertiaSsrResponse = app(\Inertia\Ssr\Gateway::class)->dispatch($page); }  if ($__inertiaSsrResponse) { echo $__inertiaSsrResponse->body; } else { ?><div id="app" data-page="<?php echo e(json_encode($page)); ?>"></div><?php } ?>
-    </div>
-        </div>
-    </div>
+    <!-- </div>
+        </div> -->
+    <!-- </div> -->
 </div>
 
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('subscriber_permissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('subscriber_id');
+            $table->unsignedBigInteger('subscriberplan_id');
             $table->unsignedBigInteger('menu_id');
             $table->enum('access', ['granted', 'revoked'])->default('granted');        
 

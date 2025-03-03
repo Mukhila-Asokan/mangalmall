@@ -199,6 +199,11 @@
                                         <span class="menu-text">Subcription Plan</span>
                                     </a>
                                 </li>
+                                <li class="menu-item">
+                                    <a href="{{ route('admin.subscriptionmenupermission') }}" class="menu-link">
+                                        <span class="menu-text">Permission Module</span>
+                                    </a>
+                                </li>
                             </ul>
                     </div>
                     </li>
@@ -269,7 +274,12 @@
                                     <a href="{{ route('admin.menu') }}" class="menu-link">
                                         <span class="menu-text">Menu</span>
                                     </a>
-                                </li>    
+                                </li>  
+                                <li class="menu-item">
+                                    <a href="{{ route('admin.usermenu') }}" class="menu-link">
+                                        <span class="menu-text">User Menu</span>
+                                    </a>
+                                </li>      
                                
                             </ul>
                          </div>   
