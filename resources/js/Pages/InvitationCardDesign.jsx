@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap'; 
 import { FaHeart, FaEye, FaEdit, FaShare, FaTimes } from 'react-icons/fa';
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../../../public/frontassets/css/main.css";
 
 const baseImageUrl = window.location.origin + "/";
 const baseurl = window.location.origin;

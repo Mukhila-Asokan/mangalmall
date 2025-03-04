@@ -17,9 +17,9 @@
                             <label for="venuetypeid" class="form-label fw-bold">Venue Type</label>
                             <select id="venuetypeid" name="venuetypeid" class="form-select">
                                 <option value="">Select Venue Type</option>
-                                @foreach($venuetypes as $venuetype)
-                                    <option value="{{ $venuetype->id }}">{{ $venuetype->venuetype_name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $venuetypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $venuetype): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($venuetype->id); ?>"><?php echo e($venuetype->venuetype_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                     </div>
@@ -66,3 +66,4 @@
 
 	</div>
 </section>
+<?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/layouts/search.blade.php ENDPATH**/ ?>
