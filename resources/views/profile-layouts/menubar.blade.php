@@ -11,14 +11,15 @@
                                 </li>
                                 <li class="list-inline-item"><a href="#"><span class="fas fa-comments mr-2"></span> Live
                                         Chat</a></li>
+                                        <li class="list-inline-item"><a href="#"><span class="fas fa-comments mr-2"></span> Contact Us</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4">
                         <div class="topbar-text">
-                            <ul class="list-inline text-right">
-                                <li class="list-inline-item"><a href = "#">{{ Auth::user()->name ?? '' }}</a></li>
-                                <li class="list-inline-item"> <a href = "{{ route('home/logout') }}">
+                            <ul class="list-inline text-right">                               
+                                <li class="list-inline-item"> <a href = "{{ route('user.profile') }}"><i class="fas fa-solid fa-user mr-1"></i> Profile</a></li>
+                                <li class="list-inline-item"> <a href = "{{ route('home/logout') }}"><i class="fa-solid fa-right-from-bracket mr-1"></i> 
                         {{ __('Log Out') }}</a>
              
                                 </li>
@@ -51,39 +52,87 @@
                     <!--main menu start-->
                     <div id="navBar" class="collapse navbar-collapse">
                         <ul class="navbar-nav ml-auto main-navbar-nav">
-                            <!--home start-->
+                          
+                            @can('accessPaidMenus', Auth::user())
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('home') }}" aria-haspopup="true" aria-expanded="false">Home</a>
+                                <a class="nav-link custom-nav-link" href="{{ route('venuereact.search') }}" aria-haspopup="true" aria-expanded="false">Venue</a>
 
                             </li>
-                            <!--home end-->
-
-                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Venue</a>
-
-                            </li>
+                            @endcan
+                            @can('accessPaidMenus', Auth::user())
                              <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Invitation</a>
+                            </li>
+                            @endcan
+                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="{{ route('venuereact.search') }}" aria-haspopup="true" aria-expanded="false">Venue</a>
 
                             </li>
+
+                            <li class="nav-item hs-has-sub-menu custom-nav-item">
+                            <a id="pagesMegaMenu" class="nav-link custom-nav-link main-link-toggle" href="javascript:void(0);" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Invitation</a>
+                            
+                                          <!-- Pages - Submenu -->
+                                          <ul id="pagesSubMenu" class="hs-sub-menu main-sub-menu" aria-labelledby="pagesMegaMenu" style="min-width: 260px;">                                   
+                                    <li class="hs-has-sub-menu">
+                                        <a id="navLinkPagesPricing" class="nav-link sub-menu-nav-link sub-link-toggle" href="javascript:void(0);" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesPricing">Card Design</a>
+
+                                        <ul id="navSubmenuPagesPricing" class="hs-sub-menu main-sub-menu" aria-labelledby="navLinkPagesPricing" style="min-width: 230px;">
+                                            <li><a class="nav-link sub-menu-nav-link" href="{{ route('user.carddesign') }}">Choose Card</a></li>
+                                            <li><a class="nav-link sub-menu-nav-link" href="">Design Your Own Card</a></li>                                           
+                                        </ul>
+                                    </li>
+                                    <li class="hs-has-sub-menu">
+                                        <a id="navLinkPagesBlog" class="nav-link sub-menu-nav-link sub-link-toggle" href="javascript:void(0);" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesBlog">Web Page Design</a>
+
+                                        <ul id="navSubmenuPagesBlog" class="hs-sub-menu main-sub-menu" aria-labelledby="navLinkPagesBlog" style="min-width: 230px;">
+                                            <li><a class="nav-link sub-menu-nav-link" href="{{ route('user.webpage') }}">Choose Web Page</a></li>
+                                            <li><a class="nav-link sub-menu-nav-link" href="{{ route('user.showtemplate') }}">Design your Own page</a></li>
+                                          
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item submenu-item">
+                                        <a class="nav-link sub-menu-nav-link" href="#">Video Making</a>
+                                    </li>
+
+                                 
+                                </ul>
+                                <!-- End Pages - Submenu -->
+                            </li>
+                            <!--pages end-->
+
+
+
+
+                            
                              <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Vendor</a>
-
                             </li>
-                            <!-- <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Event Planning</a>
-                            </li> -->
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('guest.index', ['user_id' => auth()->user()->id]) }}" aria-haspopup="true" aria-expanded="false">Guest</a>
+                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Gift Repository</a>
 
                             </li>
-                            <!-- <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Service</a>
-                            </li> -->
-                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">About</a>
+     
+                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Guest</a>
 
                             </li>
+          
+                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Occasion Plan</a>
+
+                            </li>
+                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">To do list</a>
+
+                            </li>
+                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Blog Writing</a>
+                            </li>
+                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Pricing</a>
+                            </li>
+                        
                            
 
                         </ul>

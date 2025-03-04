@@ -9,8 +9,10 @@
         </div>
         <div class="sidebar">
             <a href="#">Profile</a>  
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('accessPaidMenus', Auth::user())): ?>
             <a href="<?php echo e(route('venuereact.search')); ?>">Venue</a>
-           
+            <?php endif; ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('accessPaidMenus', Auth::user())): ?>
             <a href="#taskSubmenu" data-toggle="collapse"> <i class="ti-layers"></i> Invitation  <i class="fas fa-chevron-down toggle-icon"></i></a>
             <div id="taskSubmenu" class="collapse submenu">
                 <a href="<?php echo e(route('user.carddesign')); ?>"><i class="ti-id-badge"></i> Card Desgin </a>
@@ -18,7 +20,7 @@
                 <a href="<?php echo e(route('user.showtemplate')); ?>">Design Own Page</a>
                 <a href="#">Video Making </a>
             </div>
-          
+            <?php endif; ?>
         
             <a href="#">Gift Repository </a>
             <a href="#">Todo list </a>

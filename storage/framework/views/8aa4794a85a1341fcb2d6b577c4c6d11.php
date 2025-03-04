@@ -46,10 +46,7 @@
 
             <section class="page-header-section pt-4">
               <div class="container">
-                  <div class="row">
-                     <div class="col-lg-2 col-md-2">
-                        <?php echo $__env->make('profile-layouts.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                     </div>
+                  <div class="row">                    
                       <?php echo $__env->yieldContent('content'); ?>
                   </div>
 				</div>

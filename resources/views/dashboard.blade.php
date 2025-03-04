@@ -3,7 +3,7 @@
   <!--page header section start-->
  
 
-             <div class="col-lg-7 col-md-7" >
+             <div class="col-lg-9 col-md-9" >
                  <h5> Welcome {{ Auth::user()->name }}</h5> 
                    
 				   @php $prurl = "frontassets/img/herobg-5.png"; @endphp
@@ -22,13 +22,12 @@
                    
 
                     <div class="row">
+                    <div class="col-lg-12 col-md-12" >
                   
-                    
-
+                    @include('profile-layouts.blog')
+                    </div>
                    
-                    <a href='{{ route("home/".session("userpath")."occasion") }}' class="btn primary-solid-btn btn-block btn-not-rounded col-lg-3 m-1">Occasion</a>
-                    <a href="#" class="btn primary-solid-btn btn-block btn-not-rounded col-lg-3 m-1">Venue Search</a>
-                    <a href="#" class="btn primary-solid-btn btn-block btn-not-rounded col-lg-3 m-1">Add Guest</a>
+                   
               
                 </div>
                 
@@ -83,9 +82,7 @@
       </div>
     </div>
  <br>
- <hr>
-
-                @include('profile-layouts.blog')
+ <hr>     
             </div>
       
 

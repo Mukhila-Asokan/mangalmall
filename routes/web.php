@@ -139,6 +139,9 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
     Route::post('/api/home/invitationcard-search/{id}/design', [InvitationCardDesignController::class, 'saveDesign'])->name('invitationcard.saveDesign');
     Route::post('/api/home/invitationcard-search/{id}/design/{designId}', [InvitationCardDesignController::class, 'saveDesign'])->name('invitationcard.saveDesign');    
 
+    Route::post('/user/profile', [InvitationCardDesignController::class, 'profile'])->name('user.profile');   
+    Route::post('/home/pricing', [InvitationCardDesignController::class, 'profile'])->name('user.profile');  
+
 });
 
 

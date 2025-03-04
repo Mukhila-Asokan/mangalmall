@@ -1,4 +1,3 @@
-@extends('profile-layouts.profile')
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
 <style>
@@ -36,22 +35,22 @@ img.zoomed {
 }
 </style>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-@php 
+<?php 
 
 	$bannerurl =  url('/').Storage::url('/').$venuedetail->bannerimage;
 
-@endphp
+?>
 <div class="col-lg-10 col-md-10">
   <!--page header section start-->
         <section class="page-header-section ptb-20 gradient-overly-right" 
-        style="background: url('{{ $bannerurl }}')no-repeat center center / cover">
+        style="background: url('<?php echo e($bannerurl); ?>')no-repeat center center / cover">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-7 col-lg-6">
                         <div class="page-header-content text-white">
-                            <h1 class="text-white mb-2">{{ $venuedetail->venuename }}</h1>                          
+                            <h1 class="text-white mb-2"><?php echo e($venuedetail->venuename); ?></h1>                          
                         </div>
                     </div>
                 </div>
@@ -69,8 +68,8 @@ img.zoomed {
                 <div class="custom-breadcrumb">
                     <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
                         <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="list-inline-item breadcrumb-item"><a href="{{ route('venuereact.search') }}">Venue </a></li>
-                        <li class="list-inline-item breadcrumb-item active">{{ $venuedetail->venuename }}</li>
+                        <li class="list-inline-item breadcrumb-item"><a href="<?php echo e(route('venuereact.search')); ?>">Venue </a></li>
+                        <li class="list-inline-item breadcrumb-item active"><?php echo e($venuedetail->venuename); ?></li>
                     </ol>
                 </div>
             </div>
@@ -85,8 +84,8 @@ img.zoomed {
                     <div class="col-lg-6 col-md-6">
                             <div class="post-preview">
                                 <div class="carousel">
-                                <img src="{{ $bannerurl }}" alt="article" class="img-fluid" style="max-height:400px" />
-                                <img src="{{ $bannerurl }}" alt="article" class="img-fluid" style="max-height:400px" />
+                                <img src="<?php echo e($bannerurl); ?>" alt="article" class="img-fluid" style="max-height:400px" />
+                                <img src="<?php echo e($bannerurl); ?>" alt="article" class="img-fluid" style="max-height:400px" />
 								</div>
 							</div>
 					</div>
@@ -94,14 +93,14 @@ img.zoomed {
                     <div class="col-lg-6 col-md-6">
                         <div class="post-wrapper">
                             <div class="post-header">
-                                <h1 class="post-title">{{ $venuedetail->venuename }}</h1>
+                                <h1 class="post-title"><?php echo e($venuedetail->venuename); ?></h1>
                                 <div class="d-inline-flex">
                                     <div class="rating pl-2 pr-2 rounded ml-0 mt-2 mb-2" style="background: #58111A;">
-                                        <span class="text-white ms-2"><i class="bi bi-star-fill" style="color: gold;"></i> {{$ratingAvg}}</span>
+                                        <span class="text-white ms-2"><i class="bi bi-star-fill" style="color: gold;"></i> <?php echo e($ratingAvg); ?></span>
                                     </div>
-                                    <span class="ml-1 mt-2 text-muted" style="font-size:13px;">({{$ratingCount}})</span>
+                                    <span class="ml-1 mt-2 text-muted" style="font-size:13px;">(<?php echo e($ratingCount); ?>)</span>
                                 </div>
-								<p class="pt-2 mb-1"><small>{{ $venuedetail->venueaddress }} ,  <br> {{ $venuedetail->indianlocation->Areaname }} {{ $venuedetail->indianlocation->City }}, {{ $venuedetail->indianlocation->District }}<br>{{ $venuedetail->indianlocation->State }}</small></p>
+								<p class="pt-2 mb-1"><small><?php echo e($venuedetail->venueaddress); ?> ,  <br> <?php echo e($venuedetail->indianlocation->Areaname); ?> <?php echo e($venuedetail->indianlocation->City); ?>, <?php echo e($venuedetail->indianlocation->District); ?><br><?php echo e($venuedetail->indianlocation->State); ?></small></p>
 								
 								 
 								
@@ -109,7 +108,7 @@ img.zoomed {
 								  <div class="d-inline-flex">
 								
 									<div class="pt-2 justify-content-start"> 
-									<h5> <i class = "fa fa-indian-rupee-sign"></i> {{ $venuedetail->bookingprice }} </h5>
+									<h5> <i class = "fa fa-indian-rupee-sign"></i> <?php echo e($venuedetail->bookingprice); ?> </h5>
 									</div>
 								 </div>
 								 <br>
@@ -121,13 +120,13 @@ img.zoomed {
 										<h6>Capacity: </h6>
 									</div>
 									<div class="pt-1 justify-content-start"> 
-									    <span>&nbsp; {{ $venuedetail->capacity ? $venuedetail->capacity : 'NA' }}</span>
+									    <span>&nbsp; <?php echo e($venuedetail->capacity ? $venuedetail->capacity : 'NA'); ?></span>
 									</div>
 									<div class="pt-2 justify-content-end ml-3"> 
 										<h6>Food Type: </h6>
 									</div>
 									<div class="pt-1 justify-content-start"> 
-									<span>&nbsp; {{ $venuedetail->food_type ? $venuedetail->food_type : 'NA' }}</span>
+									<span>&nbsp; <?php echo e($venuedetail->food_type ? $venuedetail->food_type : 'NA'); ?></span>
 									</div>
 								 </div>
 								 <br>
@@ -148,7 +147,7 @@ img.zoomed {
                                                 <span class="star" data-value="5">&#9733;</span>
                                             </div>
                                         </div>
-                                        <p class="p-0 m-0">Rating: <span id="rating-value">{{$venueRating->rating ?? 0}}</span>/5</p>
+                                        <p class="p-0 m-0">Rating: <span id="rating-value"><?php echo e($venueRating->rating ?? 0); ?></span>/5</p>
                                     </div>
                                 </div>
 								 
@@ -156,7 +155,7 @@ img.zoomed {
 							</div>
 						</div>
 						<div class="bg-flower-bot">
-                      <img src="{{ asset('frontassets/img/flower.png') }}">
+                      <img src="<?php echo e(asset('frontassets/img/flower.png')); ?>">
             </div>
 					</div>
 					</div>
@@ -204,11 +203,11 @@ img.zoomed {
                                                 <div class="col-md-12 col-lg-12">
 
                                                 <ul class="list-unstyled tech-feature-list">
-                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Contact Person - {{ $venuedetail->contactperson }}</li>
-                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Contact Mobile - {{ $venuedetail->contactmobile }}</li>
-                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Office Number - {{ $venuedetail->contacttelephone }}</li>
-                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Email - {{ $venuedetail->contactemail }}</li>
-                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Website - {{ $venuedetail->websitename }}</li>
+                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Contact Person - <?php echo e($venuedetail->contactperson); ?></li>
+                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Contact Mobile - <?php echo e($venuedetail->contactmobile); ?></li>
+                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Office Number - <?php echo e($venuedetail->contacttelephone); ?></li>
+                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Email - <?php echo e($venuedetail->contactemail); ?></li>
+                                                    <li class="py-1"><span class="ti-control-forward mr-2 color-primary"></span>Website - <?php echo e($venuedetail->websitename); ?></li>
                                                     
                                                 </ul>
 
@@ -273,17 +272,20 @@ img.zoomed {
                                         <div class="tab-pane" id="feature-tab-4">  
                                             <div class="row p-0 m-0">
                                                 <div class="col-md-12 col-lg-12">
-                                                {!! $venuedetail->venuecontent->first()->description ?? '' !!}	
+                                                <?php echo $venuedetail->venuecontent->first()->description ?? ''; ?>	
                                                     <h6>Key Features</h6>
-                                                {!! $venuedetail->venuecontent->first()->key_features ?? null !!}<br> 
+                                                <?php echo $venuedetail->venuecontent->first()->key_features ?? null; ?><br> 
                                                 <h6>Ambience</h6>
-                                                {!! $venuedetail->venuecontent->first()->ambience ?? null !!}
+                                                <?php echo $venuedetail->venuecontent->first()->ambience ?? null; ?>
+
                                                 <br>
                                                 <h6>Event Sustability</h6>
-                                                {!! $venuedetail->venuecontent->first()->event_sustability ?? null !!}
+                                                <?php echo $venuedetail->venuecontent->first()->event_sustability ?? null; ?>
+
                                                 <br>
                                                 <h6>Amenities</h6>
-                                                {!! $venuedetail->venuecontent->first()->amenities ?? null !!}
+                                                <?php echo $venuedetail->venuecontent->first()->amenities ?? null; ?>
+
                                         
                                                 </div>
                                             </div>
@@ -292,7 +294,7 @@ img.zoomed {
                                             <div class="row p-0 m-0">
                                                 <div class="col-md-12 col-lg-12">
                                                     <iframe 
-                                                        src="{{$venuedetail->googlemap}}" 
+                                                        src="<?php echo e($venuedetail->googlemap); ?>" 
                                                         width="600" 
                                                         height="300" 
                                                         style="border:0;" 
@@ -321,12 +323,12 @@ img.zoomed {
 					<div class="col-md-6 col-lg-6">
 						<h6>Image Gallery</h6>
 
-                        @foreach($venuedetail->venueimage->where('image_type', 'gallery') as $image)
-                            <img src="{{ asset('storage/' . $image->image_path) }}" class="img-thumbnail gallery" width="150">               
-                        @endforeach
+                        <?php $__currentLoopData = $venuedetail->venueimage->where('image_type', 'gallery'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <img src="<?php echo e(asset('storage/' . $image->image_path)); ?>" class="img-thumbnail gallery" width="150">               
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						
 						<div class="bg-flower-bot">
-                      <img src="{{ asset('frontassets/img/palanquim.png') }}">
+                      <img src="<?php echo e(asset('frontassets/img/palanquim.png')); ?>">
 					</div>
 					</div>
 					
@@ -357,47 +359,47 @@ img.zoomed {
                 <span class="star" data-value="5">&#9733;</span>
             </div>
         </div>
-        <p>Rating: <span id="rating-value">{{$venueRating->rating ?? 0}}</span>/5</p>
+        <p>Rating: <span id="rating-value"><?php echo e($venueRating->rating ?? 0); ?></span>/5</p>
     </div> -->
 
-    @if(!$venueRating || !$venueRating->review)
+    <?php if($venueRating && $venueRating->review && ($venueRating->verified_at != null || $venueRating->rejected_at != null)): ?>
         <div class="comment-respond">
             <h5 class="comment-reply-title">Leave your Comments</h5>
             <p class="comment-notes"></p>
-            <form action="{{ route('venue.post.comments') }}" method="post" class="comment-form row">
-                @csrf
+            <form action="<?php echo e(route('venue.post.comments')); ?>" method="post" class="comment-form row">
+                <?php echo csrf_field(); ?>
                 <div class="form-group col-md-12">
-                    <textarea class="form-control" rows="8" placeholder="Comments" name="comments">{{$venueRating->review ?? null}}</textarea>
+                    <textarea class="form-control" rows="8" placeholder="Comments" name="comments"><?php echo e($venueRating->review ?? null); ?></textarea>
                 </div>
-                <input type="hidden" id="venue_rating" name="rating" value="{{ $venueRating->rating ?? 0 }}">
-                <input type="hidden" name="venue_id" value="{{ $venuedetail->id }}">
+                <input type="hidden" id="venue_rating" name="rating" value="<?php echo e($venueRating->rating ?? 0); ?>">
+                <input type="hidden" name="venue_id" value="<?php echo e($venuedetail->id); ?>">
                 <div class="form-submit col-md-12">
                     <button class="btn primary-solid-btn" type="submit">Post Comment</button>
                 </div>
             </form>
         </div>     
-    @endif
+    <?php endif; ?>
 
-    @if($commentCount > 0)
+    <?php if($commentCount > 0): ?>
         <h5 class="comments-title">Venue Comments</h5>
         <div class="venue-comments pt-2">
             <div class="comment-list">
-                @foreach($allComments as $comment)
+                <?php $__currentLoopData = $allComments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="comment-section">
                         <div class="comment-content">
-                            <p class="mb-1" style="font-size: 14px;">{{ $comment->review ?? ''}}</p>
-                            <span class="comment-author-name text-muted font-weight-bold" style="font-size: 11px;">{{ $comment->user->name == auth()->user()->name ? 'You' : ucfirst($comment->user->name) }}</span>
-                            <span class="comment-date text-muted ml-2" style="font-size: 11px;">{{ $comment->created_at->diffForHumans() }}</span>
+                            <p class="mb-1" style="font-size: 14px;"><?php echo e($comment->review ?? ''); ?></p>
+                            <span class="comment-author-name text-muted font-weight-bold" style="font-size: 11px;"><?php echo e($comment->user->name == auth()->user()->name ? 'You' : ucfirst($comment->user->name)); ?></span>
+                            <span class="comment-date text-muted ml-2" style="font-size: 11px;"><?php echo e($comment->created_at->diffForHumans()); ?></span>
                         </div>
                     </div>
                     <hr>
-                @endforeach
-                @if($commentCount > 2)
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php if($commentCount > 2): ?>
                     <a href="" class="btn primary-solid-btn text-center load_more_option">Load More</a>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
-    @endif
+    <?php endif; ?>
 
 </div>
 
@@ -410,14 +412,14 @@ img.zoomed {
       </div>
    </div>
    <div class="bg-flower-bot">
-        <img src="{{ asset('frontassets/img/flower1.png') }}">
+        <img src="<?php echo e(asset('frontassets/img/flower1.png')); ?>">
 	</div>
                      
  </div> 
    
   
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
 
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -452,12 +454,12 @@ img.zoomed {
                 $(".star").removeClass("selected");
                 $(this).addClass("selected");
                 $.ajax({
-                    url: "{{ route('venue-ratings.store') }}",
+                    url: "<?php echo e(route('venue-ratings.store')); ?>",
                     type: "POST",
                     data: {
-                        "_token": "{{ csrf_token() }}",
+                        "_token": "<?php echo e(csrf_token()); ?>",
                         "rating": parseInt(rating),
-                        "venue_id": parseInt("{{ $venuedetail->id }}")
+                        "venue_id": parseInt("<?php echo e($venuedetail->id); ?>")
                     },
                     success: function(response) {
                         console.log(response);
@@ -501,10 +503,10 @@ img.zoomed {
         $('.load_more_option').click(function(e){
             e.preventDefault();
             $.ajax({
-                url: "{{ route('venue.get.comments') }}",
+                url: "<?php echo e(route('venue.get.comments')); ?>",
                 type: "GET",
                 data: {
-                    "venue_id": parseInt("{{ $venuedetail->id }}"),
+                    "venue_id": parseInt("<?php echo e($venuedetail->id); ?>"),
                     "count": countComment
                 },
                 success: function(response) {
@@ -517,7 +519,7 @@ img.zoomed {
                                     <div class="comment-content">
                                         <p class="mb-1" style="font-size: 14px;">${comment.review}</p>
                                         <span class="comment-author-name text-muted font-weight-bold" style="font-size: 11px;">
-                                            ${comment.user.name === "{{ auth()->user()->name }}" ? 'You' : comment.user.name}
+                                            ${comment.user.name === "<?php echo e(auth()->user()->name); ?>" ? 'You' : comment.user.name}
                                         </span>
                                         <span class="comment-date text-muted ml-2" style="font-size: 11px;">
                                             ${timeAgo(comment.created_at)}
@@ -572,7 +574,8 @@ img.zoomed {
         }
 
     </script>
-@viteReactRefresh
-@vite('resources/js/app.jsx')
+<?php echo app('Illuminate\Foundation\Vite')->reactRefresh(); ?>
+<?php echo app('Illuminate\Foundation\Vite')('resources/js/app.jsx'); ?>
 
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('profile-layouts.profile', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/venuedetail.blade.php ENDPATH**/ ?>
