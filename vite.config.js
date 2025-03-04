@@ -11,5 +11,11 @@ export default defineConfig({
         react({
             jsxRuntime: 'automatic',  // Ensure React Fast Refresh works
         }),
+       
     ],
+    resolve: {
+        alias: {
+            '@': '/resources/js', // Ensures '@' maps correctly
+        },
+    },
 });

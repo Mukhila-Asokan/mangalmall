@@ -6,7 +6,16 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Mangal Mall</title>
+        @routes 
+        @viteReactRefresh
+        @vite(['resources/js/mount-venuecalendar.jsx'])
 
+       <script type="text/javascript">
+           .container
+           {
+            max-width:100%;
+           }
+       </script>
         <!-- Fonts -->
      <link rel="stylesheet" href="{{ asset('frontassets/css/main.css'); }}">
     <!-- endbuild -->
@@ -44,7 +53,7 @@
         </div>
         <!--breadcrumb bar end-->
 
-            <section class="page-header-section pt-4">
+        <section class="page-header-section pt-4">
               <div class="container">
                   <div class="row"> 
                    

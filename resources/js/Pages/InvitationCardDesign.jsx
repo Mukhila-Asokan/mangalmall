@@ -201,7 +201,7 @@ const InvitationCardDesign = ({ occasiontype = [], cardTemplates: initialInvitat
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className="col-1 btn primary-solid-btn btn-not-rounded mt-3"
+                        className="col-12 btn primary-solid-btn btn-not-rounded mt-3 p-3"
                     >
                         <FontAwesomeIcon icon={faArrowLeft} />
                     </button>
@@ -213,7 +213,7 @@ const InvitationCardDesign = ({ occasiontype = [], cardTemplates: initialInvitat
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === lastPage}
-                        className="col-md-1 btn primary-solid-btn btn-not-rounded mt-3"
+                        className="col-md-12 btn primary-solid-btn btn-not-rounded mt-3 p-3"
                     >
                         <FontAwesomeIcon icon={faArrowRight} />
                     </button>

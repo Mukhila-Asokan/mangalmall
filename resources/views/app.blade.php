@@ -1,5 +1,5 @@
 @extends('profile-layouts.profile')
-<link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+
 
    @routes 
     @viteReactRefresh
@@ -47,12 +47,3 @@
 
 
 @endsection
-
-
-@push('scripts')
-
-
-
-<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
-
-@endpush
