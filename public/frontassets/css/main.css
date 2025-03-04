@@ -5777,17 +5777,17 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.card-header {
+/* .card-header {
   padding: .75rem 1.25rem;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-}
+} */
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.card-header:first-child {
+/* .card-header:first-child {
   border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
-}
+} */
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .card-footer {
@@ -56432,13 +56432,13 @@ button.scroll-top:focus {
             background: rgba(0, 0, 0, 0.2);
         }
         
-        .card {
+        .venue-card, .contact-card {
             transition: all 0.3s ease;
             border-top: 5px solid #58111A;
-			border-bottom: 5px solid #58111A;
-      box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #f5ecf1 !important;  
+            border-bottom: 5px solid #58111A;
+            box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #f5ecf1 !important;  
         }
-        .card:hover {
+        .venue-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
@@ -56606,4 +56606,12 @@ button.scroll-top:focus {
   {
     max-width: 99%;
     margin: 0 auto;
+  }
+  
+  .font-14{
+    font-size: 14px !important;
+  }
+
+  .font-12{
+    font-size: 12px !important;
   }

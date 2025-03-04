@@ -70,18 +70,16 @@
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Vendor</a>
 
                             </li>
-                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                            <!-- <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Event Planning</a>
+                            </li> -->
+                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="{{ route('guest.index', ['user_id' => auth()->user()->id]) }}" aria-haspopup="true" aria-expanded="false">Guest</a>
 
                             </li>
-                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Guest</a>
-
-                            </li>
-                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                            <!-- <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Service</a>
-
-                            </li>
+                            </li> -->
                              <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">About</a>
 

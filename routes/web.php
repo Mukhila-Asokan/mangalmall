@@ -19,7 +19,7 @@ use App\Http\Controllers\VenueRatingController;
 use App\Http\Controllers\CanvaController;
 use App\Http\Controllers\InvitationCardDesignController;
 Use App\Http\Controllers\CardEditorController;
-use App\Http\Controllers\CardImageAjaxLoadController;
+use App\Http\Controllers\{CardImageAjaxLoadController, GuestController};
 
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
 
@@ -156,6 +156,11 @@ Route::any('/cardinvitation/uploadMedia', [CardEditorController::class, 'uploadM
 Route::any('/cardinvitation/moreImages', [CardEditorController::class, 'moreImages']);
 Route::any('/cardinvitation/save_template', [CardEditorController::class, 'saveTemplate']);
 
+// Guest
+Route::get('/guest/contacts/{user_id}', [GuestController::class, 'getGuestContacts'])->name('guest.index');
+Route::post('store/guest/contacts', [GuestController::class, 'storeGuest'])->name('guest.store');
+Route::get('guest/{id}/edit', [GuestController::class, 'editGuest'])->name('guest.edit');
+Route::post('update/guest/contacts', [GuestController::class, 'updateGuest'])->name('guest.update');
 
 
 require __DIR__.'/auth.php';
