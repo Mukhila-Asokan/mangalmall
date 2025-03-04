@@ -21,6 +21,8 @@ use App\Http\Controllers\InvitationCardDesignController;
 Use App\Http\Controllers\CardEditorController;
 use App\Http\Controllers\CardImageAjaxLoadController;
 
+Use App\Http\Controllers\PricingController;
+
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
 
     $venuesubtypes = VenueType::where('delete_status', 0)
@@ -140,7 +142,7 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
     Route::post('/api/home/invitationcard-search/{id}/design/{designId}', [InvitationCardDesignController::class, 'saveDesign'])->name('invitationcard.saveDesign');    
 
     Route::post('/user/profile', [InvitationCardDesignController::class, 'profile'])->name('user.profile');   
-    Route::post('/home/pricing', [InvitationCardDesignController::class, 'profile'])->name('user.profile');  
+    Route::any('/home/pricing', [PricingController::class, 'index'])->name('home.pricing');  
 
 });
 

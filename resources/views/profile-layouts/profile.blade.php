@@ -33,8 +33,8 @@
                     <div class="col-12">
                         <div class="custom-breadcrumb">
                             <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
-                                <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="list-inline-item breadcrumb-item active"><a href="#">Profile</a></li>
+                                <li class="list-inline-item breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                                <li class="list-inline-item breadcrumb-item active"><a href="#">Dashboard</a></li>
                                 
                             </ol>
                         </div>
@@ -46,15 +46,19 @@
 
             <section class="page-header-section pt-4">
               <div class="container">
-                  <div class="row">                    
-                      @yield('content')
+                  <div class="row"> 
+                   
+                         @yield('content')
+                                 
+                    
                   </div>
 				</div>
         </section>
+        <hr>
+        <section class = "page-header-section pt-4 shadow-sm">
+        @include('layouts.trustedvendor')
 
-
-
-            
+        </section>
          </div>
           @include('profile-layouts.footer')
      </div>

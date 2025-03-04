@@ -67,7 +67,7 @@ img.zoomed {
         <div class="row p-0">
             <div class="col-12 p-0">
                 <div class="custom-breadcrumb">
-                    <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
+                    <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-5">
                         <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
                         <li class="list-inline-item breadcrumb-item"><a href="{{ route('venuereact.search') }}">Venue </a></li>
                         <li class="list-inline-item breadcrumb-item active">{{ $venuedetail->venuename }}</li>
@@ -414,6 +414,9 @@ img.zoomed {
 	</div>
                      
  </div> 
+ <div class="col-lg-2 col-md-2">
+    <div id="adsslider-component"></div>
+ </div>
    
   
 @endsection

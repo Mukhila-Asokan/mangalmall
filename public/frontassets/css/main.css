@@ -650,7 +650,7 @@ pre code {
 @media (min-width: 1200px) {
   /* line 6, src/assets/scss/vendors/bootstrap.min.css */
   .container, .container-lg, .container-md, .container-sm, .container-xl {
-    max-width: 95%;
+    max-width: 100%;
   }
 }
 
@@ -51233,7 +51233,7 @@ a:hover {
 /* line 264, src/assets/scss/custom/_style.scss */
 .primary-solid-btn {
   border: 1px solid #58111A;
-  background: #58111A;
+  background: #58111A !important;
   color: #ffffff;
 }
 
@@ -55386,13 +55386,13 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 /* line 3699, src/assets/scss/custom/_style.scss */
 .post-header {
-  margin: 15px 0 20px;
+  margin: 10px 0 10px;
 }
 
 /* line 3702, src/assets/scss/custom/_style.scss */
 .post-header .post-title {
-  font-size: 1.5625rem;
-  margin-bottom: 0;
+  font-size: 1.0rem;
+  margin-bottom: 10px;
   color: #333333;
 }
 
@@ -55445,6 +55445,8 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 /* line 3741, src/assets/scss/custom/_style.scss */
 .post-content p {
   margin-bottom: 5px;
+  color:#000;
+  font-size: 14px;
 }
 
 /* line 3744, src/assets/scss/custom/_style.scss */
@@ -56607,3 +56609,29 @@ button.scroll-top:focus {
     max-width: 99%;
     margin: 0 auto;
   }
+
+  .card-body li
+  {
+    list-style: disc;
+    font-size: 16px;
+    text-align: left;
+    margin-left:10px;
+
+  }
+  .card-body ul
+  {
+    margin-bottom:20px;
+  }
+  .slick-slide {
+    display: block !important; /* Ensure slides are visible */
+    height: 320px; /* Set the desired height */
+    min-height: unset; /* Override any min-height restrictions */
+}
+#adsslider-component .slick-dots
+{
+  display: none !important;
+}
+#adsslider-component .slick-arrow
+{
+  display: none !important;
+}

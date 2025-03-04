@@ -33,8 +33,8 @@
                     <div class="col-12">
                         <div class="custom-breadcrumb">
                             <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
-                                <li class="list-inline-item breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="list-inline-item breadcrumb-item active"><a href="#">Profile</a></li>
+                                <li class="list-inline-item breadcrumb-item"><a href="<?php echo e(route('dashboard')); ?>">Home</a></li>
+                                <li class="list-inline-item breadcrumb-item active"><a href="#">Dashboard</a></li>
                                 
                             </ol>
                         </div>
@@ -46,15 +46,19 @@
 
             <section class="page-header-section pt-4">
               <div class="container">
-                  <div class="row">                    
-                      <?php echo $__env->yieldContent('content'); ?>
+                  <div class="row"> 
+                   
+                         <?php echo $__env->yieldContent('content'); ?>
+                                 
+                    
                   </div>
 				</div>
         </section>
+        <hr>
+        <section class = "page-header-section pt-4 shadow-sm">
+        <?php echo $__env->make('layouts.trustedvendor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
-
-
-            
+        </section>
          </div>
           <?php echo $__env->make('profile-layouts.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
      </div>

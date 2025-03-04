@@ -37,32 +37,34 @@ const AdsSlider = () => {
     const sliderSettings = {
         dots: true,
         infinite: true,
-        speed: 5000,
+        speed: 1000, // Adjust speed to slow down transition
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 5000, // Each ad stays visible for 5 seconds
+        pauseOnHover: true, // Pause slider when hovered
+        fade: true, // Smooth fade transition
     };
 
     return (
-        <aside className="widget widget-categories shadow-lg p-2">
+        <aside className="widget widget-categories p-2">
             <div className="widget-title p-2 text-center">
                 <h5 className="text-center mb-3">Sponsored Ads</h5>
             </div>
-
+            <div style={{ height: "300px", overflow: "hidden" }}>
             {loading ? (
                 <p>Loading ads...</p>
             ) : ads.length > 0 ? (
                 <Slider {...sliderSettings}>
                     {ads.map((ad) => (
-                        <div key={ad.id} className="card">
+                        <div key={ad.id} className="card" style={{ height: "100%" }}>
                             <div className="card-header">
                             <h5 className="card-title mb-2">{ad.title}</h5></div>
                             <img
                                 src={`${baseImageUrl}${ad.image}`} // FIXED: Corrected Image Path
                                 className="card-img-top"
                                 alt={ad.title}
-                                style={{ height: '200px', objectFit: 'cover' }}
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                 onError={(e) => e.target.src = '/default-ad.jpg'} // Fallback image
                             />
                             <div className="card-body">                             
@@ -79,10 +81,13 @@ const AdsSlider = () => {
                         </div>
                     ))}
                 </Slider>
+                
             ) : (
                 <p>No Ads found.</p>
             )}
+           </div> 
         </aside>
+        
     );
 };
 
