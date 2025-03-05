@@ -32,7 +32,7 @@
 							<td> <a href="{{ url('/venueadmin/themebuilder/'.$ven->id.'/edit') }}" class="btn-info btn" title="Theme"><i class="ti ti-wand action_icon"></i>
                 Theme </a></td>
 							<td>  
-							<a href="{{ url('/venueadmin/venue/'.$ven->id.'/edit') }}" class="btn-warning btn" title="Edit"><i class="ti ti-pencil action_icon"></i> Edit
+							<a href="{{ url('/venueadmin/editvenue/'.$ven->id.'') }}" class="btn-warning btn" title="Edit"><i class="ti ti-pencil action_icon"></i> Edit
                 </a>
 				
 				</td>

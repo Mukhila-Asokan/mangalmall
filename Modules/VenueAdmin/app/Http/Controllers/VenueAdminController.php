@@ -19,7 +19,7 @@ use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\VenueCampaigns;
 use Modules\Venue\Models\Imagelibrary;
-
+use Modules\Venue\Models\Area;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
@@ -156,21 +156,39 @@ class VenueAdminController extends Controller
         return view('venueadmin::venueuser.create',compact('pagetitle','pageroot','venuetypes','venueamenities','venuedatafield','arealocation'));
     }
 
+    public function editvenue($id){
+        $pagetitle = "Edit Venue";
+        $pageroot = "Home";
+        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
+        $venueamenities = VenueAmenities::where('delete_status',0)->get();
+        $venuedatafield = VenueDataField::where('delete_status',0)->get();
+        $arealocation = Area::orderBy('cityid')->get();
+        $venue = VenueDetails::where('id',$id)->first();
+        return view('venueadmin::venueuser.edit', compact('pagetitle','pageroot','venuetypes','venueamenities','venuedatafield','arealocation','venue'));
+    }
+
 
     public function storevenue(Request $request)
     {
-        $request->validate([
-           'venuename' => 'required',
+        $contactMobile = ltrim($request->input('contactmobile'), '0'); 
+        $request->merge(['contactmobile' => $contactMobile]);
+        $validator = Validator::make($request->all(),[
+            'venuename' => 'required',
             'venueaddress' => 'required',
             'locationid' => 'required',
             'description' => 'required',
             'contactperson' => 'required',
-            'contactmobile' => 'required', 
-            'venuetypeid' => 'required',
-            'venuesubtypeid' => 'required',
+            'contactmobile' => 'required|unique:venuedetails|digits:10', 
+            'venuetypeid' => 'required',         
            
          ]);
-        
+
+         if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
         $venuedetails = new VenueDetails;
         $venuedetails->venuename = $request->venuename;
         $venuedetails->venueaddress = $request->venueaddress;
@@ -182,44 +200,131 @@ class VenueAdminController extends Controller
         $venuedetails->contactemail = $request->contactemail ?? '';
         $venuedetails->websitename = $request->websitename ?? '';
         $venuedetails->venuetypeid = $request->venuetypeid;
-        $venuedetails->venuesubtypeid = $request->venuesubtypeid;
+        $venuedetails->venuesubtypeid = 0;
         $venuedetails->bookingprice = $request->bookingprice;
-        
-        $venuedetails->googlemap = '-';
+        $venuedetails->budgetperplate = $request->budgetperplate ?? '';
+        $venuedetails->capacity = $request->capacity;
+        $venuedetails->food_type = $request->food_type;
+        $venuedetails->is_worth = 'none';
+        $venuedetails->googlemap = $request->googlemap ?? '-';
 
-         $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
-    $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));
+       /* $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
+        $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));*/
 
+        $venueamenities = $request->venueamenities ?? [];
+        $venuedata = $request->datafieldvalue ?? [];
 
+        if (!empty($venueamenities) && is_array($venueamenities)) {
+            $venuedetails->venueamenities = json_encode(array_map('intval', $venueamenities));
+        } else {
+            $venuedetails->venueamenities = json_encode([]);
+        }
 
-  $filename = '';
-       if ($request->hasFile('bannerimage')) {
-        $filename = $request->file('bannerimage')->store('venuebannerimage', 'public');
-    }
+        if (!empty($venuedata) && is_array($venuedata)) {
+            $venuedetails->venuedata = json_encode(array_map('intval', $venuedata));
+        } else {
+            $venuedetails->venuedata = json_encode([]);
+        }
+
+        $filename = '';
+        if ($request->hasFile('bannerimage')) {
+            $filename = $request->file('bannerimage')->store('venuebannerimage', 'public_uploads');
+            /*$filename = $request->file('bannerimage')->storeAs('venuebannerimage', time().'_'.$request->file('bannerimage')->getClientOriginalName(), 'public');*/
+        }
     
-      
-       $venuedetails->bannerimage = $filename;
-       $venuedetails->featured = 1;
-       $venuedetails->status = 'Active'; 
-       $venuedetails->delete_status = 0;
+        $venuedetails->bannerimage = $filename;
+        $venuedetails->featured = 1;
+        $venuedetails->status = 'Active'; 
+        $venuedetails->delete_status = 0;
 
+        try{
+            $venuedetails->save();
+        }
+        catch (Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
 
-       try {
+        $uservenue = new UserVenue;
+        $uservenue->venueid = $venuedetails->id;
+        $uservenue->venueuserid = Session::get('venueuserid');
+        $uservenue->save();
+
+        return redirect('venueadmin/venuelist')->with('success', 'Venue Details Successfully created');
+    }
+
+    public function updateVenue(Request $request,$id)
+    {
+        $contactMobile = ltrim($request->input('contactmobile'), '0'); 
+        $request->merge(['contactmobile' => $contactMobile]);
+        $validator = Validator::make($request->all(),[
+            'venuename' => 'required',
+            'venueaddress' => 'required',        
+            'description' => 'required',
+            'contactperson' => 'required',
+            'contactmobile' => 'required|digits:10|unique:venuedetails,contactmobile,' . $id, 
+            'venuetypeid' => 'required',      
+            'capacity' => 'required',  
+            'food_type' => 'required',
+            'bookingprice' => 'required',
+            'venuearea' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $venuedetails = VenueDetails::findOrFail($id);
+        $venuedetails->venuename = $request->venuename;
+        $venuedetails->venueaddress = $request->venueaddress;
+        $venuedetails->locationid = $request->locationid;
+        $venuedetails->description = $request->description;
+        $venuedetails->contactperson = $request->contactperson;
+        $venuedetails->contactmobile = $request->contactmobile;
+        $venuedetails->contacttelephone = $request->contacttelephone ?? '';
+        $venuedetails->contactemail = $request->contactemail ?? '';
+        $venuedetails->websitename = $request->websitename ?? '';
+        $venuedetails->venuetypeid = $request->venuetypeid;
+        $venuedetails->venuesubtypeid = 0;
+        $venuedetails->bookingprice = $request->bookingprice;
+        $venuedetails->budgetperplate = $request->budgetperplate ?? '';
+        $venuedetails->capacity = $request->capacity;
+        $venuedetails->food_type = $request->food_type;
+        $venuedetails->is_worth = 'none';
+        $venuedetails->googlemap = $request->googlemap ?? '-';
+
+        $venueamenities = $request->venueamenities ?? [];
+        $venuedata = array_values($request->datafieldvalue) ?? [];
+
+        if (!empty($venueamenities) && is_array($venueamenities)) {
+            $venuedetails->venueamenities = json_encode(array_map('intval', $venueamenities));
+        } else {
+            $venuedetails->venueamenities = json_encode([]);
+        }
+
+        if (!empty($venuedata) && is_array($venuedata)) {
+            $venuedetails->venuedata = json_encode(array_map('intval', $venuedata));
+        } else {
+            $venuedetails->venuedata = json_encode([]);
+        }
+
+        if ($request->hasFile('bannerimage')) {
+            $filename = $request->file('bannerimage')->store('venuebannerimage', 'public_uploads');
+            $venuedetails->bannerimage = $filename;
+        }
+
+        $venuedetails->featured = 1;
+        $venuedetails->status = 'Active'; 
+        $venuedetails->delete_status = 0;
+
+        try {
             $venuedetails->save();
         } catch (Exception $e) {          
-
-             return redirect()->back()->with('error', $e->getMessage());
+            Log::error($e); // Log the entire exception object
+            return redirect()->back()->with('error', $e->getMessage());
         }
-      
-
-
-       $uservenue = new UserVenue;
-       $uservenue->venueid = $venuedetails->id;
-       $uservenue->venueuserid = Session::get('venueuserid');
-       $uservenue->save();
-
-
-       return redirect('venueadmin/venuelist')->with('success', 'Venue Details Successfully updated');
+        return redirect('venueadmin/venuelist')->with('success', 'Venue Details Successfully updated');
     }
 
     public function dashboard()

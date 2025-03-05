@@ -163,7 +163,7 @@ class VenueController extends Controller
         $venuedetails->capacity = $request->capacity;
         $venuedetails->food_type = $request->food_type;
         $venuedetails->is_worth = 'none';
-        $venuedetails->googlemap = $request->googlemap;
+        $venuedetails->googlemap = $request->googlemap ?? '-';
 
        /* $venuedetails->venueamenities = json_encode(array_map('intval', $request->venueamenities)); 
         $venuedetails->venuedata = json_encode(array_map('intval', $request->datafieldvalue));*/
@@ -337,7 +337,7 @@ class VenueController extends Controller
         $venuedetails->capacity = $request->capacity;
         $venuedetails->food_type = $request->food_type;
         $venuedetails->is_worth = 'none';
-        $venuedetails->googlemap = $request->googlemap;
+        $venuedetails->googlemap = $request->googlemap ?? '-';
 
         $venueamenities = $request->venueamenities ?? [];
         $venuedata = array_values($request->datafieldvalue) ?? [];
@@ -965,7 +965,7 @@ class VenueController extends Controller
         $venuedetails->capacity = $request->capacity;
         $venuedetails->food_type = $request->food_type;
         $venuedetails->is_worth = 'none';
-        $venuedetails->googlemap = $request->googlemap;
+        $venuedetails->googlemap = $request->googlemap ?? '-';
 
         $venueamenities = $request->venueamenities ?? [];
         $venuedata = $request->datafieldvalue ?? [];
@@ -1068,7 +1068,7 @@ class VenueController extends Controller
         $venuedetails->capacity = $request->capacity;
         $venuedetails->food_type = $request->food_type;
         $venuedetails->is_worth = 'none';
-        $venuedetails->googlemap = $request->googlemap;
+        $venuedetails->googlemap = $request->googlemap ?? '-';
 
         $venueamenities = $request->venueamenities ?? [];
         $venuedata = $request->datafieldvalue ?? [];
