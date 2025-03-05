@@ -30,7 +30,7 @@ $url = asset("venueasset/images/flower.png");
                                     <p class="fw-semibold mb-4">Venue Admin</p>
                                 </div>
 
-                               <form name = "login" method = "post" action="{{ route('venue/logincheck') }}">
+                               <form name = "login" id="login_form" method = "post" action="{{ route('venue/logincheck') }}">
                                  @csrf
 
                                       <div class="mb-3">
@@ -50,10 +50,10 @@ $url = asset("venueasset/images/flower.png");
       <div class="mb-3" style="display:none" id = "mobileotp">
         <label for="mobileno" class="form-label">OTP</label>
           <div class="input-group mb-3 otp-input-group">
-              <input class="form-control" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
-              <input class="form-control" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
-              <input class="form-control" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
-              <input class="form-control" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
+              <input class="form-control mobileotp" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
+              <input class="form-control mobileotp" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
+              <input class="form-control mobileotp" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
+              <input class="form-control mobileotp" type="text" name = "mobileotp[]" value="" placeholder="-" maxlength="1">
           </div>
           @error('mobileotp')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -65,7 +65,7 @@ $url = asset("venueasset/images/flower.png");
 
 
       <div class="d-flex align-items-center justify-content-between mb-4">
-        <div class="form-check">
+        <div class="form-check d-flex">
           <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
           <label class="form-check-label text-dark fs-3" for="flexCheckChecked">
             Remember this Device
@@ -149,6 +149,17 @@ $url = asset("venueasset/images/flower.png");
         });
 
   });
+
+  $('#login_form').on('submit', function(e){
+    let allFilled = $(".mobileotp").filter(function() {
+        return $(this).val().trim() === "";
+    }).length === 0;
+
+    if(!allFilled){
+      e.preventDefault();
+      $("#loginsubmit").trigger('click');
+    }
+  })
 
 </script>
 
