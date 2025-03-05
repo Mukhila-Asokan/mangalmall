@@ -21,6 +21,8 @@ use App\Http\Controllers\InvitationCardDesignController;
 Use App\Http\Controllers\CardEditorController;
 use App\Http\Controllers\{CardImageAjaxLoadController, GuestController};
 
+Use App\Http\Controllers\PricingController;
+
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
 
     $venuesubtypes = VenueType::where('delete_status', 0)
@@ -34,8 +36,8 @@ Route::get('/get-subtypes/{typeId}', function ($typeId) {
  $username = preg_replace('/\s+/', '_', $username);*/
 
 Route::get('/',[HomeController::class, 'home'])->name('home');
-Route::get('/home',[HomeController::class, 'home'])->name('home');
-Route::get('/logout',[HomeController::class, 'home'])->name('home');
+/*Route::get('/home',[HomeController::class, 'home'])->name('home');*/
+Route::get('/logout',[HomeController::class, 'home'])->name('logout');
 Route::any('/ajaxcvenuesubtypelist',[HomeController::class, 'ajaxcvenuesubtypelist'])->name('home/ajaxcvenuesubtypelist');
 Route::any('/venuesearchresults',[HomeController::class, 'venuesearchresults'])->name('home/venuesearchresults');
 Route::any('/home/{id}/venuedetails',[HomeController::class, 'venuedetails'])->name('home/venuedetails');
@@ -63,7 +65,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
 
-    Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home/occasion');
+    Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home.occasion');
     Route::any(session('userpath').'/occasion/add', [UserOccasionController::class, 'store'])->name('home/occasion/add');
 
     Route::any(session('userpath').'/venue/search', [VenueController::class, 'index'])->name('home/venue/search');
@@ -140,7 +142,7 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
     Route::post('/api/home/invitationcard-search/{id}/design/{designId}', [InvitationCardDesignController::class, 'saveDesign'])->name('invitationcard.saveDesign');    
 
     Route::post('/user/profile', [InvitationCardDesignController::class, 'profile'])->name('user.profile');   
-    Route::post('/home/pricing', [InvitationCardDesignController::class, 'profile'])->name('user.profile');  
+    Route::any('/home/pricing', [PricingController::class, 'index'])->name('home.pricing');  
 
 });
 

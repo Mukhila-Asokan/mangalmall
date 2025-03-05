@@ -650,7 +650,7 @@ pre code {
 @media (min-width: 1200px) {
   /* line 6, src/assets/scss/vendors/bootstrap.min.css */
   .container, .container-lg, .container-md, .container-sm, .container-xl {
-    max-width: 95%;
+    max-width: 100%;
   }
 }
 
@@ -7207,7 +7207,7 @@ a.close.disabled {
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.modal-dialog-scrollable .modal-content {
+.modal-dialog-scrollable .homemodal-content {
   max-height: calc(100vh - 1rem);
   overflow: hidden;
 }
@@ -7257,7 +7257,7 @@ a.close.disabled {
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.modal-dialog-centered.modal-dialog-scrollable .modal-content {
+.modal-dialog-centered.modal-dialog-scrollable .homemodal-content {
   max-height: none;
 }
 
@@ -7267,7 +7267,7 @@ a.close.disabled {
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.modal-content {
+.homemodal-content {
   position: relative;
   display: -ms-flexbox;
   display: -webkit-box;
@@ -7388,7 +7388,7 @@ a.close.disabled {
     max-height: calc(100% - 3.5rem);
   }
   /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-  .modal-dialog-scrollable .modal-content {
+  .modal-dialog-scrollable .homemodal-content {
     max-height: calc(100vh - 3.5rem);
   }
   /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -51233,7 +51233,7 @@ a:hover {
 /* line 264, src/assets/scss/custom/_style.scss */
 .primary-solid-btn {
   border: 1px solid #58111A;
-  background: #58111A;
+  background: #58111A !important;
   color: #ffffff;
 }
 
@@ -55386,13 +55386,13 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 /* line 3699, src/assets/scss/custom/_style.scss */
 .post-header {
-  margin: 15px 0 20px;
+  margin: 10px 0 10px;
 }
 
 /* line 3702, src/assets/scss/custom/_style.scss */
 .post-header .post-title {
-  font-size: 1.5625rem;
-  margin-bottom: 0;
+  font-size: 1.0rem;
+  margin-bottom: 10px;
   color: #333333;
 }
 
@@ -55445,6 +55445,8 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 /* line 3741, src/assets/scss/custom/_style.scss */
 .post-content p {
   margin-bottom: 5px;
+  color:#000;
+  font-size: 14px;
 }
 
 /* line 3744, src/assets/scss/custom/_style.scss */
@@ -56338,7 +56340,7 @@ button.scroll-top:focus {
   width: 100%;
   height: 60px !important; 
   border-radius: 0.25rem !important;   
-  border: 6px solid rgba(255, 236, 219, 0.5); !important;
+  border: 6px solid rgba(255, 236, 219, 0.5)!important;
   backdrop-filter: blur(10px);
   padding:20px;
   font-size: 0.8rem !important;
@@ -56699,3 +56701,33 @@ button.scroll-top:focus {
   .select2-selection__choice__display, .select2-results__option{
     font-size: 14px;
   }
+  .card-body li
+  {
+    list-style: disc;
+    font-size: 16px;
+    text-align: left;
+    margin-left:10px;
+
+  }
+  .card-body ul
+  {
+    margin-bottom:20px;
+  }
+  .slick-slide {
+    display: block !important; /* Ensure slides are visible */
+    height: 320px; /* Set the desired height */
+    min-height: unset; /* Override any min-height restrictions */
+}
+#adsslider-component .slick-dots
+{
+  display: none !important;
+}
+#adsslider-component .slick-arrow
+{
+  display: none !important;
+}
+@media (min-width: 1400px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 100%!important;
+  }
+}

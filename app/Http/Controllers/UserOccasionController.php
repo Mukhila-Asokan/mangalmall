@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-use Modules\Venue\Models\indialocation;
+use Modules\Venue\Models\Area;
+use Illuminate\Support\Facades\Validator;
 
 Use session;
 use DB;
@@ -25,11 +26,9 @@ class UserOccasionController extends Controller
        
      
         $userid = Auth::user()->id;  
-
         $occasiontype = OccasionType::where('delete_status','0')->get();
         $useroccasion = UserOccasion::where('userid',$userid)->get();
-        $areaname = DB::table('indialocations')->select("Areaname")->groupBy('Areaname')->get();
-
+        $areaname = Area::select("areaname")->groupBy('Areaname')->get();
         return view('occasion',compact('occasiontype','useroccasion','userid','areaname'));
     }
 
@@ -46,17 +45,34 @@ class UserOccasionController extends Controller
      */
     public function store(Request $request)
     {
-         $occasion = new UserOccasion;
-         $occasion->userid = $request->userid;
-         $occasion->occasiontypeid = $request->occasiontype;
-         $occasion->occasion_place = $request->occasion_place;
-         $occasion->notes = $request->message ?? '-';
-         $occasion->occasiondate = $request->occasiondate;
-         $occasion->status = 'Active';
-         $occasion->delete_status = 0;
-         $occasion->save();  
+        $validator = Validator::make($request->all(), [
+            'userid' => 'required|integer',
+            'occasiontype' => 'required',
+            'occasion_place' => 'required',
+            'occasiondate' => 'required|date',
+        ]);
 
-         return redirect('home/occasion')->with('success', 'Occasion Type successfully created');
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        try {
+            $occasion = new UserOccasion;
+            $occasion->userid = $request->userid;
+            $occasion->occasiontypeid = $request->occasiontype;
+            $occasion->occasion_place = $request->occasion_place;
+            $occasion->notes = $request->message ?? '-';
+            $occasion->occasiondate = $request->occasiondate;
+            $occasion->status = 'Active';
+            $occasion->delete_status = 0;
+            $occasion->save();  
+
+            return redirect('home/occasion')->with('success', 'Occasion Type successfully created');
+        } catch (\Exception $e) {
+            return redirect('home/occasion')->with('error', 'Failed to create Occasion Type: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -79,9 +95,36 @@ class UserOccasionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserOccasionRequest $request, UserOccasion $userOccasion)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'userid' => 'required|integer',
+            'occasiontype' => 'required',
+            'occasion_place' => 'required',
+            'occasiondate' => 'required|date',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $occasion = UserOccasion::findOrFail($id);
+            $occasion->userid = $request->userid;
+            $occasion->occasiontypeid = $request->occasiontype;
+            $occasion->occasion_place = $request->occasion_place;
+            $occasion->notes = $request->message ?? '-';
+            $occasion->occasiondate = $request->occasiondate;
+            $occasion->status = 'Active';
+            $occasion->delete_status = 0;
+            $occasion->save();
+
+            return redirect('home/occasion')->with('success', 'Occasion Type successfully updated');
+        } catch (\Exception $e) {
+            return redirect('home/occasion')->with('error', 'Failed to update Occasion Type: ' . $e->getMessage());
+        }
     }
 
     /**

@@ -52,12 +52,12 @@
                     </div>
                 </div>
                 <br>
-                <form action="{{ route('venue.update', $venue->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('venue.hallupdate', ['id' => $venue->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="accordion accordion-flush" id="accordionFlushExample">
-
+                    <input type = "hidden" name = "parentid" value = "{{ $parentid }}" />
                         <!-- Venue Details -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">

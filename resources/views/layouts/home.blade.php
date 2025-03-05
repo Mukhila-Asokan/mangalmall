@@ -139,11 +139,13 @@ $url = "frontassets/img/hero-bg-4.jpg";
     
     $(".search-section").css("display", "block");
 
+    let venueLink = "{{ route('login') }}";
+
     response.venue.forEach((venue, i) => {
-        let venueLink = `{{ url('/home/') }}/${venue.id}/venuedetails`;
+      /*  let venueLink = `{{ url('/home/') }}/${venue.id}/venuedetails`;*/ 
 
         let onclickheart = "this.classList.toggle('bi-heart-fill'); this.classList.toggle('text-danger')";
-        let truncatedAddress = venue.venueaddress.length > 50 ? venue.venueaddress.slice(0, 50) + "..." : venue.venueaddress;
+        let truncatedAddress = venue.venueaddress.length > 40 ? venue.venueaddress.slice(0, 40) + "..." : venue.venueaddress;
         content += `
             <div class="col-md-3 mtb-1">
                 <div class="card rounded white-bg shadow-sm p-1">
@@ -168,12 +170,7 @@ $url = "frontassets/img/hero-bg-4.jpg";
                         <div class="contact-info mb-2">
                             <p class="card-text"><i class="bi bi-person-fill text-primary"></i> Contact: ${venue.contactperson}</p>
                         </div>
-                        <div class="contact-info mb-3">
-                            <p class="card-text">
-                                <i class="bi bi-telephone-fill text-primary"></i> 
-                                <a href="tel:${venue.contactmobile}" class="text-decoration-none">+91 ${venue.contactmobile}</a>
-                            </p>
-                        </div>
+                        
                         <hr>
                         <div class="share-icons d-flex justify-content-between align-items-center">
                             <div>
@@ -189,6 +186,13 @@ $url = "frontassets/img/hero-bg-4.jpg";
             </div>
         `;
     });
+
+    /*<div class="contact-info mb-3">
+        <p class="card-text">
+            <i class="bi bi-telephone-fill text-primary"></i> 
+            <a href="tel:${venue.contactmobile}" class="text-decoration-none">+91 ${venue.contactmobile}</a>
+        </p>
+    </div>*/
 
     content += '';
     $(".venuedetailslist").append(content);

@@ -126,7 +126,7 @@
                             </li>
           
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Occasion Plan</a>
+                                <a class="nav-link custom-nav-link" href="{{ route('home.occasion') }}" aria-haspopup="true" aria-expanded="false">Occasion Plan</a>
 
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
@@ -137,7 +137,7 @@
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Blog Writing</a>
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Pricing</a>
+                                <a class="nav-link custom-nav-link" href="{{ route('home.pricing') }}" aria-haspopup="true" aria-expanded="false">Pricing</a>
                             </li>
                         
                            

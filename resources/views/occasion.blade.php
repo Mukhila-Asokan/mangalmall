@@ -2,7 +2,7 @@
 @section('content')
 
 
-<div class="col-lg-8 col-md-8">
+<div class="col-lg-10 col-md-10">
                         <!-- Search widget-->
     <aside class="widget widget-search">
         <form>
@@ -52,13 +52,16 @@
 </div>
 </div>
 
+<div class="col-lg-2 col-md-2">
 
+@include('profile-layouts.rightside')
+</div>
 
 
 
 <div class="modal fade" id="addoccasionpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="homemodal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Add Occasion</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -117,7 +120,7 @@
 	 $str .= '"'.$aname->Areaname.'",' ; 
 
 	endforeach;
-	echo $str;
+	
 	 $str = rtrim($str, ','); 
 	 $str .= ']';
  

@@ -1,6 +1,6 @@
-@extends('admin.layouts.app-admin')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <style type="text/css">
     .form-check-input[type=checkbox] {
@@ -31,7 +31,7 @@
 
 </style>
 
-<link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+<link href="<?php echo e(asset('adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <div class="row">
     <div class="col-12">
@@ -41,23 +41,23 @@
 
                 <div class="row">
                     <div class="col-6 text-start">
-                        <a href ="{{ route('venue/detailview', ['id' => $venue->id]) }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                        <a href ="<?php echo e(route('venue/detailview', ['id' => $venue->id])); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                             <span class="tf-icon mdi mdi-arrow-left me-1"></span>Back
                         </a>
                     </div>
                     <div class="col-6 text-end">
-                        <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                        <a href = "<?php echo e(route('venue/index')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                             <span class="tf-icon mdi mdi-eye me-1"></span>List Venue
                         </a>
                     </div>
                 </div>
                 <br>
-                <form action="{{ route('venue.update', $venue->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+                <form action="<?php echo e(route('venue.hallupdate', ['id' => $venue->id])); ?>" method="POST" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
 
                     <div class="accordion accordion-flush" id="accordionFlushExample">
-
+                    <input type = "hidden" name = "parentid" value = "<?php echo e($parentid); ?>" />
                         <!-- Venue Details -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -73,81 +73,137 @@
                                             <div class="mb-4 row">
                                                 <label class="col-md-4 col-form-label required" for="venuetypename">Venue Name <span class="text-danger">*</span></label>
                                                 <div class="col-md-8">
-                                                    <input type="text" id="venuename" name="venuename" class="form-control " placeholder="Enter the venue name" value="{{ $venue->venuename }}" #a32206>
-                                                    @error('venuename')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <input type="text" id="venuename" name="venuename" class="form-control " placeholder="Enter the venue name" value="<?php echo e($venue->venuename); ?>" #a32206>
+                                                    <?php $__errorArgs = ['venuename'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div>
                                             <div class="mb-4 row">
                                                 <label class="col-md-4 col-form-label" for="venueaddress">Venue Address <span class="text-danger">*</span></label>
                                                 <div class="col-md-8">
-                                                    <textarea class="form-control" placeholder="Enter the venue Address" id="venueaddress" name = "venueaddress" style="height: 100px">{{ $venue->venueaddress }}</textarea>
-                                                    @error('venueaddress')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <textarea class="form-control" placeholder="Enter the venue Address" id="venueaddress" name = "venueaddress" style="height: 100px"><?php echo e($venue->venueaddress); ?></textarea>
+                                                    <?php $__errorArgs = ['venueaddress'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div>
                                             <div class="mb-4 row">
                                                 <label class="col-md-4 col-form-label" for="venuearea">Area <span class="text-danger">*</span></label>
                                                 <div class="col-md-8">
                                                 <select id="venuearea" name="venuearea" class="form-control">
-                                                    @if(isset($venue) && $venue->locationid) 
-                                                        <option value="{{ $venue->locationid }}" selected>{{ $venue->area->areaname }}</option>
-                                                    @endif
+                                                    <?php if(isset($venue) && $venue->locationid): ?> 
+                                                        <option value="<?php echo e($venue->locationid); ?>" selected><?php echo e($venue->area->areaname); ?></option>
+                                                    <?php endif; ?>
                                                 </select>
-                                                    @error('venuearea')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <?php $__errorArgs = ['venuearea'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
-                                                <input type="hidden" name="locationid" id="locationid" value="{{ $venue->locationid }}">
+                                                <input type="hidden" name="locationid" id="locationid" value="<?php echo e($venue->locationid); ?>">
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="mb-4 row">
                                                 <label class="col-md-4 col-form-label" for="venuecity">City </label>
                                                 <div class="col-md-8">
-                                                    <input type="text" id="venuecity" name="venuecity" class="form-control" placeholder="Enter the city name" value="{{ $venue->area->city->cityname ?? '' }}" >
-                                                    @error('venuecity')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <input type="text" id="venuecity" name="venuecity" class="form-control" placeholder="Enter the city name" value="<?php echo e($venue->area->city->cityname ?? ''); ?>" >
+                                                    <?php $__errorArgs = ['venuecity'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <div class="text-danger"><?php echo e($message); ?></div>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div>
                                             <div class="mb-4 row">
                                                 <label class="col-md-4 col-form-label" for="venuedistrict">District</label>
                                                 <div class="col-md-8">
-                                                    <input type="text" id="venuedistrict" name="venuedistrict" class="form-control" placeholder="Enter the District name" value="{{ $venue->area->district->districtname ?? '' }}" >
-                                                    @error('venuedistrict')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <input type="text" id="venuedistrict" name="venuedistrict" class="form-control" placeholder="Enter the District name" value="<?php echo e($venue->area->district->districtname ?? ''); ?>" >
+                                                    <?php $__errorArgs = ['venuedistrict'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <div class="text-danger"><?php echo e($message); ?></div>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div> 
                                             <div class="mb-4 row">
                                                 <label class="col-md-4 col-form-label" for="venuestate">State</label>
                                                 <div class="col-md-8">
-                                                    <input type="text" id="venuestate" name="venuestate" class="form-control" placeholder="Enter the state name" value="{{ $venue->area->state->statename ?? '' }}" >
-                                                    @error('venuestate')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <input type="text" id="venuestate" name="venuestate" class="form-control" placeholder="Enter the state name" value="<?php echo e($venue->area->state->statename ?? ''); ?>" >
+                                                    <?php $__errorArgs = ['venuestate'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <div class="text-danger"><?php echo e($message); ?></div>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div> 
                                             <div class="mb-4 row">
                                                 <label class="col-md-4 col-form-label" for="venuepincode">Pincode</label>
                                                 <div class="col-md-8">
-                                                    <input type="text" id="venuepincode" name="venuepincode" class="form-control" placeholder="Enter the pincode name" value="{{ $venue->area->pincode ?? '' }}" >
-                                                    @error('venuepincode')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                    <input type="text" id="venuepincode" name="venuepincode" class="form-control" placeholder="Enter the pincode name" value="<?php echo e($venue->area->pincode ?? ''); ?>" >
+                                                    <?php $__errorArgs = ['venuepincode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <div class="text-danger"><?php echo e($message); ?></div>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div> 
                                         </div>
                                         <div class="mb-4 row">
                                             <label class="col-md-2 col-form-label" for="description">Description</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" placeholder="Enter the description about venue" id="description" name="description" style="height: 100px">{{ $venue->description }}</textarea>
-                                                @error('description')
-                                                <div class="text-danger">{{ $message }}</div>
-                                                @enderror
+                                                <textarea class="form-control" placeholder="Enter the description about venue" id="description" name="description" style="height: 100px"><?php echo e($venue->description); ?></textarea>
+                                                <?php $__errorArgs = ['description'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <div class="text-danger"><?php echo e($message); ?></div>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -155,28 +211,49 @@
                                                 <div class="mb-4 row">
                                                     <label class="col-md-4 col-form-label" for="contactperson">Contact Person</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value="{{ $venue->contactperson }}" required>
-                                                        @error('contactperson')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <input type="text" id="contactperson" name="contactperson" class="form-control" placeholder="Enter the Contact person name" value="<?php echo e($venue->contactperson); ?>" required>
+                                                        <?php $__errorArgs = ['contactperson'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                                 <div class="mb-4 row">
                                                     <label class="col-md-4 col-form-label" for="contactmobile">Mobile No</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value="{{ $venue->contactmobile }}" required>
-                                                        @error('contactmobile')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value="<?php echo e($venue->contactmobile); ?>" required>
+                                                        <?php $__errorArgs = ['contactmobile'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                                 <div class="mb-4 row">
                                                     <label class="col-md-4 col-form-label" for="contacttelephone">Telephone No</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value="{{ $venue->contacttelephone }}">
-                                                        @error('contacttelephone')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <input type="text" id="contacttelephone" name="contacttelephone" class="form-control" placeholder="Enter the Venue Telephone No" value="<?php echo e($venue->contacttelephone); ?>">
+                                                        <?php $__errorArgs = ['contacttelephone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,28 +261,49 @@
                                                 <div class="mb-4 row">
                                                     <label class="col-md-4 col-form-label" for="contactemail">Email Id</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value="{{ $venue->contactemail }}">
-                                                        @error('contactemail')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <input type="text" id="contactemail" name="contactemail" class="form-control" placeholder="Enter the Contact Email Id" value="<?php echo e($venue->contactemail); ?>">
+                                                        <?php $__errorArgs = ['contactemail'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                                 <div class="mb-4 row">
                                                     <label class="col-md-4 col-form-label" for="websitename">Website</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the website name" value="{{ $venue->websitename }}">
-                                                        @error('websitename')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <input type="text" id="websitename" name="websitename" class="form-control" placeholder="Enter the website name" value="<?php echo e($venue->websitename); ?>">
+                                                        <?php $__errorArgs = ['websitename'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                                     <div class="mb-4 row">
                                                         <label class="col-md-4 col-form-label" for="bookingprice">Booking Rate <span class="text-danger">*</span></label>
                                                         <div class="col-md-8">
-                                                            <input type="text" id="bookingprice" name="bookingprice" class="form-control" placeholder="Enter the Booking Price" value="{{ old('bookingprice', $venue->bookingprice) }}">
-                                                            @error('bookingprice')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
+                                                            <input type="text" id="bookingprice" name="bookingprice" class="form-control" placeholder="Enter the Booking Price" value="<?php echo e(old('bookingprice', $venue->bookingprice)); ?>">
+                                                            <?php $__errorArgs = ['bookingprice'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                            <div class="text-danger"><?php echo e($message); ?></div>
+                                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                         </div>
                                                     </div>
 
@@ -218,25 +316,40 @@
                                                     <div class="col-md-8">
                                                     <select class="form-select" id="venuetypeid" name="venuetypeid" aria-label="Floating label select example">
                                                         <option value="">Choose Venue Type</option>
-                                                        @foreach($venuetypes as $type)
-                                                            <option value="{{ $type->id }}" {{ old('venuetypeid', $venue->venuetypeid) == $type->id ? 'selected' : '' }}>
-                                                                {{ $type->venuetype_name }}
+                                                        <?php $__currentLoopData = $venuetypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <option value="<?php echo e($type->id); ?>" <?php echo e(old('venuetypeid', $venue->venuetypeid) == $type->id ? 'selected' : ''); ?>>
+                                                                <?php echo e($type->venuetype_name); ?>
+
                                                             </option>
-                                                        @endforeach
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     </select>
 
-                                                        @error('venuetypeid')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <?php $__errorArgs = ['venuetypeid'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                                 <div class="mb-4 row">
                                                     <label class="col-md-4 col-form-label" for="budgetperplate">Budget Per Plate</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="budgetperplate" name="budgetperplate" class="form-control" placeholder="Enter the budget per plate" value="{{ old('budgetperplate', $venue->budgetperplate) }}">
-                                                        @error('budgetperplate')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <input type="text" id="budgetperplate" name="budgetperplate" class="form-control" placeholder="Enter the budget per plate" value="<?php echo e(old('budgetperplate', $venue->budgetperplate)); ?>">
+                                                        <?php $__errorArgs = ['budgetperplate'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -244,10 +357,17 @@
                                                 <div class="mb-4 row">
                                                     <label class="col-md-4 col-form-label" for="capacity">Seating Capacity <span class="text-danger">*</span></label>
                                                     <div class="col-md-8">
-                                                        <input type="text" id="capacity" name="capacity" class="form-control" placeholder="Enter the capacity" value="{{ old('capacity', $venue->capacity) }}">
-                                                        @error('capacity')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <input type="text" id="capacity" name="capacity" class="form-control" placeholder="Enter the capacity" value="<?php echo e(old('capacity', $venue->capacity)); ?>">
+                                                        <?php $__errorArgs = ['capacity'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                                 <div class="mb-4 row">
@@ -255,13 +375,20 @@
                                                     <div class="col-md-8">
                                                         <select id="food_type" name="food_type" class="form-control">
                                                             <option value="">Select Food Type</option>
-                                                            <option value="Veg" {{ old('food_type', $venue->food_type) == 'Veg' ? 'selected' : '' }}>Veg</option>
-                                                            <option value="Non-Veg" {{ old('food_type', $venue->food_type) == 'Non-Veg' ? 'selected' : '' }}>Non-Veg</option>
-                                                            <option value="Both" {{ old('food_type', $venue->food_type) == 'Both' ? 'selected' : '' }}>Both (Veg & Non-Veg)</option>
+                                                            <option value="Veg" <?php echo e(old('food_type', $venue->food_type) == 'Veg' ? 'selected' : ''); ?>>Veg</option>
+                                                            <option value="Non-Veg" <?php echo e(old('food_type', $venue->food_type) == 'Non-Veg' ? 'selected' : ''); ?>>Non-Veg</option>
+                                                            <option value="Both" <?php echo e(old('food_type', $venue->food_type) == 'Both' ? 'selected' : ''); ?>>Both (Veg & Non-Veg)</option>
                                                         </select>
-                                                        @error('food_type')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                                        <?php $__errorArgs = ['food_type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <div class="text-danger"><?php echo e($message); ?></div>
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -281,14 +408,14 @@
                             <div id="flush-collapseTwo" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <div class="col-6" style="margin-left: 30px;">
-                                        @foreach($venueamenities as $amenity)
+                                        <?php $__currentLoopData = $venueamenities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $amenity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="venueamenities[]"
-                                                value="{{ $amenity->id }}" 
-                                                {{ in_array($amenity->id, json_decode($venue->venueamenities, true) ?? []) ? 'checked' : '' }}>
-                                            <label class="form-check-label">{{ $amenity->amenities_name }}</label>
+                                                value="<?php echo e($amenity->id); ?>" 
+                                                <?php echo e(in_array($amenity->id, json_decode($venue->venueamenities, true) ?? []) ? 'checked' : ''); ?>>
+                                            <label class="form-check-label"><?php echo e($amenity->amenities_name); ?></label>
                                         </div>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                                 </div>
                             </div>
@@ -305,20 +432,20 @@
                             <div id="flush-collapseThree" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <div class="row">
-                                        @php
+                                        <?php
                                             $venueDataArray = json_decode($venue->venuedata, true); // Convert JSON to array
-                                        @endphp
-                                        @foreach($venuedatafield as $index => $datafield)
+                                        ?>
+                                        <?php $__currentLoopData = $venuedatafield; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $datafield): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="col-6">
                                             <div class="mb-4">
-                                                <label class="col-md-4 col-form-label">{{ $datafield->datafieldname }}</label>
+                                                <label class="col-md-4 col-form-label"><?php echo e($datafield->datafieldname); ?></label>
                                                 <div class="col-md-8">
-                                                    <input type="text" name="datafieldvalue[{{ $datafield->id }}]" class="form-control"
-                                                        value="{{ $venueDataArray[$index] ?? '' }}">
+                                                    <input type="text" name="datafieldvalue[<?php echo e($datafield->id); ?>]" class="form-control"
+                                                        value="<?php echo e($venueDataArray[$index] ?? ''); ?>">
                                                 </div>
                                             </div>
                                         </div>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                                 </div>
                             </div>
@@ -337,11 +464,11 @@
                                     <div class="mb-4">
                                         <label class="form-label">Upload Banner Image</label>
                                         <input class="form-control" type="file" name="bannerimage">
-                                        @if($venue->bannerimage)
+                                        <?php if($venue->bannerimage): ?>
                                         <div class="imageOutput mt-2">
-                                            <img src="{{ asset('storage/' . $venue->bannerimage) }}" alt="Venue Banner">
+                                            <img src="<?php echo e(asset('storage/' . $venue->bannerimage)); ?>" alt="Venue Banner">
                                         </div>
-                                        @endif
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -359,7 +486,7 @@
                                 <div class="accordion-body">
                                     <div class="mb-4">
                                         <label class="form-label">Google Map Location Code</label>
-                                        <textarea name="googlemap" class="form-control">{{ $venue->googlemap }}</textarea>
+                                        <textarea name="googlemap" class="form-control"><?php echo e($venue->googlemap); ?></textarea>
                                     </div>                                  
                                 </div>
                             </div>
@@ -379,18 +506,18 @@
     </div>
 </div>
 
-@php
+<?php
     $areaOptions = $arealocation->map(function($area) {
         return [
             'id' => $area->id,
             'title' => $area->areaname  // or $area->Areaname depending on your attribute name
         ];
     });
-@endphp
+?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script type="text/javascript">
 
     $images = $('#categoryiconimage')
@@ -414,7 +541,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
 /*
-    var areaOptions = {!! json_encode($areaOptions) !!};
+    var areaOptions = <?php echo json_encode($areaOptions); ?>;
     $('#venuearea').selectize({
         valueField: 'id',
         labelField: 'title',
@@ -434,7 +561,7 @@
         placeholder: 'Search for an area',
         allowClear: true,
         ajax: {
-            url: "{{ route('venue.ajaxarealist') }}", // Route to fetch data
+            url: "<?php echo e(route('venue.ajaxarealist')); ?>", // Route to fetch data
             dataType: 'json',
             delay: 250,
             data: function (params) {
@@ -466,9 +593,9 @@
 
         $.ajax({
             type: 'POST',
-            url: "{{ route('venue/create/ajaxcitylist') }}",
+            url: "<?php echo e(route('venue/create/ajaxcitylist')); ?>",
             dataType: 'json',
-            data: { "_token": "{{ csrf_token() }}", "area_id": area_id },
+            data: { "_token": "<?php echo e(csrf_token()); ?>", "area_id": area_id },
             success: function(response) {
                 var returnData = response;              
                 
@@ -487,9 +614,9 @@
 
         $.ajax({
             type: 'POST',
-            url: "{{ route('venue/create/ajaxcvenuesubtypelist') }}",
+            url: "<?php echo e(route('venue/create/ajaxcvenuesubtypelist')); ?>",
             dataType: 'json',
-            data: { "_token": "{{ csrf_token() }}", "venuetypeid": venuetypeid },
+            data: { "_token": "<?php echo e(csrf_token()); ?>", "venuetypeid": venuetypeid },
             success: function(response) {
                 $("#venuesubtypeid").empty();
                 var returnData = response;
@@ -507,4 +634,6 @@
     });
 
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('admin.layouts.app-admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/Venue\resources/views/venues/venuehalledit.blade.php ENDPATH**/ ?>

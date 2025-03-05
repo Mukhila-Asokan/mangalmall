@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap'; 
 import { FaHeart, FaEye, FaEdit, FaShare, FaTimes } from 'react-icons/fa';
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../../../public/frontassets/css/main.css";
 
 const baseImageUrl = window.location.origin + "/";
 const baseurl = window.location.origin;
@@ -201,7 +201,7 @@ const InvitationCardDesign = ({ occasiontype = [], cardTemplates: initialInvitat
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className="col-1 btn primary-solid-btn btn-not-rounded mt-3"
+                        className="col-12 btn primary-solid-btn btn-not-rounded mt-3 p-3"
                     >
                         <FontAwesomeIcon icon={faArrowLeft} />
                     </button>
@@ -213,7 +213,7 @@ const InvitationCardDesign = ({ occasiontype = [], cardTemplates: initialInvitat
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === lastPage}
-                        className="col-md-1 btn primary-solid-btn btn-not-rounded mt-3"
+                        className="col-md-12 btn primary-solid-btn btn-not-rounded mt-3 p-3"
                     >
                         <FontAwesomeIcon icon={faArrowRight} />
                     </button>

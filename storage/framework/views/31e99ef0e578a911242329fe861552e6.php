@@ -18,82 +18,81 @@
                         </div>
                         <div class="row">
                         <div class="col-8" id = "printableTable">
-
+                    
 
                         <table class="table table-bordered border-primary mb-0 font-weight-bold">
                         <tbody>
                             <tr>
                                 <td><h4 class="header-title">Venue Type</h4></td>
-                                <td colspan="2"><?php echo e($venuedetails->venuettype->venuetype_name); ?></td>
+                                <td colspan="2"><?php echo e($venuedetails->venuettype->venuetype_name ?? ''); ?></td>
                             </tr>
 
                             <tr>
-                                <td><h4 class="header-title">Name - <?php echo e($venuedetails->venuename); ?></h4></td>
+                                <td><h4 class="header-title">Name - <?php echo e($venuedetails->venuename ?? ''); ?></h4></td>
                                 <td colspan="2" class="text-center">
                                     <img src = "<?php echo e(url('/').Storage::url('/').$venuedetails->bannerimage); ?>" style="width:100px" /></td>
                             </tr>
                             <tr>
                                 <td rowspan="4"><h4 class="header-title">Location</h4></td>
                                 <td>Address</td>
-                                <td><?php echo e($venuedetails->venueaddress); ?></td>
+                                <td><?php echo e($venuedetails->venueaddress ?? ''); ?></td>
                             </tr>
                             <tr>
                                 <td>Area</td>
-                                <td><?php echo e($venuedetails->indianlocation->Areaname); ?></td>                              
+                                <td><?php echo e($venuedetails->area->areaname ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td>City & District</td>
-                                <td><?php echo e($venuedetails->indianlocation->City); ?>, <?php echo e($venuedetails->indianlocation->District); ?></td>                              
+                                <td><?php echo e($venuedetails->area->city->cityname ?? ''); ?>, <?php echo e($venuedetails->area->district->districtname ?? ''); ?></td>                              
                             </tr>
                                <tr>
                                 <td>State</td>
-                                <td><?php echo e($venuedetails->indianlocation->State); ?></td>                              
+                                <td><?php echo e($venuedetails->area->state->statename ?? ''); ?></td>                              
                             </tr>
                             <tr><td><h4 class="header-title">Description</h4></td>
-                                <td colspan="2"><?php echo e($venuedetails->description); ?></td>
+                                <td colspan="2"><?php echo e($venuedetails->description ?? ''); ?></td>
                             </tr>
                             <tr>
                                 <td rowspan="5"><h4 class="header-title">Contact Details</h4></td>
                                 <td>Contact Person</td>
-                                <td><?php echo e($venuedetails->contactperson); ?></td>
+                                <td><?php echo e($venuedetails->contactperson ?? ''); ?></td>
                             </tr>
                             <tr>
                                 <td>Mobile No</td>
-                                <td><?php echo e($venuedetails->contactmobile); ?></td>                              
+                                <td><?php echo e($venuedetails->contactmobile ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td>Landline</td>
-                                <td><?php echo e($venuedetails->contacttelephone); ?></td>                              
+                                <td><?php echo e($venuedetails->contacttelephone ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td>Email Id</td>
-                                <td><?php echo e($venuedetails->contactemail); ?></td>                              
+                                <td><?php echo e($venuedetails->contactemail ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td>Website</td>
-                                <td><?php echo e($venuedetails->websitename); ?></td>                              
+                                <td><?php echo e($venuedetails->websitename ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td><h4 class="header-title">Booking Rate</h4></td>
-                                <td colspan="2"><?php echo e($venuedetails->bookingprice); ?></td>                              
+                                <td colspan="2"><?php echo e($venuedetails->bookingprice ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td><h4 class="header-title">Seating Capacity</h4></td>
-                                <td colspan="2"><?php echo e($venuedetails->capacity); ?></td>                              
+                                <td colspan="2"><?php echo e($venuedetails->capacity ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td><h4 class="header-title">Budget Per Plate</h4></td>
-                                <td colspan="2"><?php echo e($venuedetails->budgetperplate); ?></td>                              
+                                <td colspan="2"><?php echo e($venuedetails->budgetperplate ?? ''); ?></td>                              
                             </tr>
                             <tr>
                                 <td><h4 class="header-title">Food Type</h4></td>
-                                <td colspan="2"><?php echo e($venuedetails->food_type); ?></td>                              
+                                <td colspan="2"><?php echo e($venuedetails->food_type ?? ''); ?></td>                              
                             </tr>
                              <tr>
                                 <td><h4 class="header-title">Amenities</h4></td>
                                 
-
-                                <td colspan="2">
+                                                   <td colspan="2">
                                     <ul>
 
                                    <?PHP
@@ -101,15 +100,16 @@
                                     $amenitiesarray = json_decode($venuedetails->venueamenities, true); 
                                     
 
-                                    foreach($venueamenities as $amenities):
-                                        
-                                        if(in_array($amenities->id, $amenitiesarray))
-                                        {
-                                            echo '<li>'.$amenities->amenities_name.'</li>';
-                                        }
-                                    endforeach;
+                                    if (!empty($amenitiesarray)) {
+                                        foreach($venueamenities as $amenities):
+                                            if(in_array($amenities->id, $amenitiesarray)) {
+                                                echo '<li>'.$amenities->amenities_name.'</li>';
+                                            }
+                                        endforeach;
+                                    }
 
                                 ?>
+                                            
                             </ul>
 
 
@@ -119,21 +119,23 @@
                                 <td><h4 class="header-title">Features</h4></td>
                                 <td colspan="2">
                                     <ul>
+                             
+<?php
+$venuedataarray = json_decode($venuedetails->venuedata, true) ?? []; // Ensure it's an array
+$i = 0;
 
-                                   <?PHP
-                                    $venuedataarray = json_decode($venuedetails->venuedata, true); 
-                                    $i=0;
-                                     foreach($venuedatafield as $datafield):
+if (!empty($venuedatafield) && !empty($venuedataarray)) {
+    foreach ($venuedatafield as $datafield) {
+        // Ensure $i exists in the array before accessing it
+        if (isset($venuedataarray[$i])) {
+            $value = $venuedatafielddetails->firstWhere('id', $venuedataarray[$i])->optionname ?? $venuedataarray[$i];
+            echo '<li>' . $datafield->datafieldname . ' - ' . $value . ' ' . $datafield->datafieldnametype . '</li>';
+        }
+        $i++;
+    }
+}
+?>
 
-                                        $value = $venuedatafielddetails->firstWhere('id',$venuedataarray[$i])->optionname ?? $venuedataarray[$i];
-                                        
-                                        echo '<li>'.$datafield->datafieldname.' - '.$value.' '.$datafield->datafieldnametype.'</li>';
-
-                                      
-                                      $i++;
-                                    endforeach;
-
-                                ?>
                             </ul>
 
                                 </td>
@@ -142,6 +144,10 @@
                     </table>
                       </div>
                       <div class="col-4">
+
+                           <a href = "<?php echo e(url('/admin/venue/allhall/'.$venuedetails->id)); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end" target="_new">
+                                <span class="tf-icon mdi mdi-file-image me-1"></span>Add Hall
+                           </a>
 
                             <a href = "<?php echo e(url('/admin/venue/'.$venuedetails->id.'/venueimage')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end" target="_new">
                                 <span class="tf-icon mdi mdi-file-image me-1"></span>Venue Gallery
@@ -189,9 +195,6 @@
                       </div>
                     </div>
               
-
-
-
 
                     </div>
                 </div>

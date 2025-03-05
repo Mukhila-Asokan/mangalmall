@@ -2,41 +2,55 @@
  <section id="features" class="feature-tab-section shadow-sm p-4" style="background-color: rgba(255, 236, 219, 0.7);">
  <div class="container">
  <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="row g-3 align-items-end">
-                
-                <!-- Venue Type Dropdown -->
-                <div class="col-md-5">
-                    <label for="venuetypeid" class="form-label fw-bold">Venue Type</label>
-                    <select id="venuetypeid" name="venuetypeid" class="form-select">
-                        <option value = "">Select Venue Type</option>
-                        @foreach($venuetypes as $venuetype)
-                            <option value = "{{ $venuetype->id }}">{{ $venuetype->venuetype_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- City Search Input -->
-                <div class="col-md-5">
-                    <label for="citySearch" class="form-label fw-bold">City</label>
-                    <input type="text" id="citySearch" name="venuearea" class="form-control" placeholder="Enter City Name">
-                </div>
-
-                <!-- Search Button -->
-                <div class="col-md-2 text-end">
-                    <button id="searchbutton" type="button" class="btn btn-primary w-100">
-                        <i class="fas fa-search me-1"></i> Search
-                    </button>
-                </div>
-
-            </div>
+ <div class="col-md-8 mx-auto">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-primary text-white text-center py-3">
+            <h4 class="mb-0 text-white">Venue Search</h4>
         </div>
+        <div class="card-body">
+            <form>
+                <div class="row g-3">
+
+                    <!-- Venue Type Dropdown -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="venuetypeid" class="form-label fw-bold">Venue Type</label>
+                            <select id="venuetypeid" name="venuetypeid" class="form-select">
+                                <option value="">Select Venue Type</option>
+                                @foreach($venuetypes as $venuetype)
+                                    <option value="{{ $venuetype->id }}">{{ $venuetype->venuetype_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- City Search Input -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="citySearch" class="form-label fw-bold">City</label>
+                            <input type="text" id="citySearch" name="venuearea" class="form-control" placeholder="Enter City Name">
+                        </div>
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="col-md-12 text-center">
+                        <button id="searchbutton" type="button" class="btn btn-primary px-4 py-2">
+                            <i class="fas fa-search me-1"></i> Search
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
     </div>
 </div>
  
  </section>
 <!--feature section start-->
-<section class="feature-section search-section ptb-50 gray-light-bg" id = "searchdisplay" style="display: none;">
+<section class="feature-section search-section ptb-50 gray-light-bg" style="background-color: rgba(255, 236, 219, 0.7);display: none;" id = "searchdisplay">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-9 col-lg-8">
