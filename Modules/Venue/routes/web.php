@@ -91,6 +91,14 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
     Route::any('/venue/themebuilder/{id}/destroy', [ThemeBuilderController::class,'destroy']);
     Route::any('/venue/themebuilder/{id}/updatestatus', [ThemeBuilderController::class,'updatestatus']);
 
+    Route::any('/venue/allhall/{id}', [VenueController::class, 'allhall'])->name('venue.allhall');
+    Route::any('/venue/hallcreate/{id}', [VenueController::class,'hallcreate'])->name('venue.hallcreate');
+    Route::post('/venue/hallstore', [VenueController::class,'hallstore'])->name('venue.hall_add');
+    Route::any('/venue/{id}/hallshow', [VenueController::class,'hallshow'])->name('venue/hallshow');
+    Route::any('/venue/hall/{id}/edit', [VenueController::class,'halledit']);
+    Route::put('/venue/hall/update/{id}', [VenueController::class,'hallupdate'])->name('venue.hallupdate');
+    Route::any('/venue/hall/{id}/destroy', [VenueController::class,'halldestroy']);
+    Route::any('/venue/hall/{id}/updatestatus', [VenueController::class,'hallupdatestatus']);
 
 
 

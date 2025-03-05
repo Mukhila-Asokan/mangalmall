@@ -10,12 +10,12 @@
         @viteReactRefresh
         @vite(['resources/js/mount-venuecalendar.jsx'])
 
-       <script type="text/javascript">
+       <style type="text/css">
            .container
            {
             max-width:100%;
            }
-       </script>
+       </style>
         <!-- Fonts -->
      <link rel="stylesheet" href="{{ asset('frontassets/css/main.css'); }}">
     <!-- endbuild -->

@@ -32,12 +32,13 @@ Use Modules\Venue\Models\City;
 use Modules\Venue\Models\Area;
 use App\Exports\VenueExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Collection;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
-use DataTables;
-use Session;
+use Yajra\DataTables\Facades\DataTables;
 use Exception;
+use Illuminate\Support\Facades\Session;
 use App\Models\VenueRating;
 use Carbon\Carbon;
 
@@ -67,6 +68,13 @@ class VenueController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                         $btn = '';
+                        // Check if any row exists where parentid matches the current row's id
+                        $hasChild = VenueDetails::where('parentid', $row->id)->exists();
+
+                        if ($hasChild) {                           
+                            $btn .= '<a href="'.url('admin/venue/allhall/'.$row->id).'" class="btn btn-secondary btn-sm" title="View Hall" target="_new"><i class="tf-icon mdi mdi-file-image"></i></a> ';
+                        }
+
                         if($row->status == 'Active') 
                         {
                             $btn .= '<a href="'.url('admin/venue/'.$row->id.'/updatestatus').'" class="btn btn-primary btn-sm" title="Active Status"><i class="tf-icon mdi mdi-eye"></i></a>';
@@ -896,5 +904,223 @@ class VenueController extends Controller
             'status' => 'success',
             'message' => 'Bulk action performed successfully'
         ]);
+    }
+
+    public function allhall($id)
+    {
+        $pagetitle = "Venue Hall";
+        $pageroot = "Venue"; 
+        $venue = VenueDetails::where('id',$id)->first();
+        $venuehalls = VenueDetails::where('parentid',$id)->where('delete_status',0)->paginate(10);
+        $parentid = $id;
+       
+        return view('venue::venues.allhall',compact('venuehalls','pagetitle','pageroot','parentid','venue'));
+    }
+    public function hallcreate($id)
+    {
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue Hall";
+        $pageroot = "Home";
+        $venue = VenueDetails::where('id',$id)->first();
+        $parentid = $id;
+        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
+        $venueamenities = VenueAmenities::where('delete_status',0)->get();
+        $venuedatafield = VenueDataField::where('delete_status',0)->get();
+        $arealocation = Area::orderBy('cityid')->get();
+        return view('venue::venues.venuehallcreate',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue','parentid'));   
+    }
+    public function hallstore(Request $request)
+    {      
+        $validator = Validator::make($request->all(),[
+            'venuename' => 'required',
+            'venueaddress' => 'required',
+            'locationid' => 'required',
+            'description' => 'required',
+            'contactperson' => 'required',
+            'venuetypeid' => 'required',         
+         ]);
+
+         if ($validator->fails()) {
+            return redirect(url()->previous())
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $venuedetails = new VenueDetails;
+        $venuedetails->venuename = $request->venuename;
+        $venuedetails->venueaddress = $request->venueaddress;
+        $venuedetails->locationid = $request->locationid;
+        $venuedetails->description = $request->description;
+        $venuedetails->contactperson = $request->contactperson;
+        $venuedetails->contactmobile = $request->contactmobile;
+        $venuedetails->contacttelephone = $request->contacttelephone  ?? '';
+        $venuedetails->contactemail = $request->contactemail ?? '';
+        $venuedetails->websitename = $request->websitename ?? '';
+        $venuedetails->venuetypeid = $request->venuetypeid;
+        $venuedetails->venuesubtypeid = 0;
+        $venuedetails->parentid = $request->parentid;
+        $venuedetails->bookingprice = $request->bookingprice;
+        $venuedetails->budgetperplate = $request->budgetperplate ?? '';
+        $venuedetails->capacity = $request->capacity;
+        $venuedetails->food_type = $request->food_type;
+        $venuedetails->is_worth = 'none';
+        $venuedetails->googlemap = $request->googlemap;
+
+        $venueamenities = $request->venueamenities ?? [];
+        $venuedata = $request->datafieldvalue ?? [];
+
+        if (!empty($venueamenities) && is_array($venueamenities)) {
+            $venuedetails->venueamenities = json_encode(array_map('intval', $venueamenities));
+        } else {
+            $venuedetails->venueamenities = json_encode([]);
+        }
+
+        if (!empty($venuedata) && is_array($venuedata)) {
+            $venuedetails->venuedata = json_encode(array_map('intval', $venuedata));
+        } else {
+            $venuedetails->venuedata = json_encode([]);
+        }
+
+        $filename = '';
+        if ($request->hasFile('bannerimage')) {
+            $filename = $request->file('bannerimage')->store('venuebannerimage', 'public_uploads');
+        }
+        
+        $venuedetails->bannerimage = $filename;
+        $venuedetails->featured = 1;
+        $venuedetails->status = 'Active'; 
+        $venuedetails->delete_status = 0;
+
+        try {
+            $venuedetails->save();
+        } catch (Exception $e) {          
+            Log::error($e); // Log the entire exception object
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('venue.allhall', ['id' => $request->parentid])
+                 ->with('success', 'Venue Hall Details successfully updated');
+
+    }
+    public function hallshow($id)
+    {
+        
+            $username = Session::get('username');
+            $userid = Session::get('userid');       
+            $pagetitle = "Venue Hall Detailed View";
+            $pageroot = "Venue"; 
+            $venueamenities = VenueAmenities::where('delete_status',0)->get();
+            $venuedatafield = VenueDataField::where('delete_status',0)->get();         
+            $venuedatafielddetails = VenueDataFieldDetails::where('delete_status',0)->get();         
+            $venuedetails = VenueDetails::where('id',$id)->first();
+            return view('venue::venues.hallshow',compact('pagetitle','pageroot','username','venuedetails','venueamenities','venuedatafield','venuedatafielddetails'));
+        
+    }
+
+    public function halledit($id)
+    {
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Edit Venue Hall";
+        $pageroot = "Home";
+        $venue = VenueDetails::where('id', $id)->first();
+        $parentid = $venue->parentid;
+        $venuetypes = VenueType::where('delete_status', 0)->where('roottype', 0)->get();
+        $venueamenities = VenueAmenities::where('delete_status', 0)->get();
+        $venuedatafield = VenueDataField::where('delete_status', 0)->get();
+        $arealocation = Area::orderBy('cityid')->get();
+        return view('venue::venues.venuehalledit', compact('pagetitle', 'pageroot', 'username', 'venuetypes', 'venueamenities', 'venuedatafield', 'arealocation', 'venue', 'parentid'));
+    }
+
+    public function hallupdate(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'venuename' => 'required',
+            'venueaddress' => 'required',
+            'locationid' => 'required',
+            'description' => 'required',
+            'contactperson' => 'required',
+            'venuetypeid' => 'required',         
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $venuedetails = VenueDetails::findOrFail($id);
+        $venuedetails->venuename = $request->venuename;
+        $venuedetails->venueaddress = $request->venueaddress;
+        $venuedetails->locationid = $request->locationid;
+        $venuedetails->description = $request->description;
+        $venuedetails->contactperson = $request->contactperson;
+        $venuedetails->contactmobile = $request->contactmobile;
+        $venuedetails->contacttelephone = $request->contacttelephone ?? '';
+        $venuedetails->contactemail = $request->contactemail ?? '';
+        $venuedetails->websitename = $request->websitename ?? '';
+        $venuedetails->venuetypeid = $request->venuetypeid;
+        $venuedetails->venuesubtypeid = 0;
+        $venuedetails->parentid = $request->parentid;
+        $venuedetails->bookingprice = $request->bookingprice;
+        $venuedetails->budgetperplate = $request->budgetperplate ?? '';
+        $venuedetails->capacity = $request->capacity;
+        $venuedetails->food_type = $request->food_type;
+        $venuedetails->is_worth = 'none';
+        $venuedetails->googlemap = $request->googlemap;
+
+        $venueamenities = $request->venueamenities ?? [];
+        $venuedata = $request->datafieldvalue ?? [];
+
+        if (!empty($venueamenities) && is_array($venueamenities)) {
+            $venuedetails->venueamenities = json_encode(array_map('intval', $venueamenities));
+        } else {
+            $venuedetails->venueamenities = json_encode([]);
+        }
+
+        if (!empty($venuedata) && is_array($venuedata)) {
+            $venuedetails->venuedata = json_encode(array_map('intval', $venuedata));
+        } else {
+            $venuedetails->venuedata = json_encode([]);
+        }
+
+        if ($request->hasFile('bannerimage')) {
+            $filename = $request->file('bannerimage')->store('venuebannerimage', 'public_uploads');
+            $venuedetails->bannerimage = $filename;
+        }
+
+        $venuedetails->featured = 1;
+        $venuedetails->status = 'Active'; 
+        $venuedetails->delete_status = 0;
+
+        try {
+            $venuedetails->save();
+        } catch (Exception $e) {          
+            Log::error($e); // Log the entire exception object
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+     
+        return redirect()->route('venue.allhall', ['id' => $request->parentid])
+                 ->with('success', 'Venue Hall Details successfully updated');
+
+    }
+
+    public function hallupdatestatus($id)
+    {
+        $venuedetails = VenueDetails::where('id', '=', $id)->select('status')->first();
+        $status = $venuedetails->status;
+        $venuedetailsstatus = "Active";
+        if($status == "Active") {
+            $venuedetailsstatus = "Inactive";
+        }
+        VenueDetails::where('id', '=', $id)->update(['status' => $venuedetailsstatus]);
+        return redirect()->back()->with('success', 'Venue Hall status successfully updated');
+    }
+    public function halldestroy($id)
+    {
+        VenueDetails::where('id', '=', $id)->update(['delete_status' => 1]);
+        return redirect()->back()->with('success', 'Venue Hall Details successfully deleted');
+       
     }
 }

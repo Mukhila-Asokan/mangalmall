@@ -36,8 +36,8 @@ Route::get('/get-subtypes/{typeId}', function ($typeId) {
  $username = preg_replace('/\s+/', '_', $username);*/
 
 Route::get('/',[HomeController::class, 'home'])->name('home');
-Route::get('/home',[HomeController::class, 'home'])->name('home');
-Route::get('/logout',[HomeController::class, 'home'])->name('home');
+/*Route::get('/home',[HomeController::class, 'home'])->name('home');*/
+Route::get('/logout',[HomeController::class, 'home'])->name('logout');
 Route::any('/ajaxcvenuesubtypelist',[HomeController::class, 'ajaxcvenuesubtypelist'])->name('home/ajaxcvenuesubtypelist');
 Route::any('/venuesearchresults',[HomeController::class, 'venuesearchresults'])->name('home/venuesearchresults');
 Route::any('/home/{id}/venuedetails',[HomeController::class, 'venuedetails'])->name('home/venuedetails');
@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
 
-    Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home/occasion');
+    Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home.occasion');
     Route::any(session('userpath').'/occasion/add', [UserOccasionController::class, 'store'])->name('home/occasion/add');
 
     Route::any(session('userpath').'/venue/search', [VenueController::class, 'index'])->name('home/venue/search');

@@ -7207,7 +7207,7 @@ a.close.disabled {
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.modal-dialog-scrollable .modal-content {
+.modal-dialog-scrollable .homemodal-content {
   max-height: calc(100vh - 1rem);
   overflow: hidden;
 }
@@ -7257,7 +7257,7 @@ a.close.disabled {
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.modal-dialog-centered.modal-dialog-scrollable .modal-content {
+.modal-dialog-centered.modal-dialog-scrollable .homemodal-content {
   max-height: none;
 }
 
@@ -7267,7 +7267,7 @@ a.close.disabled {
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-.modal-content {
+.homemodal-content {
   position: relative;
   display: -ms-flexbox;
   display: -webkit-box;
@@ -7388,7 +7388,7 @@ a.close.disabled {
     max-height: calc(100% - 3.5rem);
   }
   /* line 6, src/assets/scss/vendors/bootstrap.min.css */
-  .modal-dialog-scrollable .modal-content {
+  .modal-dialog-scrollable .homemodal-content {
     max-height: calc(100vh - 3.5rem);
   }
   /* line 6, src/assets/scss/vendors/bootstrap.min.css */

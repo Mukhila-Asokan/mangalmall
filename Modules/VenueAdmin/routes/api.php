@@ -26,7 +26,7 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 
   Route::any('/{id}/get-events',[VenueBookingController::class, 'getEventlist']);
   Route::any('/save-booking',[VenueBookingController::class, 'savebooking']);
-  Route::put('/api/update-booking/{id}', [YourController::class, 'updatebooking']);
-Route::delete('/api/delete-booking/{id}', [YourController::class, 'deletebooking']);
+  Route::put('/api/update-booking/{id}', [VenueBookingController::class, 'updatebooking']);
+Route::delete('/api/delete-booking/{id}', [VenueBookingController::class, 'deletebooking']);
 
 Route::any('/get-event-details/{id}',[VenueBookingController::class, 'getEventsbyid']);

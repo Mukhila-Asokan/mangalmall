@@ -13,7 +13,9 @@ use Modules\Venue\Models\VenueThemeBuilder;
 use Modules\Venue\Models\State;
 use Modules\Venue\Models\City;
 use Modules\Venue\Models\VenueDetails;
-Use Session;
+use Illuminate\Support\Facades\Session;
+use Modules\Venue\Models\Area;
+use Illuminate\Support\Facades\Response;
 
 class HomeController extends Controller
 {
@@ -86,14 +88,14 @@ public function venuesearchresults(Request $request)
         $cityid = $request->city;
         $state = State::where('id','=',$stateid)->first();        
         $city = City::where('id','=',$cityid)->first();
-        $statename = $state->statename;
-        $cityname = $city->cityname;    
+      /*  $statename = $state->statename;
+        $cityname = $city->cityname;    */
     
    
 
-        $arealocation = indialocation::where('City','Like',$cityname)->where('State','Like',$statename)->pluck('Areaname')->toArray();
-    Session::put('city', $cityname ?? '');
-    Session::put('state', $statename ?? '');
+        $arealocation = Area::where('City','=',$cityid)->where('State','=',$stateid)->pluck('Areaname')->toArray();
+        Session::put('city', $cityname ?? '');
+        Session::put('state', $statename ?? '');
        /* $areaContent = '';  
   
         foreach ($arealocation as $key => $area) {
@@ -109,13 +111,13 @@ public function venuesearchresults(Request $request)
     }
 
     public function ajaxCitySearch(Request $request)
-{
-    $query = $request->input('query');
-    
-    $aarea = City::where('cityname', 'LIKE', "%{$query}%")->pluck('cityname')->toArray();
+    {
+        $query = $request->input('query');
+        
+        $aarea = City::where('cityname', 'LIKE', "%{$query}%")->pluck('cityname')->toArray();
 
-    return response()->json($aarea);
-}
+        return response()->json($aarea);
+    }
 
 
 }
