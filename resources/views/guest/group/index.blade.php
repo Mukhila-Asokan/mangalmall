@@ -6,6 +6,9 @@
     </div>
     <input type="hidden" name="group_id" id="group_id">
 </div>
+<div class="col-lg-2 col-md-2">
+    @include('profile-layouts.rightside')
+</div>
 <div class="modal" id="edit_group_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
