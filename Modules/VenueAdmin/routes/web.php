@@ -9,6 +9,7 @@ use Modules\VenueAdmin\Http\Controllers\VenueBookingController;
 use Illuminate\Foundation\Configuration\Middleware;
 use Modules\VenueAdmin\Http\Middleware\VenueAdminMiddleware;
 use App\Http\Middleware\FlashMessageMiddleware;
+use Modules\VenueAdmin\Http\Controllers\BookingAdonsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +39,10 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 
     Route::any('/dashboard',[VenueAdminController::class, 'dashboard'])->name('venueadmin/dashboard');
 
-    Route::any('/userprofile',[VenueUserProfileController::class, 'index'])->name('venueadmin/userprofile');
+    Route::any('/userprofile',[VenueUserProfileController::class, 'index'])->name('venueadmin.userprofile');
     Route::any('/userprofileupdate',[VenueUserProfileController::class, 'store'])->name('venueadmin/userprofileupdate');
-    Route::any('/changemobileno',[VenueUserProfileController::class, 'changemobileno'])->name('venueadmin/changemobileno');
+    Route::any('/changemobileno',[VenueUserProfileController::class, 'changemobileno'])->name('venueadmin.changemobileno');
+    Route::any('/sendrequestchangemobileno',[VenueUserProfileController::class, 'sendrequestchangemobileno'])->name('venueadmin.sendrequestchangemobileno');
 
     Route::any('/venueadd',[VenueAdminController::class, 'storevenue'])->name('venueadmin/venueadd');
 
@@ -59,6 +61,14 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuebooking/eventslist',[VenueBookingController::class, 'index'])->name('venuebooking.eventslist');
 
     
+    Route::any('/bookingadons',[BookingAdonsController::class, 'index'])->name('venue.bookingadons');
+    Route::any('/bookingadons/create',[BookingAdonsController::class, 'create'])->name('bookingadons.create');
+    Route::post('/bookingadons/store',[BookingAdonsController::class, 'store'])->name('bookingadons.add');
+    Route::any('/bookingadons/{id}/edit', [BookingAdonsController::class,'edit']);
+    Route::put('/bookingadons/update/{id}', [BookingAdonsController::class,'update'])->name('bookingadons.update');
+    Route::any('/bookingadons/{id}/destroy', [BookingAdonsController::class,'destroy']);
+    Route::any('/bookingadons/{id}/updatestatus', [BookingAdonsController::class,'updatestatus']);
+
 
      Route::any('/logout',[VenueAdminController::class, 'destroy'])->name('venueadmin/logout');
 
