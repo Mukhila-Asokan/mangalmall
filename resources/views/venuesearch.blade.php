@@ -4,7 +4,7 @@
 @section('content')
 <div class="col-lg-8 col-md-8">
                         <!-- Search widget-->
-    <aside class="widget widget-search">
+    <!-- <aside class="widget widget-search">
       
             <input class="form-control" type="search" placeholder="Type Search Words">
             <button class="search-button" type="submit"><span class="ti-search"></span></button>
@@ -17,7 +17,7 @@
         
 
 		<div class = "row pt-2 col-12">
-			<div class="col-md-12 col-12">
+			<div class="col-md-12 col-12"> -->
 			
 			
 			
@@ -28,9 +28,9 @@
 
 
           
-			</div>
+			<!-- </div>
 		</div>
-    </div>
+    </div> -->
 </div>
 
 

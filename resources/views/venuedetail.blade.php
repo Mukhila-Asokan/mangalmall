@@ -360,7 +360,7 @@ img.zoomed {
         <p>Rating: <span id="rating-value">{{$venueRating->rating ?? 0}}</span>/5</p>
     </div> -->
 
-    @if($venueRating && $venueRating->review && ($venueRating->verified_at != null || $venueRating->rejected_at != null))
+    @if(!$venueRating || !$venueRating->review)
         <div class="comment-respond">
             <h5 class="comment-reply-title">Leave your Comments</h5>
             <p class="comment-notes"></p>

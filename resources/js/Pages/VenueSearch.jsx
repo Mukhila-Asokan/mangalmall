@@ -484,7 +484,7 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                 {Array.isArray(venues) && venues.length > 0 ? (
                     venues.map((venue) => (
                         <div key={venue.id} className="col-md-4 mtb-2">
-                            <div className="card rounded white-bg shadow-sm p-1">
+                            <div className="card venue-card rounded white-bg shadow-sm p-1">
                             {/* <div className="favorite-icon"> <i className="bi bi-heart"></i> </div>  */}
                             <div className="image-container"><img src={`${baseImageUrl}${venue.bannerimage}`} className="venue-img" alt={venue.venuename}/></div>
                             {/* <div className="label-container"> 

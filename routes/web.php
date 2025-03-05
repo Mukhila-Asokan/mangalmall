@@ -19,7 +19,7 @@ use App\Http\Controllers\VenueRatingController;
 use App\Http\Controllers\CanvaController;
 use App\Http\Controllers\InvitationCardDesignController;
 Use App\Http\Controllers\CardEditorController;
-use App\Http\Controllers\CardImageAjaxLoadController;
+use App\Http\Controllers\{CardImageAjaxLoadController, GuestController};
 
 Use App\Http\Controllers\PricingController;
 
@@ -161,7 +161,28 @@ Route::any('/cardinvitation/uploadMedia', [CardEditorController::class, 'uploadM
 Route::any('/cardinvitation/moreImages', [CardEditorController::class, 'moreImages']);
 Route::any('/cardinvitation/save_template', [CardEditorController::class, 'saveTemplate']);
 
+// Guest
+Route::get('/guest/contacts/ajax', [GuestController::class, 'getGuestContactsAjax'])->name('guest.contacts');
+Route::get('/guest/contacts/{user_id}', [GuestController::class, 'getGuestContacts'])->name('guest.index');
+Route::post('store/guest/contacts', [GuestController::class, 'storeGuest'])->name('guest.store');
+Route::get('guest/{id}/edit', [GuestController::class, 'editGuest'])->name('guest.edit');
+Route::post('update/guest/contacts', [GuestController::class, 'updateGuest'])->name('guest.update');
+Route::get('guest/{id}/delete', [GuestController::class, 'deleteGuest'])->name('guest.delete');
+Route::get('guest/search', [GuestController::class, 'searchGuest'])->name('guest.search');
+Route::get('get/guest/new-group', [GuestController::class, 'getNewGroupGuest'])->name('guest.new-group');
+Route::get('download/guest/contact/format', [GuestController::class, 'downloadGuestFormat'])->name('download.guest.format');
+Route::post('upload/guest/contacts', [GuestController::class, 'uploadGuestContacts'])->name('upload.guest.contacts');
 
+//Guest group
+Route::get('/guest/group/ajax', [GuestController::class, 'getGuestGroupAjax'])->name('guest.group');
+Route::get('/guest/group/contacts', [GuestController::class, 'getGuestGroupContacts'])->name('guest.group.index');
+Route::post('create/guest/group', [GuestController::class, 'createGuestGroup'])->name('guest.create.group');
+Route::get('guest/group/{id}/edit', [GuestController::class, 'editGuestGroup'])->name('guest.edit.group');
+Route::post('update/guest/group', [GuestController::class, 'updateGuestGroup'])->name('guest.update.group');
+Route::post('update/group/text', [GuestController::class, 'updateGuestGroupText'])->name('guest.update.group.text');
+Route::get('guest/group/search', [GuestController::class, 'searchGuestGroup'])->name('guest.group.search');
+Route::post('add/guest/group/', [GuestController::class, 'addGuestInGroup'])->name('add.guest.group');
+Route::post('delete/guest/group', [GuestController::class, 'deleteGuestGroup'])->name('guest.group.delete');
 
 require __DIR__.'/auth.php';
 

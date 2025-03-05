@@ -113,9 +113,16 @@
 
                             </li>
      
-                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Guest</a>
+                            <!-- <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
+                                <a class="nav-link custom-nav-link" href="{{route('guest.index', ['user_id'=> auth()->user()->id])}}" aria-haspopup="true" aria-expanded="false">Guest</a>
 
+                            </li> -->
+                            <li class="nav-item hs-has-sub-menu custom-nav-item">
+                                <a id="pagesMegaMenu" class="nav-link custom-nav-link main-link-toggle" href="javascript:void(0);" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesGuestSubMenu">Guest</a>
+                                <ul id="pagesGuestSubMenu" class="hs-sub-menu main-sub-menu" aria-labelledby="pagesMegaMenu" style="min-width: 260px;">                                   
+                                    <li><a class="nav-link sub-menu-nav-link" href="{{ route('guest.index', ['user_id'=> auth()->user()->id]) }}">All Guests</a></li>
+                                    <li><a class="nav-link sub-menu-nav-link" href="{{ route('guest.group.index') }}">Guest Groups</a></li>
+                                </ul>
                             </li>
           
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
