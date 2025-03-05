@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class GuestContact extends Model
+class GuestGroup extends Model
 {
     use SoftDeletes;
     
+    protected $table = 'guest_groups';
+    
     protected $guarded = [];
-
-    public function groups(){
-        return $this->hasMany(GuestGroupContact::class, 'guest_id', 'id');
-    }
 }
