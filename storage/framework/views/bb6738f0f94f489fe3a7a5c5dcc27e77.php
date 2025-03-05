@@ -39,13 +39,13 @@
                                         </button>
                                         <?php endif; ?>                                       
 
-                                        <a href="<?php echo e(url('/venueadmin/venuepricingaddon/'.$addon->id.'/edit')); ?>" class="btn btn-info" title="Edit">
+                                        <a href="<?php echo e(url('/venueadmin/bookingadons/'.$addon->id.'/edit')); ?>" class="btn btn-info" title="Edit">
                                             <i class="bi bi-pencil-fill"></i> 
                                         </a>
                                         
-                                        <a href="<?php echo e(url('/venueadmin/venuepricingaddon/'.$addon->id.'/edit')); ?>" class="btn btn-danger" title="Edit">
+                                        <button type="button" class="btn btn-danger deleteid" data-bs-toggle="modal"  data-bs-target="#delModal" data-id="<?php echo e($addon->id); ?>" title="Delete">
                                             <i class="bi bi-trash2-fill"></i> 
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

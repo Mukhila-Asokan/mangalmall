@@ -81,11 +81,11 @@ class BookingAdonsController extends Controller
         $venueuserid =  Session::get('venueuserid'); 
         $pagetitle = "Venue Booking Addons";
         $pageroot = "Home"; 
-        $addon = VenuePriceAddons::find($id);
-        if (!$addon) {
+        $bookingadon = VenuePriceAddons::find($id);
+        if (!$bookingadon) {
             return redirect()->route('venue.bookingadons')->with('error', 'Addon not found.');
         }
-        return view('venueadmin::bookingadon.edit', compact('addon', 'pagetitle', 'pageroot'));
+        return view('venueadmin::bookingadon.edit', compact('bookingadon', 'pagetitle', 'pageroot'));
     }
 
     /**
