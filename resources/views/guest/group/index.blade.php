@@ -11,7 +11,7 @@
 </div>
 <div class="modal" id="edit_group_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="homemodal-content">
             <div class="modal-header">
                 <div>
                     <h5 class="modal-title edit_group_title font-color"></h5>
@@ -33,7 +33,7 @@
 
 <div class="modal" id="add_group_contact_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="height: 18rem !important;">
+        <div class="homemodal-content" style="height: 18rem !important;">
             <div class="modal-header">
                 <h5 class="modal-title font-14 font-color">Add Group Guest</h5>
                 <div class="d-flex">
