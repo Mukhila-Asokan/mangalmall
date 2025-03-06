@@ -25,6 +25,7 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 });
 
   Route::any('/{id}/get-events',[VenueBookingController::class, 'getEventlist']);
+  Route::any('get-muhurtam-dates',[VenueBookingController::class, 'getMuhurthamDates']);
   Route::any('/save-booking',[VenueBookingController::class, 'savebooking']);
   Route::put('/api/update-booking/{id}', [VenueBookingController::class, 'updatebooking']);
 Route::delete('/api/delete-booking/{id}', [VenueBookingController::class, 'deletebooking']);
