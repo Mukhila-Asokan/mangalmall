@@ -19533,3 +19533,31 @@ span.flatpickr-weekday,
 [dir=rtl] .irs-bar--single {
   border-radius: 0 4px 4px 0 !important;
 }
+.pricing-details {
+  margin-bottom: 20px;
+}
+
+.pricing-type-section {
+  margin-bottom: 20px;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pricing-table th,
+.pricing-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.pricing-table th {
+  background-color: #f2f2f2;
+}
+
+.extras-list {
+  list-style-type: disc;
+  margin-left: 20px;
+}

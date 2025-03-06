@@ -131,10 +131,10 @@
                             <div class="collapse" id="sidebarStaff">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="#">Add Staff</a>
+                                        <a href="<?php echo e(route('venueadmin.add.staff')); ?>">Add Staff</a>
                                     </li>
                                     <li>
-                                        <a href="#">List</a>
+                                        <a href="<?php echo e(route('venueadmin.list.staff')); ?>">List</a>
                                     </li>                                  
                                 </ul>
                             </div>

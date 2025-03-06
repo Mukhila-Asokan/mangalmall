@@ -21,4 +21,9 @@ class VenuePriceAddons extends Model
     // {
     //     // return VenuePriceAddonsFactory::new();
     // }
+
+    public function addons()
+    {
+        return $this->belongsTo(VenuePricingAddon::class, 'addonid', 'id'); 
+    }
 }

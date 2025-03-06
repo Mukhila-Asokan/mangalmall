@@ -30,9 +30,87 @@
                             <td>{{  $i++ }}</td>
 							<td> {{ $ven->venuename }} </td>
 							<td> {{ $ven->websitename }} </td>
-							<td> <a href="{{ url('/venueadmin/venuepricing/'.$ven->id.'/add') }}" class="btn-primary btn" title="Pricing"><i class="ti ti-book action_icon"></i>
-               Pricing </a> </td>
-							<td><a href="{{ url('/venueadmin/venuebooking/'.$ven->id.'/add') }}" class="btn-success btn" title="Booking"><i class="ti ti-bookmark action_icon"></i>
+							<td>
+								<a href="javascript:void(0);" class="btn-primary btn" title="Pricing" data-bs-toggle="modal" data-bs-target="#pricingModal{{ $ven->id }}">
+									<i class="ti ti-book action_icon"></i> Pricing
+								</a>
+								<!-- Modal -->
+
+								@php
+								$pricingDetails = DB::table('venuePricing')->where('venue_id', $ven->id)
+								->where('delete_status','0')->where('status','Active')->get();
+								@endphp
+								<div class="modal fade" id="pricingModal{{ $ven->id }}" tabindex="-1" aria-labelledby="pricingModalLabel{{ $ven->id }}" aria-hidden="true">
+									<div class="modal-dialog modal-xl">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="pricingModalLabel{{ $ven->id }}">Venue Pricing Details</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+											
+											<div class="pricing-details">
+    <p><strong>Pricing details for {{ $ven->venuename }} - Price: ${{ $ven->bookingprice }}</strong></p>
+
+    @if($pricingDetails->isNotEmpty())
+        @foreach($pricingDetails as $pricing)
+            <div class="pricing-type-section">
+                <h5>Pricing Type: {{ $pricing->pricing_type }}</h5>
+
+                <table class="table pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Peak Rate</th>
+                            <th>Deposit Amount</th>
+                            <th>Base Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${{ $pricing->peak_rate }}</td>
+                            <td>${{ $pricing->deposit_amount }}</td>
+                            <td>${{ $pricing->base_price }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                @php
+                    $bookingAddons = Modules\VenueAdmin\Models\VenuePricingAddon::where('venuepricingid', $pricing->id)->with('addon')->get();
+                @endphp
+
+                @if($bookingAddons->isNotEmpty())
+                    <p><strong>Extras:</strong></p>
+                    <ul class="extras-list">
+                        @foreach($bookingAddons as $bookingAddon)
+                            <li>{{ $bookingAddon->addon->addonname }}: ${{ $bookingAddon->addon->price }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+            @if(!$loop->last)
+                <hr>
+            @endif
+        @endforeach
+    @else
+        <p>No pricing details available.</p>
+    @endif
+</div>
+
+											
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</td>
+							<td>
+								<a href="{{ url('/venueadmin/venuebooking/'.$ven->id.'/add') }}" class="btn-success btn" title="Booking">
+									<i class="ti ti-bookmark action_icon"></i> Booking
+								</a>
+							</td>
                Booking </a>  </td>
 							<!-- <td> <a href="{{ url('/venueadmin/themebuilder/'.$ven->id.'/edit') }}" class="btn-info btn" title="Theme"><i class="ti ti-wand action_icon"></i>
                 Theme </a></td> -->
