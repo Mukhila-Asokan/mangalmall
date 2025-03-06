@@ -9,6 +9,7 @@ use Modules\VenueAdmin\Http\Controllers\VenueBookingController;
 use Illuminate\Foundation\Configuration\Middleware;
 use Modules\VenueAdmin\Http\Middleware\VenueAdminMiddleware;
 use App\Http\Middleware\FlashMessageMiddleware;
+use Modules\VenueAdmin\Http\Controllers\StaffController;
 use Modules\VenueAdmin\Http\Controllers\BookingAdonsController;
 
 /*
@@ -73,4 +74,11 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 
      Route::any('/logout',[VenueAdminController::class, 'destroy'])->name('venueadmin/logout');
 
+    //Staff
+    Route::get('/list/staffs', [StaffController::class, 'index'])->name('venueadmin.list.staff');
+    Route::get('/add/staff', [StaffController::class, 'add'])->name('venueadmin.add.staff');
+    Route::post('/store/staff', [StaffController::class, 'store'])->name('venueadmin.store.staff');
+    Route::get('/edit/staff/{id}', [StaffController::class, 'edit'])->name('venueadmin.edit.staff');
+    Route::post('/update/staff', [StaffController::class, 'update'])->name('venueadmin.update.staff');
+    Route::get('/delete/staff/{id}', [StaffController::class, 'delete'])->name('venueadmin.delete.staff');
 });

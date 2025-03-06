@@ -10,7 +10,7 @@
 </div>
 <div class="modal" id="add_contact_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="homemodal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-20 font-color">Add Contact</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -99,7 +99,7 @@
 
 <div class="modal" id="edit_contact_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="homemodal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Contact</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -189,7 +189,7 @@
 
 <div class="modal" id="view_contact_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="homemodal-content">
             <div class="modal-header">
                 <h5 class="modal-title">View Contact</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -259,7 +259,7 @@
 
 <div class="modal" id="create_group_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="homemodal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-20 font-color">Create Group</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -296,7 +296,7 @@
 
 <div class="modal" id="import_contact_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="homemodal-content">
             <div class="modal-header">
                 <div>
                     <h5 class="modal-title font-20 font-color">Import Guest</h5>
