@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\OccasionType;
 use Session;
 use Carbon\Carbon;
+use Modules\VenueAdmin\Models\MuhurthamDates;
 
 class VenueBookingController extends Controller
 {
@@ -23,6 +24,11 @@ class VenueBookingController extends Controller
       
         $occasion_types = OccasionType::where('delete_status','0')->get();
         return view('venueadmin::booking.index',compact('pagetitle','pageroot','occasion_types','venueid'));
+    }
+
+    public function getMuhurthamDates(){
+        $muhurtamDates = MuhurthamDates::get();
+        return response()->json($muhurtamDates);
     }
 
 

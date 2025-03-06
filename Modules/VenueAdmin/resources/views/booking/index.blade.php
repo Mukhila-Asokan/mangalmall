@@ -148,27 +148,69 @@ document.addEventListener("DOMContentLoaded", function () {
     var calendarEl = document.getElementById("calendar");
 
     if (calendarEl) {
+        var muhurthamDates;
+        $.ajax({
+            url: '/api/get-muhurtam-dates',
+            success: function(response) {
+                muhurthamDates = response;
+            },
+            error: function(error) {
+                failureCallback(error);
+            }, async:false
+        });
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
             selectable: true, // Enable date selection
-            events: "/api/"+venue_id+"/get-events/", 
-            events: function(fetchInfo, successCallback, failureCallback) {
-            $.ajax({
-                url: '/api/'+venue_id+'/get-events',
-                success: function(response) {
-                    let events = response.map(event => ({
-                      id:event.id,  
-                    title: event.title,
-                    start: event.start + 'T00:00:00',
-                    end: event.end + 'T00:00:00',
-                    color: event.color || getRandomColor(), 
-                }));
-                successCallback(events);
-                },
-                error: function(error) {
-                    failureCallback(error);
+            // events: "/api/"+venue_id+"/get-events/", 
+        //     events: function(fetchInfo, successCallback, failureCallback) {
+        //     $.ajax({
+        //         url: '/api/'+venue_id+'/get-events',
+        //         success: function(response) {
+        //             let events = response.map(event => ({
+        //               id:event.id,  
+        //             title: event.title,
+        //             start: event.start + 'T00:00:00',
+        //             end: event.end + 'T00:00:00',
+        //             color: event.color || getRandomColor(), 
+        //         }));
+        //         successCallback(events);
+        //         },
+        //         error: function(error) {
+        //             failureCallback(error);
+        //         }
+        //     });
+        // },
+        dayCellDidMount: function (arg) {
+            console.log(muhurthamDates, 'muhurthamDates');
+            let currentDate = arg.date.toISOString().split("T")[0];
+            let muhurthamData = muhurthamDates.find(muhurtham => muhurtham.muhurtham_date === currentDate);
+
+            if (muhurthamData) {
+
+                let img = document.createElement("img");
+                img.src = "{{ asset('assets/images/wedding-image.png') }}";
+                img.style.width = "45px";
+                img.style.height = "45px";
+                img.style.position = "absolute";
+                img.style.top = "80px";
+                img.style.left = "2px";
+
+                arg.el.style.position = "relative";
+                arg.el.querySelector(".fc-daygrid-day-top")?.appendChild(img);
+
+                if (muhurthamData?.muhurtham_type === "Subha Muhurtham") {
+                    let mangalyamImg = document.createElement("img");
+                    mangalyamImg.src = "{{ asset('assets/images/mangalyam.png') }}";
+                    mangalyamImg.style.width = "35px";
+                    mangalyamImg.style.height = "45px";
+                    mangalyamImg.style.position = "absolute";
+                    mangalyamImg.style.top = "0px";
+                    mangalyamImg.style.left = "0px";
+
+                    arg.el.style.position = "relative";
+                    arg.el.querySelector(".fc-daygrid-day-top")?.appendChild(mangalyamImg);
                 }
-            });
+            }
         },
          eventDidMount: function(info) {
                 // Optional: Add custom styling or tooltips
@@ -194,57 +236,57 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("day-type-containers").innerHTML = "";
 
   
-    $.ajax({
-        url: '/api/get-event-details/' + event.id,
-        method: 'GET',
-        success: function(response) {
-          console.log(response);
-            document.getElementById("event_name").value = response.event_name;
-            document.getElementById("event-start-date").value = response.start_date;
-            document.getElementById("event-end-date").value = response.end_date;
-            document.getElementById("booking_id").value = response.id;
-            document.getElementById("person_name").value = response.person_name;
-            document.getElementById("contact_address").value = response.contact_address;
-            document.getElementById("mobileno").value = response.mobileno;
-            document.getElementById("special_requirements").value = response.special_requirements;
+    // $.ajax({
+    //     url: '/api/get-event-details/' + event.id,
+    //     method: 'GET',
+    //     success: function(response) {
+    //       console.log(response);
+    //         document.getElementById("event_name").value = response.event_name;
+    //         document.getElementById("event-start-date").value = response.start_date;
+    //         document.getElementById("event-end-date").value = response.end_date;
+    //         document.getElementById("booking_id").value = response.id;
+    //         document.getElementById("person_name").value = response.person_name;
+    //         document.getElementById("contact_address").value = response.contact_address;
+    //         document.getElementById("mobileno").value = response.mobileno;
+    //         document.getElementById("special_requirements").value = response.special_requirements;
 
           
-            $('input[name="bookingstatus"][value="' + response.booking_status + '"]').prop("checked", true);
+    //         $('input[name="bookingstatus"][value="' + response.booking_status + '"]').prop("checked", true);
 
-            response.daytypes.forEach(day => {
-                let dayTypeContainer = `
-                    <div class="col-md-6 mt-2">
-                        <label class="form-label">Day (${day.date})</label>
-                        <div class="d-flex">
-                            <div class="n-chk">
-                                <div class="form-check form-check-primary form-check-inline">
-                                    <input class="form-check-input daytype" type="radio" name="daytype-${day.date}" value="full" ${day.daytype === 'full' ? 'checked' : ''} />
-                                    <label class="form-check-label">Full Day</label>
-                                </div>
-                            </div>
-                            <div class="n-chk">
-                                <div class="form-check form-check-warning form-check-inline">
-                                    <input class="form-check-input daytype" type="radio" name="daytype-${day.date}" value="morning" ${day.daytype === 'morning' ? 'checked' : ''} />
-                                    <label class="form-check-label">Morning</label>
-                                </div>
-                            </div>
-                            <div class="n-chk">
-                                <div class="form-check form-check-warning form-check-inline">
-                                    <input class="form-check-input daytype" type="radio" name="daytype-${day.date}" value="evening" ${day.daytype === 'evening' ? 'checked' : ''} />
-                                    <label class="form-check-label">Evening</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                $("#day-type-containers").append(dayTypeContainer);
-            });
+    //         response.daytypes.forEach(day => {
+    //             let dayTypeContainer = `
+    //                 <div class="col-md-6 mt-2">
+    //                     <label class="form-label">Day (${day.date})</label>
+    //                     <div class="d-flex">
+    //                         <div class="n-chk">
+    //                             <div class="form-check form-check-primary form-check-inline">
+    //                                 <input class="form-check-input daytype" type="radio" name="daytype-${day.date}" value="full" ${day.daytype === 'full' ? 'checked' : ''} />
+    //                                 <label class="form-check-label">Full Day</label>
+    //                             </div>
+    //                         </div>
+    //                         <div class="n-chk">
+    //                             <div class="form-check form-check-warning form-check-inline">
+    //                                 <input class="form-check-input daytype" type="radio" name="daytype-${day.date}" value="morning" ${day.daytype === 'morning' ? 'checked' : ''} />
+    //                                 <label class="form-check-label">Morning</label>
+    //                             </div>
+    //                         </div>
+    //                         <div class="n-chk">
+    //                             <div class="form-check form-check-warning form-check-inline">
+    //                                 <input class="form-check-input daytype" type="radio" name="daytype-${day.date}" value="evening" ${day.daytype === 'evening' ? 'checked' : ''} />
+    //                                 <label class="form-check-label">Evening</label>
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             `;
+    //             $("#day-type-containers").append(dayTypeContainer);
+    //         });
 
            
-            var myModal = new bootstrap.Modal(document.getElementById("eventModal"));
-            myModal.show();
-        }
-    });
+    //         var myModal = new bootstrap.Modal(document.getElementById("eventModal"));
+    //         myModal.show();
+    //     }
+    // });
 },
 
 dateClick: function(info) {
@@ -261,21 +303,21 @@ dateClick: function(info) {
     myModal.show();
 },
 
-eventContent: function(arg) { // Custom event rendering
-        let eventTitle = document.createElement('div');
-        eventTitle.innerHTML = arg.event.title;
+// eventContent: function(arg) { // Custom event rendering
+//         // let eventTitle = document.createElement('div');
+//         // eventTitle.innerHTML = arg.event.title;
 
-        let eventTime = document.createElement('div');
-        eventTime.classList.add('fc-event-time'); // Add FullCalendar's time class
-        eventTime.innerHTML = arg.timeText; // Display time if available
+//         // let eventTime = document.createElement('div');
+//         // eventTime.classList.add('fc-event-time'); // Add FullCalendar's time class
+//         // eventTime.innerHTML = arg.timeText; // Display time if available
 
-        let eventWrapper = document.createElement('div');
-        eventWrapper.classList.add('fc-event-content'); // Important for styling
-        eventWrapper.appendChild(eventTitle);
-        eventWrapper.appendChild(eventTime);
+//         let eventWrapper = document.createElement('div');
+//         // eventWrapper.classList.add('fc-event-content'); // Important for styling
+//         // eventWrapper.appendChild(eventTitle);
+//         // eventWrapper.appendChild(eventTime);
 
-        return { domNodes: [eventWrapper] }; // Return the DOM nodes
-    }
+//         return { domNodes: [eventWrapper] }; // Return the DOM nodes
+//     }
 
 
 
