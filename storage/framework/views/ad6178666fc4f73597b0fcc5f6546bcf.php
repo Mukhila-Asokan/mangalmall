@@ -16,7 +16,7 @@
         <script src="<?php echo e(asset('venueasset/js/config.js')); ?>"></script>
 
         <!-- App css -->
-        <link href="<?php echo e(asset('venueasset/css/app.min.css')); ?>" rel="stylesheet" type="text/css" id="app-style" />
+        <link href="<?php echo e(asset('venueasset/css/app.css')); ?>" rel="stylesheet" type="text/css" id="app-style" />
 
         <!-- Icons css -->
         <link href="<?php echo e(asset('venueasset/css/icons.min.css')); ?>" rel="stylesheet" type="text/css" />

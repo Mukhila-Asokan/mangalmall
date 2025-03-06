@@ -2723,6 +2723,8 @@ textarea.form-control-lg {
 .form-check .form-check-input {
   float: left;
   margin-left: -1.635em;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 .form-check-reverse {

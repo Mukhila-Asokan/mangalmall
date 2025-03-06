@@ -67,7 +67,7 @@
 
 </div>
 @include('venueadmin::layouts.footer')
-@include('admin.layouts.scripts')
+</div>
 @include('admin.layouts.popup')
 @stack('scripts')
 @include('admin.layouts.popupscripts')

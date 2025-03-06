@@ -119,7 +119,7 @@ class VenueBookingController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function showBooking($id)
     {
         return view('venueadmin::show');
     }
@@ -431,7 +431,17 @@ public function getEventsbyid($id)
     return response()->json($formattedEvents, 200);
 }
 
+public function show()
+{
+    $pagetitle = "Venue Booking";
+    $pageroot = "Home"; 
+    $venueid = session('venue_id');
+    $venuebooking = VenueBooking::where('id',$venueid)->first();
+    $booking = VenueBookingContact::where('venuebooking_id',$venueid)->first();
+    $venuebookingdetails = VenueBookingDetails::where('venuebooking_id',$venueid)->get();
 
+    return view('venueadmin::booking.list',compact('pagetitle','pageroot','venueid'));
+}
 
 
 
