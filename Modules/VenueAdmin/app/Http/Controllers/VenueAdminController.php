@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Modules\VenueAdmin\Models\VenueUser;
 use Modules\VenueAdmin\Models\UserVenue;
 use Modules\VenueAdmin\Models\VenueBookingContact;
-
+Use Modules\Venue\Models\VenueImage;
+use Modules\Venue\Models\VenueContent;
 use Modules\Venue\Models\VenueType;
 use Modules\Venue\Models\VenueAmenities;
 Use Modules\Venue\Models\VenueDataField;
@@ -325,6 +326,127 @@ class VenueAdminController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
         return redirect('venueadmin/venuelist')->with('success', 'Venue Details Successfully updated');
+    }
+
+    public function viewvenue($id){
+        $pagetitle = "Venue Details";
+        $pageroot = "Home";
+        $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
+        $venueamenities = VenueAmenities::where('delete_status',0)->get();
+        $venuedatafield = VenueDataField::where('delete_status',0)->get();
+        $arealocation = Area::orderBy('cityid')->get();
+        $venuedetails = VenueDetails::where('id',$id)->first();
+        $venuedatafielddetails = VenueDataFieldDetails::where('delete_status',0)->get();
+        return view('venueadmin::venueuser.view', compact('pagetitle','pageroot','venuetypes','venueamenities','venuedatafield','arealocation','venuedetails', 'venuedatafielddetails'));
+    }
+
+    public function venueGallery($id){
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue Image";
+        $pageroot = "Venue"; 
+        $venue = VenueDetails::where('id',$id)->first();
+        $venueimage = VenueImage::where('venue_id',$id)->get(); 
+        return view('venueadmin::venueuser.venueimage',compact('pagetitle','pageroot','username','venue','venueimage'));
+    }
+
+    public function venueimageAdd(Request $request){
+        $id = $request->venue_id;
+
+        $validator = Validator::make($request->all(), [
+            'sliderimage' => 'required_without:galleryimage',
+            'sliderimage.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'galleryimage' => 'required_without:sliderimage',
+            'galleryimage.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'venue_id' => 'required|exists:venuedetails,id',
+        ], [
+            'galleryimage.required_without' => 'Either slider image or gallery image is required.',
+            'sliderimage.required_without' => 'Either slider image or gallery image is required.',
+        ]);
+
+         if ($validator->fails()) {
+            return redirect(url()->previous())
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
+        $venue = VenueDetails::find($request->venue_id);
+
+        // Handle slider images
+        if ($request->hasFile('sliderimage')) {
+         
+            foreach ($request->file('sliderimage') as $image) {
+                $filename = time() . '-' . $image->getClientOriginalName();
+                $path = $image->storeAs('venue_images', $filename, 'public');
+
+                $image_type = 'slider';
+
+              $result =   VenueImage::create([
+                    'venue_id' => $id,
+                    'image_path' => $path,
+                    'image_type' => $image_type,
+                ]);
+            }
+        }
+
+        // Handle gallery images
+        if ($request->hasFile('galleryimage')) {
+            foreach ($request->file('galleryimage') as $image) {
+                $filename = time() . '-' . $image->getClientOriginalName();
+                $path = $image->storeAs('venue_images', $filename, 'public');
+
+                VenueImage::create([
+                    'venue_id' => $id,
+                    'image_path' => $path,
+                    'image_type' => 'gallery',
+                ]);
+            }
+        }
+       
+        return redirect()->back()->with('success', 'Venue Image successfully created');
+    }
+
+    public function imageDelete(Request $request)
+    {
+        $image = VenueImage::find($request->id);
+        if ($image) {
+            Storage::delete('public/venue_images/' . $image->image_path);
+            $image->delete();
+            return response()->json(['success' => true, 'message' => 'Image deleted successfully!']);
+        }
+        return response()->json(['success' => false, 'message' => 'Image not found!']);
+    }
+
+    public function venuecontent($id)
+    {
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue Content";
+        $pageroot = "Venue"; 
+        $venue = VenueDetails::where('id',$id)->first();
+        $venuecontent = VenueContent::where('venue_id',$id)->first();       
+        return view('venueadmin::venueuser.venuecontent',compact('pagetitle','pageroot','username','venue','venuecontent'));
+    }
+
+    public function contentAdd(Request $request)
+    {
+        $id = $request->venue_id;
+        $venue_content = VenueContent::where('venue_id',$id)->first(); 
+        if ($venue_content !== null && count((array)$venue_content) > 0) { // Check for null first, then cast to array
+            $venuecontent = VenueContent::find($venue_content->id);
+        } else {
+            $venuecontent = new VenueContent;
+        }
+        
+        $venuecontent->venue_id = $id;
+        $venuecontent->description = $request->description;
+        $venuecontent->key_features = $request->key_features;
+        $venuecontent->ambience = $request->ambience;
+        $venuecontent->event_sustability = $request->event_sustability;
+        $venuecontent->amenities = $request->amenities;
+        $venuecontent->policy = $request->policy;       
+        $venuecontent->save();
+        return redirect()->back()->with('success', 'Venue Content successfully updated');
     }
 
     public function dashboard()

@@ -9,6 +9,7 @@ use Modules\VenueAdmin\Http\Controllers\VenueBookingController;
 use Illuminate\Foundation\Configuration\Middleware;
 use Modules\VenueAdmin\Http\Middleware\VenueAdminMiddleware;
 use App\Http\Middleware\FlashMessageMiddleware;
+use Modules\VenueAdmin\Http\Controllers\StaffController;
 use Modules\VenueAdmin\Http\Controllers\BookingAdonsController;
 use Modules\VenueAdmin\Http\Controllers\VenuePricingController;
 
@@ -50,9 +51,13 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 
      Route::any('/addvenue',[VenueAdminController::class, 'createvenue'])->name('venueadmin/create');
      Route::any('/editvenue/{id}',[VenueAdminController::class, 'editvenue'])->name('venueadmin/edit');
-
+     Route::any('/viewvenue/{id}',[VenueAdminController::class, 'viewvenue'])->name('venueadmin/view');
+     Route::any('/venue/gallery/{id}',[VenueAdminController::class, 'venueGallery'])->name('venueadmin/venue/gallery');
+     Route::any('/venue/venueimage_add', [VenueAdminController::class,'venueimageAdd'])->name('venueadmin/venueimage_add');
     Route::any('/venuelist',[VenueAdminController::class, 'show'])->name('venueadmin/venuelist');
-
+    Route::post('/venue/image-delete', [VenueAdminController::class, 'imageDelete'])->name('venueadmin/image_delete');
+    Route::any('/venue/{id}/venuecontent', [VenueAdminController::class,'venuecontent'])->name('venueadmin/venuecontent');
+    Route::any('/venue/content_add', [VenueAdminController::class,'contentAdd'])->name('venueadmin/content_add');
 
     Route::any('/venuebooking/{id}/add',[VenueBookingController::class, 'create']);
     Route::any('/venuebooking/addnewevents',[VenueBookingController::class, 'addnewevents']);
@@ -84,4 +89,11 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 
      Route::any('/logout',[VenueAdminController::class, 'destroy'])->name('venueadmin/logout');
 
+    //Staff
+    Route::get('/list/staffs', [StaffController::class, 'index'])->name('venueadmin.list.staff');
+    Route::get('/add/staff', [StaffController::class, 'add'])->name('venueadmin.add.staff');
+    Route::post('/store/staff', [StaffController::class, 'store'])->name('venueadmin.store.staff');
+    Route::get('/edit/staff/{id}', [StaffController::class, 'edit'])->name('venueadmin.edit.staff');
+    Route::post('/update/staff', [StaffController::class, 'update'])->name('venueadmin.update.staff');
+    Route::get('/delete/staff/{id}', [StaffController::class, 'delete'])->name('venueadmin.delete.staff');
 });

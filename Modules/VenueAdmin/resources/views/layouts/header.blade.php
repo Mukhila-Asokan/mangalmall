@@ -11,6 +11,7 @@
          <meta name="_token" content="{{ csrf_token() }}" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('venueassets/images/logo-light.png') }}">
+        <link rel="stylesheet" href="{{ asset('venueasset/css/venueadmin.css') }}"></script>
         
         <!-- Theme Config Js -->
         <script src="{{ asset('venueasset/js/config.js') }}"></script>

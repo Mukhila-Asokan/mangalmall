@@ -131,10 +131,10 @@
                             <div class="collapse" id="sidebarStaff">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="#">Add Staff</a>
+                                        <a href="{{ route('venueadmin.add.staff') }}">Add Staff</a>
                                     </li>
                                     <li>
-                                        <a href="#">List</a>
+                                        <a href="{{ route('venueadmin.list.staff') }}">List</a>
                                     </li>                                  
                                 </ul>
                             </div>
