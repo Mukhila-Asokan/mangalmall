@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 Use Modules\StaffManagement\Models\staff;
 use Modules\VenueAdmin\Models\VenueUser;
 use Modules\VenueAdmin\Models\VenueUserProfile;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class VenueUserProfileController extends Controller
 {
@@ -105,5 +105,12 @@ class VenueUserProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function changemobileno()
+    {
+        $venueuserid =  Session::get('venueuserid'); 
+        $pagetitle = "Profile Page";
+        $pageroot = "Home"; 
+        return view('venueadmin::profile.changemobileno',compact('pagetitle','pageroot'));
     }
 }

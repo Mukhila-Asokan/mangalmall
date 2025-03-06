@@ -23,6 +23,7 @@ $url1 = asset("venueasset/images/bg-auth.jpg");
 
 
 @stack('scripts')
+@include('admin.layouts.popupscripts')
 
 </body>
 

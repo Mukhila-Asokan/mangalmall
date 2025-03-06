@@ -6,20 +6,20 @@
                             <!-- Logo light -->
                             <a href="#" class="logo-light">
                                 <span class="logo-lg">
-                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="logo">
+                                    <img src="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" alt="logo">
                                 </span>
                                 <span class="logo-sm">
-                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="small logo">
+                                    <img src="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" alt="small logo">
                                 </span>
                             </a>
 
                             <!-- Logo Dark -->
                             <a href="#" class="logo-dark">
                                 <span class="logo-lg">
-                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="dark logo">
+                                    <img src="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" alt="dark logo">
                                 </span>
                                 <span class="logo-sm">
-                                    <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="small logo">
+                                    <img src="<?php echo e(asset('venueassets/images/logo-light.png')); ?>" alt="small logo">
                                 </span>
                             </a>
                         </div>
@@ -144,10 +144,11 @@
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">                              
                                 <span class="d-lg-flex flex-column gap-1 d-none">
-                                    <h5 class="my-0">{{ $username }}</h5>
+                                    <h5 class="my-0"><?php echo e($username); ?></h5>
                                     <h6 class="my-0 fw-normal">Venue Administrator</h6>
                                      <p class="mb-0 d-flex align-items-center gap-2">
-                                      <i class="ri-mail-fill"></i> {{ $email }}
+                                      <i class="ri-mail-fill"></i> <?php echo e($email); ?>
+
                                     </p>
                                 </span>
                             </a>
@@ -158,13 +159,13 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('venueadmin.userprofile'); }}" class="dropdown-item">
+                                <a href="<?php echo e(route('venueadmin.userprofile')); ?>" class="dropdown-item">
                                     <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
                                     <span>My Account</span>
                                 </a>
 
                                 <!-- item-->
-                                <a href="{{ route('venueadmin.userprofile'); }}" class="dropdown-item">
+                                <a href="<?php echo e(route('venueadmin.userprofile')); ?>" class="dropdown-item">
                                     <i class="ri-settings-4-line fs-18 align-middle me-1"></i>
                                     <span>Settings</span>
                                 </a>
@@ -177,11 +178,11 @@
 
                               
                                 <!-- item-->
-                                <a href="{{ route('venueadmin/logout') }}" class="dropdown-item">
+                                <a href="<?php echo e(route('venueadmin/logout')); ?>" class="dropdown-item">
                                     <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
                                     <span>Logout</span>
                                 </a>
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/VenueAdmin\resources/views/layouts/topbar.blade.php ENDPATH**/ ?>
