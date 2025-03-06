@@ -110,11 +110,12 @@
                             <div class="collapse" id="sidebarExtendedUI">
                                 <ul class="side-nav-second-level">
                                     <li>
+                                        <a href="#">Venue Booking Payment</a>
+                                    </li>  
+                                    <li>
                                         <a href="#">Invoice Generator</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Booking Adds</a>
-                                    </li>                                  
+                                                                  
                                 </ul>
                             </div>
                         </li>
