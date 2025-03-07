@@ -9,12 +9,12 @@ use Modules\VenueAdmin\Models\VenueBookingContact;
 use Modules\VenueAdmin\Models\{VenueBookingDetails, UserVenue};
 use Illuminate\Support\Facades\Log;
 use App\Models\OccasionType;
-use Modules\Venue\Models\VenueDetails;
-use Session;
 use Carbon\Carbon;
 use DB;
 use Modules\VenueAdmin\Models\MuhurthamDates;
+use Illuminate\Support\Facades\Session;
 use DateTime;
+use Modules\Venue\Models\VenueDetails;
 Use Modules\VenueAdmin\Models\VenuePriceAddons;
 use Modules\VenueAdmin\Models\VenuePricingAddon;
 use Modules\VenueAdmin\Models\VenuePricing;
@@ -563,7 +563,7 @@ public function show()
         $venuebooking = VenueBooking::where('bookinguserid',$venueuserid)->where('booked_by','VenueUser')->get();
         
         return view('venueadmin::booking.venuebookinglist',compact('pagetitle','pageroot','venuebooking','venues','venueuserid'));   
-
+    
     } 
     public function destroy($id)
     {
