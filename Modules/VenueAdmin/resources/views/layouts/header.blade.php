@@ -21,5 +21,15 @@
 
         <!-- Icons css -->
         <link href="{{ asset('venueasset/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
+        
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- Theme Config Js -->
+        <script src="{{ asset('venueasset/assets/js/config.js') }}"></script>
+
+        <!-- App css -->
+        <link href="{{ asset('venueasset/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
     </head>
 

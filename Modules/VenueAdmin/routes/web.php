@@ -67,6 +67,8 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuebooking/{id}/destroy',[VenueBookingController::class, 'destroy']);
     Route::any('/venuebooking/{id}/invoicegenerator',[VenueBookingController::class, 'invoicegenerator']);
     
+    Route::any('/venue/calendar',[VenueBookingController::class, 'viewCalendar'])->name('venue.calendar');
+    // need to change
     Route::any('/venuebooking/eventslist',[VenueBookingController::class, 'index'])->name('venuebooking.eventslist');
 
     Route::any('/venuebooking/list',[VenueBookingController::class, 'show'])->name('venuebooking.list');
@@ -101,4 +103,11 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::get('/edit/staff/{id}', [StaffController::class, 'edit'])->name('venueadmin.edit.staff');
     Route::post('/update/staff', [StaffController::class, 'update'])->name('venueadmin.update.staff');
     Route::get('/delete/staff/{id}', [StaffController::class, 'delete'])->name('venueadmin.delete.staff');
+
+    // booking
+    Route::any('/venue/booking/add/{booking_date}',[VenueBookingController::class, 'venueBookingAdd'])->name('venue.booking.add');
+    Route::any('/venue/booking/available/venues',[VenueBookingController::class, 'checkAvailableVenue'])->name('venue.check.available');
+    Route::post('/venue/booking/create/',[VenueBookingController::class, 'venueBookingCreate'])->name('venue.booking.create');
+    Route::any('/venue/booking/{id}/edit',[VenueBookingController::class, 'editVenue'])->name('venue.booking.edit');
+    Route::any('/venue/booking/update',[VenueBookingController::class, 'updateVenue'])->name('venue.venue.update');
 });

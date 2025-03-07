@@ -46,7 +46,7 @@
                         </li>
 
                         <li class="side-nav-item">
-                            <a href="#" class="side-nav-link">
+                            <a href="{{ route('venue.calendar') }}" class="side-nav-link">
                                 <i class="ri-calendar-event-fill"></i>
                                 <span> Calendar </span>
                             </a>
@@ -92,16 +92,18 @@
                                     </li>
                                     <li>
                                         <a href="{{ route('venueadmin/venuelist') }}">List Venue</a>
-                                    </li>                                  
-                                    <li>
-                                        <a href="{{ route('venuebooking.eventslist') }}">Booking Details</a>
                                     </li>
-                                   
+                                    <li>
+                                        <a href="{{ route('venuebookinglist') }}">Booking Details</a>
+                                    </li>  
+                                    <li>
+                                        <a href="#">Invoice Generator</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
 
-                        <li class="side-nav-item">
+                        <!-- <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarExtendedUI" aria-expanded="false" aria-controls="sidebarExtendedUI" class="side-nav-link">
                                 <i class="ri-price-tag-2-fill"></i>
                                 <span> Venue Pricing</span>
@@ -118,7 +120,7 @@
                                                                   
                                 </ul>
                             </div>
-                        </li>
+                        </li> -->
             
             <li class="side-nav-title">Staff Mangament</li>
             
