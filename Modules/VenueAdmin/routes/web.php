@@ -108,4 +108,6 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venue/booking/add/{booking_date}',[VenueBookingController::class, 'venueBookingAdd'])->name('venue.booking.add');
     Route::any('/venue/booking/available/venues',[VenueBookingController::class, 'checkAvailableVenue'])->name('venue.check.available');
     Route::post('/venue/booking/create/',[VenueBookingController::class, 'venueBookingCreate'])->name('venue.booking.create');
+    Route::any('/venue/booking/{id}/edit',[VenueBookingController::class, 'editVenue'])->name('venue.booking.edit');
+    Route::any('/venue/booking/update',[VenueBookingController::class, 'updateVenue'])->name('venue.venue.update');
 });

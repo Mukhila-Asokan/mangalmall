@@ -184,6 +184,7 @@
 
 @push('scripts')
     <script>
+        const baseUrl = "{{ url('/') }}";
         document.addEventListener("DOMContentLoaded", function () {
             const startDateInput = document.getElementById("event-start-date");
             const endDateInput = document.getElementById("event-end-date");
@@ -290,6 +291,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="card-footer d-flex justify-content-end">
+                                                <a href="${baseUrl}/venueadmin/viewvenue/${venue.id}" target="_blank" class="btn btn-primary book_date_confirm" id="view_venue">View Details</a
+                                            </div>
                                         </div>
                                     </div>
                                 `;
@@ -329,6 +333,7 @@
                 },
                 success: function(response){
                     console.log(response, 'response');
+                    window.location.href = `{{ url('/venueadmin/venuebookinglist') }}`;
                 }
             })
         })

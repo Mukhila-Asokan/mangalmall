@@ -631,4 +631,39 @@ public function show()
             dd($e);
         }
     }
+
+    public function editVenue($id){
+        $venuebooking = VenueBooking::where('id', $id)->first();
+        $booking = VenueBookingContact::where('venuebooking_id',$id)->first();
+        $pagetitle = 'Edit Venue Booking';
+        $pageroot = 'Home';
+        $occasion_types = OccasionType::where('delete_status','0')->get();
+        return view('venueadmin::booking.edit', compact('pagetitle', 'pageroot', 'venuebooking', 'booking', 'occasion_types'));
+    }
+
+    public function updateVenue(Request $request){
+        DB::beginTransaction();
+        try{
+            $venueBooking = VenueBooking::find($request->id);
+            $venueBooking->event_name = $request->event_name;
+            $venueBooking->event_title = $request->event_name;
+            $venueBooking->special_requirements = $request->special_requirements;
+            $venueBooking->save();
+
+            $venueBookingContact = VenueBookingContact::where('venuebooking_id',$request->id)->first();
+            $venueBookingContact->person_name = $request->person_name;
+            $venueBookingContact->mobileno = $request->mobileno;
+            $venueBookingContact->contact_address = $request->contact_address;
+            $venueBookingContact->save();
+            DB::Commit();
+            return redirect()->route('venuebookinglist')->with('success', 'Venue Booking updated Successfully');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }
