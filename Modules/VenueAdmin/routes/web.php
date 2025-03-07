@@ -64,11 +64,15 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuebooking/updatenewevents',[VenueBookingController::class, 'updatenewevents']);
     Route::any('/venuebooking/events',[VenueBookingController::class, 'getevents']);
     Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'edit']);
+    Route::any('/venuebooking/{id}/destroy',[VenueBookingController::class, 'destroy']);
+    Route::any('/venuebooking/{id}/invoicegenerator',[VenueBookingController::class, 'invoicegenerator']);
     
     Route::any('/venuebooking/eventslist',[VenueBookingController::class, 'index'])->name('venuebooking.eventslist');
 
     Route::any('/venuebooking/list',[VenueBookingController::class, 'show'])->name('venuebooking.list');
-    
+
+    Route::any('/venuebookinglist',[VenueBookingController::class, 'venuebookinglist'])->name('venuebookinglist');
+
     Route::any('/bookingadons',[BookingAdonsController::class, 'index'])->name('venue.bookingadons');
     Route::any('/bookingadons/create',[BookingAdonsController::class, 'create'])->name('bookingadons.create');
     Route::post('/bookingadons/store',[BookingAdonsController::class, 'store'])->name('bookingadons.add');

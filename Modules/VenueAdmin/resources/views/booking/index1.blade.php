@@ -1,9 +1,10 @@
+@extends('venueadmin::layouts.admin-layout')
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
 
-<?php $__env->startSection('content'); ?>
+@section('content')
 
 <div id="calendar"></div>
-<input type="hidden" name="venue_id" id="venue_id" value="<?php echo e($venueid); ?>" />
+<input type="hidden" name="venue_id" id="venue_id" value="{{ $venueid }}" />
 
  <!-- BEGIN MODAL -->
           <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
@@ -27,13 +28,13 @@
                 <label class="form-label">Event Type</label>
                 <select name="event_id" id="event_id" class="form-select" required>
                     <option value="">Select Events</option>
-                    <?php $__currentLoopData = $occasion_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option value="<?php echo e($type->id); ?>"><?php echo e($type->eventtypename); ?></option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    @foreach($occasion_types as $type)
+                    <option value="{{ $type->id }}">{{ $type->eventtypename }}</option>
+                    @endforeach
                 </select>
             </div>
             
-            <input type="hidden" name="bookinguserid" id="bookinguserid" value="<?php echo e(Session::get('venueuserid')); ?>" />
+            <input type="hidden" name="bookinguserid" id="bookinguserid" value="{{ Session::get('venueuserid') }}" />
             <input type="hidden" name="booking_id" id="booking_id" value="0" />
             <div class="col-md-6 mt-2">
                 <label class="form-label">Contact Person Name</label>
@@ -136,8 +137,8 @@
           </div>
           <!-- END MODAL -->
 
-<?php $__env->stopSection(); ?>
-<?php $__env->startPush('scripts'); ?>
+@endsection
+@push('scripts')
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
@@ -187,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (muhurthamData) {
 
                 let img = document.createElement("img");
-                img.src = "<?php echo e(asset('assets/images/wedding-image.png')); ?>";
+                img.src = "{{ asset('assets/images/wedding-image.png') }}";
                 img.style.width = "45px";
                 img.style.height = "45px";
                 img.style.position = "absolute";
@@ -199,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (muhurthamData?.muhurtham_type === "Subha Muhurtham") {
                     let mangalyamImg = document.createElement("img");
-                    mangalyamImg.src = "<?php echo e(asset('assets/images/mangalyam.png')); ?>";
+                    mangalyamImg.src = "{{ asset('assets/images/mangalyam.png') }}";
                     mangalyamImg.style.width = "35px";
                     mangalyamImg.style.height = "45px";
                     mangalyamImg.style.position = "absolute";
@@ -597,5 +598,4 @@ $('#updateEvent').on('click', function () {
 
 </script>
 
-<?php $__env->stopPush(); ?>
-<?php echo $__env->make('venueadmin::layouts.admin-layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\Modules/VenueAdmin\resources/views/booking/index.blade.php ENDPATH**/ ?>
+@endpush

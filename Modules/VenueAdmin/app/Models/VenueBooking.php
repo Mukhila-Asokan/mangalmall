@@ -33,7 +33,18 @@ class VenueBooking extends Model
     {
         return $this->hasMany(VenueBookingDetails::class, 'venuebooking_id');
     }
+    public function venue()
+    {
+        return $this->hasOne('Modules\Venue\Models\VenueDetails', 'venue_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo('Modules\VenueAdmin\Models\VenueUser', 'user_id');
+    }
 
-
+    public function venuepricing()
+    {
+        return $this->hasOne('Modules\VenueAdmin\Models\VenuePricing', 'venue_id');
+    }
 
 }

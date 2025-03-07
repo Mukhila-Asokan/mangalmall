@@ -9,9 +9,16 @@ use Modules\VenueAdmin\Models\VenueBookingContact;
 use Modules\VenueAdmin\Models\VenueBookingDetails;
 use Illuminate\Support\Facades\Log;
 use App\Models\OccasionType;
-use Session;
 use Carbon\Carbon;
 use Modules\VenueAdmin\Models\MuhurthamDates;
+use Illuminate\Support\Facades\Session;
+use DateTime;
+use Modules\Venue\Models\VenueDetails;
+Use Modules\VenueAdmin\Models\VenuePriceAddons;
+use Modules\VenueAdmin\Models\VenuePricingAddon;
+use Modules\VenueAdmin\Models\VenuePricing;
+use Modules\VenueAdmin\Models\VenueUser;
+
 
 class VenueBookingController extends Controller
 {
@@ -127,7 +134,7 @@ class VenueBookingController extends Controller
      */
     public function showBooking($id)
     {
-        return view('venueadmin::show');
+        return view('venueadmin::booking.show');
     }
 
     /**
@@ -449,7 +456,43 @@ public function show()
     return view('venueadmin::booking.list',compact('pagetitle','pageroot','venueid'));
 }
 
+public function venuebookinglist()
+{
+    $pagetitle = "Venue Booking";
+    $pageroot = "Home"; 
+    $venueuserid =  Session::get('venueuserid');
+    $venues = VenueDetails::whereIn('id', function ($query) use ($venueuserid) {
+        $query->select('venueid')
+            ->from('uservenue') // Ensure this is the correct table name
+            ->where('venueuserid', '=', $venueuserid);
+    })->get();    
+    $venuebooking = VenueBooking::where('bookinguserid',$venueuserid)->where('booked_by','VenueUser')->get();
+    
+    return view('venueadmin::booking.venuebookinglist',compact('pagetitle','pageroot','venuebooking','venues','venueuserid'));   
 
+} 
+public function destroy($id)
+{
+    $venuebooking = VenueBooking::find($id);
+    if (!$venuebooking) {
+        return redirect()->back()->with('error', 'Booking not found');
+    }
+     
+    VenueBooking::where('id', '=', $id)->update(['delete_status' => 1]);       
+
+    return redirect()->back()->with('success', 'Booking deleted successfully!');
+}
+public function invoicegenerator($id)
+{
+    $booking = VenueBooking::find($id);
+    if (!$booking) {
+        return redirect()->back()->with('error', 'Booking not found');
+    }
+    $pagetitle = "Venue Booking Invoice";
+    $pageroot = "Home";
+    $venuebooking = VenueBooking::where('id',$id)->first();
+    return view('venueadmin::booking.invoicegenerator', compact('venuebooking','pagetitle','pageroot'));
+}
 
 
 }

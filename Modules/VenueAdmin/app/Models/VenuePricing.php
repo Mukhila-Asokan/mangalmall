@@ -29,8 +29,8 @@ class VenuePricing extends Model
         return $this->belongsTo('Modules\Venue\Models\VenueDetails', 'venue_id');
     }
   
-    /*public function addons()
+    public function addons()
     {
-        return $this->belongsTo(VenuePriceAddons::class, 'addonid', 'id'); 
-    }*/
+        return $this->hasMany(VenuePricingAddon::class, 'venuepricingid', 'id'); 
+    }
 }
