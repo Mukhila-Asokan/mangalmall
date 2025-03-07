@@ -571,9 +571,9 @@ public function show()
         if (!$venuebooking) {
             return redirect()->back()->with('error', 'Booking not found');
         }
-        
+         
         VenueBooking::where('id', '=', $id)->update(['delete_status' => 1]);       
-
+    
         return redirect()->back()->with('success', 'Booking deleted successfully!');
     }
     public function invoicegenerator($id)

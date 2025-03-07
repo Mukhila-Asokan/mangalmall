@@ -55,7 +55,7 @@
                                                         <i class="bi bi-file-spreadsheet"></i>
 
                                                     </a>
-                                                    <a href="{{ route('venue.booking.edit', ['id' => $booking->id]) }}" class="btn btn-info" title="Edit">
+                                                    <a href="{{ url('/venueadmin/venuebooking/'.$booking->id.'/edit') }}" class="btn btn-info" title="Edit">
                                                         <i class="bi bi-pencil-fill"></i>
                                                     </a>
                                                     <button type="button" class="btn btn-danger deleteid" data-bs-toggle="modal" data-bs-target="#delModal" data-id="{{ $booking->id }}" title="Delete">
