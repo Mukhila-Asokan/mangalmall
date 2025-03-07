@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\VenueAdmin\Models\VenueBooking;
 use Modules\VenueAdmin\Models\VenueBookingContact;
-use Modules\VenueAdmin\Models\VenueBookingDetails;
+use Modules\VenueAdmin\Models\{VenueBookingDetails, UserVenue};
 use Illuminate\Support\Facades\Log;
 use App\Models\OccasionType;
+use Modules\Venue\Models\VenueDetails;
 use Session;
 use Carbon\Carbon;
+use DB;
 use Modules\VenueAdmin\Models\MuhurthamDates;
 
 class VenueBookingController extends Controller
@@ -24,6 +26,15 @@ class VenueBookingController extends Controller
       
         $occasion_types = OccasionType::where('delete_status','0')->get();
         return view('venueadmin::booking.index',compact('pagetitle','pageroot','occasion_types','venueid'));
+    }
+
+    public function viewCalendar()
+    {
+        $pagetitle = "Calendar";
+        $pageroot = "Home"; 
+      
+        $occasion_types = OccasionType::where('delete_status','0')->get();
+        return view('venueadmin::booking.index',compact('pagetitle','pageroot','occasion_types'));
     }
 
     public function getMuhurthamDates(){
@@ -103,7 +114,7 @@ class VenueBookingController extends Controller
 		$venuebooking->booking_status = $request->bookingstatus;
 		$venuebooking->total_price = '1000';
 		$venuebooking->payment_status = 'Unpaid';		
-		$venuebooking->special_requirements = $request->special_requirements;
+		$venuebooking->special_requirements = $request->special_requirements ?? '-';
 		$venuebooking->status = "Active";
 		$venuebooking->delete_status = "0";
 		$venuebooking->save();
@@ -170,7 +181,7 @@ class VenueBookingController extends Controller
         $venuebooking->booking_status = $request->bookingstatus;
         $venuebooking->total_price = '1000';
         $venuebooking->payment_status = 'Unpaid';       
-        $venuebooking->special_requirements = $request->special_requirements;
+        $venuebooking->special_requirements = $request->special_requirements ?? '-';
         $venuebooking->status = "Active";
         $venuebooking->delete_status = "0";
         $venuebooking->save();
@@ -233,7 +244,7 @@ class VenueBookingController extends Controller
     $venuebooking->booking_status = $request->bookingstatus;
     $venuebooking->total_price = '1000';
     $venuebooking->payment_status = 'Unpaid';
-    $venuebooking->special_requirements = $request->special_requirements;
+    $venuebooking->special_requirements = $request->special_requirements ?? '-';
     $venuebooking->status = "Active";
     $venuebooking->delete_status = "0";    
     
@@ -320,7 +331,7 @@ public function updatebooking(Request $request, $id)
     $venuebooking->booking_status = $request->bookingstatus;
     $venuebooking->total_price = '1000';
     $venuebooking->payment_status = 'Unpaid';
-    $venuebooking->special_requirements = $request->special_requirements;
+    $venuebooking->special_requirements = $request->special_requirements ?? '-';
     $venuebooking->status = "Active";
     $venuebooking->delete_status = "0";  
     $venuebooking->save();
@@ -448,8 +459,133 @@ public function show()
 
     return view('venueadmin::booking.list',compact('pagetitle','pageroot','venueid'));
 }
+    public function venueBookingAdd($date){
+        $pagetitle = "Venue Booking";
+        $pageroot = "Home";
+        $occasion_types = OccasionType::where('delete_status','0')->get();
+        $userVenues = UserVenue::where('venueuserid', Session::get('venueuserid'))->pluck('venueid')->toArray();
+        $venueDetails = VenueDetails::where('delete_status',0)->whereIn('id', $userVenues)->get();
+        // $venueDetails = VenueDetails::where('delete_status',0)->get();
+        return view('venueadmin::booking.add', compact('pagetitle', 'pageroot', 'date', 'venueDetails', 'occasion_types'));
+    }
 
+    public function venueBookingCreate(Request $request){
+        DB::beginTransaction();
+        try{
+            $start_date = $request->eventstartdate;
+            $end_date = $request->eventenddate;
+            $noofdays = Carbon::parse($start_date)->diffInDays(Carbon::parse($end_date)) + 1;
 
+            $venuebooking = new VenueBooking();
+            $venuebooking->venue_id = $request->venue;
+            $venuebooking->booked_by = 'VenueUser';
+            $venuebooking->bookinguserid = $request->bookinguserid; 
+            $venuebooking->event_id = $request->event_id;
+            $venuebooking->event_title = $request->event_name;
+            $venuebooking->event_name = $request->event_name;
+            $venuebooking->start_date = $start_date;
+            $venuebooking->end_date = $end_date;
+            $venuebooking->noofdays = $noofdays;
+            $venuebooking->total_guests = '0';
+            $venuebooking->booking_status = 'Confirmed';
+            $venuebooking->total_price = '1000';
+            $venuebooking->payment_status = 'Unpaid';
+            $venuebooking->special_requirements = $request->special_requirements ?? '-';
+            $venuebooking->status = "Active";
+            $venuebooking->delete_status = "0";    
+            $venuebooking->save();
+            
+            $bookingcontact = new VenueBookingContact();
+            $bookingcontact->venue_id = $request->venue;
+            $bookingcontact->venuebooking_id = $venuebooking->id;
+            $bookingcontact->person_name = $request->person_name;
+            $bookingcontact->mobileno = $request->mobileno;
+            $bookingcontact->contact_address = $request->contact_address;
+            $bookingcontact->status = "Active";
+            $bookingcontact->delete_status = "0";
+            $bookingcontact->save();
 
+            $daytypes = json_decode($request->input('daytypes'), true);
+            foreach ($daytypes as $date => $dayType) {
+                $actualDate = str_replace("daytype-", "", $date);
+                $bookingdetails = new VenueBookingDetails();
+                $bookingdetails->venue_id = $request->venue;
+                $bookingdetails->venuebooking_id = $venuebooking->id;
+                $bookingdetails->date = $actualDate;
+                $bookingdetails->daytype = $dayType;
 
+                switch ($dayType) {
+                    case 'full':
+                        $bookingdetails->starttime = '05:00:00';
+                        $bookingdetails->endtime = '23:00:00';
+                        break;
+                    case 'morning':
+                        $bookingdetails->starttime = '05:00:00';
+                        $bookingdetails->endtime = '14:00:00';
+                        break;
+                    case 'evening':
+                        $bookingdetails->starttime = '14:00:00';
+                        $bookingdetails->endtime = '23:00:00';
+                        break;
+                }
+                $bookingdetails->save();
+            }
+            DB::Commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Venue booked successfully!'
+            ]);
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function checkAvailableVenue(Request $request){
+        try{
+            $startDate = $request->input('eventstartdate');
+            $endDate = $request->input('eventenddate');
+            $dayTypes = $request->except(['eventstartdate', 'eventenddate', '_token', 'venue_id']);
+            
+            $bookedDates = VenueBooking::where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('start_date', [$startDate, $endDate])
+                    ->orWhereBetween('end_date', [$startDate, $endDate])
+                    ->orWhere(function ($q) use ($startDate, $endDate) {
+                        $q->where('start_date', '<=', $startDate)
+                            ->where('end_date', '>=', $endDate);
+                    });
+            })
+            ->get();
+            $conflicts = [];
+            if($bookedDates){
+                $requestedDates = array_map(fn($key) => str_replace('daytype-', '', $key), array_keys($dayTypes));
+                $bookedDetails = VenueBookingDetails::whereIn('date', $requestedDates)
+                    ->select('date', 'daytype', 'venue_id')
+                    ->get();           
+                    
+                foreach ($bookedDetails as $booking) {
+                    $dateKey = $booking->date;
+                    if($booking->daytype == 'full' || $dayTypes["daytype-$dateKey"] == 'full'){
+                        $conflicts[$booking->venue_id] = $dateKey;
+                    }
+                    else if (isset($dayTypes["daytype-$dateKey"]) && $dayTypes["daytype-$dateKey"] == $booking->daytype) {
+                        $conflicts[$booking->venue_id] = $dateKey;
+                    }
+                }
+            }
+            $uniqueVenueIds = array_unique(array_keys($conflicts));
+            $userVenues = UserVenue::where('venueuserid', Session::get('venueuserid'))->pluck('venueid')->toArray();
+            $venueDetails = VenueDetails::where('delete_status',0)->whereIn('id', $userVenues)->whereNotIn('id', $uniqueVenueIds)->get();
+            return response()->json([
+                'venueDetails' => $venueDetails
+            ]);
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
+    }
 }
