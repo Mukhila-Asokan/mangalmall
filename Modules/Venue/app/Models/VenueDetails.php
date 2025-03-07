@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Modules\Venue\Database\Factories\VenueDetailsFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\VenueRating;
+use Modules\VenueAdmin\Models\VenueBooking;
+use Modules\VenueAdmin\Models\VenuePricing;
 
 class VenueDetails extends Model
 {
@@ -100,5 +102,15 @@ class VenueDetails extends Model
         );
     }
    
+    public function bookings()
+    {
+        return $this->hasMany(VenueBooking::class, 'venue_id', 'id')->where('delete_status', 0)->orderby('created_at','desc');
+    }
+    public function venuepricing()
+    {
+        return $this->hasMany(VenuePricing::class, 'venue_id', 'id');
+    }
+  
+  
 
 }

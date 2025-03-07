@@ -2,6 +2,7 @@
 <?php $__env->startSection('content'); ?>
  <div class="col-12">
     <div class="card">
+
         <div class="card-body p-4">
         <div class="row mt-4">
                 <div class="text-end">   
@@ -10,12 +11,14 @@
                         </a>
                 </div>
         </div>
+        <h3 class="text-center mt-2 mb-2">Venue Pricing List</h3>
             <div class="table-responsive mb-4 border rounded-1">
                 <table class="table text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
                         <tr>
                             <th>#</th>
                             <th>Venue Name</th>
+                            <th>Pricing Type</th>
                             <th>Base Price</th>
                             <th>Peak Price</th>
                             <th>Deposit Amount</th>
@@ -24,16 +27,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i=1; ?>
+                        <?php
+                            $i = ($pricing->currentPage() - 1) * $pricing->perPage() + 1;
+                        ?>
                         <?php if(count($pricing) > 0): ?>
                             <?php $__currentLoopData = $pricing; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pricing): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($i++); ?></td>
-                                    <td><?php echo e($pricing->venue); ?></td>
-                                    <td><?php echo e($pricing->bookingrate); ?></td>
-                                    <td><?php echo e($pricing->peakrate); ?></td>
+                                    <td><?php echo e($pricing->venue->venuename); ?></td>
+                                    <td><?php echo e($pricing->pricing_type); ?></td>
+                                    <td><?php echo e($pricing->venue->bookingprice); ?></td>
+                                    <td><?php echo e($pricing->peak_rate); ?></td>
                                     <td><?php echo e($pricing->deposit_amount); ?></td>
-                                    <td></td>
+                                    <td>
+                                    <?php
+                                            $bookingaddons = Modules\VenueAdmin\Models\VenuePricingAddon::where('venuepricingid', $pricing->id)->with('addon')->get();
+                                            ?>
+
+                                            <?php $__currentLoopData = $bookingaddons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bookingad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div><?php echo e($bookingad->addon->addonname); ?>: <?php echo e($bookingad->addon->price); ?></div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                    </td>
                                     <td>
                                         <?php if($pricing->status == 'Active'): ?>
                                         <button type="button" class="btn-warning btn statusid" data-bs-toggle="modal"  data-bs-target=".statusModal"  data-id="<?php echo e($pricing->id); ?>" title="Active Status">
@@ -55,13 +70,28 @@
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td colspan="">
+                                    <div class="d-flex justify-content-center"> 
+                            
+                                    </div>
+                                </td>
+                            </tr>
+                          
                         <?php else: ?>
                             <tr>
                                 <td colspan="6" class="text-center">No Records Found</td>
                             </tr>
                         <?php endif; ?>
+                        <tr>
+                            <td colspan="8" class="text-center">
+                               
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
+              
+                
             </div>
         </div>
     </div>

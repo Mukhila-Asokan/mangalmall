@@ -11,6 +11,7 @@
          <meta name="_token" content="<?php echo e(csrf_token()); ?>" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="<?php echo e(asset('venueassets/images/logo-light.png')); ?>">
+        <link rel="stylesheet" href="<?php echo e(asset('venueasset/css/venueadmin.css')); ?>"></script>
         
         <!-- Theme Config Js -->
         <script src="<?php echo e(asset('venueasset/js/config.js')); ?>"></script>

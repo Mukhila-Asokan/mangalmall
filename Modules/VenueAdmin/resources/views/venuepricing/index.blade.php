@@ -2,6 +2,7 @@
 @section('content')
  <div class="col-12">
     <div class="card">
+
         <div class="card-body p-4">
         <div class="row mt-4">
                 <div class="text-end">   
@@ -10,12 +11,14 @@
                         </a>
                 </div>
         </div>
+        <h3 class="text-center mt-2 mb-2">Venue Pricing List</h3>
             <div class="table-responsive mb-4 border rounded-1">
                 <table class="table text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
                         <tr>
                             <th>#</th>
                             <th>Venue Name</th>
+                            <th>Pricing Type</th>
                             <th>Base Price</th>
                             <th>Peak Price</th>
                             <th>Deposit Amount</th>
@@ -24,16 +27,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php $i=1; @endphp
+                        @php
+                            $i = ($pricing->currentPage() - 1) * $pricing->perPage() + 1;
+                        @endphp
                         @if(count($pricing) > 0)
                             @foreach($pricing as $pricing)
                                 <tr>
                                     <td>{{ $i++ }}</td>
-                                    <td>{{ $pricing->venue }}</td>
-                                    <td>{{ $pricing->bookingrate }}</td>
-                                    <td>{{ $pricing->peakrate }}</td>
+                                    <td>{{ $pricing->venue->venuename }}</td>
+                                    <td>{{ $pricing->pricing_type }}</td>
+                                    <td>{{ $pricing->venue->bookingprice }}</td>
+                                    <td>{{ $pricing->peak_rate }}</td>
                                     <td>{{ $pricing->deposit_amount }}</td>
-                                    <td></td>
+                                    <td>
+                                    @php
+                                            $bookingaddons = Modules\VenueAdmin\Models\VenuePricingAddon::where('venuepricingid', $pricing->id)->with('addon')->get();
+                                            @endphp
+
+                                            @foreach($bookingaddons as $bookingad)
+                                                <div>{{ $bookingad->addon->addonname }}: {{ $bookingad->addon->price }}</div>
+                                            @endforeach
+
+                                    </td>
                                     <td>
                                         @if($pricing->status == 'Active')
                                         <button type="button" class="btn-warning btn statusid" data-bs-toggle="modal"  data-bs-target=".statusModal"  data-id="{{ $pricing->id }}" title="Active Status">
@@ -55,13 +70,28 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td colspan="">
+                                    <div class="d-flex justify-content-center"> 
+                            
+                                    </div>
+                                </td>
+                            </tr>
+                          
                         @else
                             <tr>
                                 <td colspan="6" class="text-center">No Records Found</td>
                             </tr>
                         @endif
+                        <tr>
+                            <td colspan="8" class="text-center">
+                               
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
+              
+                
             </div>
         </div>
     </div>

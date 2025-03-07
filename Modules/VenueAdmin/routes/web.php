@@ -64,13 +64,17 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuebooking/updatenewevents',[VenueBookingController::class, 'updatenewevents']);
     Route::any('/venuebooking/events',[VenueBookingController::class, 'getevents']);
     Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'edit']);
+    Route::any('/venuebooking/{id}/destroy',[VenueBookingController::class, 'destroy']);
+    Route::any('/venuebooking/{id}/invoicegenerator',[VenueBookingController::class, 'invoicegenerator']);
     
     Route::any('/venue/calendar',[VenueBookingController::class, 'viewCalendar'])->name('venue.calendar');
     // need to change
     Route::any('/venuebooking/eventslist',[VenueBookingController::class, 'index'])->name('venuebooking.eventslist');
 
     Route::any('/venuebooking/list',[VenueBookingController::class, 'show'])->name('venuebooking.list');
-    
+
+    Route::any('/venuebookinglist',[VenueBookingController::class, 'venuebookinglist'])->name('venuebookinglist');
+
     Route::any('/bookingadons',[BookingAdonsController::class, 'index'])->name('venue.bookingadons');
     Route::any('/bookingadons/create',[BookingAdonsController::class, 'create'])->name('bookingadons.create');
     Route::post('/bookingadons/store',[BookingAdonsController::class, 'store'])->name('bookingadons.add');
@@ -80,14 +84,15 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/bookingadons/{id}/updatestatus', [BookingAdonsController::class,'updatestatus']);
 
 
-    Route::any('/venuepricing',[VenuePricingController::class, 'index'])->name('venue.venuepricing');
+    Route::any('/venuepricing',[VenuePricingController::class, 'index'])->name('venue.pricing');
     Route::any('/venuepricing/create',[VenuePricingController::class, 'create'])->name('venuepricing.create');
     Route::post('/venuepricing/store',[VenuePricingController::class, 'store'])->name('venuepricing.add');
     Route::any('/venuepricing/{id}/edit', [VenuePricingController::class,'edit']);
     Route::put('/venuepricing/update/{id}', [VenuePricingController::class,'update'])->name('venuepricing.update');
     Route::any('/venuepricing/{id}/destroy', [VenuePricingController::class,'destroy']);
     Route::any('/venuepricing/{id}/updatestatus', [VenuePricingController::class,'updatestatus']);
-
+    Route::get('venuepricing/getRate/{id}', [VenuePricingController::class, 'getRate']);
+    Route::any('/venuepricing/{id}/',[VenuePricingController::class, 'index'])->name('venue.pricing');
 
      Route::any('/logout',[VenueAdminController::class, 'destroy'])->name('venueadmin/logout');
 
