@@ -2,10 +2,22 @@
     font-size: 14px;
 }
 
+.font-16{
+    font-size: 16px;
+}
+
 .font-20{
     font-size: 20px;
 }
 
 .mleft-10{
     margin-left: 10px;
-}
+}  
+
+.mleft-5{
+    margin-left: 5px;
+}  
+
+.font-color{
+    color: #58111A;
+} 
