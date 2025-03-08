@@ -16,31 +16,27 @@ class IsAdminRoleCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-    
+        // Ensure the user is authenticated as an admin
+        $admin = Auth::guard('admin')->user();
 
-        if (!Auth::guard('admin')->check()) {
+        if (!$admin) {
             return redirect()->route('admin.login')->with([
                 'success' => false,
                 'status' => 'error',
-                'message' => 'Admin authentication failed',
-            ], 403);
+                'message' => 'Admin authentication failed. Please log in.',
+            ]);
         }
-       
-        if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->role == 'Admin')
-        {
+
+        // Role-based authorization
+        if ($admin->role === 'Admin' || $admin->role === 'Super Admin') {
             return $next($request);
         }
-        elseif(Auth::guard('admin')->user() && Auth::guard('admin')->user()->role == 'Super Admin')
-        {
-            return $next($request);
-        }
-        else
-        {
-            return redirect()->route('admin.login')->with([
-                'success' => false,
-                'status' => 'error',
-                'message' => 'Admin authentication failed',
-            ], 403);
-        }
+
+        // If the user does not have an appropriate role
+        return redirect()->route('admin.login')->with([
+            'success' => false,
+            'status' => 'error',
+            'message' => 'Access denied. Insufficient permissions.',
+        ]);
     }
 }

@@ -50,10 +50,11 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/userprofile',[VenueUserProfileController::class, 'index'])->name('venueadmin.userprofile');
     Route::any('/userprofileupdate',[VenueUserProfileController::class, 'store'])->name('venueadmin/userprofileupdate');
     Route::any('/changemobileno',[VenueUserProfileController::class, 'changemobileno'])->name('venueadmin.changemobileno');
-    Route::any('/sendrequestchangemobileno',[VenueUserProfileController::class, 'sendrequestchangemobileno'])->name('venueadmin.sendrequestchangemobileno');
+    
 
     Route::any('/venueadd',[VenueAdminController::class, 'storevenue'])->name('venueadmin/venueadd');
     Route::any('/venueupdate/{id}',[VenueAdminController::class, 'updateVenue'])->name('venueadmin/venueupdate');
+    Route::any('/storeRequest',[VenueAdminController::class, 'storeRequest'])->name('venueadmin.storeRequest');
 
      Route::any('/addvenue',[VenueAdminController::class, 'createvenue'])->name('venueadmin/create');
      Route::any('/editvenue/{id}',[VenueAdminController::class, 'editvenue'])->name('venueadmin/edit');

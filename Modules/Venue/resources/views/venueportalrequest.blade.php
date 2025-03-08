@@ -8,6 +8,14 @@
             <div class="card-body">
                 <h4 class="header-title mb-4">List of Venue User Request</h4>
 
+
+
+                <div class="text-end">
+                    <a href="{{ route('venue.mobilechangerequest') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                        <span class="tf-icon mdi mdi-eye me-1"></span> ChangeMobileNo Request 
+                    </a>
+                </div>
+
             @if($id == 2)    
             <div class="text-end">
                 <a href="{{ route('venue.venueadminlist') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">

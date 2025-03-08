@@ -1,7 +1,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-<form class="form-horizontal" role="form" method="post" action="<?php echo e(route('venueadmin.sendrequestchangemobileno')); ?>" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" method="post" action="<?php echo e(route('venueadmin.storeRequest')); ?>" enctype="multipart/form-data">
     <?php echo csrf_field(); ?>
     <div class="col-12">
         <div class="card">
@@ -9,8 +9,8 @@
                 <div class="mb-4 row">
                     <label class="col-md-2 col-form-label" for="mobileno">Mobile No</label>
                     <div class="col-md-6">
-                        <input type="text" id="mobileno" name="mobileno" class="form-control border border-warning" placeholder="Enter the new mobile number" value="<?php echo e(old('mobileno')); ?>" required>
-                        <?php $__errorArgs = ['mobileno'];
+                        <input type="text" id="new_mobile" name="new_mobile" class="form-control border border-warning" placeholder="Enter the new mobile number" value="<?php echo e(old('new_mobile')); ?>" required>
+                        <?php $__errorArgs = ['new_mobile'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

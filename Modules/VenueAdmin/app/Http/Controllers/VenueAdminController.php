@@ -29,10 +29,13 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Models\BookingEnquiry;
-use DataTables;
 use Session;
 use Auth;
 use Carbon\Carbon;
+use App\Notifications\ChangeMobileNo;
+use DataTables;
+use Svg\Tag\Rect;
+use Exception;
 
 class VenueAdminController extends Controller
 {
@@ -653,4 +656,26 @@ class VenueAdminController extends Controller
         $request->session()->regenerateToken();
         return redirect('/venue/login'); 
     }
+
+    public function storeRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'new_mobile' => 'required|regex:/^[0-9]{10}$/|unique:venueuser,mobileno'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+     
+        $venueuserid =  Session::get('venueuserid');
+        $admincheck = VenueUser::where('id',$venueuserid)->first();
+        
+        /* Send Confirmation Notification to Admin */      
+        $admin = Auth::guard('admin')->user(); 
+       
+        $admin->notify(new ChangeMobileNo($request->new_mobile, 'User requested to change their mobile number.'));
+
+        return redirect()->back()->with('success', 'Your request has been sent to the admin for approval.');
+    }   
+
 }
