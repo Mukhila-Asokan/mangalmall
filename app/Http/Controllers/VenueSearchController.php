@@ -15,6 +15,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\VenueRating;
+use Modules\VenueAdmin\Models\UserVenue;
+use Modules\VenueAdmin\Models\VenueUser;
+use App\Notifications\EnquiryNotification;
+use App\Models\BookingEnquiry;
+use DB;
 
 class VenueSearchController extends Controller
 {
@@ -207,4 +212,48 @@ class VenueSearchController extends Controller
         ], 200);
     }
 
+    public function submitBookingEnquiry(Request $request){
+        DB::beginTransaction();
+        try{
+            $venueDetails = VenueDetails::where('id', $request->id)->first();
+            $venueUser = UserVenue::where('venueid', $request->id)->first();
+            if($venueUser){
+                $createEnquiry = new BookingEnquiry();
+                $createEnquiry->venue_id = $request->id;
+                $createEnquiry->user_id = auth()->user()->id;
+                $createEnquiry->name = $request->name;
+                $createEnquiry->mobile_number = $request->phone;
+                $createEnquiry->message = $request->message;
+                $createEnquiry->booking_date = $request->date;
+                $createEnquiry->venue_user_id = $venueUser->venueuserid;
+                $createEnquiry->save();
+
+                $user = VenueUser::where('id', $venueUser->venueuserid)->first();
+                $userName = auth()->user()->name;
+                $data = [
+                    'message' => "You received and booking enquiry from $userName",
+                    'user_id' => auth()->user()->id,
+                    'user_name' => $userName,
+                    'venue_id' => $request->id,
+                    'type' => 'Venue Booking',
+                    'venue_name' => $venueDetails->venuename,
+                    'booking_details' => $createEnquiry,
+                    'redirection_url' => '',
+                ];
+                $user->notify(new EnquiryNotification($data));
+                DB::commit();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Enquiry updated successfully'
+                ]);
+            }
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

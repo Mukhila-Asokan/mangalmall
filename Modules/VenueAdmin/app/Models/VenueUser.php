@@ -5,11 +5,13 @@ namespace Modules\VenueAdmin\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Venue\Models\VenueDetails;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 // use Modules\VenueAdmin\Database\Factories\VenueUserFactory;
 
 class VenueUser extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.

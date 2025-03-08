@@ -19,5 +19,9 @@
 }  
 
 .font-color{
-    color: #58111A;
+    color: #58111A !important;
 } 
+
+.font-bold{
+    font-weight: bold !important;
+}

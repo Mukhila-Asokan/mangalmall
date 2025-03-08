@@ -39,7 +39,7 @@
                         <li class="side-nav-title">Main</li>
 
                         <li class="side-nav-item">
-                            <a href="#" class="side-nav-link">
+                            <a href="{{ route('venueadmin/dashboard') }}" class="side-nav-link">
                                 <i class="ri-dashboard-2-fill"></i>
                                 <span> Dashboard </span>
                             </a>
@@ -96,6 +96,9 @@
                                     <li>
                                         <a href="{{ route('venuebookinglist') }}">Booking Details</a>
                                     </li>  
+                                    <li>
+                                        <a href="{{ route('get.all.enquiries') }}">Booking Enquiries</a>
+                                    </li> 
                                     <li>
                                         <a href="#">Invoice Generator</a>
                                     </li>

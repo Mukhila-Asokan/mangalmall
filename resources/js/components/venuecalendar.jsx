@@ -6,7 +6,7 @@ const VenueBookingCalendar = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", message: "", id: "" });
 
   // Example booked dates
   const bookedDates = {
@@ -57,7 +57,7 @@ const VenueBookingCalendar = () => {
     setTimeout(() => {
       setShowModal(false);
       setSelectedDate(null);
-      setFormData({ name: "", phone: "", message: "" });
+      setFormData({ name: "", phone: "", message: "", id: "" });
     }, 300);
   };
 
@@ -73,11 +73,54 @@ const VenueBookingCalendar = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = (e) => {
+  // const handleFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   alert(`Enquiry Sent: ${formData.name}, ${formData.phone}, ${formData.message}`);
+  //   handleCloseModal();
+  // };
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    alert(`Enquiry Sent: ${formData.name}, ${formData.phone}, ${formData.message}`);
-    handleCloseModal();
-  };
+    const urlPath = window.location.pathname; 
+    const segments = urlPath.split('/').filter(Boolean); 
+    const id = segments[2]; // Extract venue ID from URL
+
+    if (!selectedDate || !selectedDate.date) {
+        console.log("No date selected!");
+        return;
+    }
+    const updatedFormData = { 
+        ...formData, 
+        id, 
+        date: selectedDate.date
+    };
+
+    console.log("Form Data Being Sent:", updatedFormData);
+
+    const endpoint = `/home/submit-enquiry`;
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // If using Laravel
+            },
+            body: JSON.stringify(updatedFormData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            handleCloseModal();
+        } else {
+            console.log(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        console.error("Error submitting enquiry:", error);
+    }
+};
+
 
   return (
     <div className="calendar-container">
@@ -133,6 +176,12 @@ const VenueBookingCalendar = () => {
                     className="form-control mb-2"
                     value={formData.message}
                     onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="hidden"
+                    name="venue_id"
+                    value={formData.id}
                     required
                   />
                   <button type="submit" className="btn btn-primary">Send Enquiry</button>

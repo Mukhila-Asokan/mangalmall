@@ -12,3 +12,5 @@
 
         <!-- Wizard Form Demo js -->
         <script src="{{ asset('venueasset/assets/js/pages/demo.form-wizard.js') }}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -80,6 +80,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
 
     Route::any('/venuesyn-search', [VenueSearchController::class, 'syncfushindex'])->name('venuesyn.search');
     Route::any('/venuesearch/{id}/venuedetails',[VenueSearchController::class, 'venuedetails'])->name('venuesearch/venuedetails');
+    Route::post('/submit-enquiry',[VenueSearchController::class, 'submitBookingEnquiry'])->name('submit/venue/booking');
 
      
     Route::any('/ads/random', [VenueSearchController::class, 'adsrandom'])->name('venue/adsrandom');
