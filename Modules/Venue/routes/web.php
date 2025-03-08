@@ -12,6 +12,9 @@ use Modules\Venue\Http\Controllers\DistrictController;
 Use Modules\Venue\Http\Controllers\CityController;
 use Modules\Venue\Http\Controllers\AreaController;
 Use Modules\Venue\Http\Controllers\DeletedRecordsController;
+Use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\StaffController;
 
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Support\Facades\Auth;
@@ -150,6 +153,15 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
 
     Route::any('/venueportalrequest',[VenueController::class,'venueportalrequest'])->name('venue.venueportalrequest');
     Route::any('/venueportalrequest/{id}/updatestatus',[VenueController::class,'venueuserupdatestatus']);
+    
+    Route::any('/mobilechangerequest/',[NotificationController::class,'index'])->name('venue.mobilechangerequest');
+
+    Route::any('/mobilechangerequest/approveRequest/{userid}',[NotificationController::class,'unreadNotification'])->name('mobilechange.approve');
+ 
+
+    Route::any('/mobilechangerequest/markAsRead/{id}',[NotificationController::class,'markAsRead'])->name('admin.notifications.markAsRead');
+
+
     Route::any('/venueadminlist',[VenueController::class,'venueadminlist'])->name('venue.venueadminlist');
     Route::any('/venue/comments',[VenueController::class,'venueComments'])->name('venue.comments');
     Route::get('/venue/comment/{action}/{venueId}',[VenueController::class,'venueApproveComment'])->name('venue.approve.comments');

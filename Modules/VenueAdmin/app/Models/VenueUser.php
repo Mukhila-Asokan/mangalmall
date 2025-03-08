@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\VenueAdmin\Models;
-
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Venue\Models\VenueDetails;
@@ -10,11 +10,12 @@ use Modules\Venue\Models\VenueDetails;
 class VenueUser extends Model
 {
     use HasFactory;
+    use Notifiable;  // <-- Add this line
 
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = ['name','mobileno'];
 
     protected $table = 'venueuser';
 

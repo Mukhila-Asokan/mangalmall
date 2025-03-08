@@ -608,6 +608,17 @@ class VenueController extends Controller
         return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id'));
 
     }
+    public function mobilechangerequest()
+    {
+        $venueuser = VenueUser::where('status','Inactive')->paginate(20);
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue User Mobile No change Request";
+        $pageroot = "Venue";  
+        $id = 2;      
+        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id'));
+
+    }
     public function venueadminlist()
     {
         $venueuser = VenueUser::where('delete_status','0')->paginate(20);

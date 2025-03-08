@@ -169,7 +169,7 @@ function calculateTotal() {
     });
 
     // Update total cost display
-    document.getElementById('total-cost').innerText = '<i class="bi bi-currency-rupee me-3 fs-20"></i> ' + total.toFixed(2);
+    document.getElementById('total-cost').innerText = '₹ ' + total.toFixed(2);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
