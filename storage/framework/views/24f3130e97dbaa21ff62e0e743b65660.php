@@ -25,12 +25,36 @@
         <script src="<?php echo e(asset('adminassets/js/pages/form-fileuploads.js')); ?>"></script>
 
         <script>
-            function fetchNotifications() {
-                $.get("<?php echo e(route('admin.notifications')); ?>", function(data) {
-                    $("#notificationcount").text(data.count);
-                    $(".dropdown-menu").html(data.html);
-                });
+            $(document).ready(function() {
+    setInterval(fetchNotifications, 10000); // Only trigger on interval
+});
+    function fetchNotifications() {
+        $.ajax({
+            url: "<?php echo e(route('admin.notifications')); ?>",
+            method: "GET",
+            success: function(data) {
+                // Update Notification Count
+                console.log(data.count);
+                $("#notificationcount").text(data.count);
+
+                // Update Notification List
+                console.log(data.html);
+                $(".dropdown-menu .px-1").html(data.html);
+            },
+            error: function(xhr) {
+                console.error('Error fetching notifications:', xhr.responseText);
             }
-         
-            setInterval(fetchNotifications, 10000); // Refresh every 10 seconds
-    </script><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/scripts.blade.php ENDPATH**/ ?>
+        });
+    }
+
+    // Auto-refresh every 10 seconds
+    setInterval(fetchNotifications, 10000);
+
+    // CSRF token setup (important for Laravel AJAX requests)
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+<?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/scripts.blade.php ENDPATH**/ ?>

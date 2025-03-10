@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use App\AdminUser;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -68,18 +69,22 @@ class LoginController extends Controller
     public function authcheck(Request $request)
     {
 
-       $request->validate([
-           'email' => 'required|email',
-            'password' => 'required'
-        ]);
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
 
          $credentials = $request->only('email', 'password');
-
+       
          \Log::info('Admin credentials:', [$credentials]);
 
         if (Auth::guard('admin')->attempt($credentials)) {
            
-          
+       
 
           $session = $request->session()->regenerate();
 
@@ -88,6 +93,7 @@ class LoginController extends Controller
             return redirect(route('adminrole'));
      
         }else{
+        
             return redirect(route('admin.login'))->with([
                 'error' => "Invalid Credentials."
             ]);

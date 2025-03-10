@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Auth;
-use Session;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RoleController extends Controller
 {
@@ -17,10 +18,11 @@ class RoleController extends Controller
         Session::put('userrole', Auth::guard('admin')->user()->role);
         Session::put('userid', Auth::guard('admin')->user()->id);
 
-        \Log::info('Admin session:', Session::all());
+        Log::info('Admin session:', Session::all());
 
         if (Auth::guard('admin')->user() && Auth::guard('admin')->user()->role != 'Staff')
         {
+            
             return redirect('admin/dashboard');
         }
         elseif(Auth::guard('admin')->user() && Auth::guard('admin')->user()->role == 'Staff')
