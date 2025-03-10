@@ -81,7 +81,7 @@ Route::prefix('admin')->middleware('auth:admin',IsAdminRoleCheck::class)->group(
      Route::any('/changepassword', [DashboardController::class, 'changepassword'])->name('admin.changepassword');
      Route::any('/passwordupdate', [DashboardController::class, 'passwordupdate'])->name('admin.passwordupdate');
 
-
+    Route::any('/notification', [DashboardController::class, 'notifications'])->name('admin.notifications');
 
    
 

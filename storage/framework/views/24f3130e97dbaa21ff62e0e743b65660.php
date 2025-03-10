@@ -22,4 +22,15 @@
         <script src="<?php echo e(asset('adminassets/libs/dropzone/min/dropzone.min.js')); ?>"></script>
 
         <!-- Demo js-->
-        <script src="<?php echo e(asset('adminassets/js/pages/form-fileuploads.js')); ?>"></script><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/scripts.blade.php ENDPATH**/ ?>
+        <script src="<?php echo e(asset('adminassets/js/pages/form-fileuploads.js')); ?>"></script>
+
+        <script>
+            function fetchNotifications() {
+                $.get("<?php echo e(route('admin.notifications')); ?>", function(data) {
+                    $("#notificationcount").text(data.count);
+                    $(".dropdown-menu").html(data.html);
+                });
+            }
+         
+            setInterval(fetchNotifications, 10000); // Refresh every 10 seconds
+    </script><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/scripts.blade.php ENDPATH**/ ?>

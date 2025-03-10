@@ -159,8 +159,10 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
     Route::any('/mobilechangerequest/approveRequest/{userid}',[NotificationController::class,'unreadNotification'])->name('mobilechange.approve');
  
 
-    Route::any('/mobilechangerequest/markAsRead/{id}',[NotificationController::class,'markAsRead'])->name('admin.notifications.markAsRead');
+    Route::any('/markNotification/{id}',[NotificationController::class,'markNotification'])->name('admin.markNotification');
 
+
+     Route::any('/mobilechangerequest/markAsRead/{id}',[NotificationController::class,'markAsRead'])->name('admin.notifications.markAsRead');
 
     Route::any('/venueadminlist',[VenueController::class,'venueadminlist'])->name('venue.venueadminlist');
     Route::any('/venue/comments',[VenueController::class,'venueComments'])->name('venue.comments');
