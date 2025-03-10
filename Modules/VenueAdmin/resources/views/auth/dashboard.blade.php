@@ -68,7 +68,7 @@
 				</div>
 
 				<div class="card-footer text-center bg-light">
-					<a href="{{ route('get.all.enquiries') }}" class="btn btn-primary btn-sm">View All Bookings</a>
+					<a href="{{ route('get.all.enquiries') }}" class="btn btn-primary btn-sm">View All Enquiries</a>
 				</div>
 			</div>
 		</div>

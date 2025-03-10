@@ -34,8 +34,11 @@ Route::prefix('admin')->middleware(IsAdminRoleCheck::class)->group(function () {
     })->name('admin.dashboard');*/
 
 
-     Route::any('/dashboard', [DashboardController::class, 'index'])->name('admin/dashboard');
-     
+    Route::any('/dashboard', [DashboardController::class, 'dashboard'])->name('admin/dashboard');
+    Route::get('/dashboard/data',[DashboardController::class, 'dashboardChart'])->name('admin/get-dashboard-data');
+    Route::get('/view/all/enquiries', [DashboardController::class, 'allEnquiries'])->name('admin/get.all.enquiries');
+    Route::get('update/enquiry/status/{id}', [DashboardController::class, 'updateEnquiryStatus'])->name('admin/update.enquiry.status');
+
      Route::any('/occasion', [OccasionTypeController::class, 'index'])->name('admin/occasion');
      Route::any('/occasion/create', [OccasionTypeController::class, 'create'])->name('admin/occasion/create');
      Route::any('/occasion/store', [OccasionTypeController::class, 'store'])->name('admin/occasion/store');
