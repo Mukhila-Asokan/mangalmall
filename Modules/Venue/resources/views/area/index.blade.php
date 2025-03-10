@@ -122,9 +122,9 @@
                                             <td>{{ $dist->state->statename ?? '' }}</td>
                                             <td>
                                                 @if($dist->status == 'Active')
-                                                    <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="{{ $dist->id }}" title="Status"><i class="fa fa-eye action_icon"></i></button>
+                                                    <button type="button" class="btn btn-primary statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="{{ $dist->id }}" title="Active Status"><i class="fa fa-eye action_icon"></i></button>
                                                 @else 
-                                                    <button type="button" class="btn-info btn statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="{{ $dist->id }}" title="Status"><i class="fa fa-eye-slash action_icon"></i></button>
+                                                    <button type="button" class="btn-info btn statusid" data-bs-toggle="modal" data-bs-target=".statusModal" data-id="{{ $dist->id }}" title="Inactive Status"><i class="fa fa-eye-slash action_icon"></i></button>
                                                 @endif
                                                 <a href="{{ url('/admin/area/'.$dist->id.'/edit') }}" class="btn-warning btn" title="Edit"><i class="fa fa-pencil action_icon"></i></a>
                                                 <button type="button" class="btn-danger btn deleteid" data-bs-toggle="modal" data-bs-target="#delModal" data-id="{{ $dist->id }}" title="Delete"><i class="fa fa-trash action_icon"></i></button>

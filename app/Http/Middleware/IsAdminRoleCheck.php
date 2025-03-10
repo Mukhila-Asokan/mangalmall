@@ -19,6 +19,8 @@ class IsAdminRoleCheck
         // Ensure the user is authenticated as an admin
         $admin = Auth::guard('admin')->user();
 
+      
+
         if (!$admin) {
             return redirect()->route('admin.login')->with([
                 'success' => false,

@@ -1,31 +1,3 @@
-<?php
-use Carbon\Carbon;
-
-$today = Carbon::today();
-$yesterday = Carbon::yesterday();
-?>
-
-<li class="dropdown notification-list">
-    
-    <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown"
-       href="#" role="button" aria-haspopup="false" aria-expanded="false">
-        <i class="mdi mdi-bell font-size-24"></i>
-        <span class="badge bg-danger rounded-circle noti-icon-badge" id = "notificationcount"><?php echo e(auth()->guard('admin')->user()->unreadNotifications->count()); ?></span>
-    </a>
-    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
-        <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h6 class="m-0 font-size-16 fw-semibold"> Notification</h6>
-                </div>
-                <div class="col-auto">
-                    <a href="javascript: void(0);" class="text-dark text-decoration-underline">
-                        <small>Clear All</small>
-                    </a>
-                </div>
-            </div>
-        </div>
-
         <div class="px-1" style="max-height: 300px;" data-simplebar>
     
 <?php if($todayNotifications->count() > 0): ?>
@@ -99,6 +71,4 @@ $yesterday = Carbon::yesterday();
 <?php if($todayNotifications->count() === 0 && $yesterdayNotifications->count() === 0 && $olderNotifications->count() === 0): ?>
     <a class="dropdown-item text-center">No new notifications</a>
 <?php endif; ?>
-</div>
-</li>
-<?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/notification.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/notification-list.blade.php ENDPATH**/ ?>
