@@ -13,7 +13,7 @@ class NotificationMacroServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-       
+        // Define a macro for notification filtering
         Str::macro('filterNotificationsByDate', function ($notifications) {
             $today = now();
             $yesterday = now()->subDay();

@@ -1,6 +1,4 @@
-@extends('layouts.guest')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
 .form-group span
@@ -26,14 +24,15 @@
                                 </div>
 
                                 <!--login form-->
-                                <form class="login-signup-form" method = "post" action = "{{ route('logincheck') }}">
-                                    @csrf
+                                <form class="login-signup-form" method = "post" action = "<?php echo e(route('logincheck')); ?>">
+                                    <?php echo csrf_field(); ?>
 
-                                    @if (session('error'))
+                                    <?php if(session('error')): ?>
                                     <div class="alert alert-danger">
-                                        {{ session('error') }}
+                                        <?php echo e(session('error')); ?>
+
                                     </div>
-                                     @endif
+                                     <?php endif; ?>
 
 
 
@@ -43,11 +42,25 @@
                                             <div class="input-icon">
                                                 <span class="ti-email color-primary"></span>
                                             </div>
-                                           <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="name@domain.com" name="email" value="{{ old('email') }}" required>
+                                           <input type="email" class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="name@domain.com" name="email" value="<?php echo e(old('email')); ?>" required>
                                         </div>
-                                         @error('email')
-                                            <span>{{ $message }}</span>
-                                        @enderror
+                                         <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                            <span><?php echo e($message); ?></span>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                     </div>
                                     <!-- Password -->
                                     <div class="form-group">
@@ -68,7 +81,14 @@
                                             <div class="input-group">
                                             <input 
                                                 type="password" 
-                                                class="form-control passwordcontrol @error('password') is-invalid @enderror" 
+                                                class="form-control passwordcontrol <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" 
                                                 placeholder="Enter your password" 
                                                 name="password" 
                                                 id="password"
@@ -81,11 +101,19 @@
                                             </div>
                                         </div>
 
-                                        @error('password')
+                                        <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                             <div class="invalid-feedback">
-                                                {{ $message }}
+                                                <?php echo e($message); ?>
+
                                             </div>
-                                        @enderror
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
 
                                         </div>
                                     </div>
@@ -98,15 +126,15 @@
                                 </form>
                             </div>
                             <div class="card-footer bg-transparent px-md-5"><small>Not registered?</small>
-                                <a href="{{ route('register') }}" class="small"> Create account</a>
+                                <a href="<?php echo e(route('register')); ?>" class="small"> Create account</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-@endsection
-@push('scripts')    
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>    
 <script>
     function togglePassword() {
         const passwordInput = document.getElementById("password");
@@ -123,4 +151,5 @@
         }
     }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.guest', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/auth/login.blade.php ENDPATH**/ ?>

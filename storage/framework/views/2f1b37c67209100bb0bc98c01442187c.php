@@ -1,6 +1,4 @@
-@extends('layouts.guest')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <section class="ptb-100 height-lg-100vh d-flex align-items-center">
     <div class="container">
@@ -11,14 +9,15 @@
                         <div class="mb-5">
                             <h5 class="h3">Create account</h5>
                         </div>
-                        <form class="login-signup-form" method="POST" action="{{ route('register/add') }}">
-                            @csrf
+                        <form class="login-signup-form" method="POST" action="<?php echo e(route('register/add')); ?>">
+                            <?php echo csrf_field(); ?>
 
-                            @if (session('error'))
+                            <?php if(session('error')): ?>
                                     <div class="alert alert-danger">
-                                        {{ session('error') }}
+                                        <?php echo e(session('error')); ?>
+
                                     </div>
-                                     @endif
+                                     <?php endif; ?>
 
                             <div class="form-group">
                                 <label class="pb-1">Your Name</label>
@@ -26,11 +25,18 @@
                                     <div class="input-icon">
                                         <span class="ti-user color-primary"></span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Enter your name" name="name" value="{{ old('name') }}" required>
+                                    <input type="text" class="form-control" placeholder="Enter your name" name="name" value="<?php echo e(old('name')); ?>" required>
                                 </div>
-                                @error('name')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <div class="text-danger"><?php echo e($message); ?></div>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="form-group">
                                 <label class="pb-1">Email Address</label>
@@ -38,11 +44,18 @@
                                     <div class="input-icon">
                                         <span class="ti-email color-primary"></span>
                                     </div>
-                                    <input type="email" class="form-control" placeholder="name@address.com" name="email" value="{{ old('email') }}" required>
+                                    <input type="email" class="form-control" placeholder="name@address.com" name="email" value="<?php echo e(old('email')); ?>" required>
                                 </div>
-                                    @error('email')
-        <span class="text-danger">{{ $message }}</span>
-    @enderror
+                                    <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+        <span class="text-danger"><?php echo e($message); ?></span>
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="form-group">
                                 <label class="pb-1">Password</label>
@@ -57,9 +70,16 @@
                                                 </span>
                                             </div>
                                 </div>
-                                @error('password')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <div class="text-danger"><?php echo e($message); ?></div>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                              <div class="form-group">
@@ -70,9 +90,16 @@
                                     </div>
                                       <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm your password" required>
                                 </div>
-                               @error('password_confirmation')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                               <?php $__errorArgs = ['password_confirmation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                             
 
@@ -90,7 +117,7 @@
                     </div>
                     <div class="card-footer px-md-5 bg-transparent border-top">
                         <small>Already have an account?</small>
-                        <a href="{{ route('login') }}" class="small">Sign in</a>
+                        <a href="<?php echo e(route('login')); ?>" class="small">Sign in</a>
                     </div>
                 </div>
             </div>
@@ -98,8 +125,8 @@
     </div>
 </section>
 
-@endsection
-@push('scripts')    
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>    
 <script>
    
     function togglePassword() {
@@ -117,4 +144,5 @@
         }
     }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.guest', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/auth/register.blade.php ENDPATH**/ ?>
