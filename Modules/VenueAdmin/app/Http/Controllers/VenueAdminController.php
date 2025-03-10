@@ -34,6 +34,8 @@ use Svg\Tag\Rect;
 use Illuminate\Support\Facades\Session;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AdminUser;
+use Illuminate\Support\Facades\Log;
 
 class VenueAdminController extends Controller
 {
@@ -547,9 +549,25 @@ class VenueAdminController extends Controller
         $admincheck = VenueUser::where('id',$venueuserid)->first();
         
         /* Send Confirmation Notification to Admin */      
-        $admin = Auth::guard('admin')->user(); 
+      /*  $admin = Auth::guard('admin')->user(); */
+
+        $admins = AdminUser::where('delete_status', '0')
+                   ->whereIn('role', ['Super Admin', 'Admin'])
+                   ->get(); // Fetch all admin users
+
+         
+          if (!$admins) {
+                    return redirect()->back()->with('error', 'Admin not found or not authenticated.');
+                }
+
+        foreach ($admins as $admin) {
+            $admin->notify(new ChangeMobileNo($request->new_mobile, 'User requested to change their mobile number.'));
+        }
+
+     
        
-        $admin->notify(new ChangeMobileNo($request->new_mobile, 'User requested to change their mobile number.'));
+       
+       // $admin->notify(new ChangeMobileNo($request->new_mobile, 'User requested to change their mobile number.'));
 
         return redirect()->back()->with('success', 'Your request has been sent to the admin for approval.');
     }   

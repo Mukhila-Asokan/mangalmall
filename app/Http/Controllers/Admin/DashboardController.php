@@ -73,4 +73,13 @@ class DashboardController extends Controller
         return redirect()->route('admin.login')->with('success', __('Your password has been updated successfully.'));
        
     }
+    public function notifications()
+    {
+      $notifications = auth()->guard('admin')->user()->unreadNotifications->groupBy(function ($notification) {
+        return \Carbon\Carbon::parse($notification->created_at)->format('Y-m-d');
+    });
+     // Fetch all notifications
+
+        return response()->json(['notifications' => $notifications]);
+    }
 }

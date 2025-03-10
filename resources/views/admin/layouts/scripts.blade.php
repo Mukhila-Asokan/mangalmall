@@ -23,3 +23,14 @@
 
         <!-- Demo js-->
         <script src="{{ asset('adminassets/js/pages/form-fileuploads.js') }}"></script>
+
+        <script>
+            function fetchNotifications() {
+                $.get("{{ route('admin.notifications') }}", function(data) {
+                    $("#notificationcount").text(data.count);
+                    $(".dropdown-menu").html(data.html);
+                });
+            }
+         
+            setInterval(fetchNotifications, 10000); // Refresh every 10 seconds
+    </script>
