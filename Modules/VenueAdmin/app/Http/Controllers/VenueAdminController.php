@@ -30,7 +30,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Models\BookingEnquiry;
 use Session;
-use Auth;
 use Carbon\Carbon;
 use App\Notifications\ChangeMobileNo;
 use DataTables;

@@ -176,45 +176,50 @@
  <script>
     document.addEventListener("DOMContentLoaded", function() {
         var baseUrl = "{{ url('/') }}";
+        renderNotification(baseUrl);
         setInterval(() => {
-            fetch(`${baseUrl}/venueadmin/notifications`)
-            .then(response => response.json())
-            .then(notifications => {
-                let notificationContainer = document.querySelector(".unread_notifications");
-                if (!notificationContainer) {
-                    console.error("Notification container not found.");
-                    return;
-                }
-
-                notificationContainer.innerHTML = "";
-                notifications.forEach(notification => {
-                    console.log(notification);
-                    
-                    let item = `
-                        <a href="javascript:void(0);" class="dropdown-item p-0 notify-item unread-noti card m-0 shadow-none">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="notify-icon bg-primary">
-                                            <i class="ri-message-3-line fs-18"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <h5 class="noti-item-title fw-semibold fs-14">
-                                            ${notification.data.type ?? ''} 
-                                            <small class="fw-normal text-muted float-end ms-1"> - </small>
-                                        </h5>
-                                        <small class="noti-item-subtitle text-muted">${notification.data.message}</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                    notificationContainer.innerHTML += item;
-                });
-            })
+            renderNotification(baseUrl);
             .catch(error => console.error("Error fetching notifications:", error));
         }, 5000);
     });
+
+    function renderNotification(baseUrl){
+        fetch(`${baseUrl}/venueadmin/notifications`)
+        .then(response => response.json())
+        .then(notifications => {
+            let notificationContainer = document.querySelector(".unread_notifications");
+            if (!notificationContainer) {
+                console.error("Notification container not found.");
+                return;
+            }
+
+            notificationContainer.innerHTML = "";
+            notifications.forEach(notification => {
+                console.log(notification);
+                
+                let item = `
+                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item unread-noti card m-0 shadow-none">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="notify-icon bg-primary">
+                                        <i class="ri-message-3-line fs-18"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 text-truncate ms-2">
+                                    <h5 class="noti-item-title fw-semibold fs-14">
+                                        ${notification.data.type ?? ''} 
+                                        <small class="fw-normal text-muted float-end ms-1"> - </small>
+                                    </h5>
+                                    <small class="noti-item-subtitle text-muted">${notification.data.message}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                notificationContainer.innerHTML += item;
+            });
+        })
+    }
  </script>
 @endpush

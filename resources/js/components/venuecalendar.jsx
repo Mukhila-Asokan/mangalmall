@@ -1,20 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./calendor.css"; // Import CSS for styling
 
 const VenueBookingCalendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [currentYear, setCurrentYear] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", message: "", id: "" });
+  const [bookedDates, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Example booked dates
-  const bookedDates = {
-    "2025-02-10": { type: "full", details: "Wedding Event - Full Day" },
-    "2025-02-15": { type: "morning", details: "Business Meeting - Morning Slot" },
-    "2025-02-20": { type: "evening", details: "Private Party - Evening Slot" },
-    "2025-02-25": { type: "full", details: "Corporate Event - Full Day" }
-  };
+  // const bookedDates = {
+  //   "2025-02-10": { type: "full", details: "Wedding Event - Full Day" },
+  //   "2025-02-15": { type: "morning", details: "Business Meeting - Morning Slot" },
+  //   "2025-02-20": { type: "evening", details: "Private Party - Evening Slot" },
+  //   "2025-02-25": { type: "full", details: "Corporate Event - Full Day" }
+  // };
+  useEffect(() => {
+    const fetchData = async () => {
+      const urlPath = window.location.pathname; 
+      const segments = urlPath.split('/').filter(Boolean); 
+      const id = segments[2];
+
+      let selectedMonth = currentMonth.getMonth() + 1;
+      let selectedYear = currentYear.getFullYear();
+      
+      console.log(selectedYear, 'selectedYear');
+      console.log(selectedMonth, 'selectedMonth');
+      
+      const endpoint = `/home/${id}/${selectedMonth}/${selectedYear}`;
+      try {
+        const response = await fetch(endpoint, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document
+              .querySelector('meta[name="csrf-token"]')
+              ?.getAttribute("content"),
+          },
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          console.log(result.bookings, 'result');
+          setBookings(result.bookings || []);
+        } else {
+          setError(result.error || "Failed to fetch data");
+        }
+      } catch (error) {
+        setError("Error fetching data: " + error.message);
+      } finally {
+        setLoading(false); // Stop loading once request is complete
+      }
+    };
+
+    fetchData(); // Call function when the component mounts
+  }, [currentMonth, currentYear]);
+
 
   const renderCalendar = () => {
     const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
@@ -61,13 +107,34 @@ const VenueBookingCalendar = () => {
     }, 300);
   };
 
-  const handlePrevMonth = () => {
-    setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)));
-  };
+  // const handlePrevMonth = () => {
+  //   setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)));
+  // };
 
-  const handleNextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)));
+  // const handleNextMonth = () => {
+  //   setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)));
+  // };
+
+  const handlePrevMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      if (prevMonth.getMonth() === 0) {
+        setCurrentYear((prevYear) => new Date(prevYear.getFullYear() - 1, 11)); 
+        return new Date(prevMonth.getFullYear() - 1, 11);
+      }
+      return new Date(prevMonth.getFullYear(), prevMonth.getMonth() - 1);
+    });
   };
+  
+  const handleNextMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      if (prevMonth.getMonth() === 11) {
+        setCurrentYear((prevYear) => new Date(prevYear.getFullYear() + 1, 0));
+        return new Date(prevMonth.getFullYear() + 1, 0);
+      }
+      return new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1);
+    });
+  };
+  
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -83,7 +150,7 @@ const VenueBookingCalendar = () => {
     e.preventDefault();
     const urlPath = window.location.pathname; 
     const segments = urlPath.split('/').filter(Boolean); 
-    const id = segments[2]; // Extract venue ID from URL
+    const id = segments[2];
 
     if (!selectedDate || !selectedDate.date) {
         console.log("No date selected!");
