@@ -21,17 +21,20 @@ use Modules\Venue\Models\VenueDetails;
 use Modules\Venue\Models\VenueCampaigns;
 use Modules\Venue\Models\Imagelibrary;
 use Modules\Venue\Models\Area;
+use Modules\VenueAdmin\Models\VenueBooking;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use App\Models\BookingEnquiry;
+use Session;
+use Auth;
+use Carbon\Carbon;
 use App\Notifications\ChangeMobileNo;
-
 use DataTables;
 use Svg\Tag\Rect;
-use Illuminate\Support\Facades\Session;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AdminUser;
@@ -456,10 +459,132 @@ class VenueAdminController extends Controller
 
     public function dashboard()
     {
-        $pagetitle = "Dashboard";
-        $pageroot = "Home"; 
-        return view('venueadmin::auth.dashboard',compact('pagetitle','pageroot'));
-    }  
+        try{
+            $pagetitle = "Dashboard";
+            $pageroot = "Home"; 
+            $bookings =  BookingEnquiry::where('venue_user_id', Session::get('venueuserid'))->where('status', 'open')->orderBy('id', 'desc')->limit(2)->get();
+            $topBookedVenues = VenueBooking::join('venuedetails', 'venuebooking.venue_id', '=', 'venuedetails.id')
+                        ->select('venuedetails.venuename', 'venuedetails.description', DB::raw('COUNT(venuebooking.id) as total_bookings'))
+                        ->where('venuebooking.bookinguserid', Session::get('venueuserid'))
+                        ->groupBy('venuedetails.id', 'venuedetails.venuename', 'venuedetails.description')
+                        ->orderByDesc('total_bookings')
+                        ->limit(7)
+                        ->get();
+            $user = VenueUser::where('id', \Session::get('venueuserid'))->first();
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
+        return view('venueadmin::auth.dashboard',compact('pagetitle','pageroot', 'bookings', 'topBookedVenues', 'user'));
+    }
+
+    public function dashboardChart(){
+        try{
+            $startDate = Carbon::now()->subMonths(4)->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+
+            $bookings = VenueBooking::selectRaw("DATE_FORMAT(start_date, '%Y-%m') as month, COUNT(*) as booking_count")
+                ->where('bookinguserid', Session::get('venueuserid'))
+                ->where(function($query) use ($startDate, $endDate) {
+                    $query->whereBetween('start_date', [$startDate, $endDate])
+                        ->orWhereBetween('end_date', [$startDate, $endDate])
+                        ->orWhere(function($q) use ($startDate, $endDate) {
+                                $q->where('start_date', '<=', $startDate)
+                                    ->where('end_date', '>=', $endDate);
+                            });
+                })
+                ->groupBy('month')
+                ->orderBy('month')
+                ->pluck('booking_count', 'month')
+                ->toArray();
+
+            $today = Carbon::now()->toDateString();
+
+            $bookingCount = VenueBooking::whereDate('start_date', '<=', $today)
+                ->whereDate('end_date', '>=', $today)
+                ->where('bookinguserid', Session::get('venueuserid'))
+                ->count();
+
+            $monthStartDate = Carbon::now()->subMonths(4)->startOfMonth();
+            $monthEndDate = Carbon::now()->endOfMonth();
+
+            $monthBookingCount = VenueBooking::whereDate('start_date', '<=', $monthStartDate)
+                ->whereDate('end_date', '>=', $monthEndDate)
+                ->where('bookinguserid', Session::get('venueuserid'))
+                ->count();
+
+            $allMonths = [];
+            for ($i = 4; $i >= 0; $i--) {
+                $month = Carbon::now()->subMonths($i)->format('Y-m');
+                $allMonths[$month] = $bookings[$month] ?? 0;
+            }
+
+            $formattedBookings = [];
+            foreach ($allMonths as $month => $count) {
+                $monthName = Carbon::createFromFormat('Y-m', $month)->format('M'); 
+                $formattedBookings[] = ['month' => $monthName, 'booking_count' => $count];
+            }
+
+            $allFormattedMonths = array_column($formattedBookings, 'month');
+            $bookingCounts = array_column($formattedBookings, 'booking_count');
+
+            return response()->json([
+                'status' => 'success',
+                'allFormattedMonths' => $allFormattedMonths,
+                'formattedBookings' => $formattedBookings,
+                'bookingCounts' => $bookingCounts,
+                'todayCounts' => $bookingCount,
+                'monthBookingCount' => $monthBookingCount
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getNotifications(){
+        $user = VenueUser::where('id', \Session::get('venueuserid'))->first();
+        return response()->json($user->unreadNotifications);
+    }
+
+    public function markAsRead(){
+        $user = VenueUser::where('id', \Session::get('venueuserid'))->first();
+        $user->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
+
+    public function allNotifications(){
+        $user = VenueUser::where('id', \Session::get('venueuserid'))->first();
+        $pagetitle = "Booking Enquiries";
+        $pageroot = "Venue"; 
+        return view('venueadmin::booking.all_notifications', compact('user', 'pagetitle', 'pageroot'));
+    }
+
+    public function allEnquiries(){
+        $userId = \Session::get('venueuserid');
+        $pagetitle = "Booking Enquiries";
+        $pageroot = "Venue"; 
+        $getAllEnquiries = BookingEnquiry::where('venue_user_id', $userId)->get();
+        return view ('venueadmin::booking.enquiries', compact('getAllEnquiries', 'pagetitle', 'pageroot'));
+    }
+
+    public function updateEnquiryStatus($id){
+        try{
+            $updateEnquiryStatus = BookingEnquiry::where('id', $id)->first();
+            $updateEnquiryStatus->status = 'ENQUIRED';
+            $updateEnquiryStatus->save();
+            return redirect()->back()->with('success', 'Booking Enquiry status successfully updated');
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
     public function register()
     {

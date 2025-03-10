@@ -40,6 +40,12 @@ Route::post('/venue/newaccountadd',[VenueAdminController::class, 'newaccountadd'
 Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessageMiddleware::class])->group(function () { 
 
     Route::any('/dashboard',[VenueAdminController::class, 'dashboard'])->name('venueadmin/dashboard');
+    Route::get('/dashboard/data',[VenueAdminController::class, 'dashboardChart'])->name('get-dashboard-data');
+    Route::get('/mark/as/read/notification', [VenueAdminController::class, 'markAsRead'])->name('mark.as.read');
+    Route::get('/notifications', [VenueAdminController::class, 'getNotifications'])->name('venueadmin/notifications');
+    Route::get('/view/all/notifications', [VenueAdminController::class, 'allNotifications'])->name('get.all.notifications');
+    Route::get('/view/all/enquiries', [VenueAdminController::class, 'allEnquiries'])->name('get.all.enquiries');
+    Route::get('update/enquiry/status/{id}', [VenueAdminController::class, 'updateEnquiryStatus'])->name('update.enquiry.status');
 
     Route::any('/userprofile',[VenueUserProfileController::class, 'index'])->name('venueadmin.userprofile');
     Route::any('/userprofileupdate',[VenueUserProfileController::class, 'store'])->name('venueadmin/userprofileupdate');
