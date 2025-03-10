@@ -25,10 +25,20 @@
         <script src="{{ asset('adminassets/js/pages/form-fileuploads.js') }}"></script>
 
         <script>
+
+            $(window).on('load', function() {
+                alert("Page loaded");
+                fetchNotifications();
+            });
             $(document).ready(function() {
-    setInterval(fetchNotifications, 10000); // Only trigger on interval
-});
+                fetchNotifications();
+                 setInterval(fetchNotifications, 10000); // Only trigger on interval
+    });
+
+
+
     function fetchNotifications() {
+       
         $.ajax({
             url: "{{ route('admin.notifications') }}",
             method: "GET",

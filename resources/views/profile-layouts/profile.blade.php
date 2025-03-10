@@ -9,7 +9,7 @@
         @routes 
         @viteReactRefresh
         @vite(['resources/js/mount-venuecalendar.jsx'])
-
+        
        <style type="text/css">
            .container
            {

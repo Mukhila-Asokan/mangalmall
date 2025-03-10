@@ -15,30 +15,25 @@ use Illuminate\Support\Facades\Session;
 
 use App\Models\AdminUser;
 use Carbon\Carbon; 
+use App\NotificationFilterTrait;
 
 class DashboardController extends Controller
 {
     use AuthorizesRequests; 
+    use NotificationFilterTrait;
     public function index()
     {  
          $username = Session::get('username');
          $userid = Session::get('userid');
          $user = auth()->guard('admin')->user();
-         $today = now();
-         $yesterday = now()->subDay();
-
-         $todayNotifications = $user->unreadNotifications->filter(function ($notification) use ($today) {
-        return Carbon::parse($notification->created_at)->isToday();
-    });
-
-    $yesterdayNotifications = $user->unreadNotifications->filter(function ($notification) use ($yesterday) {
-        return Carbon::parse($notification->created_at)->isYesterday();
-    });
-
-    $olderNotifications = $user->unreadNotifications->filter(function ($notification) use ($yesterday) {
-        return Carbon::parse($notification->created_at)->lt($yesterday);
-    });
-
+         $notifications = $user->unreadNotifications;
+ 
+         $filteredNotifications = $this->filterNotificationsByDate($notifications); 
+       
+        $todayNotifications = $filteredNotifications['today'];
+        $yesterdayNotifications  = $filteredNotifications['yesterday'];
+        $olderNotifications  = $filteredNotifications['older'];
+     
          $pagetitle = "Dashboard";
          $pageroot = "Home";
          return view('admin.dashboard', compact('pagetitle','pageroot','username','todayNotifications','yesterdayNotifications','olderNotifications'));
@@ -47,9 +42,8 @@ class DashboardController extends Controller
     {
          $username = Session::get('username');
          $userid = Session::get('userid');
-
          $pagetitle = "Change Password";
-        return view('admin.password', compact('pagetitle','username'));
+         return view('admin.password', compact('pagetitle','username'));
     }
 
     public function passwordupdate(Request $request)
@@ -90,33 +84,34 @@ class DashboardController extends Controller
     }
    public function notifications()
     {
-    $user = auth()->guard('admin')->user();
-    $today = now();
-    $yesterday = now()->subDay();
+        $user = auth()->guard('admin')->user();
+        $notifications = $user->unreadNotifications;
 
-    // Filter Notifications
-    $todayNotifications = $user->unreadNotifications->filter(function ($notification) use ($today) {
-        return Carbon::parse($notification->created_at)->isToday();
-    });
+        $filteredNotifications = $this->filterNotificationsByDate($notifications);
 
-    $yesterdayNotifications = $user->unreadNotifications->filter(function ($notification) use ($yesterday) {
-        return Carbon::parse($notification->created_at)->isYesterday();
-    });
-
-    $olderNotifications = $user->unreadNotifications->filter(function ($notification) use ($yesterday) {
-        return Carbon::parse($notification->created_at)->lt($yesterday);
-    });
-
-    $html = view('admin.layouts.notification-list', compact(
-        'todayNotifications',
-        'yesterdayNotifications',
-        'olderNotifications'
-    ))->render();
+        $html = view('admin.layouts.notification-list', [
+        'todayNotifications' => $filteredNotifications['today'],
+        'yesterdayNotifications' => $filteredNotifications['yesterday'],
+        'olderNotifications' => $filteredNotifications['older'],
+    ])->render();
 
     return response()->json([
         'count' => $user->unreadNotifications->count(),
         'html' => $html
     ]);
 }
+public function getNotifications()
+    {
+        $user = auth()->guard('admin')->user();
+        $notifications = $user->unreadNotifications;
+
+        $filteredNotifications = $this->filterNotificationsByDate($notifications);
+
+        return view('admin.notifications', [
+            'todayNotifications' => $filteredNotifications['today'],
+            'yesterdayNotifications' => $filteredNotifications['yesterday'],
+            'olderNotifications' => $filteredNotifications['older'],
+        ]);
+    }
 
 }

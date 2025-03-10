@@ -5,17 +5,23 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.jsx'],  // Ensure correct entry file
+            input: [
+                'resources/js/app.jsx', 
+                'resources/js/mount-venuecalendar.jsx'  // ✅ Ensure this file is included
+            ],
             refresh: true,
         }),
         react({
-            jsxRuntime: 'automatic',  // Ensure React Fast Refresh works
+            jsxRuntime: 'automatic',
         }),
-       
     ],
+    build: {
+        manifest: true,
+        outDir: 'public/build', // Correct build path
+    },
     resolve: {
         alias: {
-            '@': '/resources/js', // Ensures '@' maps correctly
+            '@': '/resources/js', 
         },
     },
 });
