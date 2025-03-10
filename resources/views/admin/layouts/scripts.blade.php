@@ -26,10 +26,6 @@
 
         <script>
 
-            $(window).on('load', function() {
-                alert("Page loaded");
-                fetchNotifications();
-            });
             $(document).ready(function() {
                 fetchNotifications();
                  setInterval(fetchNotifications, 10000); // Only trigger on interval
@@ -38,7 +34,6 @@
 
 
     function fetchNotifications() {
-       
         $.ajax({
             url: "{{ route('admin.notifications') }}",
             method: "GET",
