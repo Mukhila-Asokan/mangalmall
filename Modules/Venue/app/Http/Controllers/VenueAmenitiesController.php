@@ -5,9 +5,8 @@ namespace Modules\Venue\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 use Modules\Venue\Models\VenueAmenities;
-use Session;
-
 class VenueAmenitiesController extends Controller
 {
     /**

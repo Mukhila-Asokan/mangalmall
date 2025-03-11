@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 Use Modules\Venue\Models\State;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class StateController extends Controller
 {
@@ -19,8 +19,9 @@ class StateController extends Controller
          $userid = Session::get('userid');       
          $pagetitle = "State";
          $pageroot = "Venue";
+         $pageurl = route('venue');
         $states = State::where('delete_status',0)->paginate(20);
-        return view('venue::state.index',compact('states','pagetitle','pageroot','username'));
+        return view('venue::state.index',compact('states','pagetitle','pageroot','username','pageurl'));
     }
 
     /**
@@ -32,7 +33,8 @@ class StateController extends Controller
          $userid = Session::get('userid');       
          $pagetitle = "State";
          $pageroot = "Venue";
-        return view('venue::state.create',compact('pagetitle','pageroot','username'));
+         $pageurl = route('venue');
+        return view('venue::state.create',compact('pagetitle','pageroot','username','pageurl'));
     }
 
     /**
@@ -77,7 +79,8 @@ class StateController extends Controller
         $pagetitle = "State";
         $pageroot = "Venue";
         $state = State::where('id',$id)->first();
-        return view('venue::state.edit',compact('state','pagetitle','pageroot','username'));
+        $pageurl = route('venue');
+        return view('venue::state.edit',compact('state','pagetitle','pageroot','username','pageurl'));
     }
 
     /**

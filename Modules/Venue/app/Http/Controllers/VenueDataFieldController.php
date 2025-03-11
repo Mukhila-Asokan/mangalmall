@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 Use Modules\Venue\Models\VenueDataField;
 Use Modules\Venue\Models\VenueDataFieldDetails;
 
-use Session;
+use Illuminate\Support\Facades\Session;
 class VenueDataFieldController extends Controller
 {
     /**
@@ -28,7 +28,8 @@ class VenueDataFieldController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue Data Field";
         $pageroot = "Venue";
-        return view('venue::venuedatafield.create',compact('pagetitle','pageroot','username'));
+        $pageurl = route('venue');
+        return view('venue::venuedatafield.create',compact('pagetitle','pageroot','username','pageurl'));
     }
 
     /**
@@ -87,9 +88,9 @@ class VenueDataFieldController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue Data Field";
         $pageroot = "Venue";
-
+        $pageurl = route('venue');
         $venuedatafield = VenueDataField::where('delete_status',0)->paginate(15);
-        return view('venue::venuedatafield.list',compact('pagetitle','pageroot','username','venuedatafield'));
+        return view('venue::venuedatafield.list',compact('pagetitle','pageroot','username','venuedatafield','pageurl'));
     }
 
     /**
@@ -102,7 +103,8 @@ class VenueDataFieldController extends Controller
         $pagetitle = "Venue Data Field";
         $pageroot = "Venue";
         $venuedatafield = VenueDataField::where('id',$id)->first();
-        return view('venue::venuedatafield.edit',compact('pagetitle','pageroot','username','venuedatafield'));
+         $pageurl = route('venue');
+        return view('venue::venuedatafield.edit',compact('pagetitle','pageroot','username','venuedatafield','pageurl'));
     }
 
     /**

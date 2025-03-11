@@ -15,8 +15,9 @@ class DeletedRecordsController extends Controller
     {
         $pagetitle = "Deleted Records";
         $pageroot = "Venue";
+        $pageurl = route('venue');
         $deletedMenus = Menu::where('delete_status', 0)->paginate(20);
-        return view('venue::deletedrecords.index', compact('pagetitle', 'pageroot', 'deletedMenus'));      
+        return view('venue::deletedrecords.index', compact('pagetitle', 'pageroot', 'deletedMenus','pageurl'));      
     }
 
     public function deletedview($id)

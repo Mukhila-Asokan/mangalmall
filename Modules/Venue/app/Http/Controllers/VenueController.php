@@ -53,10 +53,11 @@ class VenueController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue List";
         $pageroot = "Venue"; 
+        $pageurl = route('venue'); 
         $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
-        $arealocation = indialocation::where('delete_status',0)->get();
+        $arealocation = Area::where('delete_status',0)->get();
 
 
         if ($request->ajax()) {
@@ -94,7 +95,7 @@ class VenueController extends Controller
                     ->make(true);
         }
           
-        return view('venue::venues.show',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation'));
+        return view('venue::venues.show',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','pageurl'));
     }
 
     public function venuesettings()
@@ -102,8 +103,10 @@ class VenueController extends Controller
         $username = Session::get('username');
         $userid = Session::get('userid');       
         $pagetitle = "Venue Settings";
-        $pageroot = "Venue";        
-        return view('venue::venuesettings',compact('pagetitle','pageroot','username'));
+        $pageurl = route('venue'); 
+        $pageroot = "Venue";    
+        $pageurl = route('venue');    
+        return view('venue::venuesettings',compact('pagetitle','pageroot','username','pageurl'));
     }
 
     /**
@@ -115,11 +118,12 @@ class VenueController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue";
         $pageroot = "Home";
+        $pageurl = route('venue'); 
         $venuetypes = VenueType::where('delete_status',0)->where('roottype',0)->get();
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
         $arealocation = Area::orderBy('cityid')->get();
-        return view('venue::venues.create',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation'));
+        return view('venue::venues.create',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','pageurl'));
     }
 
     /**
@@ -136,7 +140,11 @@ class VenueController extends Controller
             'description' => 'required',
             'contactperson' => 'required',
             'contactmobile' => 'required|unique:venuedetails|digits:10', 
-            'venuetypeid' => 'required',         
+            'venuetypeid' => 'required', 
+            'bookingprice' => 'required',
+            'capacity' => 'required',
+            'food_type' => 'required',   
+            'bannerimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',            
            
          ]);
 
@@ -236,11 +244,12 @@ class VenueController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue Detailed View";
         $pageroot = "Venue"; 
+        $pageurl = route('venue');
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafield = VenueDataField::where('delete_status',0)->get();         
         $venuedatafielddetails = VenueDataFieldDetails::where('delete_status',0)->get();         
         $venuedetails = VenueDetails::where('id',$id)->first();
-        return view('venue::venues.detailview',compact('pagetitle','pageroot','username','venuedetails','venueamenities','venuedatafield','venuedatafielddetails'));
+        return view('venue::venues.detailview',compact('pagetitle','pageroot','username','venuedetails','venueamenities','venuedatafield','venuedatafielddetails','pageurl'));
     }
 
 
@@ -250,9 +259,10 @@ class VenueController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue Detailed View";
         $pageroot = "Venue"; 
+        $pageurl = route('venue');
         $venueid = $id;
         $theme = VenueThemeBuilder::where('delete_status',0)->get();
-        return view('venue::venues.themelistview',compact('pagetitle','pageroot','username','theme','venueid'));
+        return view('venue::venues.themelistview',compact('pagetitle','pageroot','username','theme','venueid','pageurl'));
     }
 
     public function themeeditor($venueid,$id)
@@ -268,10 +278,10 @@ class VenueController extends Controller
         $template = VenueCampaigns::where('venueid',$venueid)->where('theme_id',$id)->first();
         $themefullpath = $theme->zip_path;
         $pathurl = url('/').$themefullpath.'/index.html'; 
-       
+        $pageurl = route('venue');
        
 
-       return view('venue::venues.showvenuetheme',compact('pagetitle','pageroot','username','userid','theme','venue','pathurl','template'));
+       return view('venue::venues.showvenuetheme',compact('pagetitle','pageroot','username','userid','theme','venue','pathurl','template','pageurl'));
     }
 
     /**
@@ -288,7 +298,8 @@ class VenueController extends Controller
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
         $arealocation = Area::orderBy('cityid')->get();
         $venue = VenueDetails::where('id',$id)->first();
-        return view('venue::venues.edit', compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue'));
+        $pageurl = route('venue');
+        return view('venue::venues.edit', compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue','pageurl'));
       
     }
 
@@ -305,7 +316,8 @@ class VenueController extends Controller
             'description' => 'required',
             'contactperson' => 'required',
             'contactmobile' => 'required|digits:10|unique:venuedetails,contactmobile,' . $id, 
-            'venuetypeid' => 'required',      
+            'venuetypeid' => 'required',    
+            'loctationid' => 'required',
             'capacity' => 'required',  
             'food_type' => 'required',
             'bookingprice' => 'required',
@@ -604,8 +616,9 @@ class VenueController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue User Request";
         $pageroot = "Venue";  
+        $pageurl = route('venue');
         $id = 2;      
-        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id'));
+        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id','pageurl'));
 
     }
     public function mobilechangerequest()
@@ -615,8 +628,9 @@ class VenueController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue User Mobile No change Request";
         $pageroot = "Venue";  
+        $pageurl = route('venue');
         $id = 2;      
-        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id'));
+        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id','pageurl'));
 
     }
     public function venueadminlist()
@@ -627,7 +641,8 @@ class VenueController extends Controller
         $pagetitle = "Venue Admin List";
         $pageroot = "Venue";     
         $id = 1;   
-        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id'));
+        $pageurl = route('venue');
+        return view('venue::venueportalrequest',compact('pagetitle','pageroot','username','venueuser','id','pageurl'));
 
     }
 
@@ -681,9 +696,9 @@ class VenueController extends Controller
         
     }
 
-    public function getBookings($id)
+    public function getBookings(Request $request, $id)
     {
-         $month = $request->query('month', date('m'));
+        $month = $request->query('month', date('m'));
         $bookings = VenueBooking::where('venue_id',$id)->whereMonth('start_datetime', $month)->get();
 
         return response()->json($bookings);
@@ -695,9 +710,10 @@ class VenueController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue Content";
         $pageroot = "Venue"; 
+        $pageurl = route('venue');
         $venue = VenueDetails::where('id',$id)->first();
         $venuecontent = VenueContent::where('venue_id',$id)->first();       
-        return view('venue::venues.venuecontent',compact('pagetitle','pageroot','username','venue','venuecontent'));
+        return view('venue::venues.venuecontent',compact('pagetitle','pageroot','username','venue','venuecontent','pageurl'));
     }
 
     public function content_add(Request $request)
@@ -729,8 +745,9 @@ class VenueController extends Controller
         $pageroot = "Venue"; 
         $venue = VenueDetails::where('id',$id)->first();
         $venueimage = VenueImage::where('venue_id',$id)->get(); 
+        $pageurl = route('venue');
            
-        return view('venue::venues.venueimage',compact('pagetitle','pageroot','username','venue','venueimage'));
+        return view('venue::venues.venueimage',compact('pagetitle','pageroot','username','venue','venueimage','pageurl'));
     }
     public function venueimage_add(Request $request)
     {
@@ -891,7 +908,8 @@ class VenueController extends Controller
                 ->whereNull('rejected_at')
                 ->get()
                 ->toArray();
-            return view('venue::venues.comments', compact('comments'));
+                $pageurl = route('venue');
+            return view('venue::venues.comments', compact('comments','pageurl'));
         }
     }
 
@@ -924,8 +942,9 @@ class VenueController extends Controller
         $venue = VenueDetails::where('id',$id)->first();
         $venuehalls = VenueDetails::where('parentid',$id)->where('delete_status',0)->paginate(10);
         $parentid = $id;
+        $pageurl = route('venue');
        
-        return view('venue::venues.allhall',compact('venuehalls','pagetitle','pageroot','parentid','venue'));
+        return view('venue::venues.allhall',compact('venuehalls','pagetitle','pageroot','parentid','venue','pageurl'));
     }
     public function hallcreate($id)
     {
@@ -939,7 +958,8 @@ class VenueController extends Controller
         $venueamenities = VenueAmenities::where('delete_status',0)->get();
         $venuedatafield = VenueDataField::where('delete_status',0)->get();
         $arealocation = Area::orderBy('cityid')->get();
-        return view('venue::venues.venuehallcreate',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue','parentid'));   
+        $pageurl = route('venue');
+        return view('venue::venues.venuehallcreate',compact('pagetitle','pageroot','username','venuetypes','venueamenities','venuedatafield','arealocation','venue','parentid','pageurl'));   
     }
     public function hallstore(Request $request)
     {      
@@ -1025,7 +1045,8 @@ class VenueController extends Controller
             $venuedatafield = VenueDataField::where('delete_status',0)->get();         
             $venuedatafielddetails = VenueDataFieldDetails::where('delete_status',0)->get();         
             $venuedetails = VenueDetails::where('id',$id)->first();
-            return view('venue::venues.hallshow',compact('pagetitle','pageroot','username','venuedetails','venueamenities','venuedatafield','venuedatafielddetails'));
+            $pageurl = route('venue');
+            return view('venue::venues.hallshow',compact('pagetitle','pageroot','username','venuedetails','venueamenities','venuedatafield','venuedatafielddetails','pageurl'));
         
     }
 
@@ -1041,7 +1062,8 @@ class VenueController extends Controller
         $venueamenities = VenueAmenities::where('delete_status', 0)->get();
         $venuedatafield = VenueDataField::where('delete_status', 0)->get();
         $arealocation = Area::orderBy('cityid')->get();
-        return view('venue::venues.venuehalledit', compact('pagetitle', 'pageroot', 'username', 'venuetypes', 'venueamenities', 'venuedatafield', 'arealocation', 'venue', 'parentid'));
+        $pageurl = route('venue');
+        return view('venue::venues.venuehalledit', compact('pagetitle', 'pageroot', 'username', 'venuetypes', 'venueamenities', 'venuedatafield', 'arealocation', 'venue', 'parentid','pageurl'));
     }
 
     public function hallupdate(Request $request, $id)
@@ -1133,5 +1155,16 @@ class VenueController extends Controller
         VenueDetails::where('id', '=', $id)->update(['delete_status' => 1]);
         return redirect()->back()->with('success', 'Venue Hall Details successfully deleted');
        
+    }
+    public function getAreaName(Request $request)
+    {
+        $areaId = $request->input('id'); // Get the area ID
+        $area = Area::find($areaId); // Find the area by ID
+
+        if ($area) {
+            return response()->json(['name' => $area->areaname.' - '.$area->city->cityname]); // Return the area name
+        }
+
+        return response()->json(['name' => '']); // Return empty if not found
     }
 }

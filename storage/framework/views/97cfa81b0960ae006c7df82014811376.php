@@ -34,7 +34,7 @@
                 <div class="col-lg-6">
                    <div class="d-none d-lg-block">
                     <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="<?php echo e(route('admin/dashboard')); ?>"><?php echo e($pageroot ?? ' Home '); ?></a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e($pageurl ?? route('admin/dashboard')); ?>"><?php echo e($pageroot ?? ' Home '); ?></a></li>
                         <li class="breadcrumb-item active"><?php echo e($pagetitle ?? ' Home '); ?></li>
                     </ol>
                    </div>

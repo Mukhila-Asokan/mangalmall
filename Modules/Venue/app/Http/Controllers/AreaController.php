@@ -10,7 +10,7 @@ Use Modules\Venue\Models\District;
 Use Modules\Venue\Models\City;
 use Modules\Venue\Models\Area;
 use Illuminate\Support\Facades\Log;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 
 class AreaController extends Controller
@@ -51,8 +51,8 @@ class AreaController extends Controller
         $cities = City::where('delete_status', 0)->get();
         $districts = District::where('delete_status', 0)->get();
         $states = State::where('delete_status', 0)->get();
-
-        return view('venue::area.index', compact('pagetitle', 'pageroot', 'username', 'area', 'cities', 'districts', 'states'));
+        $pageurl = route('venue');
+        return view('venue::area.index', compact('pagetitle', 'pageroot', 'username', 'area', 'cities', 'districts', 'states','pageurl'));
     }
 
     /**
@@ -67,7 +67,8 @@ class AreaController extends Controller
         $states = State::where('delete_status', 0)->get();
         $districts = District::where('delete_status', 0)->get();
         $cities = City::where('delete_status', 0)->get();
-        return view('venue::area.create', compact('pagetitle', 'pageroot', 'username', 'states', 'districts', 'cities'));
+        $pageurl = route('venue');
+        return view('venue::area.create', compact('pagetitle', 'pageroot', 'username', 'states', 'districts', 'cities','pageurl'));
     }
 
     /**
@@ -126,7 +127,8 @@ class AreaController extends Controller
         $districts = District::where('delete_status', 0)->get();
         $cities = City::where('delete_status', 0)->get();
         $area = Area::findOrFail($id);
-        return view('venue::area.edit', compact('pagetitle', 'pageroot', 'username', 'states', 'districts', 'cities', 'area'));
+        $pageurl = route('venue');
+        return view('venue::area.edit', compact('pagetitle', 'pageroot', 'username', 'states', 'districts', 'cities', 'area','pageurl'));
     }
 
     /**

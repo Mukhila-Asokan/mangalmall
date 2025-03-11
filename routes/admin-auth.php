@@ -39,6 +39,8 @@ Route::prefix('admin')->middleware(IsAdminRoleCheck::class)->group(function () {
     Route::get('/view/all/enquiries', [DashboardController::class, 'allEnquiries'])->name('admin/get.all.enquiries');
     Route::get('update/enquiry/status/{id}', [DashboardController::class, 'updateEnquiryStatus'])->name('admin/update.enquiry.status');
 
+
+    /*Occasion Type */
      Route::any('/occasion', [OccasionTypeController::class, 'index'])->name('admin/occasion');
      Route::any('/occasion/create', [OccasionTypeController::class, 'create'])->name('admin/occasion/create');
      Route::any('/occasion/store', [OccasionTypeController::class, 'store'])->name('admin/occasion/store');
