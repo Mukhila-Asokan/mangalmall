@@ -5,6 +5,11 @@
   background-size: 300px!important;
   background-repeat: no-repeat!important;
 }
+.input-group .input-group-text {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
 </style>
 <?php $__env->startSection('content'); ?>
 
@@ -64,8 +69,22 @@
                                                 <a href="pages-recoverpw.html"
                                                     class="text-muted float-end"><small></small></a>
                                                 <label class="form-label" for="password">Password</label>
-                                                <input class="form-control" type="password" required="" id="password" value="" name="password"
-                                                    placeholder="Enter your password">
+                                                <div class="input-group">
+                                                    <input 
+                                                        class="form-control" 
+                                                        type="password" 
+                                                        id="password" 
+                                                        name="password" 
+                                                        placeholder="Enter your password" 
+                                                        required
+                                                    >
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" onclick="togglePassword()">
+                                                            <i class="fas fa-eye" id="eye-icon"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <div class="form-group mb-3">

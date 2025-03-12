@@ -56731,3 +56731,23 @@ button.scroll-top:focus {
       max-width: 100%!important;
   }
 }
+.input-icon {
+  position: absolute;
+  left: 5px;      /* Ensure space from the left */
+  top: 50%;        /* Vertically center the icon */
+  transform: translateY(-50%);
+  color: #524242;
+  font-size: 16px;
+  pointer-events: none; /* Prevents accidental click issues */
+  z-index: 10;         /* Ensures the icon is always above the input field */
+}
+
+.input-group .passwordcontrol {
+  padding-left: 40px; /* Ensure text doesn't overlap with the lock icon */
+}
+
+.input-group .input-group-text {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}

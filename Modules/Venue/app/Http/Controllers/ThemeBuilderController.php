@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Venue\Models\VenueThemeBuilder;
 use Illuminate\Support\Facades\Storage;
-use Session;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 use ZipArchive;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Session;
 
 class ThemeBuilderController extends Controller
 {
@@ -61,8 +61,8 @@ class ThemeBuilderController extends Controller
                     ->rawColumns(['theme_type','preview_image','action'])
                     ->make(true);
          }
-
-         return view('venue::themebuilder.index', compact('pagetitle','pageroot','username','venuethemebuilder'));
+         $pageurl = route('venue');
+         return view('venue::themebuilder.index', compact('pagetitle','pageroot','username','venuethemebuilder','pageurl'));
     }
 
     /**

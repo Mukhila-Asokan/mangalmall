@@ -46,6 +46,8 @@ $userid = Session::get('userid');
 Route::any('/venue/create/ajaxcitylist', [VenueController::class,'ajaxcitylist'])->name('venue/create/ajaxcitylist');
 Route::any('/venue/ajaxarealist', [VenueController::class,'ajaxarealist'])->name('venue.ajaxarealist');
 
+Route::get('/venue/getareaname', [VenueController::class, 'getAreaName'])->name('venue.getareaname');
+
 Route::any('/venue/create/ajaxcvenuesubtypelist', [VenueController::class,'ajaxcvenuesubtypelist'])->name('venue/create/ajaxcvenuesubtypelist');
 
 Route::prefix('admin')->middleware('admin.role')->group(function () {

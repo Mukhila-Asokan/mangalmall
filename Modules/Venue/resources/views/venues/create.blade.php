@@ -24,6 +24,13 @@
     .select2-container .select2-selection--single {
         height: 40px !important;  /* Adjust the select box height */
     }
+    .is-valid {
+            border-color: #28a745; /* Green border for valid input */
+        }
+
+        .is-invalid {
+            border-color: #dc3545; /* Red border for invalid input */
+        }
 </style>
  <link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -43,6 +50,16 @@
                           <form class="form-horizontal" role="form" method = "post" action="{{ route('venue.venue_add') }}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="col-12">
+
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
 
                                            <div class="accordion accordion-flush" id="accordionFlushExample">
                                             <div class="accordion-item">
@@ -88,6 +105,9 @@
                                             <div class="col-md-8">
                                                   <select id="venuearea" name="venuearea"  placeholder="Enter the Area name" ></select>
                                                   @error('venuearea')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                                @error('locationid')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -163,8 +183,11 @@
                                         <div class="mb-4 row">
                                             <label class="col-md-4 col-form-label" for="contactmobile">Mobile No <span class="text-danger">*</span></label>
                                             <div class="col-md-8">
-                                                  <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value = "{{ old('contactmobile') }}" >
-                                                  @error('contactmobile')
+                                                <input type="text" id="contactmobile" name="contactmobile" class="form-control" placeholder="Enter the Contact Mobile No" value="{{ old('contactmobile') }}" oninput="validateMobile(this)">
+                                                <small class="form-text text-muted">
+                                                        Enter a 10-digit mobile number (or 11 digits if it starts with 0).
+                                                </small>
+                                                @error('contactmobile')
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -219,14 +242,14 @@
                   <label class="col-md-4 col-form-label" for="venuetypeid">Select Venue Type <span class="text-danger">*</span></label>
                    <div class="col-md-8">
                  <select class="form-select" id="venuetypeid" name="venuetypeid" aria-label="Floating label select example">
-                                <option selected>Choose Venue Type</option>
-                                @foreach($venuetypes as $type)
-                                <option value = "{{ $type->id }}" {{ old('venuetypeid') == $type->id ? 'selected' : '' }} >{{ $type->venuetype_name }}</option>
-                                @endforeach
-                            </select>
-                            @error('venuetypeid')
-								<div class="text-danger">{{ $message }}</div>
-                            @enderror
+                    <option value="">Choose Venue Type</option>
+                    @foreach($venuetypes as $type)
+                    <option value = "{{ $type->id }}" {{ old('venuetypeid') == $type->id ? 'selected' : '' }} >{{ $type->venuetype_name }}</option>
+                    @endforeach
+                </select>
+                @error('venuetypeid')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 </div>
 
              </div>   
@@ -518,52 +541,12 @@ if (input.files && input.files[0]) {
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript">
-    $('#venuearea').select2({
-        placeholder: 'Search for an area',
-        allowClear: true,
-        ajax: {
-            url: "{{ route('venue.ajaxarealist') }}", // Route to fetch data
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    q: params.term, // Send search term to backend
-                };
-            },
-            processResults: function (data) {
-                console.log(data.results); // Debug API response
-                return {
-                    results: data.results // Use 'results' key from API response
-                };
-            },
-            cache: true,
-        },
-        minimumInputLength: 1,
-    });
- 
-
-//     var areaOptions = {!! json_encode($areaOptions) !!};
-// $('#venuearea').selectize({
-//     valueField: 'id',
-//     labelField: 'title',
-//     searchField: 'title',
-//     options: areaOptions,
-//     create: false
-// });
-
-
-
-
-
-
-
    $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
         }
     });
    
-
 
 
       $("#venuearea").change(function(e) {
@@ -592,6 +575,107 @@ if (input.files && input.files[0]) {
         });
            
      });
+
+
+
+     function validateMobile(input) {
+    // Get the input value
+    let mobileNumber = input.value;
+
+    // Remove any non-digit characters
+    mobileNumber = mobileNumber.replace(/\D/g, '');
+
+    // Check if the first character is '0'
+    if (mobileNumber.startsWith('0')) {
+        // Allow 11 digits if the first character is '0'
+        if (mobileNumber.length > 11) {
+            mobileNumber = mobileNumber.slice(0, 11); // Trim to 11 digits
+        }
+    } else {
+        // Allow only 10 digits if the first character is not '0'
+        if (mobileNumber.length > 10) {
+            mobileNumber = mobileNumber.slice(0, 10); // Trim to 10 digits
+        }
+    }
+
+    // Update the input value
+    input.value = mobileNumber;
+
+    // Validate the mobile number
+    let isValid = false;
+    if (mobileNumber.startsWith('0')) {
+        isValid = mobileNumber.length === 11; // 11 digits required if starts with '0'
+    } else {
+        isValid = mobileNumber.length === 10; // 10 digits required otherwise
+    }
+
+    // Add or remove error styling
+    if (isValid) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+    } else {
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+    }
+}
+
+
+
+
+$(document).ready(function() {
+
+
+    $('#venuearea').select2({
+        placeholder: 'Search for an area',
+        allowClear: true,
+        ajax: {
+            url: "{{ route('venue.ajaxarealist') }}", // Route to fetch data
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term, // Send search term to backend
+                };
+            },
+            processResults: function (data) {
+                console.log(data.results); // Debug API response
+                return {
+                    results: data.results // Use 'results' key from API response
+                };
+            },
+            cache: true,
+        },
+        minimumInputLength: 1,
+    });
+ 
+
+
+
+
+
+
+     // Pre-select if old('venuearea') exists
+     @if(old('venuearea'))
+        var oldValue = "{{ old('venuearea') }}";
+        
+        // Fetch the area name by ID
+        $.ajax({
+            url: "{{ route('venue.getareaname') }}",
+            data: { id: oldValue },
+            dataType: 'json',
+            success: function (response) {
+                if (response.name) {
+                    var newOption = new Option(response.name, oldValue, true, true);
+                    $('#venuearea').append(newOption).trigger('change');
+                }
+            }
+        });
+    @endif
+
+        });
+
+
+
 
 </script>
 @endpush

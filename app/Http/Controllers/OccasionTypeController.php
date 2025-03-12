@@ -18,8 +18,9 @@ class OccasionTypeController extends Controller
         $username = Session::get('username');
         $userid = Session::get('userid');       
         $pagetitle = "Occasion Types";
+        $pageurl =  route('admin/dashboard');
         $occasion = OccasionType::where('delete_status','0')->paginate(20);
-        return view('admin.occasiontypes.index', compact('pagetitle','pageroot','occasion','username'));
+        return view('admin.occasiontypes.index', compact('pagetitle','pageroot','occasion','username','pageurl'));
     }
 
     /**
@@ -31,8 +32,8 @@ class OccasionTypeController extends Controller
         $username = Session::get('username');
         $userid = Session::get('userid');       
         $pagetitle = "Occasion Types";
-     
-        return view('admin.occasiontypes.create', compact('pagetitle','pageroot','username'));
+        $pageurl =  route('admin/dashboard');
+        return view('admin.occasiontypes.create', compact('pagetitle','pageroot','username','pageurl'));
     }
 
     /**
@@ -69,8 +70,9 @@ class OccasionTypeController extends Controller
         $username = Session::get('username');
         $userid = Session::get('userid');       
         $pagetitle = "Occasion Types";
+        $pageurl =  route('admin/dashboard');
         $occasion = OccasionType::where('id',$id)->first();
-        return view('admin.occasiontypes.edit', compact('pagetitle','pageroot','username','occasion'));
+        return view('admin.occasiontypes.edit', compact('pagetitle','pageroot','username','occasion','pageurl'));
     }
 
     /**

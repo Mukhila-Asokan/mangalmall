@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 
-const baseImageUrl = window.location.origin + "/storage/";
+const baseImageUrl = window.location.origin + "/public/storage/";
 const baseurl = window.location.origin;
 console.log(baseurl);
 

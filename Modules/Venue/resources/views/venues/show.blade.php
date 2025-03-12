@@ -58,7 +58,7 @@
         serverSide: true,
         ajax: "{{ route('venue/index') }}",
         columns: [
-            {data: 'id', name: 'id'},
+			{data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'venuename', name: 'venuename'},
             {data: 'venueaddress', name: 'venueaddress'},
             {data: 'contactperson', name: 'contactperson'},

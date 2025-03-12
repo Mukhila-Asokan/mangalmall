@@ -66,6 +66,17 @@
                                     Venue Details
                                 </button>
                             </h2>
+
+                            
+                            @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
                             <div id="flush-collapseOne" class="accordion-collapse collapse show">
                                 <div class="accordion-body">
                                     <div class="row">

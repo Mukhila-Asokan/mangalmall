@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 Use Modules\Venue\Models\State;
 Use Modules\Venue\Models\District;
 Use Modules\Venue\Models\City;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 
 class CityController extends Controller
@@ -22,6 +22,7 @@ class CityController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "City";
         $pageroot = "Venue";  
+        $pageurl = route('venue');
         $query = City::query();
         if ($request->has('state') && $request->state != '') {
             $query->where('stateid', $request->state);
@@ -48,7 +49,7 @@ class CityController extends Controller
 
         $states = State::where('delete_status',0)->get();
         $districts = District::where('delete_status',0)->get();
-        return view('venue::city.index',compact('pagetitle','pageroot','username','city','states','districts'));
+        return view('venue::city.index',compact('pagetitle','pageroot','username','city','states','districts','pageurl'));
     }
 
     /**
@@ -60,9 +61,10 @@ class CityController extends Controller
         $userid = Session::get('userid');
         $pageroot = "Venue";
         $pagetitle = "City";
+        $pageurl = route('venue');
         $states = State::where('delete_status',0)->get();
         $districts = District::where('delete_status',0)->get();
-        return view('venue::city.create',compact('pagetitle','pageroot','username','states','districts'));
+        return view('venue::city.create',compact('pagetitle','pageroot','username','states','districts','pageurl'));
     }
 
     /**
@@ -118,7 +120,8 @@ class CityController extends Controller
         $city=  City::where('id',$id)->first();
         $districts = District::where('delete_status',0)->get();
         $states = State::where('delete_status',0)->get();
-        return view('venue::city.edit',compact('states','pagetitle','pageroot','username','districts','city'));
+        $pageurl = route('venue');
+        return view('venue::city.edit',compact('states','pagetitle','pageroot','username','districts','city','pageurl'));
        
     }
 

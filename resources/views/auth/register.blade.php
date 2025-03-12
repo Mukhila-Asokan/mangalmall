@@ -50,7 +50,12 @@
                                     <div class="input-icon">
                                         <span class="ti-lock color-primary"></span>
                                     </div>
-                                    <input type="password" class="form-control" placeholder="Enter your password" name="password" required>
+                                    <input type="password"  id="password" class="form-control" placeholder="Enter your password" name="password" required>
+                                    <div class="input-group-append">
+                                                <span class="input-group-text" id="togglePassword" onclick="togglePassword()" style="cursor: pointer;">
+                                                    <i class="fas fa-eye" id="eye-icon"></i>
+                                                </span>
+                                            </div>
                                 </div>
                                 @error('password')
                                     <div class="text-danger">{{ $message }}</div>
@@ -94,3 +99,22 @@
 </section>
 
 @endsection
+@push('scripts')    
+<script>
+   
+    function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash"); // Eye slash icon
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye"); // Regular eye icon
+        }
+    }
+</script>
+@endpush

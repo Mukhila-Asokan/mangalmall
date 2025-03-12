@@ -34,7 +34,7 @@
                 <div class="col-lg-6">
                    <div class="d-none d-lg-block">
                     <ol class="breadcrumb m-0 float-end">
-                        <li class="breadcrumb-item"><a href="<?php echo e(route('admin/dashboard')); ?>"><?php echo e($pageroot ?? ' Home '); ?></a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e($pageurl ?? route('admin/dashboard')); ?>"><?php echo e($pageroot ?? ' Home '); ?></a></li>
                         <li class="breadcrumb-item active"><?php echo e($pagetitle ?? ' Home '); ?></li>
                     </ol>
                    </div>
@@ -68,6 +68,7 @@
 
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <?php echo $__env->make('admin.layouts.popupscripts', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>
 

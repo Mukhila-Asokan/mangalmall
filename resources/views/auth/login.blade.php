@@ -8,6 +8,11 @@
     color:red;
     font-weight: bold;
 }
+.input-group .input-group-text {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
 </style>
     <section class="ptb-100 height-lg-100vh d-flex align-items-center">
             <div class="container">
@@ -60,10 +65,28 @@
                                             <div class="input-icon">
                                                 <span class="ti-lock color-primary"></span>
                                             </div>
-                                           <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password" name="password" required>
-                                              @error('password')
-                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                @enderror
+                                            <div class="input-group">
+                                            <input 
+                                                type="password" 
+                                                class="form-control passwordcontrol @error('password') is-invalid @enderror" 
+                                                placeholder="Enter your password" 
+                                                name="password" 
+                                                id="password"
+                                                required
+                                            >
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="togglePassword" onclick="togglePassword()" style="cursor: pointer;">
+                                                    <i class="fas fa-eye" id="eye-icon"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        @error('password')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+
                                         </div>
                                     </div>
 
@@ -83,3 +106,21 @@
             </div>
         </section>
 @endsection
+@push('scripts')    
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash"); // Eye slash icon
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye"); // Regular eye icon
+        }
+    }
+</script>
+@endpush

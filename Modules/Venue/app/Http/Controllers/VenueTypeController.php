@@ -19,7 +19,8 @@ class VenueTypeController extends Controller
          $userid = Session::get('userid');       
          $pagetitle = "Venue Category";
          $pageroot = "Venue";
-         return view('venue::venuetype.index', compact('pagetitle','pageroot','username'));
+         $pageurl = route('venue');
+         return view('venue::venuetype.index', compact('pagetitle','pageroot','username','pageurl'));
        
     }
 
@@ -32,8 +33,8 @@ class VenueTypeController extends Controller
          $userid = Session::get('userid');       
          $pagetitle = "Venue Category";
          $pageroot = "Venue";
-         
-        return view('venue::venuetype.create',compact('pagetitle','pageroot','username'));
+         $pageurl = route('venue');
+        return view('venue::venuetype.create',compact('pagetitle','pageroot','username','pageurl'));
     }
 
     /**
@@ -70,8 +71,9 @@ class VenueTypeController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue Category";
         $pageroot = "Venue";
+        $pageurl = route('venue');
         $venuetypename = VenueType::where('delete_status',0)->where('roottype',0)->get();
-        return view('venue::venuetype.show',compact('pagetitle','pageroot','username','venuetypename'));
+        return view('venue::venuetype.show',compact('pagetitle','pageroot','username','venuetypename','pageurl'));
     }
 
     /**
@@ -83,8 +85,9 @@ class VenueTypeController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "Venue Category";
         $pageroot = "Venue";
+        $pageurl = route('venue');
         $venuetype = VenueType::where('id',$id)->first();
-        return view('venue::venuetype.edit',compact('pagetitle','pageroot','username','venuetype'));
+        return view('venue::venuetype.edit',compact('pagetitle','pageroot','username','venuetype','pageurl'));
     }
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 Use Modules\Venue\Models\State;
 Use Modules\Venue\Models\District;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class DistrictController extends Controller
 {
@@ -20,7 +20,7 @@ class DistrictController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "District";
         $pageroot = "Venue";
-
+        $pageurl = route('venue');
         $query = District::query();
 
         // Filtering by category
@@ -43,7 +43,7 @@ class DistrictController extends Controller
 
         /*$district = District::where('delete_status',0)->paginate(20);*/
         $states = State::where('delete_status',0)->get();
-        return view('venue::district.index',compact('pagetitle','pageroot','username','district','states'));
+        return view('venue::district.index',compact('pagetitle','pageroot','username','district','states','pageurl'));
     }
 
     /**
@@ -55,8 +55,9 @@ class DistrictController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "District";
         $pageroot = "Venue";
+        $pageurl = route('venue');
         $states = State::where('delete_status',0)->get();
-        return view('venue::district.create',compact('pagetitle','pageroot','username','states'));
+        return view('venue::district.create',compact('pagetitle','pageroot','username','states','pageurl'));
     }
 
     /**
@@ -102,9 +103,10 @@ class DistrictController extends Controller
         $userid = Session::get('userid');       
         $pagetitle = "District";
         $pageroot = "Venue";
+        $pageurl = route('venue');
         $district = District::where('id',$id)->first();
         $states = State::where('delete_status',0)->get();
-        return view('venue::district.edit',compact('states','pagetitle','pageroot','username','district'));
+        return view('venue::district.edit',compact('states','pagetitle','pageroot','username','district','pageurl'));
     }
 
     /**
