@@ -22,7 +22,7 @@
                     <li class="menu-item">
                         <a href="{{ route('admin/dashboard') }}" class="menu-link waves-effect">
                             <span class="menu-icon"><i data-lucide="airplay "></i></span>
-                            <span class="menu-text"> Dashboards </span>
+                            <span class="menu-text"> Dashboard </span>
                          
                         </a>
                     </li>

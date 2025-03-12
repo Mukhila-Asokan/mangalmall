@@ -179,7 +179,6 @@
         renderNotification(baseUrl);
         setInterval(() => {
             renderNotification(baseUrl);
-            .catch(error => console.error("Error fetching notifications:", error));
         }, 5000);
     });
 

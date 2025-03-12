@@ -45,13 +45,6 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item">
-                            <a href="{{ route('venue.calendar') }}" class="side-nav-link">
-                                <i class="ri-calendar-event-fill"></i>
-                                <span> Calendar </span>
-                            </a>
-                        </li>
-
                         <!--li class="side-nav-item">
                             <a href="#" class="side-nav-link">
                                 <i class="ri-message-3-fill"></i>
@@ -104,6 +97,13 @@
                                     </li>
                                 </ul>
                             </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a href="{{ route('venue.calendar') }}" class="side-nav-link">
+                                <i class="ri-calendar-event-fill"></i>
+                                <span> Calendar </span>
+                            </a>
                         </li>
 
                         <!-- <li class="side-nav-item">

@@ -19,7 +19,8 @@ Use Modules\VenueAdmin\Models\VenuePriceAddons;
 use Modules\VenueAdmin\Models\VenuePricingAddon;
 use Modules\VenueAdmin\Models\VenuePricing;
 use Modules\VenueAdmin\Models\VenueUser;
-
+use App\Rules\VenueAvailability;
+use Illuminate\Support\Facades\Validator;
 
 class VenueBookingController extends Controller
 {
@@ -40,7 +41,8 @@ class VenueBookingController extends Controller
         $pageroot = "Home"; 
       
         $occasion_types = OccasionType::where('delete_status','0')->get();
-        return view('venueadmin::booking.index',compact('pagetitle','pageroot','occasion_types'));
+        $venueCount = UserVenue::where('venueuserid', Session::get('venueuserid'))->count();
+        return view('venueadmin::booking.index',compact('pagetitle','pageroot','occasion_types', 'venueCount'));
     }
 
     public function getMuhurthamDates(){
@@ -48,6 +50,36 @@ class VenueBookingController extends Controller
         return response()->json($muhurtamDates);
     }
 
+    public function getEventDaytypes($eventId)
+    {
+        $details = VenueBookingDetails::where('venuebooking_id', $eventId)->get();
+        $daytypes = [];
+
+        foreach ($details as $detail) {
+            $date = $detail->date;
+            $venueId = $detail->venue_id;
+
+            $existingBookings = VenueBookingDetails::where('venue_id', $venueId)
+                ->where('id', '!=', $detail->id)
+                ->where('date', $date)
+                ->first();
+            if($existingBookings){
+                $daytypes[$date] = $existingBookings->daytype;
+            }
+            if (isset($daytypes[$date])) {
+                if ($detail->daytype == 'full' || $daytypes[$date] == 'full') {
+                    $daytypes[$date] = 'full';
+                } elseif (($daytypes[$date] == 'morning' && $detail->daytype == 'evening') ||
+                        ($daytypes[$date] == 'evening' && $detail->daytype == 'morning')) {
+                    $daytypes[$date] = 'full';
+                }
+            } else {
+                $daytypes[$date] = $detail->daytype;
+            }
+        }
+
+        return response()->json(['daytypes' => $daytypes], 200);
+    }
 
     public function getEventlist($id)
     {
@@ -55,18 +87,10 @@ class VenueBookingController extends Controller
         $pageroot = "Home"; 
         $venueid = $id;
         $formattedEvents = [];
-        $events = VenueBooking::where('venue_id',$venueid)->get(); // Fetch all bookings
+        $events = VenueBooking::with('details')->where('venue_id',$venueid)->get();
 
-       
         foreach ($events as $event) {
-            $color = '#40161C'; // Default color for full-day bookings
-
-            /*if ($event->daytype == 'morning') {
-                $color = '#40161C'; // Yellow for morning
-            } elseif ($event->daytype == 'evening') {
-                $color = '#D39D55'; // Red for evening
-            }*/
-
+            $color = '#40161C';
             $formattedEvents[] = [
                 'id' => $event->id, 
                 'title' => $event->event_title,
@@ -75,18 +99,15 @@ class VenueBookingController extends Controller
                 'color' => $color, 
             ];
         }
-
       
-        return response()->json($formattedEvents, 200);
-
-         
+        return response()->json($formattedEvents, 200);   
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create($id)
     {
-
         $pagetitle = "Venue Booking";
         $pageroot = "Home"; 
         $venueid = $id;
@@ -369,7 +390,94 @@ public function updatebooking(Request $request, $id)
     ], 200);
 }
 
+    public function addVenueBooking(Request $request){
+        try{
+            DB::beginTransaction();
+            $validator = Validator::make($request->all(), [
+                'eventstartdate' => ['required', 'date'],
+                'eventenddate' => ['required', 'date', 'after_or_equal:eventstartdate'],
+                'venue_id' => ['required', 'exists:venuedetails,id', new VenueAvailability($request->eventstartdate, $request->eventenddate, $request->venue_id, $request->except(['eventstartdate', 'eventenddate', '_token', 'venue_id']))],
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
 
+            $noofdays = Carbon::parse($request->eventstartdate)->diffInDays(Carbon::parse($request->eventenddate)) + 1;
+
+            $venuebooking = new VenueBooking();
+            $venuebooking->venue_id = $request->venue_id;
+            $venuebooking->booked_by = 'VenueUser';
+            $venuebooking->bookinguserid = Session::get('venueuserid'); 
+            $venuebooking->event_id = $request->event_id;
+            $venuebooking->event_title = $request->event_name;
+            $venuebooking->event_name = $request->event_name;
+            $venuebooking->start_date = $request->eventstartdate;
+            $venuebooking->end_date = $request->eventenddate;
+            $venuebooking->noofdays = $noofdays;
+            $venuebooking->total_guests = '0';
+            $venuebooking->booking_status = 'Confirmed';
+            $venuebooking->total_price = '1000';
+            $venuebooking->payment_status = 'Unpaid';
+            $venuebooking->special_requirements = $request->special_requirements ?? '-';
+            $venuebooking->status = "Active";
+            $venuebooking->delete_status = "0";
+            $venuebooking->save();
+        
+            $bookingcontact = new VenueBookingContact();
+            $bookingcontact->venue_id = $request->venue_id;
+            $bookingcontact->venuebooking_id = $venuebooking->id;
+            $bookingcontact->person_name = $request->person_name;
+            $bookingcontact->mobileno = $request->mobileno;
+            $bookingcontact->contact_address = $request->contact_address;
+            $bookingcontact->status = "Active";
+            $bookingcontact->delete_status = "0";
+            $bookingcontact->save();
+            
+            $dayTypesRaw = $request->except(['eventstartdate', 'eventenddate', '_token', 'venue_id']);
+
+            $dayTypes = [];
+            foreach ($dayTypesRaw as $key => $value) {
+                if (strpos($key, 'daytype-') === 0) {
+                    $date = str_replace('daytype-', '', $key);
+                    $dayTypes[$date] = $value;
+                }
+            }
+            foreach ($dayTypes as $date => $dayType) {
+                $actualDate = str_replace("daytype-", "", $date);
+                \Log::info('Processing date: ' . $date . ', dayType: ' . $dayType);
+                $bookingdetails = new VenueBookingDetails();
+                $bookingdetails->venue_id = $request->venue_id;
+                $bookingdetails->venuebooking_id = $venuebooking->id;
+                $bookingdetails->date = $actualDate;
+                $bookingdetails->daytype = $dayType;
+            
+                switch ($dayType) {
+                    case 'full':
+                        $bookingdetails->starttime = '05:00:00';
+                        $bookingdetails->endtime = '23:00:00';
+                        break;
+                    case 'morning':
+                        $bookingdetails->starttime = '05:00:00';
+                        $bookingdetails->endtime = '14:00:00';
+                        break;
+                    case 'evening':
+                        $bookingdetails->starttime = '14:00:00';
+                        $bookingdetails->endtime = '23:00:00';
+                        break;
+                }
+    
+                $bookingdetails->save();
+            }
+            DB::commit();
+            return redirect()->back()->with('success', 'Booking added successfully!');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            dd($e);
+        }
+    }
  
 
 function getDatesBetween($startDate, $endDate) {
@@ -419,38 +527,36 @@ public function getEventsbyid($id)
 {
     $venueid = $id;
     $formattedEvents = [];
+    $daytypes = [];
 
-        $venuebooking = VenueBooking::where('id',$id)->first();
-        $booking = VenueBookingContact::where('venuebooking_id',$id)->first();
-        $venuebookingdetails = VenueBookingDetails::where('venuebooking_id',$id)->get();
-
-        
-        $daytypes = [];
-        foreach ($venuebookingdetails as $detail) {
-            $daytypes[] = [
-                'date' => Carbon::parse($detail->date)->format('Y-m-d'),
-                'daytype' => $detail->daytype,
-                'starttime' => $detail->starttime,
-                'endtime' => $detail->endtime,
-            ];
-        }
-
-        // Format event details
-        $formattedEvents[] = [
-            'id' => $venuebooking->id,
-            'title' => $venuebooking->event_title,
-            'event_type' => $venuebooking->event_id,
-            'contact_person' => $booking->person_name,
-            'contact_address' => $booking->contact_address,
-            'mobileno' => $booking->mobileno,
-            'booking_status' => $venuebooking->booking_status,
-            'special_requirements' => $venuebooking->special_requirements,
-            'start' => Carbon::parse($venuebooking->start_date)->format('Y-m-d'),
-            'end' => date('Y-m-d', strtotime($venuebooking->end_date . ' +1 day')),          
-            'daytypes' => $daytypes,
+    $venuebooking = VenueBooking::where('id',$id)->first();
+    $booking = VenueBookingContact::where('venuebooking_id',$id)->first();
+    $venuebookingdetails = VenueBookingDetails::where('venuebooking_id',$id)->get();
+    
+    foreach ($venuebookingdetails as $detail) {
+        $daytypes[] = [
+            'date' => Carbon::parse($detail->date)->format('Y-m-d'),
+            'daytype' => $detail->daytype,
+            'starttime' => $detail->starttime,
+            'endtime' => $detail->endtime,
         ];
-  
+    }
 
+    // Format event details
+    $formattedEvents[] = [
+        'id' => $venuebooking->id,
+        'title' => $venuebooking->event_title,
+        'event_name' => $venuebooking->event_name,
+        'event_type' => $venuebooking->event_type,
+        'person_name' => $booking->person_name,
+        'contact_address' => $booking->contact_address,
+        'mobileno' => $booking->mobileno,
+        'booking_status' => $venuebooking->booking_status,
+        'special_requirements' => $venuebooking->special_requirements,
+        'start_date' => Carbon::parse($venuebooking->start_date)->format('Y-m-d'),
+        'end_date' => date('Y-m-d', strtotime($venuebooking->end_date . ' +1 day')),          
+        'daytypes' => $daytypes,
+    ];
     return response()->json($formattedEvents, 200);
 }
 
@@ -622,9 +728,10 @@ public function show()
             }
             $uniqueVenueIds = array_unique(array_keys($conflicts));
             $userVenues = UserVenue::where('venueuserid', Session::get('venueuserid'))->pluck('venueid')->toArray();
-            $venueDetails = VenueDetails::where('delete_status',0)->whereIn('id', $userVenues)->whereNotIn('id', $uniqueVenueIds)->get();
+            $venueDetails = VenueDetails::where('delete_status',0)->whereIn('id', $userVenues)->get();
             return response()->json([
-                'venueDetails' => $venueDetails
+                'venueDetails' => $venueDetails,
+                'uniqueVenueIds' => $uniqueVenueIds
             ]);
         }
         catch(\Exception $e){

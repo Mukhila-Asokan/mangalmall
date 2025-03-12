@@ -31,3 +31,4 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
 Route::delete('/api/delete-booking/{id}', [VenueBookingController::class, 'deletebooking']);
 
 Route::any('/get-event-details/{id}',[VenueBookingController::class, 'getEventsbyid']);
+Route::get('/get-event-daytypes/{eventId}', [VenueBookingController::class, 'getEventDaytypes']);

@@ -73,6 +73,7 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'edit']);
     Route::any('/venuebooking/{id}/destroy',[VenueBookingController::class, 'destroy']);
     Route::any('/venuebooking/{id}/invoicegenerator',[VenueBookingController::class, 'invoicegenerator']);
+    Route::post('/venue/booking/add', [VenueBookingController::class, 'addVenueBooking'])->name('add.venue.booking');
     
     Route::any('/venue/calendar',[VenueBookingController::class, 'viewCalendar'])->name('venue.calendar');
     // need to change

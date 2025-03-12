@@ -1134,4 +1134,48 @@ class VenueController extends Controller
         return redirect()->back()->with('success', 'Venue Hall Details successfully deleted');
        
     }
+
+    
+    public function getBookingsOnMonth($id, $month, $year) {
+        $startOfMonth = Carbon::createFromDate($year, $month, 1)->startOfMonth();
+        $endOfMonth = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+    
+        $bookings = VenueBookingDetails::where('venue_id', $id)
+            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->get();
+    
+        $result = [];
+        $bookedDates = [];
+    
+        for ($date = clone $startOfMonth; $date->lte($endOfMonth); $date->addDay()) {
+            $formattedDate = $date->toDateString();
+            $dayBookings = $bookings->where('date', $formattedDate)->pluck('daytype')->toArray();
+    
+            if(in_array('full', $dayBookings)){
+                $dayType = 'full';
+            }
+            else if (in_array('morning', $dayBookings) && in_array('evening', $dayBookings)) {
+                $dayType = 'full';
+            } elseif (in_array('morning', $dayBookings)) {
+                $dayType = 'morning';
+            } elseif (in_array('evening', $dayBookings)) {
+                $dayType = 'evening';
+            } else {
+                $dayType = 'available';
+            }
+    
+            if ($dayType !== 'available') {
+                $bookedDates[] = $formattedDate;
+                $result[$formattedDate] = [
+                    'type' => $dayType,
+                    'details' => 'Booked - ' . ucfirst($dayType) . ' Slot'
+                ];
+            }
+        }
+    
+        return response()->json([
+            'bookings' => $result,
+            'booked_dates' => $bookedDates
+        ]);
+    }
 }
