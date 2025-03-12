@@ -777,7 +777,7 @@ class VenueController extends Controller
          
             foreach ($request->file('sliderimage') as $image) {
                 $filename = time() . '-' . $image->getClientOriginalName();
-                $path = $image->storeAs('venue_images', $filename, 'public');
+                $path = $image->storeAs('venue_images', $filename, 'public_uploads');
 
                 $image_type = 'slider';
 
@@ -793,7 +793,7 @@ class VenueController extends Controller
         if ($request->hasFile('galleryimage')) {
             foreach ($request->file('galleryimage') as $image) {
                 $filename = time() . '-' . $image->getClientOriginalName();
-                $path = $image->storeAs('venue_images', $filename, 'public');
+                $path = $image->storeAs('venue_images', $filename, 'public_uploads');
 
                 VenueImage::create([
                     'venue_id' => $id,

@@ -4,5 +4,6 @@
     "VenueAdmin": true,
     "StaffManagement": true,
     "Merchandiser": true,
-    "Subcription": true
+    "Subcription": true,
+    "Blog": true
 }

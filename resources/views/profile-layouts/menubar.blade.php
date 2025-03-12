@@ -92,7 +92,7 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link sub-menu-nav-link" href="#">Video Making</a>
+                                        <a class="nav-link sub-menu-nav-link" href="{{ route('video.index') }}">Video Making</a>
                                     </li>
 
                                  
@@ -134,7 +134,7 @@
 
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Blog Writing</a>
+                                <a class="nav-link custom-nav-link" href="{{ route('blog.index') }}" aria-haspopup="true" aria-expanded="false">Blog Writing</a>
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="{{ route('home.pricing') }}" aria-haspopup="true" aria-expanded="false">Pricing</a>

@@ -25,6 +25,16 @@
                                     <p class="text-muted mb-0">Sign in to your account to continue.</p>
                                 </div>
 
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <!--login form-->
                                 <form class="login-signup-form" method = "post" action = "{{ route('logincheck') }}">
                                     @csrf

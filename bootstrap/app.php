@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'VenueAdminMiddleware' => \Modules\VenueAdmin\Http\Middleware\VenueAdminMiddleware::class,
             'HandleSessionExpiration' => \App\Http\Middleware\HandleSessionExpiration::class,
             'HandleInertiaRequests' => HandleInertiaRequests::class,
+            'RedirectIfNotFound' => \App\Http\Middleware\RedirectIfNotFound::class,
             
             
         ]);

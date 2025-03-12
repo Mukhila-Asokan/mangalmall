@@ -1,5 +1,5 @@
 @include('admin.layouts.header')
-<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link href="{{ asset('adminassets/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
 <style>
     .navbar-custom
     {

@@ -1,5 +1,5 @@
 <?php echo $__env->make('admin.layouts.header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<link href="<?php echo e(asset('adminassets/css/dataTables.bootstrap5.min.css')); ?>" rel="stylesheet">
 <style>
     .navbar-custom
     {
