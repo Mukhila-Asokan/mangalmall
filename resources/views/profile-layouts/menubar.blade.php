@@ -122,6 +122,7 @@
                                 <ul id="pagesGuestSubMenu" class="hs-sub-menu main-sub-menu" aria-labelledby="pagesMegaMenu" style="min-width: 260px;">                                   
                                     <li><a class="nav-link sub-menu-nav-link" href="{{ route('guest.index', ['user_id'=> auth()->user()->id]) }}">All Guests</a></li>
                                     <li><a class="nav-link sub-menu-nav-link" href="{{ route('guest.group.index') }}">Guest Groups</a></li>
+                                    <li><a class="nav-link sub-menu-nav-link" href="{{ route('list.caretaker') }}">Caretakers</a></li>
                                 </ul>
                             </li>
           

@@ -4,11 +4,6 @@
             <div class="col-md-6 d-flex">
                 <span class="font-20 font-color font-weight-bold">Guest Groups</span>
             </div>
-            <div class="col-md-6 d-flex justify-content-end">
-                <a href="{{ route('guest.index', ['user_id' => auth()->user()->id]) }}" id="add_contact" class="font-14 btn btn-primary waves-effect waves-light">
-                    <span>View Guests</span>
-                </a>
-            </div>
         </div>
     </div>
     <hr>

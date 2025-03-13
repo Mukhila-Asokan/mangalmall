@@ -20,7 +20,7 @@ use App\Http\Controllers\CanvaController;
 use App\Http\Controllers\InvitationCardDesignController;
 Use App\Http\Controllers\CardEditorController;
 use App\Http\Controllers\{CardImageAjaxLoadController, GuestController};
-
+use App\Http\Controllers\CaretakerController;
 Use App\Http\Controllers\PricingController;
 
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
@@ -186,6 +186,12 @@ Route::post('update/group/text', [GuestController::class, 'updateGuestGroupText'
 Route::get('guest/group/search', [GuestController::class, 'searchGuestGroup'])->name('guest.group.search');
 Route::post('add/guest/group/', [GuestController::class, 'addGuestInGroup'])->name('add.guest.group');
 Route::post('delete/guest/group', [GuestController::class, 'deleteGuestGroup'])->name('guest.group.delete');
+
+//caretaker
+Route::post('create/caretaker', [CaretakerController::class, 'createCaretaker'])->name('create.caretaker');
+Route::get('caretaker/list', [CaretakerController::class, 'listCaretaker'])->name('list.caretaker');
+Route::get('guest/list/caretaker/add', [CaretakerController::class, 'listGuestCaretaker'])->name('list.guest.caretaker');
+Route::get('caretaker/search', [CaretakerController::class, 'searchCaretaker'])->name('caretaker.search');
 
 require __DIR__.'/auth.php';
 
