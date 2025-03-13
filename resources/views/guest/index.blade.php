@@ -332,24 +332,76 @@
         </div>
     </div>
 </div>
+
+<div class="modal" id="assign_care_taker_model" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="homemodal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-20 font-color">Assign Caretaker</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('create.caretaker') }}" method="POST" id="caretaker_add_form">
+                    @csrf
+                    <input type="hidden" name="selected_guests" id="selected_guests">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="caretaker_id" class="font-14">Caretaker</label>
+                                    <select name="caretaker_id" class="form-control select2" id="caretaker_id" required>
+                                        <option value="" disabled selected>Select Caretaker Name</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card d-none" id="cartaker_details">
+                            <div class="card-header">
+                                <h6 class="p-2">Add Caretaker Details</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="caretaker_name" class="font-14">Name</label>
+                                            <input type="text" class="form-control" required name="caretaker_name" id="caretaker_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="caretaker_email" class="font-14">Email</label>
+                                            <input type="text" class="form-control" required name="caretaker_email" id="caretaker_email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="caretaker_mobile" class="font-14">Mobile Number</label>
+                                            <input type="text" class="form-control" required name="caretaker_mobile" id="caretaker_mobile">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary create_caretaker font-14">Submit</button>
+                        <button type="button" class="btn btn-secondary font-14" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
-    $(document).ready(function() {
-        $('.nav-link').click(function(e) {
-            e.preventDefault(); // Prevent default link behavior
-
-            $('.nav-link').removeClass('active'); // Remove active class from all links
-            $(this).addClass('active'); // Add active class to clicked link
-
-            let target = $(this).data('target'); // Get target section
-
-            $('.content-section').addClass('d-none'); // Hide all sections
-            $('#' + target).removeClass('d-none'); // Show selected section
-        });
-    });
-
     $('.edit_contact').on('click', function(){
         var id = $(this).data('id');
         $.ajax({
@@ -406,7 +458,7 @@
         });
     });
 
-    $('#add_contact').click(function() {
+    $(document).on('click', '#add_contact', function() {
         $('#add_contact_modal').modal('show');
     });
 
@@ -480,6 +532,33 @@
             }
         });
     });
+
+    $(document).on('click', '#assign_caretaker', function(){
+        let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {
+            return $(this).attr('data-id');
+        }).get();
+        if(selectedValues.length < 1){
+            alert('Please select atleast one contact to assing caretaker');
+            return false;
+        }
+        else{
+            $('#caretaker_id').append('<option value="add new">Add New Caretaker</option>');
+            $.each(<?=$caretakers?>, function(key, value){
+                $('#caretaker_id').append(`<option value="${value.id}">${value.name}</option>`);
+            })
+            $('#selected_guests').val(JSON.stringify(selectedValues));
+            $('#assign_care_taker_model').modal('show');
+
+            $('#caretaker_id').on('change', function(){
+                if($(this).val() == 'add new'){
+                    $('#cartaker_details').removeClass('d-none');
+                }
+                else{
+                    $('#cartaker_details').addClass('d-none');
+                }
+            })
+        }
+    })
 
     $('#create_group').click(function() {
         let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {

@@ -467,41 +467,38 @@
    
    
    
-     $("#venuetypeid").change(function(e) {
+    //  $("#venuetypeid").change(function(e) {
+    //    e.preventDefault();   
+    //    var venuetypeid = $(this).val();
    
-   
-     
-       e.preventDefault();   
-       var venuetypeid = $(this).val();
-   
-       $.ajax({
-          type:'POST',
-          url:"{{ route('venue/create/ajaxcvenuesubtypelist') }}",
-          dataType: 'json',
-          data:{ "_token": "{{ csrf_token() }}", "venuetypeid" :venuetypeid},
-          success:function(response){  
-           $("#venuesubtypeid").empty();   
-           var returnData = response;   
-           if(returnData.length>0)
-           {
-               let casestr = '<option>Select Venue Sub Type</option>';
-               for(i=0;i<returnData.length;i++)
-               {
-                   casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['venuetype_name'] + '</option>';
-               }
-            console.log(casestr);       
+    //    $.ajax({
+    //       type:'POST',
+    //       url:"{{ route('venue/create/ajaxcvenuesubtypelist') }}",
+    //       dataType: 'json',
+    //       data:{ "_token": "{{ csrf_token() }}", "venuetypeid" :venuetypeid},
+    //       success:function(response){  
+    //        $("#venuesubtypeid").empty();   
+    //        var returnData = response;   
+    //        if(returnData.length>0)
+    //        {
+    //            let casestr = '<option>Select Venue Sub Type</option>';
+    //            for(i=0;i<returnData.length;i++)
+    //            {
+    //                casestr  += '<option value = "' + returnData[i]['id'] + ' ">' + returnData[i]['venuetype_name'] + '</option>';
+    //            }
+    //         console.log(casestr);       
           
-            $("#venuesubtypeid").append(casestr);
-           }
-           else
-           {
-               alert("No Data")
-           }
-        }        
+    //         $("#venuesubtypeid").append(casestr);
+    //        }
+    //        else
+    //        {
+    //            alert("No Data")
+    //        }
+    //     }        
          
-       });
+    //    });
           
-    });
+    // });
 
     $("#venuearea").change(function(e) {
         e.preventDefault();   

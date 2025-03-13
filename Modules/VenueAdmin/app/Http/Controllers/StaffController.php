@@ -4,7 +4,7 @@ namespace Modules\VenueAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\VenueAdmin\Models\VenueStaff;
+use Modules\VenueAdmin\Models\{VenueStaff, VenueUser};
 use Illuminate\Support\Facades\Validator;
 use DB;
 
@@ -41,8 +41,19 @@ class StaffController extends Controller
         }
 
         try{
+            
+            $createVenueUser = new VenueUser;
+            $createVenueUser->name = $request->first_name.' '.$request->last_name;
+            $createVenueUser->mobileno = $request->mobile_number;
+            $createVenueUser->email = $request->email;
+            $createVenueUser->role = 'Staff';
+            $createVenueUser->city = '-';
+            $createVenueUser->status = 'Active';
+            $createVenueUser->save();
+
             $createStaff = new VenueStaff;
             $createStaff->venue_admin_id = \Session::get('venueuserid');
+            $createStaff->venue_user_id = $createVenueUser->id;
             $createStaff->first_name = $request->first_name;
             $createStaff->last_name = $request->last_name;
             $createStaff->staff_code = $request->staff_code;
@@ -52,10 +63,12 @@ class StaffController extends Controller
             $createStaff->hired_date = $request->hired_date;
             $createStaff->date_of_birth = $request->date_of_birth;
             $createStaff->save();
+
             DB::commit();
             return redirect()->route('venueadmin.list.staff')->with('success', 'Venue Staff Created Sucessfully');
         }
         catch(\Exception $e){
+            dd($e);
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
@@ -100,10 +113,21 @@ class StaffController extends Controller
             $createStaff->hired_date = $request->hired_date;
             $createStaff->date_of_birth = $request->date_of_birth;
             $createStaff->save();
+
+            $createVenueUser = VenueUser::where('id', $createStaff->venue_user_id)->first();
+            $createVenueUser->name = $createStaff->first_name.' '.$createStaff->last_name;
+            $createVenueUser->mobileno = $request->mobile_number;
+            $createVenueUser->email = $request->email;
+            $createVenueUser->role = 'Staff';
+            $createVenueUser->city = '-';
+            $createVenueUser->status = 'Active';
+            $createVenueUser->save();
+
             DB::commit();
             return redirect()->route('venueadmin.list.staff')->with('success', 'Venue staff updated Successfully');
         }
         catch(\Exception $e){
+            dd($e);
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
