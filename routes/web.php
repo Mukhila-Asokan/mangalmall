@@ -214,8 +214,13 @@ Route::post('delete/guest/group', [GuestController::class, 'deleteGuestGroup'])-
 //caretaker
 Route::post('create/caretaker', [CaretakerController::class, 'createCaretaker'])->name('create.caretaker');
 Route::get('caretaker/list', [CaretakerController::class, 'listCaretaker'])->name('list.caretaker');
+Route::get('caretaker/list/ajax', [CaretakerController::class, 'listCaretakerAjax'])->name('list.caretaker.ajax');
 Route::get('guest/list/caretaker/add', [CaretakerController::class, 'listGuestCaretaker'])->name('list.guest.caretaker');
+Route::post('create/caretaker/more', [CaretakerController::class, 'createCaretakerGuests'])->name('create.caretaker.more');
 Route::get('caretaker/search', [CaretakerController::class, 'searchCaretaker'])->name('caretaker.search');
+Route::get('edit/caretaker/{id}', [CaretakerController::class, 'editCaretaker'])->name('caretaker.edit');
+Route::post('update/caretaker', [CaretakerController::class, 'updateCaretaker'])->name('caretaker.update');
+Route::post('delete/caretaker', [CaretakerController::class, 'deleteCaretaker'])->name('caretaker.delete');
 
 require __DIR__.'/auth.php';
 

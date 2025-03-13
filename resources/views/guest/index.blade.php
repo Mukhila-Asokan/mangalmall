@@ -446,16 +446,18 @@
     })
 
     $('#delete_contact').on('click', function(){
-        var id = $(this).data('id');
-        $.ajax({
-            url: '/guest/' + id + '/delete',
-            type: 'GET',
-            success: function(response) {
-                if(response.status == 'success'){
-                    location.reload();
+        if(confirm('Are you sure want to delete this contact?')){
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/guest/' + id + '/delete',
+                type: 'GET',
+                success: function(response) {
+                    if(response.status == 'success'){
+                        location.reload();
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     $(document).on('click', '#add_contact', function() {
@@ -554,6 +556,9 @@
                     $('#cartaker_details').removeClass('d-none');
                 }
                 else{
+                    document.querySelectorAll('.d-none input[required]').forEach(input => {
+                        input.removeAttribute('required');
+                    });
                     $('#cartaker_details').addClass('d-none');
                 }
             })
@@ -612,5 +617,9 @@
     $(document).on('click', '.clear_search', function(){
         window.location.reload();
     })
+
+    $(document).on('click', '[data-dismiss="modal"]', function() {
+        $('.modal').modal('hide');
+    });
 </script>
 @endpush
