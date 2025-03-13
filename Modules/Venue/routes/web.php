@@ -234,8 +234,7 @@ Route::get('/get-cities', [VenueController::class, 'getCities'])->name('get.citi
 Route::middleware(HandleInertiaRequests::class)->group(function () {  
     Route::prefix('admin')->middleware(['auth:admin'])->group(function () { 
         Route::get('/venue/{id}/bookingdetails', [VenueController::class, 'bookingdetails'])->name('admin.venue.bookingdetails');
-       
-
+        Route::get('/{id}/{month}/{year}',[VenueController::class, 'getBookingsOnMonth'])->name('admin.get.bookings.on.date');
     });
 
     

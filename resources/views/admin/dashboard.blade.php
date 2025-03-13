@@ -28,12 +28,6 @@
 	.venue-card:hover {
 		transform: scale(1.05);
 	}
-
-	/* Scrolling Animation */
-	@keyframes scroll {
-		0% { transform: translateX(100%); }
-		100% { transform: translateX(-100%); }
-	}
 </style>
 @section('content')
     <div class="row">
@@ -75,7 +69,7 @@
                         <div class="col-lg-6 col-sm-6 col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <label class="h4 font-color font-bold"> Venue Booking Month wise</label>
+                                    <label class="h4 font-color font-bold"> User Registration Month wise</label>
                                 </div>
                                 <canvas id="dashboardChart" class="p-1"></canvas>
                             </div>
@@ -148,8 +142,8 @@
 					const data = {
 					labels: labels,
 					datasets: [{
-						label: 'Venue Booking Count',
-						data: response.bookingCounts,
+						label: 'User Count:',
+						data: response.userCounts,
 						backgroundColor: [
 						'rgba(255, 99, 132, 0.2)',
 						'rgba(255, 205, 86, 0.2)',

@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\VenueAdmin\Models\VenueBooking;
 use DB; 
 use App\NotificationFilterTrait;
-
+use App\Models\User;
 class DashboardController extends Controller
 {
     use AuthorizesRequests; 
@@ -54,18 +54,13 @@ class DashboardController extends Controller
             $startDate = Carbon::now()->subMonths(4)->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
 
-            $bookings = VenueBooking::selectRaw("DATE_FORMAT(start_date, '%Y-%m') as month, COUNT(*) as booking_count")
+            $users = User::selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as user_count")
                 ->where(function($query) use ($startDate, $endDate) {
-                    $query->whereBetween('start_date', [$startDate, $endDate])
-                        ->orWhereBetween('end_date', [$startDate, $endDate])
-                        ->orWhere(function($q) use ($startDate, $endDate) {
-                                $q->where('start_date', '<=', $startDate)
-                                    ->where('end_date', '>=', $endDate);
-                            });
+                    $query->whereBetween('created_at', [$startDate, $endDate]);
                 })
                 ->groupBy('month')
                 ->orderBy('month')
-                ->pluck('booking_count', 'month')
+                ->pluck('user_count', 'month')
                 ->toArray();
 
             $today = Carbon::now()->toDateString();
@@ -84,23 +79,24 @@ class DashboardController extends Controller
             $allMonths = [];
             for ($i = 4; $i >= 0; $i--) {
                 $month = Carbon::now()->subMonths($i)->format('Y-m');
-                $allMonths[$month] = $bookings[$month] ?? 0;
+                $allMonths[$month] = $users[$month] ?? 0;
             }
 
-            $formattedBookings = [];
+            $formattedUsers = [];
             foreach ($allMonths as $month => $count) {
                 $monthName = Carbon::createFromFormat('Y-m', $month)->format('M'); 
-                $formattedBookings[] = ['month' => $monthName, 'booking_count' => $count];
+                $formattedUsers[] = ['month' => $monthName, 'user_count' => $count];
             }
 
-            $allFormattedMonths = array_column($formattedBookings, 'month');
-            $bookingCounts = array_column($formattedBookings, 'booking_count');
+            $allFormattedMonths = array_column($formattedUsers, 'month');
+            $userCounts = array_column($formattedUsers, 'user_count');
+
 
             return response()->json([
                 'status' => 'success',
                 'allFormattedMonths' => $allFormattedMonths,
-                'formattedBookings' => $formattedBookings,
-                'bookingCounts' => $bookingCounts,
+                'formattedUsers' => $formattedUsers,
+                'userCounts' => $userCounts,
                 'todayCounts' => $bookingCount,
                 'monthBookingCount' => $monthBookingCount
             ]);

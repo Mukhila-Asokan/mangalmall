@@ -50,6 +50,11 @@
         background-color: #eaf4ff;
         transition: 0.3s;
     }
+
+    .disabled-card{
+        background-color: #E5E4E2;
+        opacity: .4;
+    }
 </style>
 @section('content')
     <div class="wrapper">
@@ -257,46 +262,91 @@
                             let venueHtml = '';
                             venueHtml += `<div class="row">`;
                             response.venueDetails.forEach(venue => {
-                                venueHtml += `
-                                    <div class="col-4">
-                                        <div class="card position-relative">
-                                            <input type="radio" name="venue" id="venue-${venue.id}" value="${venue.id}" class="venue-radio" required>
-                                            <label for="venue-${venue.id}" class="custom-radio"></label>
+                                if(response.uniqueVenueIds.includes(venue.id)){
+                                    venueHtml += `
+                                        <div class="col-4">
+                                            <div class="card position-relative">
+                                                <input type="radio" name="venue" disabled id="venue-${venue.id}" value="${venue.id}" class="venue-radio" required>
+                                                <label for="venue-${venue.id}" class="custom-radio"></label>
 
-                                            <div class="card-header d-flex">
-                                                <i class="bi bi-building-check h4"></i>
-                                                <h4 class="mleft-10"> ${venue.venuename} </h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row mb-2">
-                                                    <div class="col-5 font-14">
-                                                        <i class="bi bi-telephone"></i>
-                                                        ${venue.contactmobile}
+                                                <div class="card-header d-flex">
+                                                    <i class="bi bi-building-check h4"></i>
+                                                    <h4 class="mleft-10"> ${venue.venuename} </h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-14">
+                                                            <i class="bi bi-telephone"></i>
+                                                            ${venue.contactmobile}
+                                                        </div>
+                                                        <div class="col-7 font-14">
+                                                            <i class="bi bi-person-circle"></i>
+                                                            ${venue.contactperson}
+                                                        </div>
                                                     </div>
-                                                    <div class="col-7 font-14">
-                                                        <i class="bi bi-person-circle"></i>
-                                                        ${venue.contactperson}
+                                                    <div class="row mb-2">
+                                                        <div class="col-12 font-14">
+                                                            <i class="bi bi-menu-down"></i>
+                                                            ${venue.description.length > 40 ? venue.description.substring(0, 40) + '...' : venue.description}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-12 font-14">
+                                                            <i class="bi bi-geo-alt"></i>
+                                                            ${venue.venueaddress.length > 40 ? venue.venueaddress.substring(0, 40) + '...' : venue.venueaddress}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-12 font-14">
-                                                        <i class="bi bi-menu-down"></i>
-                                                        ${venue.description.length > 40 ? venue.description.substring(0, 40) + '...' : venue.description}
-                                                    </div>
+                                                <div class="card-footer d-flex justify-content-end">
+                                                    <a href="${baseUrl}/venueadmin/viewvenue/${venue.id}" target="_blank" class="btn btn-primary book_date_confirm" id="view_venue">View Details</a
                                                 </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-12 font-14">
-                                                        <i class="bi bi-geo-alt"></i>
-                                                        ${venue.venueaddress.length > 40 ? venue.venueaddress.substring(0, 40) + '...' : venue.venueaddress}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer d-flex justify-content-end">
-                                                <a href="${baseUrl}/venueadmin/viewvenue/${venue.id}" target="_blank" class="btn btn-primary book_date_confirm" id="view_venue">View Details</a
                                             </div>
                                         </div>
-                                    </div>
-                                `;
+                                    `;
+                                }
+                                else{
+                                    venueHtml += `
+                                        <div class="col-4">
+                                            <div class="card position-relative">
+                                                <input type="radio" name="venue" id="venue-${venue.id}" value="${venue.id}" class="venue-radio" required>
+                                                <label for="venue-${venue.id}" class="custom-radio"></label>
+
+                                                <div class="card-header d-flex">
+                                                    <i class="bi bi-building-check h4"></i>
+                                                    <h4 class="mleft-10 font-color"> ${venue.venuename} </h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-14">
+                                                            <i class="bi bi-telephone"></i>
+                                                            ${venue.contactmobile}
+                                                        </div>
+                                                        <div class="col-7 font-14">
+                                                            <i class="bi bi-person-circle"></i>
+                                                            ${venue.contactperson}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-12 font-14">
+                                                            <i class="bi bi-menu-down"></i>
+                                                            ${venue.description.length > 40 ? venue.description.substring(0, 40) + '...' : venue.description}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-12 font-14">
+                                                            <i class="bi bi-geo-alt"></i>
+                                                            ${venue.venueaddress.length > 40 ? venue.venueaddress.substring(0, 40) + '...' : venue.venueaddress}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer d-flex justify-content-end">
+                                                    <a href="${baseUrl}/venueadmin/viewvenue/${venue.id}" target="_blank" class="btn btn-primary book_date_confirm" id="view_venue">View Details</a
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                venueHtml += `</div>`;
+                                }
                             });
                             venueHtml += `</div>`;
                             $('.venueContainer').append(venueHtml);

@@ -15,6 +15,36 @@
   {
     color:#ffffff!important;
   }
+  
+  .modal.right .modal-dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100%;
+    max-height: 100%;
+    width: 40%; /* Adjust as needed */
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal.right .modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal.right .modal-body {
+    flex: 1;
+    overflow-y: auto; /* Enables scrolling if content exceeds height */
+    padding: 15px;
+}
+
+/* Ensures modal opens properly */
+.modal.right.show .modal-dialog {
+    transform: translateX(0);
+}
+
 </style>
 <body>
 <div class="wrapper">
