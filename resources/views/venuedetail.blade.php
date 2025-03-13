@@ -85,8 +85,10 @@ img.zoomed {
                     <div class="col-lg-6 col-md-6">
                             <div class="post-preview">
                                 <div class="carousel">
-                                <img src="{{ $bannerurl }}" alt="article" class="img-fluid" style="max-height:400px" />
-                                <img src="{{ $bannerurl }}" alt="article" class="img-fluid" style="max-height:400px" />
+                                @foreach($venuedetail->venueimage->where('image_type', 'slider') as $image)
+                                <img src="{{ asset('storage/'.$image->image_path) }}" alt="{{ $venuedetail->venuename }}" class="img-fluid" style="max-height:400px" >               
+                                @endforeach
+                              
 								</div>
 							</div>
 					</div>
@@ -187,11 +189,13 @@ img.zoomed {
                                         <h6 class="mb-0">Description</h6>
                                     </a>
                                 </li>
+                                @if(!empty($venuedetail->googlemap) && $venuedetail->googlemap != '-')
                                 <li class="nav-item">
                                     <a class="nav-link d-flex align-items-center" href="#feature-tab-5" data-toggle="tab">
                                         <h6 class="mb-0">Google Map</h6>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                             </div>
                         </div>
@@ -288,6 +292,7 @@ img.zoomed {
                                                 </div>
                                             </div>
                                         </div>
+                                        @if(!empty($venuedetail->googlemap) && $venuedetail->googlemap != '-')
                                         <div class="tab-pane" id="feature-tab-5">  
                                             <div class="row p-0 m-0">
                                                 <div class="col-md-12 col-lg-12">
@@ -302,6 +307,7 @@ img.zoomed {
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                 </div>
                             </div>
                             </div>

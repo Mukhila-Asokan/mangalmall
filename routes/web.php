@@ -22,6 +22,8 @@ Use App\Http\Controllers\CardEditorController;
 use App\Http\Controllers\{CardImageAjaxLoadController, GuestController};
 use App\Http\Controllers\CaretakerController;
 Use App\Http\Controllers\PricingController;
+Use App\Http\Controllers\UserBlogController;
+use App\Http\Controllers\VideoController;
 
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
 
@@ -105,6 +107,8 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     /* Invitation Card Design*/
 
     Route::any('/carddesign/list',[InvitationCardDesignController::class, 'index'])->name('user.carddesign');
+    Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
+    Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');
 
 });
 
@@ -146,6 +150,26 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
 
     Route::post('/user/profile', [InvitationCardDesignController::class, 'profile'])->name('user.profile');   
     Route::any('/home/pricing', [PricingController::class, 'index'])->name('home.pricing');  
+
+    /* Video Making */
+    Route::get('/video/index', [VideoController::class, 'index'])->name('video.index');
+    Route::get('/video/create', [VideoController::class, 'create'])->name('video.create');
+    Route::post('/video/store', [VideoController::class, 'store'])->name('video.store');
+    Route::get('/video/download/{id}', [VideoController::class, 'download'])->name('video.download');
+    Route::get('/video/show/{id}', [VideoController::class, 'show'])->name('video.show');
+    Route::get('/video/edit/{id}', [VideoController::class, 'edit'])->name('video.edit');
+    Route::post('/video/update/{id}', [VideoController::class, 'update'])->name('video.update');
+    Route::get('/video/destroy/{id}', [VideoController::class, 'destroy'])->name('video.destroy');   
+    Route::get('/video/get-videos', [VideoController::class, 'getVideos'])->name('video.get-videos');
+    Route::get('/video/get-video/{id}', [VideoController::class, 'getVideo'])->name('video.get-video');
+
+    Route::post('/images-upload', [VideoController::class, 'uploadImages'])->name('images.upload');
+
+    Route::get('/media/upload', [VideoController::class, 'uploadImagesView'])->name('media.upload');
+    Route::post('/media/images/upload', [VideoController::class, 'uploadImages'])->name('images.upload');
+    Route::post('/media/audio/upload', [VideoController::class, 'uploadAudio'])->name('audio.upload');
+    Route::post('/media/video/create', [VideoController::class, 'createVideo'])->name('video.create');
+
 
 });
 

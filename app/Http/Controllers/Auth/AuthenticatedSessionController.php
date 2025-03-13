@@ -88,7 +88,7 @@ class AuthenticatedSessionController extends Controller
             }
         }
     
-        return redirect('/')->with('error', 'Authentication failed. Please check your credentials.');
+        return redirect('/home/login')->with('error', 'Authentication failed. Please check your credentials.');
     }
 
     /**

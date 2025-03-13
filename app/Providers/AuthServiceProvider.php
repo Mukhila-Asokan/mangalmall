@@ -7,6 +7,7 @@ use App\Policies\UserPolicy;
 use App\Models\User;
 use App\Models\Subscribers;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Auth::routes();
+
+        // Define redirect callback for dynamic redirection
+        \Illuminate\Auth\Middleware\Authenticate::redirectUsing(function ($request) {
+            return route('login');
+        });
     }
 }

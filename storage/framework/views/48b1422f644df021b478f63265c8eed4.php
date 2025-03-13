@@ -186,6 +186,52 @@
 </div>
 
                     </li>
+
+                    <li class= "menu-item">
+                    <a href="#menublogpages" data-bs-toggle="collapse" class="menu-link waves-effect">
+                            <span class="menu-icon"><i data-lucide="person-standing"></i></span>
+                            <span class="menu-text">Blog Mangement</span>
+                             <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="menublogpages">
+                            <ul class="sub-menu">
+                            <li class="menu-item">
+                                    <a href="<?php echo e(route('subcriptionplan')); ?>" class="menu-link">
+                                        <span class="menu-text">Blog Analytics</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('subcriptionplan')); ?>" class="menu-link">
+                                        <span class="menu-text">Blog</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('subcriptionplan')); ?>" class="menu-link">
+                                        <span class="menu-text">User Request</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('admin.blogcategory')); ?>" class="menu-link">
+                                        <span class="menu-text">Blog Category</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('admin.blogtag')); ?>" class="menu-link">
+                                        <span class="menu-text">Blog Tags</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('admin.subscriptionmenupermission')); ?>" class="menu-link">
+                                        <span class="menu-text">Social Login</span>
+                                    </a>
+                                </li>
+                            </ul>
+                    </div>
+                    </li>
+
+
+
+
                     <li class= "menu-item">
                     <a href="#menusubcriptionpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                             <span class="menu-icon"><i data-lucide="person-standing"></i></span>
