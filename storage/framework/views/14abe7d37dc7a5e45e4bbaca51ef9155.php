@@ -18,9 +18,9 @@
                     <div class="col-md-4 col-lg-4">
                         <div class="topbar-text">
                             <ul class="list-inline text-right">                               
-                                <li class="list-inline-item"> <a href = "{{ route('user.profile') }}"><i class="fas fa-solid fa-user mr-1"></i> Profile</a></li>
-                                <li class="list-inline-item"> <a href = "{{ route('home/logout') }}"><i class="fa-solid fa-right-from-bracket mr-1"></i> 
-                        {{ __('Log Out') }}</a>
+                                <li class="list-inline-item"> <a href = "<?php echo e(route('user.profile')); ?>"><i class="fas fa-solid fa-user mr-1"></i> Profile</a></li>
+                                <li class="list-inline-item"> <a href = "<?php echo e(route('home/logout')); ?>"><i class="fa-solid fa-right-from-bracket mr-1"></i> 
+                        <?php echo e(__('Log Out')); ?></a>
              
                                 </li>
                             </ul>
@@ -38,7 +38,7 @@
                 <nav class="js-mega-menu navbar navbar-expand-md header-nav">
 
                     <!--logo start-->
-                    <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('frontassets//img/logo-color.png'); }}" width="120" alt="logo" class="img-fluid" /></a>
+                    <a class="navbar-brand" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('frontassets//img/logo-color.png')); ?>" width="120" alt="logo" class="img-fluid" /></a>
                     <!--logo end-->
 
                     <!--responsive toggle button start-->
@@ -53,19 +53,19 @@
                     <div id="navBar" class="collapse navbar-collapse">
                         <ul class="navbar-nav ml-auto main-navbar-nav">
                           
-                            @can('accessPaidMenus', Auth::user())
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('accessPaidMenus', Auth::user())): ?>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('venuereact.search') }}" aria-haspopup="true" aria-expanded="false">Venue</a>
+                                <a class="nav-link custom-nav-link" href="<?php echo e(route('venuereact.search')); ?>" aria-haspopup="true" aria-expanded="false">Venue</a>
 
                             </li>
-                            @endcan
-                            @can('accessPaidMenus', Auth::user())
+                            <?php endif; ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('accessPaidMenus', Auth::user())): ?>
                              <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">Invitation</a>
                             </li>
-                            @endcan
+                            <?php endif; ?>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('venuereact.search') }}" aria-haspopup="true" aria-expanded="false">Venue</a>
+                                <a class="nav-link custom-nav-link" href="<?php echo e(route('venuereact.search')); ?>" aria-haspopup="true" aria-expanded="false">Venue</a>
 
                             </li>
 
@@ -78,7 +78,7 @@
                                         <a id="navLinkPagesPricing" class="nav-link sub-menu-nav-link sub-link-toggle" href="javascript:void(0);" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesPricing">Card Design</a>
 
                                         <ul id="navSubmenuPagesPricing" class="hs-sub-menu main-sub-menu" aria-labelledby="navLinkPagesPricing" style="min-width: 230px;">
-                                            <li><a class="nav-link sub-menu-nav-link" href="{{ route('user.carddesign') }}">Choose Card</a></li>
+                                            <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('user.carddesign')); ?>">Choose Card</a></li>
                                             <li><a class="nav-link sub-menu-nav-link" href="">Design Your Own Card</a></li>                                           
                                         </ul>
                                     </li>
@@ -86,13 +86,13 @@
                                         <a id="navLinkPagesBlog" class="nav-link sub-menu-nav-link sub-link-toggle" href="javascript:void(0);" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesBlog">Web Page Design</a>
 
                                         <ul id="navSubmenuPagesBlog" class="hs-sub-menu main-sub-menu" aria-labelledby="navLinkPagesBlog" style="min-width: 230px;">
-                                            <li><a class="nav-link sub-menu-nav-link" href="{{ route('user.webpage') }}">Choose Web Page</a></li>
-                                            <li><a class="nav-link sub-menu-nav-link" href="{{ route('user.showtemplate') }}">Design your Own page</a></li>
+                                            <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('user.webpage')); ?>">Choose Web Page</a></li>
+                                            <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('user.showtemplate')); ?>">Design your Own page</a></li>
                                           
                                         </ul>
                                     </li>
                                     <li class="nav-item submenu-item">
-                                        <a class="nav-link sub-menu-nav-link" href="{{ route('video.index') }}">Video Making</a>
+                                        <a class="nav-link sub-menu-nav-link" href="<?php echo e(route('video.index')); ?>">Video Making</a>
                                     </li>
 
                                  
@@ -114,20 +114,20 @@
                             </li>
      
                             <!-- <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{route('guest.index', ['user_id'=> auth()->user()->id])}}" aria-haspopup="true" aria-expanded="false">Guest</a>
+                                <a class="nav-link custom-nav-link" href="<?php echo e(route('guest.index', ['user_id'=> auth()->user()->id])); ?>" aria-haspopup="true" aria-expanded="false">Guest</a>
 
                             </li> -->
                             <li class="nav-item hs-has-sub-menu custom-nav-item">
                                 <a id="pagesMegaMenu" class="nav-link custom-nav-link main-link-toggle" href="javascript:void(0);" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesGuestSubMenu">Guest</a>
                                 <ul id="pagesGuestSubMenu" class="hs-sub-menu main-sub-menu" aria-labelledby="pagesMegaMenu" style="min-width: 260px;">                                   
-                                    <li><a class="nav-link sub-menu-nav-link" href="{{ route('guest.index', ['user_id'=> auth()->user()->id]) }}">All Guests</a></li>
-                                    <li><a class="nav-link sub-menu-nav-link" href="{{ route('guest.group.index') }}">Guest Groups</a></li>
-                                    <li><a class="nav-link sub-menu-nav-link" href="{{ route('list.caretaker') }}">Caretakers</a></li>
+                                    <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('guest.index', ['user_id'=> auth()->user()->id])); ?>">All Guests</a></li>
+                                    <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('guest.group.index')); ?>">Guest Groups</a></li>
+                                    <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('list.caretaker')); ?>">Caretakers</a></li>
                                 </ul>
                             </li>
           
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('home.occasion') }}" aria-haspopup="true" aria-expanded="false">Occasion Plan</a>
+                                <a class="nav-link custom-nav-link" href="<?php echo e(route('home.occasion')); ?>" aria-haspopup="true" aria-expanded="false">Occasion Plan</a>
 
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
@@ -135,10 +135,10 @@
 
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('blog.index') }}" aria-haspopup="true" aria-expanded="false">Blog Writing</a>
+                                <a class="nav-link custom-nav-link" href="<?php echo e(route('blog.index')); ?>" aria-haspopup="true" aria-expanded="false">Blog Writing</a>
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('home.pricing') }}" aria-haspopup="true" aria-expanded="false">Pricing</a>
+                                <a class="nav-link custom-nav-link" href="<?php echo e(route('home.pricing')); ?>" aria-haspopup="true" aria-expanded="false">Pricing</a>
                             </li>
                         
                            
@@ -152,3 +152,4 @@
         <!--main header menu end-->
     </header>
     <!--header section end-->
+<?php /**PATH C:\xampp\htdocs\mangalmall\mangalmall\resources\views/profile-layouts/menubar.blade.php ENDPATH**/ ?>

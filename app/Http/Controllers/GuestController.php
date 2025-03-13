@@ -8,12 +8,14 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\GuestImport;
 use DB;
 use Carbon\Carbon;
+use App\Models\Caretaker;
 
 class GuestController extends Controller
 {
     public function getGuestContacts(){
         $getGuestContacts = GuestContact::whereNull('deleted_at')->where('created_by', auth()->user()->id)->orderBy('created_at', 'desc')->take(30)->get();
-        return view('guest.index', compact('getGuestContacts'));
+        $caretakers = Caretaker::where('created_by', auth()->user()->id)->get();
+        return view('guest.index', compact('getGuestContacts', 'caretakers'));
     }
 
     public function getGuestContactsAjax(Request $request){
