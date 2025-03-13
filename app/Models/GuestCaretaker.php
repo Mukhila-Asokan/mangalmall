@@ -12,4 +12,8 @@ class GuestCaretaker extends Model
     protected $table = 'guest_caretakers';
 
     protected $guarded = [];
+
+    public function contact(){
+        return $this->belongsTo(GuestContact::class, 'guest_id', 'id');
+    }
 }
