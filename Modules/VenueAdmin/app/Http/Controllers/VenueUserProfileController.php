@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 Use Modules\StaffManagement\Models\staff;
 use Modules\VenueAdmin\Models\VenueUser;
+use Modules\VenueAdmin\Models\VenueStaff;
 use Modules\VenueAdmin\Models\VenueUserProfile;
 use Illuminate\Support\Facades\Session;
 
@@ -21,7 +22,15 @@ class VenueUserProfileController extends Controller
         $pageroot = "Home"; 
         $staff = staff::where('delete_status','0')->get();
         $venueuser = VenueUser::where('id',$venueuserid)->first();
-        $venueuserprofile = VenueUserProfile::where('venueuserid',$venueuserid)->first();
+		if($venueuser->role == "Staff")
+		{
+			$venuestaff = VenueStaff::where('venue_user_id',$venueuserid)->first();
+			$venueuserprofile = VenueUserProfile::where('venueuserid',$venuestaff->venue_admin_id)->first();
+		}
+		else
+		{
+			$venueuserprofile = VenueUserProfile::where('venueuserid',$venueuserid)->first();
+		}
       
         return view('venueadmin::profile.index',compact('pagetitle','pageroot','staff','venueuser','venueuserprofile'));
     }

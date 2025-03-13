@@ -1,5 +1,5 @@
-@extends('profile-layouts.profile')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="mt-1 col-lg-10 col-md-10">
     <div id="all_contacts_container" class="content-section">
 
@@ -73,7 +73,7 @@
                         <div class="section-heading mb-5">
                             <h2>Our Blog List</h2>
                           
-                                <a href = "{{ route('blog.create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end" style = "float:right"><span class="fas fa-pencil text-white"></span> Add Blog </a> 
+                                <a href = "<?php echo e(route('blog.create')); ?>" class="btn btn-primary waves-effect waves-light mb-4 text-end" style = "float:right"><span class="fas fa-pencil text-white"></span> Add Blog </a> 
 </div>
                        
                     </div>
@@ -82,7 +82,7 @@
                     <div class="col-md-4">
                     <div class="single-blog-card card border-0 shadow-sm">
                             <span class="category position-absolute badge badge-pill badge-primary">Lifestyle</span>
-                            <img src="{{ asset('adminassets/img/blog/1.jpg') }}" class="card-img-top position-relative" alt="blog">
+                            <img src="<?php echo e(asset('adminassets/img/blog/1.jpg')); ?>" class="card-img-top position-relative" alt="blog">
                             <div class="card-body">
                                 <div class="post-meta mb-2">
                                     <ul class="list-inline meta-list">
@@ -106,6 +106,7 @@
     </div>
 </div>
 <div class="col-lg-2 col-md-2">
-    @include('profile-layouts.rightside')
+    <?php echo $__env->make('profile-layouts.rightside', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('profile-layouts.profile', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/blog/index.blade.php ENDPATH**/ ?>
