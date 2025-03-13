@@ -25,6 +25,32 @@ Use App\Http\Controllers\PricingController;
 Use App\Http\Controllers\UserBlogController;
 use App\Http\Controllers\VideoController;
 
+
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+
+Route::get('/db-check', function () {
+    try {
+        DB::connection()->getPdo();
+        return 'Database connection is working!';
+    } catch (\Exception $e) {
+        return 'Error connecting to database: ' . $e->getMessage();
+    }
+});
+Route::get('/run-migrations', function () {
+	
+	 try {
+        DB::connection()->getPdo();
+          Artisan::call('migrate');
+    		return Artisan::output(); 
+    } catch (\Exception $e) {
+        return 'Migration Error : ' . $e->getMessage();
+    }
+	DB::connection()->getPdo();
+  
+});
+
+
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
 
     $venuesubtypes = VenueType::where('delete_status', 0)
