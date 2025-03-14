@@ -84,12 +84,12 @@
                         // Name Column
                         guestGroupContact += '<div class="col-md-5 d-flex">';
                         guestGroupContact += '<i class="bi bi-person-circle mt-1 font-14"></i>';
-                        guestGroupContact += '<span class="form-control-plaintext font-14 d-block ml-1">' + value.name + '</span>';
+                        guestGroupContact += '<span class="form-control-plaintext font-14 d-block ml-2">' + value.name + '</span>';
                         guestGroupContact += '</div>';
                         // Mobile Number Column
                         guestGroupContact += '<div class="col-md-5 d-flex">';
                         guestGroupContact += '<i class="bi bi-telephone font-14 mt-1"></i>';
-                        guestGroupContact += '<span class="form-control-plaintext font-14 d-block ml-1">' + value.mobile_number + '</span>';
+                        guestGroupContact += '<span class="form-control-plaintext font-14 d-block ml-2">' + value.mobile_number + '</span>';
                         guestGroupContact += '</div>';
                         guestGroupContact += '</div>';
                         guestGroupContact += '<hr>';
@@ -106,22 +106,24 @@
         })
 
         $(document).on('click', '.delete_group', function(){
-            var id = $(this).data('id');
-            $.ajax({
-                url: "{{ route('guest.group.delete') }}",
-                type: "POST",
-                data: {
-                    'id' : id,
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response){
-                    if(response.status == 'success'){
-                        window.location.reload();
+            if(confirm('Are you sure want to delete this group?')){
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('guest.group.delete') }}",
+                    type: "POST",
+                    data: {
+                        'id' : id,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response){
+                        if(response.status == 'success'){
+                            window.location.reload();
+                        }
                     }
-                }
-            });
+                });
+            }
         })
 
         $(document).on('click', '#delete_group_contact', function(){
@@ -361,6 +363,9 @@
                     }
                 }
             });
+        });
+        $(document).on('click', '[data-dismiss="modal"]', function() {
+            $('.modal').modal('hide');
         });
     </script>
 @endpush

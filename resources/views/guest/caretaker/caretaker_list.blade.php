@@ -53,13 +53,13 @@
                         <div class="card-footer bg-transparent">
                             <div class="row d-flex">
                                 <div class="col-md-6 d-flex justify-content-start p-0">
-                                    <a id="delete_group" class="delete_group ml-2 pointer" data-id="{{$caretaker->id}}">
+                                    <a id="delete_caretaker" class="delete_caretaker ml-2 pointer" data-id="{{$caretaker->id}}">
                                         <i class="bi bi-trash3"></i>
                                     </a>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end p-0">
-                                    <button class="btn btn-primary waves-effect waves-light text-end ml-1 pl-2 pr-2 pt-1 pb-1 font-12 view_group" id="view_group" data-id="{{$caretaker->id}}">
-                                        View Caretaker
+                                    <button class="btn btn-primary waves-effect waves-light text-end ml-1 pl-2 pr-2 pt-1 pb-1 font-12 view_caretaker_details" id="view_caretaker_details" data-id="{{$caretaker->id}}">
+                                        View Guests
                                     </button>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
         @endif
         @if(count($caretakers) > 30)
             <div class="col-12 d-flex justify-content-center mt-4">
-                <a href="" class="btn primary-solid-btn text-center load_more_groups w-25">Load More</a>
+                <a href="" class="btn primary-solid-btn text-center load_more_caretakers w-25">Load More</a>
             </div>
         @endif
     </div>
