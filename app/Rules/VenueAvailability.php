@@ -13,13 +13,16 @@ class VenueAvailability implements ValidationRule
     protected $endDate;
     protected $venueId;
     protected $dayTypes;
+    protected $bookingId;
 
-    public function __construct($startDate, $endDate, $venueId, $dayTypes)
+
+    public function __construct($startDate, $endDate, $venueId, $dayTypes, $bookingId = null)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->venueId = $venueId;
         $this->dayTypes = $dayTypes;
+        $this->bookingId = $bookingId;
     }
 
     /**
@@ -29,7 +32,9 @@ class VenueAvailability implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $bookedDates = VenueBooking::where('venue_id', $this->venueId)
+        if($this->bookingId){
+            $bookedDates = VenueBooking::where('venue_id', $this->venueId)
+            ->where('id', '!=', $this->bookingId)
             ->where(function ($query) {
                 $query->whereBetween('start_date', [$this->startDate, $this->endDate])
                     ->orWhereBetween('end_date', [$this->startDate, $this->endDate])
@@ -39,6 +44,19 @@ class VenueAvailability implements ValidationRule
                     });
             })
             ->exists();
+        }
+        else{
+            $bookedDates = VenueBooking::where('venue_id', $this->venueId)
+                ->where(function ($query) {
+                    $query->whereBetween('start_date', [$this->startDate, $this->endDate])
+                        ->orWhereBetween('end_date', [$this->startDate, $this->endDate])
+                        ->orWhere(function ($q) {
+                            $q->where('start_date', '<=', $this->startDate)
+                                ->where('end_date', '>=', $this->endDate);
+                        });
+                })
+                ->exists();
+            }
 
         if ($bookedDates) {
             $requestedDates = array_map(fn($key) => str_replace('daytype-', '', $key), array_keys($this->dayTypes));

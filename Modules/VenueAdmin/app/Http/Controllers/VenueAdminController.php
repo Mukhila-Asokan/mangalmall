@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\VenueAdmin\Models\VenueUser;
 use Modules\VenueAdmin\Models\UserVenue;
-use Modules\VenueAdmin\Models\VenueBookingContact;
+use Modules\VenueAdmin\Models\{VenueBookingContact, VenueStaff};
 Use Modules\Venue\Models\VenueImage;
 use Modules\Venue\Models\VenueContent;
 use Modules\Venue\Models\VenueType;
@@ -613,21 +613,34 @@ class VenueAdminController extends Controller
      */
     public function show(Request $request)
     {
-        $venueuserid =  Session::get('venueuserid'); 
-        $pagetitle = "Venue List";
-        $pageroot = "Home"; 
+        try{
+            $venueuserid =  Session::get('venueuserid'); 
+            $pagetitle = "Venue List";
+            $pageroot = "Home"; 
 
-       /* $venues = UserVenue::where('venueuserid',venueuserid)->get();*/
-
-        /* SELECT * FROM `venuedetails` WHERE id = (select venueid from `uservenue` where venueuserid = 1); */
-
-
-        $venues = VenueDetails::whereIn('id', function($query) {
-                                     $query->select('venueid')
-                                        ->from('uservenue')
-                                        ->where('venueuserid','=',Session::get('venueuserid'));
-                                     })->get();
-
+            $venueUser = VenueUser::where('id', Session::get('venueuserid'))->first();
+            $loggedInUserType = $venueUser->role;
+            
+            $venues = VenueDetails::when($loggedInUserType === 'Venue Admin', function($query) use ($venueuserid) {
+                    $query->whereIn('id', function($subQuery) use ($venueuserid) {
+                        $subQuery->select('venueid')
+                                ->from('uservenue')
+                                ->where('venueuserid', $venueuserid);
+                    });
+                })
+                ->when($loggedInUserType === 'Staff', function($query) use($venueuserid, $venueUser) {
+                    $adminId = VenueStaff::where('id', $venueUser->venue_staff_id)->pluck('venue_admin_id')->first();
+                    $query->whereIn('id', function($subQuery) use ($adminId) {
+                        $subQuery->select('venueid')
+                                ->from('uservenue')
+                                ->where('venueuserid', $adminId);
+                    });
+                })
+                ->get();
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
 
          
         return view('venueadmin::venueuser.list',compact('pagetitle','pageroot','venues'));

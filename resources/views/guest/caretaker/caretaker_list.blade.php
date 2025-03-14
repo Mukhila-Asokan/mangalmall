@@ -70,7 +70,7 @@
         </div>
         @if(count($caretakers) == 0)
             <div class="col-12 text-center">
-                <div class="">No groups found</div>
+                <div class="">No Caretakers found</div>
             </div>
         @endif
         @if(count($caretakers) > 30)
