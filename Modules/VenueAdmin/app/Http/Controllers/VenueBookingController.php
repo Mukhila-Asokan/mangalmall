@@ -735,7 +735,10 @@ public function show()
             ]);
         }
         catch(\Exception $e){
-            dd($e);
+            return response()->json([
+                'venueDetails' => null,
+                'uniqueVenueIds' => null
+            ]);
         }
     }
 

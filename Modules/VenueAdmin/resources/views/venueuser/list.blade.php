@@ -50,52 +50,52 @@
 											<div class="modal-body">
 											
 											<div class="pricing-details">
-    <p><strong>Pricing details for {{ $ven->venuename }} - Price: ${{ $ven->bookingprice }}</strong></p>
+    											<p><strong>Pricing details for {{ $ven->venuename }} - Price: ${{ $ven->bookingprice }}</strong></p>
 
-    @if($pricingDetails->isNotEmpty())
-        @foreach($pricingDetails as $pricing)
-            <div class="pricing-type-section">
-                <h5>Pricing Type: {{ $pricing->pricing_type }}</h5>
+												@if($pricingDetails->isNotEmpty())
+													@foreach($pricingDetails as $pricing)
+														<div class="pricing-type-section">
+															<h5>Pricing Type: {{ $pricing->pricing_type }}</h5>
 
-                <table class="table pricing-table">
-                    <thead>
-                        <tr>
-                            <th>Peak Rate</th>
-                            <th>Deposit Amount</th>
-                            <th>Base Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>${{ $pricing->peak_rate }}</td>
-                            <td>${{ $pricing->deposit_amount }}</td>
-                            <td>${{ $pricing->base_price }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+															<table class="table pricing-table">
+																<thead>
+																	<tr>
+																		<th>Peak Rate</th>
+																		<th>Deposit Amount</th>
+																		<th>Base Price</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>${{ $pricing->peak_rate }}</td>
+																		<td>${{ $pricing->deposit_amount }}</td>
+																		<td>${{ $pricing->base_price }}</td>
+																	</tr>
+																</tbody>
+															</table>
 
-                @php
-                    $bookingAddons = Modules\VenueAdmin\Models\VenuePricingAddon::where('venuepricingid', $pricing->id)->with('addon')->get();
-                @endphp
+															@php
+																$bookingAddons = Modules\VenueAdmin\Models\VenuePricingAddon::where('venuepricingid', $pricing->id)->with('addon')->get();
+															@endphp
 
-                @if($bookingAddons->isNotEmpty())
-                    <p><strong>Extras:</strong></p>
-                    <ul class="extras-list">
-                        @foreach($bookingAddons as $bookingAddon)
-                            <li>{{ $bookingAddon->addon->addonname }}: ${{ $bookingAddon->addon->price }}</li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+															@if($bookingAddons->isNotEmpty())
+																<p><strong>Extras:</strong></p>
+																<ul class="extras-list">
+																	@foreach($bookingAddons as $bookingAddon)
+																		<li>{{ $bookingAddon->addon->addonname }}: ${{ $bookingAddon->addon->price }}</li>
+																	@endforeach
+																</ul>
+															@endif
+														</div>
 
-            @if(!$loop->last)
-                <hr>
-            @endif
-        @endforeach
-    @else
-        <p>No pricing details available.</p>
-    @endif
-</div>
+														@if(!$loop->last)
+															<hr>
+														@endif
+													@endforeach
+												@else
+													<p>No pricing details available.</p>
+												@endif
+											</div>
 
 											
 											</div>
@@ -111,7 +111,6 @@
 									<i class="ti ti-bookmark action_icon"></i> Booking
 								</a>
 							</td>
-               Booking </a>  </td>
 							<!-- <td> <a href="{{ url('/venueadmin/themebuilder/'.$ven->id.'/edit') }}" class="btn-info btn" title="Theme"><i class="ti ti-wand action_icon"></i>
                 Theme </a></td> -->
 							<td>

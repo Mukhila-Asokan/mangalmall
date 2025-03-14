@@ -70,7 +70,7 @@ Route::prefix('venueadmin')->middleware([VenueAdminMiddleware::class, FlashMessa
     Route::any('/venuebooking/addnewevents',[VenueBookingController::class, 'addnewevents']);
     Route::any('/venuebooking/updatenewevents',[VenueBookingController::class, 'updatenewevents']);
     Route::any('/venuebooking/events',[VenueBookingController::class, 'getevents']);
-    Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'edit']);
+    Route::any('/venuebooking/{id}/edit',[VenueBookingController::class, 'editVenue']);
     Route::any('/venuebooking/{id}/destroy',[VenueBookingController::class, 'destroy']);
     Route::any('/venuebooking/{id}/invoicegenerator',[VenueBookingController::class, 'invoicegenerator']);
     Route::post('/venue/booking/add', [VenueBookingController::class, 'addVenueBooking'])->name('add.venue.booking');

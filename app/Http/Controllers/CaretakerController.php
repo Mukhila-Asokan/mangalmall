@@ -55,6 +55,14 @@ class CaretakerController extends Controller
     public function createCaretakerGuests(Request $request){
         DB::beginTransaction();
         try{
+            $validator = Validator::make($request->all(), [
+                'selected_contacts' => ['required', new CaretakerCheck(json_decode($request->selected_contacts))],
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
             $caretaker = Caretaker::where('id', $request->caretaker_id)->first();
             foreach($request->selected_contacts as $guestId){
                 $guestCaretaker = new GuestCaretaker;
