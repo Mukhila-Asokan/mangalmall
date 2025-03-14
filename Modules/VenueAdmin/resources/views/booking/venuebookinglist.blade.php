@@ -17,6 +17,12 @@
                 @foreach($venues as $venue)
                     <div class="tab-content" id="venueTabContent">
                         <div class="tab-pane fade @if($loop->first) show active @endif" id="content{{ $venue->id }}" role="tabpanel" aria-labelledby="tab{{ $venue->id }}">
+                            <div class="input-group mb-1 mt-3">
+                                <input type="text" id="searchInput_{{$venue->id}}" class="form-control searchInput" placeholder="search">
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                            </div>
                             <div class="table-responsive mb-4 border rounded-1">
                                 <table class="table text-nowrap mb-0 align-middle">
                                     <thead class="text-dark fs-4">
@@ -34,7 +40,7 @@
                                             <th width="100px">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="venueBookingBody">
                                         @php
                                             $i = 1;                                              
                                         @endphp
@@ -82,3 +88,29 @@
 <input type="hidden" name="redirecturl" id="redirecturl" value="{{ url('/venueadmin/venuebooking/') }}">
 
 @endsection
+@push('scripts')
+	<script>
+		$('.searchInput').on('input', function(){
+			let searchValue = this.value.toLowerCase();
+			let tableRows = document.querySelectorAll('tbody tr');
+
+			tableRows.forEach(row => {
+				let rowData = '';
+				Array.from(row.cells).forEach(cell => {
+					rowData += cell.textContent.toLowerCase() + ' ';
+				});
+
+				if (rowData.includes(searchValue)) {
+					row.style.display = '';
+				} else {
+					row.style.display = 'none';
+				}
+			});
+		});
+		$(document).ready(function() {
+			$('.nav-link').on('click', function() {
+				$('.searchInput').val('').trigger('input');
+			});
+		});
+	</script>
+@endpush

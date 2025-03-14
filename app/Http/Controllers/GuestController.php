@@ -131,7 +131,7 @@ class GuestController extends Controller
     }
 
     public function downloadGuestFormat(){
-        return response()->download(public_path('\guest\guest_format.xlsx'));
+        return response()->download(public_path('/guest/guest_format.xlsx'));
     }
 
     public function uploadGuestContacts(Request $request){

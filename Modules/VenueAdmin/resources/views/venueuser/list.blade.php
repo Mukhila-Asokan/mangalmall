@@ -9,8 +9,14 @@
 				<span class="tf-icon mdi mdi-plus me-1"></span><i class="bi bi-plus"></i> Add Venue
 			</a>
 		</div>
+		<div class="input-group mb-3">
+			<input type="text" id="searchInput" class="form-control" placeholder="search">
+			<span class="input-group-text">
+				<i class="bi bi-search"></i>
+			</span>
+		</div>
 	  <div class="table-responsive mb-4 border rounded-1">
-        <table class="table text-nowrap mb-0 align-middle">
+        <table class="table text-nowrap mb-0 align-middle mt-2">
                   <thead class="text-dark fs-4">
 				  <tr>
 						<th>#</th>
@@ -22,11 +28,11 @@
 						<th width="100px">Action</th>
 				  </tr>
 				  </thead>
-				  <tbody>
+				  <tbody id="venueTableBody">
 				   @php $i=1; @endphp
 				     @if(count($venues) > 0)
 					@foreach($venues as $ven)
-						 <tr>
+						<tr>
                             <td>{{  $i++ }}</td>
 							<td> {{ $ven->venuename }} </td>
 							<td> {{ $ven->websitename }} </td>
@@ -111,17 +117,17 @@
 									<i class="ti ti-bookmark action_icon"></i> Booking
 								</a>
 							</td>
-							<!-- <td> <a href="{{ url('/venueadmin/themebuilder/'.$ven->id.'/edit') }}" class="btn-info btn" title="Theme"><i class="ti ti-wand action_icon"></i>
-                Theme </a></td> -->
+							<!-- <td> <a href="{{ url('/venueadmin/themebuilder/'.$ven->id.'/edit') }}" class="btn-info btn" title="Theme"><i class="ti ti-wand action_icon"></i>Theme </a></td> -->
 							<td>
-                            <a href="{{ url('/venueadmin/viewvenue/'.$ven->id.'') }}" class="font-20 text-primary mleft-10"><i class="bi bi-eye"></i></a>
-							<a href="{{ url('/venueadmin/editvenue/'.$ven->id.'') }}" class="font-20 text-warning mleft-10" title="Edit"><i class="bi bi-pencil-square"></i></a>
-				
-				</td>
+								<a href="{{ url('/venueadmin/viewvenue/'.$ven->id.'') }}" class="font-20 text-primary mleft-10"><i class="bi bi-eye"></i></a>
+								<a href="{{ url('/venueadmin/editvenue/'.$ven->id.'') }}" class="font-20 text-warning mleft-10" title="Edit"><i class="bi bi-pencil-square"></i></a>
+							</td>
 						</tr>
 					@endforeach
 					@else                                     
-							No Records Found
+						<tr>
+							<td>No Records Found</td>
+						</tr>
 					@endif
 				  </tbody>
 
@@ -131,3 +137,24 @@
 </div>
 </div>
 @endsection
+@push('scripts')
+	<script>
+		document.getElementById('searchInput').addEventListener('input', function() {
+			let searchValue = this.value.toLowerCase();
+			let tableRows = document.querySelectorAll('#venueTableBody tr');
+
+			tableRows.forEach(row => {
+				let rowData = '';
+				Array.from(row.cells).forEach(cell => {
+					rowData += cell.textContent.toLowerCase() + ' ';
+				});
+
+				if (rowData.includes(searchValue)) {
+					row.style.display = '';
+				} else {
+					row.style.display = 'none';
+				}
+			});
+		});
+	</script>
+@endpush

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\VenueAdmin\Models\VenueBooking;
 use Modules\VenueAdmin\Models\VenueBookingContact;
-use Modules\VenueAdmin\Models\{VenueBookingDetails, UserVenue};
+use Modules\VenueAdmin\Models\{VenueBookingDetails, UserVenue, VenueStaff};
 use Illuminate\Support\Facades\Log;
 use App\Models\OccasionType;
 use Carbon\Carbon;
@@ -661,11 +661,31 @@ public function show()
         $pagetitle = "Venue Booking";
         $pageroot = "Home"; 
         $venueuserid =  Session::get('venueuserid');
-        $venues = VenueDetails::whereIn('id', function ($query) use ($venueuserid) {
-            $query->select('venueid')
-                ->from('uservenue') // Ensure this is the correct table name
-                ->where('venueuserid', '=', $venueuserid);
-        })->get();    
+        // $venues = VenueDetails::whereIn('id', function ($query) use ($venueuserid) {
+        //     $query->select('venueid')
+        //         ->from('uservenue')
+        //         ->where('venueuserid', '=', $venueuserid);
+        // })->get();    
+        
+        $venueUser = VenueUser::where('id', Session::get('venueuserid'))->first();
+        $loggedInUserType = $venueUser->role;
+        
+        $venues = VenueDetails::when($loggedInUserType === 'Venue Admin', function($query) use ($venueuserid) {
+                $query->whereIn('id', function($subQuery) use ($venueuserid) {
+                    $subQuery->select('venueid')
+                            ->from('uservenue')
+                            ->where('venueuserid', $venueuserid);
+                });
+            })
+            ->when($loggedInUserType === 'Staff', function($query) use($venueuserid, $venueUser) {
+                $adminId = VenueStaff::where('id', $venueUser->venue_staff_id)->pluck('venue_admin_id')->first();
+                $query->whereIn('id', function($subQuery) use ($adminId) {
+                    $subQuery->select('venueid')
+                            ->from('uservenue')
+                            ->where('venueuserid', $adminId);
+                });
+            })
+            ->get();
         $venuebooking = VenueBooking::where('bookinguserid',$venueuserid)->where('booked_by','VenueUser')->get();
         
         return view('venueadmin::booking.venuebookinglist',compact('pagetitle','pageroot','venuebooking','venues','venueuserid'));   

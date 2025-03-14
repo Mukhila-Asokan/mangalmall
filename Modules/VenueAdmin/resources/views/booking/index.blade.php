@@ -6,6 +6,7 @@
         display: flex;
         align-items: flex-start; /* Aligns items at the top */
         padding-top: 50px; /* Push down */
+        height: 100px;
     }
     .wedding_image{
         width: 45px;

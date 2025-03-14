@@ -64,6 +64,9 @@ class StaffController extends Controller
             $createStaff->date_of_birth = $request->date_of_birth;
             $createStaff->save();
 
+            $createVenueUser->venue_staff_id = $createStaff->id;
+            $createVenueUser->save();
+
             DB::commit();
             return redirect()->route('venueadmin.list.staff')->with('success', 'Venue Staff Created Sucessfully');
         }
@@ -123,6 +126,9 @@ class StaffController extends Controller
             $createVenueUser->status = 'Active';
             $createVenueUser->save();
 
+            $createVenueUser->venue_staff_id = $createStaff->id;
+            $createVenueUser->save();
+            
             DB::commit();
             return redirect()->route('venueadmin.list.staff')->with('success', 'Venue staff updated Successfully');
         }
