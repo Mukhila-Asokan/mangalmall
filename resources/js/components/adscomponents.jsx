@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const baseImageUrl = window.location.origin + "/storage/";
+const baseImageUrl = window.location.origin + "/public/storage/";
 console.log(baseImageUrl);
 
 const AdsSlider = () => {
@@ -14,14 +14,12 @@ const AdsSlider = () => {
     useEffect(() => {
         const fetchAds = async () => {
             try {
-                const response = await fetch('/home/ads/random'); // Replace with your API endpoint
+                const response = await fetch('/home/ads/random');
                 const data = await response.json();
-                console.log("API Response:", data);
                 
-                if (data && data.ads) {
-                    setAds(data.ads); // FIXED: Extract 'ads' array correctly
-                } else {
-                    setAds([]);
+                // Only update if data has changed
+                if (JSON.stringify(data.ads) !== JSON.stringify(ads)) {
+                    setAds(data.ads || []);
                 }
             } catch (error) {
                 console.error('Error fetching ads:', error);
@@ -29,10 +27,12 @@ const AdsSlider = () => {
                 setLoading(false);
             }
         };
-
-        fetchAds();
+    
+        if (ads.length === 0) {  // Prevent repeated fetch
+            fetchAds();
+        }
     }, []);
-
+    
     // Slider settings
     const sliderSettings = {
         dots: true,

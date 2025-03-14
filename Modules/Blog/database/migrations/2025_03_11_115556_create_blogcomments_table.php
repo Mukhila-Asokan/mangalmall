@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('blog_id')->constrained('blogs')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('content');
+            $table->unsignedBigInteger('reply_id')->nullable();
             $table->enum('blogcommentsstatus', ['pending', 'approved', 'rejected'])->default('pending');
             $table->enum('status',['Active', 'Inactive'])->default('Active'); 
             $table->tinyInteger('delete_status')->default('0');   

@@ -4,7 +4,7 @@
     <div id="all_contacts_container" class="content-section">
 
          <!--why choose us section start-->
-         <section class="why-choose-us ptb-50">
+         <section class="why-choose-us">
             <div class="container">
                 <div class="row">
                     <div class="col-md-9 col-lg-8">
@@ -23,7 +23,7 @@
                                     <span class="fas fa-newspaper text-white"></span>
                                 </div>
                                 <h5>Blog Count</h5>
-                                <p id = "blogcount">0</p>
+                                <p id = "blogcount"><?php echo e($blogcount); ?></p>
                             </div>
                         </a>
                     </div>
@@ -34,7 +34,7 @@
                                     <span class="fas fa-eye text-white"></span>
                                 </div>
                                 <h5>Views Count</h5>
-                                <p id = "viewcount">0</p>
+                                <p id = "viewcount"><?php echo e($viewcount); ?></p>
                             </div>
                         </a>
                     </div>
@@ -45,7 +45,7 @@
                                     <span class="fas fa-thumbs-up text-white"></span>
                                 </div>
                                 <h5>Likes</h5>
-                                <p id = "likescount">0</p>
+                                <p id = "likescount"><?php echo e($likescount); ?></p>
                             </div>
                         </a>
                     </div>
@@ -56,7 +56,7 @@
                                     <span class="fas fa-comments text-white"></span>
                                 </div>
                                 <h5>Total Comments</h5>
-                                <p id = "totalcomments">0</p>
+                                <p id = "totalcomments"><?php echo e($commentscount); ?></p>
                             </div>
                         </a>
                     </div>
@@ -66,7 +66,7 @@
 
 
             <!--blog section start-->
-        <section class="our-blog-section ptb-50 gray-light-bg">
+        <section class="our-blog-section gray-light-bg mt-4">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -79,24 +79,27 @@
                     </div>
                 </div>
                 <div class="row">
+                    <?php $__currentLoopData = $blogs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $blog): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-md-4">
                     <div class="single-blog-card card border-0 shadow-sm">
-                            <span class="category position-absolute badge badge-pill badge-primary">Lifestyle</span>
-                            <img src="<?php echo e(asset('adminassets/img/blog/1.jpg')); ?>" class="card-img-top position-relative" alt="blog">
+                            <span class="category position-absolute badge badge-pill badge-primary"><?php echo e($blog->category->categoryname ?? 'No Category'); ?></span>
+                            <img src="<?php echo e(url('/').Storage::url($blog->image)); ?>" class="card-img-top position-relative" alt="blog">
                             <div class="card-body">
                                 <div class="post-meta mb-2">
                                     <ul class="list-inline meta-list">
-                                        <li class="list-inline-item">Jan 21, 2019</li>
-                                        <li class="list-inline-item"><span>45</span> Comments</li>
-                                        <li class="list-inline-item"><span>10</span> Share</li>
+                                        <li class="list-inline-item"><?php echo e($blog->created_at->format('F d, Y')); ?></li>
+                                        <li class="list-inline-item"><span class="fas fa-comments"></span> <span><?php echo e($blog->comments); ?></span></li>
+                                        <li class="list-inline-item"><span class="fas fa-thumbs-up"></span> <span><?php echo e($blog->likes); ?></span></li>
+                                        <li class="list-inline-item"><span class="fas fa-eye"></span> <span><?php echo e($blog->views); ?></span> </li>
                                     </ul>
                                 </div>
-                                <h3 class="h5 card-title"><a href="#">Appropriately productize fully</a></h3>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk.</p>
-                                <a href="#" class="detail-link">Read more <span class="ti-arrow-right"></span></a>
+                                <h3 class="h5 card-title"><a href="<?php echo e(route('blog.show', $blog->id)); ?>"><?php echo e($blog->title); ?></a></h3>
+                                
+                                <a href="<?php echo e(route('blog.show', $blog->id)); ?>" class="detail-link">Read more <span class="ti-arrow-right"></span></a>
                             </div>
                         </div>
                     </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>

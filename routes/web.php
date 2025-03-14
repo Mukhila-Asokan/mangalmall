@@ -9,6 +9,7 @@ use App\Http\Middleware\FlashMessageMiddleware;
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\VenueSearchController;
 use Illuminate\Support\Facades\Log;
+Use App\Models\UserBlog;
 
 use Modules\Venue\Models\VenueType;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ use App\Http\Controllers\CaretakerController;
 Use App\Http\Controllers\PricingController;
 Use App\Http\Controllers\UserBlogController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\BlogCommentController;
 
 
 use Illuminate\Support\Facades\Artisan;
@@ -49,6 +51,28 @@ Route::get('/run-migrations', function () {
 	DB::connection()->getPdo();
   
 });
+
+Route::get('/routelist', function () {
+
+     try { 
+            Artisan::call('route:list');
+            return Artisan::output(); 
+     } catch (\Exception $e) {
+        return 'routelist : ' . $e->getMessage();
+    }
+
+});
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('optimize:clear');
+    return "Cache cleared!";
+});
+
+
 
 
 Route::get('/get-subtypes/{typeId}', function ($typeId) {
@@ -103,6 +127,32 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
 
      Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
 
+
+
+     Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
+    Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');
+    /*check-slug*/
+    
+    Route::any('/blog/check-slug',function (Illuminate\Http\Request $request) {
+        $slugExists = UserBlog::where('slug', $request->slug)->exists();
+        return response()->json(['exists' => $slugExists]);
+    })->name('blog.check-slug');
+
+    Route::any('/blog/store',[UserBlogController::class, 'store'])->name('blog.store');
+    Route::any('/blog/{id}/edit',[UserBlogController::class, 'edit'])->name('blog.edit');
+    Route::any('/blog/{id}/update',[UserBlogController::class, 'update'])->name('blog.update');
+    Route::any('/blog/{id}/delete',[UserBlogController::class, 'destroy'])->name('blog.delete');
+    Route::any('/blog/show/{id}',[UserBlogController::class, 'show'])->name('blog.show');
+    Route::any('/blog/{id}/preview',[UserBlogController::class, 'preview'])->name('blog.preview');
+    Route::post('/comments/store', [BlogCommentController::class, 'store'])->name('comments.store');
+    Route::get('/comments/{blogId}', [BlogCommentController::class, 'getComments'])->name('comments.get');
+
+
+
+
+
+
+
     Route::any('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
     Route::any('/venuesearch', [VenueSearchController::class, 'index'])->name('venuereact.search');
 
@@ -133,8 +183,8 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     /* Invitation Card Design*/
 
     Route::any('/carddesign/list',[InvitationCardDesignController::class, 'index'])->name('user.carddesign');
-    Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
-    Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');
+   
+   
 
 });
 

@@ -38,7 +38,7 @@
                 <nav class="js-mega-menu navbar navbar-expand-md header-nav">
 
                     <!--logo start-->
-                    <a class="navbar-brand" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('frontassets//img/logo-color.png')); ?>" width="120" alt="logo" class="img-fluid" /></a>
+                    <a class="navbar-brand" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('frontassets//img/logo-color.png')); ?>" alt="logo" class="img-fluid" /></a>
                     <!--logo end-->
 
                     <!--responsive toggle button start-->
@@ -122,6 +122,7 @@
                                 <ul id="pagesGuestSubMenu" class="hs-sub-menu main-sub-menu" aria-labelledby="pagesMegaMenu" style="min-width: 260px;">                                   
                                     <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('guest.index', ['user_id'=> auth()->user()->id])); ?>">All Guests</a></li>
                                     <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('guest.group.index')); ?>">Guest Groups</a></li>
+                                    <li><a class="nav-link sub-menu-nav-link" href="<?php echo e(route('list.caretaker')); ?>">Caretakers</a></li>
                                 </ul>
                             </li>
           
