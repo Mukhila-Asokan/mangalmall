@@ -265,7 +265,7 @@
                                 if(response.uniqueVenueIds.includes(venue.id)){
                                     venueHtml += `
                                         <div class="col-4">
-                                            <div class="card position-relative">
+                                            <div class="card position-relative disabled-card">
                                                 <input type="radio" name="venue" disabled id="venue-${venue.id}" value="${venue.id}" class="venue-radio" required>
                                                 <label for="venue-${venue.id}" class="custom-radio"></label>
 
@@ -303,6 +303,7 @@
                                             </div>
                                         </div>
                                     `;
+                                    venueHtml += `</div>`;
                                 }
                                 else{
                                     venueHtml += `

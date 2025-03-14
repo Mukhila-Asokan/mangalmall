@@ -4,7 +4,7 @@ namespace Modules\VenueAdmin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-Use Modules\StaffManagement\Models\staff;
+Use Modules\StaffManagement\Models\Staff;
 use Modules\VenueAdmin\Models\VenueUser;
 use Modules\VenueAdmin\Models\VenueStaff;
 use Modules\VenueAdmin\Models\VenueUserProfile;

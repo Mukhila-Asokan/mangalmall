@@ -1,4 +1,8 @@
-    <!-- Brand Logo Light -->
+    <?php
+        $userId = Session::get('venueuserid');
+        $venueUser = \Modules\VenueAdmin\Models\VenueUser::where('id', $userId)->where('delete_status', 0)->first();
+    ?>
+        <!-- Brand Logo Light -->
                 <a href="#" class="logo logo-light">
                     <span class="logo-lg">
                         <img src="{{ asset('venueassets/images/logo-light.png') }}" alt="logo">
@@ -80,18 +84,18 @@
                             </a>
                             <div class="collapse" id="sidebarBaseUI">
                                 <ul class="side-nav-second-level">
-                                    <li>
+                                    <!-- <li>
                                         <a href="{{ route('venueadmin/create')}}">Add Venue</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="{{ route('venueadmin/venuelist') }}">List Venue</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('venuebookinglist') }}">Booking Details</a>
+                                        <a href="{{ route('venuebookinglist') }}">Booked Details</a>
                                     </li>  
-                                    <li>
+                                    <!-- <li>
                                         <a href="{{ route('get.all.enquiries') }}">Booking Enquiries</a>
-                                    </li> 
+                                    </li>  -->
                                     <li>
                                         <a href="#">Invoice Generator</a>
                                     </li>
@@ -103,6 +107,12 @@
                             <a href="{{ route('venue.calendar') }}" class="side-nav-link">
                                 <i class="ri-calendar-event-fill"></i>
                                 <span> Calendar </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{ route('get.all.enquiries') }}" class="side-nav-link">
+                                <i class="ri-calendar-event-fill"></i>
+                                <span> Booking Enquiries </span>
                             </a>
                         </li>
 
@@ -124,45 +134,45 @@
                                 </ul>
                             </div>
                         </li> -->
-            
-            <li class="side-nav-title">Staff Mangament</li>
-            
-               <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarStaff" aria-expanded="false" aria-controls="sidebarStaff" class="side-nav-link">
-                                <i class="ri-team-fill"></i>
-                                <span> Staff</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarStaff">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="{{ route('venueadmin.add.staff') }}">Add Staff</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('venueadmin.list.staff') }}">List</a>
-                                    </li>                                  
-                                </ul>
-                            </div>
-                   </li>
-            <li class="side-nav-title">Settings</li>
-            
-            <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarsettings" aria-expanded="false" aria-controls="sidebarStaff" class="side-nav-link">
-                                <i class="ri-team-fill"></i>
-                                <span> Settings</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarsettings">
-                                <ul class="side-nav-second-level">
-                                <li>  <a href="{{ route('venueadmin.changemobileno')}}">Change Mobile No</a></li> 
-                                    <li>
-                                        <a href="{{ route('venue.bookingadons')}}">Booking Adds</a>
-                                    </li> 
-                                    <li>  <a href="{{ route('venueadmin.userprofile')}}">User Profile</a></li>                                  
-                                </ul>
-                            </div>
-                   </li>
-
+            @if($venueUser->role != 'Staff')
+                <li class="side-nav-title">Staff Mangament</li>
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarStaff" aria-expanded="false" aria-controls="sidebarStaff" class="side-nav-link">
+                        <i class="ri-team-fill"></i>
+                        <span> Staff</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarStaff">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <a href="{{ route('venueadmin.add.staff') }}">Add Staff</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('venueadmin.list.staff') }}">List</a>
+                            </li>                                  
+                        </ul>
+                    </div>
+                </li>
+            @endif
+            @if($venueUser->role != 'Staff')
+                <li class="side-nav-title">Settings</li>
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarsettings" aria-expanded="false" aria-controls="sidebarStaff" class="side-nav-link">
+                        <i class="ri-team-fill"></i>
+                        <span> Settings</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarsettings">
+                        <ul class="side-nav-second-level">
+                        <li>  <a href="{{ route('venueadmin.changemobileno')}}">Change Mobile No</a></li> 
+                            <li>
+                                <a href="{{ route('venue.bookingadons')}}">Booking Adds</a>
+                            </li> 
+                            <li>  <a href="{{ route('venueadmin.userprofile')}}">User Profile</a></li>                                  
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
            
             
