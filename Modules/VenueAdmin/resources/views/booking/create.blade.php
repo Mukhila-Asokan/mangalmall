@@ -67,11 +67,13 @@
 @endif
 
  <div class="col-12">
- 
+ <input type="hidden" name="venue_name_value" id="venue_name_value" value="{{ $venue->venuename }}" />
   <div class="card">
 	<div class="card-body calender-sidebar app-calendar">
-		 <div id="calendar"></div>
-
+        <span class="d-flex justify-content-center align-items-center font-20 font-color" style="height: 100%; font-weight:bold;">
+            {{$venue->venuename}}
+        </span>
+		<div id="calendar"></div>
 	</div>
 </div>
 
@@ -85,9 +87,10 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form name="bookingform" id="bookingform" action="#">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form name="bookingform" id="bookingform" action="{{ route('venue.venue.update') }}">
                     <div class="row p-1">
+                        <span class="font-16 font-color mb-2" id="venue_name" style="height: 100%; font-weight:bold;"></span>
                         <div class="col-md-6 mt-2">
                             <label class="form-label">Event Name</label>
                             <input id="event_name" type="text" name="event_name" class="form-control" value="" required />
@@ -102,7 +105,7 @@
                             </select>
                         </div>
                         <input type="hidden" name="venue_id" id="venue_id" value="{{ $venueid }}" />
-                        <input type="hidden" name="booking_id" id="booking_id" value="" />
+                        <input type="hidden" name="id" id="booking_id" value="" />
                         <div class="col-md-6 mt-2">
                             <label class="form-label">Contact Person Name</label>
                             <input id="person_name" name="person_name" type="text" class="form-control" required />
@@ -141,30 +144,30 @@
 
                         <div class="col-md-6 mt-2">
                             <label class="form-label">Enter Start Date</label>
-                            <input id="event-start-date" type="date" class="form-control" name="event-start-date" required />
+                            <input id="event-start-date" type="date" class="form-control" name="eventstartdate" required />
                         </div>
 
                         <div class="col-md-6 mt-2">
                             <label class="form-label">Enter End Date</label>
-                            <input id="event-end-date" type="date" class="form-control" name="event-end-date" required />
+                            <input id="event-end-date" type="date" class="form-control" name="eventenddate" required />
                         </div>
 
-                        <!-- <div id="day-type-containers" class="row">
-                        </div> -->
+                        <div id="day-type-containers-edit" class="row">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer mt-5">
-                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <!-- <button type="button" class="btn btn-primary btn-add-event" id="saveEvent">
-                        Save
-                    </button>
-                    <button type="button" class="btn btn-warning btn-update-event" id="updateEvent" style="display:none">
-                        Update
-                    </button> -->
-                </div>
-            </form>
+                    <div class="modal-footer mt-5">
+                        <button type="button" class="btn btn-info" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-add-event" id="saveEvent">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-warning btn-update-event" id="updateEvent" style="display:none">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
             </div>
         </div>
     </div>
@@ -180,6 +183,7 @@
         <form name="addVenueBooking" id="addVenueBooking" method="POST" action="{{route('add.venue.booking')}}">
             @csrf
             <div class="row p-1">
+                <span class="font-16 font-color mb-2" id="add_venue_name" style="height: 100%; font-weight:bold;"></span>
                 <div class="col-md-6 mt-2">
                     <label class="form-label">Event Name</label>
                     <input id="add_event_name" type="text" name="event_name" class="form-control" value="" required />
@@ -255,6 +259,59 @@
         const startDate = document.getElementById('add-event-start-date').value;
         const endDate = document.getElementById('add-event-end-date').value;
         const dayTypeContainers = document.getElementById('add-day-type-containers');
+
+        if (startDate && endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+            dayTypeContainers.innerHTML = ''; // Clear previous
+
+            for (let i = 0; i < diffInDays; i++) {
+                const currentDate = new Date(start);
+                currentDate.setDate(start.getDate() + i);
+                const formattedDate = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+
+                dayTypeContainers.innerHTML += `
+                    <div class="col-md-12 mb-2">
+                        <label class="form-label">Day ${i + 1} (${formattedDate})</label>
+                        <div class="d-flex">
+                            <div class="n-chk">
+                                <div class="form-check form-check-primary form-check-inline">
+                                    <input class="form-check-input daytype" type="radio" name="daytype-${formattedDate}" value="full" required />
+                                    <label class="form-check-label mt-1">Full</label>
+                                </div>
+                            </div>
+                            <div class="n-chk">
+                                <div class="form-check form-check-warning form-check-inline">
+                                    <input class="form-check-input daytype" type="radio" name="daytype-${formattedDate}" value="morning" />
+                                    <label class="form-check-label mt-1">Morning</label>
+                                </div>
+                            </div>
+                            <div class="n-chk">
+                                <div class="form-check form-check-warning form-check-inline">
+                                    <input class="form-check-input daytype" type="radio" name="daytype-${formattedDate}" value="evening" />
+                                    <label class="form-check-label mt-1">Evening</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        } else {
+            dayTypeContainers.innerHTML = ''; // Clear if no dates
+        }
+    }
+</script>
+
+<script>
+    document.getElementById('event-start-date').addEventListener('change', generateDayTypeInputs);
+    document.getElementById('event-end-date').addEventListener('change', generateDayTypeInputs);
+
+    function generateDayTypeInputs() {
+        const startDate = document.getElementById('event-start-date').value;
+        const endDate = document.getElementById('event-end-date').value;
+        const dayTypeContainers = document.getElementById('day-type-containers-edit');
 
         if (startDate && endDate) {
             const start = new Date(startDate);
