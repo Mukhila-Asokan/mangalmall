@@ -8,13 +8,36 @@
     <div class="post-preview"><img src="{{ url('/').Storage::url($userblog->image) }}" alt="article" class="img-fluid" /></div>
             <div class="post-wrapper">
                 <div class="post-header">
-                    <h1 class="post-title">{{ $userblog->title }}</h1>
+				
+				
+                    
+					<h1 class="post-title">{{ $userblog->title }}</h1>
+					
+					<div class="d-flex justify-content-between align-items-center mt-2">
+					<div>
+					
                     <ul class="post-meta">
                         <li>{{ $userblog->created_at->format('F d, Y') }}</li>
                         <li>In <a href="#">{{ $userblog->category->categoryname ?? 'No Category' }}</a></li>
                         <li><a href="#"><span class="fas fa-comments"></span> {{ $userblog->comments }} </a></li>
+                        <li><span class="fas fa-thumbs-up"></span> <span id="like-count"> {{ $userblog->likes }} </span></li>
                     </ul>
-                </div>
+					</div>
+                    <div class="text-end">
+					<button id="like-btn" 
+							data-blog-id="{{ $userblog->id }}"
+							class="{{ $userblog->isLikedByUser($user_id) ? 'btn btn-danger' : 'btn btn-outline-danger' }}">
+						❤️ Like
+					</button>
+
+					
+				</div>
+				</div>				
+								
+								
+				
+				
+				</div>
                 <div class="post-content">
                     {!! $userblog->content !!}
                 </div>
@@ -116,19 +139,19 @@
                 <h2>Comments</h2>
             </div>
 
-            <div class="comment-respond">
-                <h5 class="comment-reply-title">Leave a Feedback</h5>
-                <p class="comment-notes">Please add decent comments</p>
-                <form id="commentForm">
-                    @csrf
-                    <input type="hidden" name="blog_id" value="{{ $userblog->id }}">
-                    <input type="hidden" name="reply_id" id="reply_id">
+ <div class="comment-respond" id="comment-respond">
+    <h5 class="comment-reply-title">Leave a Feedback</h5>
+    <p class="comment-notes">Please add decent comments</p>
+    <form id="commentForm">
+        @csrf
+        <input type="hidden" name="blog_id" value="{{ $userblog->id }}">
+        <input type="hidden" name="reply_id" id="reply_id">
 
-                    <textarea name="content" id = "content" placeholder="Write your comment here..." class="form-control" required></textarea>
-                    <button type="submit" class="btn btn-primary mt-2">Submit Comment</button>
-                </form>
-            </div>
-            <div id="comments-container"></div>   
+        <textarea name="content" id="content" placeholder="Write your comment here..." class="form-control" required></textarea>
+        <button type="submit" class="btn btn-primary mt-2">Submit Comment</button>
+    </form>
+</div>
+<div id="comments-container"></div>
 
         </div>
                         <!-- Comments area end-->
@@ -140,81 +163,150 @@
 @endsection
 @push('scripts')
 <script>
-    $(document).ready(function () {
-        // Submit Comment or Reply
-        $('#commentForm').submit(function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: "{{ route('comments.store') }}",
-                type: "POST",
-                data: $(this).serialize(),
-                success: function (response) {
-                    if (response.success) {
-                        alert(response.message);
-                        loadComments(); // Refresh comments dynamically
-                        $('#content').val(''); // Clear the textarea
-                    }
-                },
-                error: function (xhr) {
-                    alert('Failed to submit comment. Please try again.');
+    
+$(document).ready(function () {
+
+    loadComments(); // Load comments on page load
+
+    // Submit Comment or Reply
+    $('#commentForm').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{{ route('comments.store') }}",
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    loadComments(); // Refresh comments dynamically
+                    $('#content').val(''); // Clear the textarea
+                    $('#reply_id').val(''); // Reset reply ID
+                    $('#comment-respond').appendTo('#comments-container'); // Return form to original place
                 }
-            });
+            },
+            error: function (xhr) {
+                alert('Failed to submit comment. Please try again.');
+            }
         });
-
-        // Load Comments with Replies
-        function loadComments() {           
-            $.ajax({
-                url: "{{ route('comments.get', $userblog->id) }}",
-                type: "GET",
-                success: function (comments) {
-                    let commentHtml = '';
-                    comments.forEach(comment => {                       
-                        commentHtml += `
-                            <div class="comment">
-                                <div class="comment-body">
-                                    <div class="comment-meta">
-                                        <div class="comment-meta-author">${comment.user.name}</div>
-                                        <div class="comment-meta-date">${comment.created_at}</div>
-                                    </div>
-                                    <div class="comment-content">
-                                        <p>${comment.content}</p>
-                                    </div>
-                                    <div class="comment-reply">
-                                        <a href="#" onclick="reply(${comment.id})">Reply</a>
-                                    </div>
-                                </div>
-                                <div class="children">
-                                    ${comment.replies.map(reply => `
-                                        <div class="comment">
-                                            <div class="comment-body">
-                                                <div class="comment-meta">
-                                                    <div class="comment-meta-author">${reply.user.name}</div>
-                                                    <div class="comment-meta-date">${reply.created_at}</div>
-                                                </div>
-                                                <div class="comment-content">
-                                                    <p>${reply.content}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    $('#comments-container').html(commentHtml);
-                }
-            });
-        }
-
-        loadComments(); // Load comments on page load
     });
 
-    function reply(commentId) {
-        $('#reply_id').val(commentId); // Sets the parent comment ID
-        $('#commentForm').focus();
+    function renderReplies(replies) {
+    let replyHtml = '';
+
+    replies.forEach(reply => {
+        replyHtml += `
+            <div class="comment" id="comment-${reply.id}">
+                <div class="comment-body">
+                    <div class="comment-meta">
+                        <div class="comment-meta-author">${reply.user?.name || 'Anonymous'}</div>
+                        <div class="comment-meta-date">${reply.created_at}</div>
+                    </div>
+                    <div class="comment-content">
+                        <p>${reply.content}</p>
+                    </div>
+                    <div class="comment-reply">
+                        <a href="#" onclick="reply(${reply.id}, true)">Reply</a>
+                    </div>
+                </div>
+                <div class="children">
+                    ${renderReplies(reply.replies || [])}
+                </div>
+            </div>
+        `;
+    });
+
+    return replyHtml;
+}
+
+function loadComments() {         
+    $.ajax({
+      url: "{{ route('comments.get', ['blogId' => $userblog->id]) }}",
+        type: "GET",
+        success: function (comments) {
+            let commentHtml = '';
+            comments.forEach(comment => {
+                commentHtml += `
+                    <div class="comment" id="comment-${comment.id}">
+                        <div class="comment-body">
+                            <div class="comment-meta">
+                                <div class="comment-meta-author">${comment.user?.name || 'Anonymous'}</div>
+                                <div class="comment-meta-date">${comment.created_at}</div>
+                            </div>
+                            <div class="comment-content">
+                                <p>${comment.content}</p>
+                            </div>
+                            <div class="comment-reply">
+                                <a href="#" onclick="reply(${comment.id}, false)">Reply</a>
+                            </div>
+                        </div>
+                        <div class="children">
+                            ${renderReplies(comment.replies || [])}
+                        </div>
+                    </div>
+                `;
+            });
+
+            $('#comments-container').html(commentHtml);
+        }
+    });
+}
+
+
+});
+
+
+// Reply function to dynamically move form
+function reply(commentId, isReply = false) {
+    event.preventDefault(); // Prevent page refresh
+
+    const commentChildren = $(`#comment-${commentId} .children`);
+
+    // Create .children if not present
+    if (!commentChildren.length) {
+        $(`#comment-${commentId}`).append('<div class="children"></div>');
     }
+
+    $('#reply_id').val(commentId); // Set the parent comment ID
+    $('#comment-respond').appendTo(`#comment-${commentId} .children`).hide().fadeIn();
+    $('#content').focus();
+}
+
+
+$(document).on('click', '.comment-reply a', function (e) {
+    e.preventDefault();
+    const commentId = $(this).closest('.comment').attr('id').split('-')[1];
+    reply(commentId);
+});
+
+$(document).ready(function () {
+    $('#like-btn').on('click', function () {
+        const blogId = $(this).data('blog-id');
+
+        $.ajax({
+            url: `/home/bloglike/${blogId}`,
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Required for POST requests in Laravel
+            },
+            success: function (response) {
+                alert(response.message);
+
+                // Refresh Like Count
+                $.get(`/home/bloggetlikes/${blogId}`, function (data) {
+                    $('#like-count').text(`${data.likes}`);
+                });
+
+                // Toggle Button Class
+                $('#like-btn').toggleClass('btn-danger btn-outline-danger');
+            },
+            error: function () {
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    });
+});
 </script>
+
 
 
 @endpush

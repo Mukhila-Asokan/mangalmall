@@ -1,9 +1,9 @@
         <!--call to action section start-->
-        <section class="call-to-action ptb-50" style="background: url('{{ asset('frontassets/img/templatebg1.jpg') }}') no-repeat;">
+        <section class="call-to-action ptb-50" style="background: url('<?php echo e(asset('frontassets/img/templatebg1.jpg')); ?>') no-repeat;">
             <div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-md-12 col-lg-4">
-                        <img src='{{ asset("frontassets/img/36.png") }}' class="img-fluid rounded" alt='template' style="width: 400px;" />
+                        <img src='<?php echo e(asset("frontassets/img/36.png")); ?>' class="img-fluid rounded" alt='template' style="width: 400px;" />
                     </div>
                     <div class="col-md-12 col-lg-8">
                         <div class="call-to-action-content text-white">
@@ -16,3 +16,4 @@
                 </div>
             </div>
         </section>
+<?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/layouts/builder.blade.php ENDPATH**/ ?>

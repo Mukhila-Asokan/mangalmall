@@ -1,10 +1,10 @@
- @extends('layouts.guest')
+ 
 
 
 
 
-@section('content')
-<link href="{{ asset('adminassets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+<?php $__env->startSection('content'); ?>
+<link href="<?php echo e(asset('adminassets/libs/selectize/css/selectize.bootstrap3.css')); ?>" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
 
  <style>
@@ -28,32 +28,33 @@
  </style>
   
 
- @include('layouts.slider')
- @if(session('error'))
+ <?php echo $__env->make('layouts.slider', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+ <?php if(session('error')): ?>
     <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-        @include('layouts.search')
+        <?php echo e(session('error')); ?>
 
-@php
+    </div>
+<?php endif; ?>
+        <?php echo $__env->make('layouts.search', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+
+<?php
 $url = "frontassets/img/hero-bg-4.jpg";
 
-@endphp
- @include('layouts.vendorgallery')
+?>
+ <?php echo $__env->make('layouts.vendorgallery', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
- @include('layouts.promotion')
+ <?php echo $__env->make('layouts.promotion', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
- @include('layouts.trustedvendor')
+ <?php echo $__env->make('layouts.trustedvendor', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
- @include('layouts.blog')
+ <?php echo $__env->make('layouts.blog', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
- @include('layouts.builder')
+ <?php echo $__env->make('layouts.builder', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
-   @include('layouts.testimonial')
+   <?php echo $__env->make('layouts.testimonial', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
                   <!--call to action new style start-->
-        <section class="call-to-action ptb-100" style="background: url('{{ asset($url) }}')no-repeat center center / cover fixed">
+        <section class="call-to-action ptb-100" style="background: url('<?php echo e(asset($url)); ?>')no-repeat center center / cover fixed">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-9 col-lg-8">
@@ -62,8 +63,8 @@ $url = "frontassets/img/hero-bg-4.jpg";
                             
                             <div class="action-btns mt-3">
                                 <a href="#">
-                                        <img src = '{{ asset("frontassets/img/googleplaystore.png"); }}' style ="width:100px" /></a>
-                                <a href="#"><img src = '{{ asset("frontassets/img/appstore.png"); }}' style ="width:100px" /></a>
+                                        <img src = '<?php echo e(asset("frontassets/img/googleplaystore.png")); ?>' style ="width:100px" /></a>
+                                <a href="#"><img src = '<?php echo e(asset("frontassets/img/appstore.png")); ?>' style ="width:100px" /></a>
                             </div>
                         </div>
                     </div>
@@ -72,8 +73,8 @@ $url = "frontassets/img/hero-bg-4.jpg";
         </section>
         <!--call to action new style end-->
        
-@endsection
- @php
+<?php $__env->stopSection(); ?>
+ <?php
     $areaContent = ''; 
   
     foreach ($arealocation as $key => $area) {
@@ -84,7 +85,7 @@ $url = "frontassets/img/hero-bg-4.jpg";
     $areaContent = rtrim($areaContent, ','); 
    
    
-@endphp
+?>
 
 
 
@@ -93,9 +94,9 @@ $url = "frontassets/img/hero-bg-4.jpg";
 
 
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 
-<script src="{{ asset('adminassets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+<script src="<?php echo e(asset('adminassets/libs/selectize/js/standalone/selectize.min.js')); ?>"></script>
 
 
 <script type="text/javascript">
@@ -123,9 +124,9 @@ $url = "frontassets/img/hero-bg-4.jpg";
 
         $.ajax({
            type:'POST',
-           url:"{{ route('home/venuesearchresults') }}",
+           url:"<?php echo e(route('home/venuesearchresults')); ?>",
            dataType: 'json',
-           data:{ "_token": "{{ csrf_token() }}", "venuearea" :venuearea,"venuetype" :venuetype},
+           data:{ "_token": "<?php echo e(csrf_token()); ?>", "venuearea" :venuearea,"venuetype" :venuetype},
            success:function(response){ 
             console.log("Full Response:", response); // Debug the full response
             console.log("Venues Array:", response.venue); // Check if the array exists
@@ -141,10 +142,10 @@ $url = "frontassets/img/hero-bg-4.jpg";
     
     $(".search-section").css("display", "block");
 
-    let venueLink = "{{ route('login') }}";
+    let venueLink = "<?php echo e(route('login')); ?>";
 
     response.venue.forEach((venue, i) => {
-      /*  let venueLink = `{{ url('/home/') }}/${venue.id}/venuedetails`;*/ 
+      /*  let venueLink = `<?php echo e(url('/home/')); ?>/${venue.id}/venuedetails`;*/ 
 
         let onclickheart = "this.classList.toggle('bi-heart-fill'); this.classList.toggle('text-danger')";
         let truncatedAddress = venue.venueaddress.length > 40 ? venue.venueaddress.slice(0, 40) + "..." : venue.venueaddress;
@@ -153,7 +154,7 @@ $url = "frontassets/img/hero-bg-4.jpg";
                 <div class="card rounded white-bg shadow-sm p-1">
                     
                     <div class="image-container">
-                        <img src="{{ url('/') }}/storage/${venue.bannerimage}" class="venue-img" alt="Venue Image">
+                        <img src="<?php echo e(url('/')); ?>/storage/${venue.bannerimage}" class="venue-img" alt="Venue Image">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title mb-2">${venue.venuename}</h5>
@@ -212,11 +213,11 @@ $(document).ready(function() {
     $("#citySearch").autocomplete({
         source: function(request, response) {
             $.ajax({
-                url: "{{ route('home/ajaxcitysearch') }}", // Replace with your backend route
+                url: "<?php echo e(route('home/ajaxcitysearch')); ?>", // Replace with your backend route
                 type: "POST",
                 dataType: "json",
                 data: {
-                    "_token": "{{ csrf_token() }}", // CSRF Token for security
+                    "_token": "<?php echo e(csrf_token()); ?>", // CSRF Token for security
                     "query": request.term // User input
                 },
                 success: function(data) {
@@ -238,4 +239,5 @@ $(document).ready(function() {
 
 
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.guest', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/layouts/home.blade.php ENDPATH**/ ?>

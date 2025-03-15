@@ -22,6 +22,17 @@ class UserBlog extends Model
     }
     public function tags()
     {
-        return $this->belongsTo('Modules\Blog\Models\BlogTag');
+        return $this->hasMany('Modules\Blog\Models\BlogTag');
     }
+    public function likes()
+    {
+        return $this->hasMany(BlogLike::class);
+    }
+
+    public function isLikedByUser($userId)
+    {
+        return $this->likes()->where('user_id', $userId)->exists();
+    }
+    
+
 }
