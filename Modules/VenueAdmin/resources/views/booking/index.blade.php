@@ -6,10 +6,16 @@
         display: flex;
         align-items: flex-start; /* Aligns items at the top */
         padding-top: 50px; /* Push down */
+        height: 100px;
     }
     .wedding_image{
         width: 45px;
         height: 45px;
+        margin-left: 2px;
+    }
+    .wedding_image_label{
+        width: 30px;
+        height: 30px;
         margin-left: 2px;
     }
     .fc-daygrid-day-number{
@@ -19,7 +25,13 @@
 </style>
 @section('content')
 
-<div id="calendar"></div>
+<div class="card p-1">
+    <div class="d-flex justify-content-center">
+        <img class="wedding_image_label" src="{{ asset('assets/images/wedding-image.png') }}"><span class="mt-1 fw-bold mleft-5">Muhurtham</span>
+        <img class="wedding_image_label" src="{{ asset('assets/images/mangalyam.png') }}"><span class="mt-1 fw-bold mleft-5">Subha-Muhurtham</span>
+    </div>
+    <div id="calendar"></div>
+</div>
 
  <!-- BEGIN MODAL -->
 <!-- <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">

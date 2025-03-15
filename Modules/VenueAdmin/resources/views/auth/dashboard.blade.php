@@ -30,10 +30,10 @@
 	}
 
 	/* Scrolling Animation */
-	@keyframes scroll {
+	/* @keyframes scroll {
 		0% { transform: translateX(100%); }
 		100% { transform: translateX(-100%); }
-	}
+	} */
 </style>
 @section('content')
 	<div class="m-3 h3 d-flex" style="font-weight: bold;">

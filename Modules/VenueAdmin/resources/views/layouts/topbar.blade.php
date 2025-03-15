@@ -31,12 +31,12 @@
 
                         <!-- Topbar Search Form -->
                         <div class="app-search dropdown d-none d-lg-block">
-                            <form>
+                            <!-- <form>
                                 <div class="input-group">
                                     <input type="search" class="form-control dropdown-toggle" placeholder="Search..." id="top-search">
                                     <span class="ri-search-line search-icon"></span>
                                 </div>
-                            </form>
+                            </form> -->
 
                             <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
                                 <!-- item-->

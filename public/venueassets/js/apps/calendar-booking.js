@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
                 }
-
+                document.getElementById("add_venue_name").textContent = $('#venue_name_value').val();
                 document.getElementById("bookingform").reset();
                 document.getElementById("booking_id").value = "0";
                 document.getElementById("add-event-start-date").value = info.dateStr;
@@ -135,7 +135,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         response = response[0];
                         console.log(response, 'response');
 
+                        document.getElementById("venue_name").textContent = $('#venue_name_value').val();
                         document.getElementById("event_name").value = response.event_name;
+                        document.getElementById("event_id").value = response.event_type;
                         document.getElementById("event-start-date").value = response.start_date;
                         document.getElementById("event-end-date").value = response.end_date;
                         document.getElementById("booking_id").value = response.id;
@@ -145,7 +147,49 @@ document.addEventListener("DOMContentLoaded", function () {
                         document.getElementById("special_requirements").value = response.special_requirements;
                         $('input[name="bookingstatus"][value="' + response.booking_status + '"]').prop("checked", true);
 
-                        $("#bookingform input, #bookingform textarea, #bookingform select").prop("disabled", true);
+                        const dayTypeContainers = document.getElementById('day-type-containers-edit');
+                        if (response.start_date && response.end_date) {
+                            const start = new Date(response.start_date);
+                            const end = new Date(response.end_date);
+                            const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                            dayTypeContainers.innerHTML = '';
+
+                            for (let i = 0; i < diffInDays; i++) {
+                                const currentDate = new Date(start);
+                                currentDate.setDate(start.getDate() + i);
+                                const formattedDate = currentDate.toISOString().split('T')[0];
+                                dayTypeContainers.innerHTML += `<div class="col-md-12 mb-2 mt-2">
+                                        <label class="form-label">Day ${i + 1} (${formattedDate})</label>
+                                        <div class="d-flex">
+                                            <div class="n-chk">
+                                                <div class="form-check form-check-primary form-check-inline">
+                                                    <input class="form-check-input daytype" type="radio" name="daytype-${formattedDate}" value="full" required />
+                                                    <label class="form-check-label mt-1">Full</label>
+                                                </div>
+                                            </div>
+                                            <div class="n-chk">
+                                                <div class="form-check form-check-warning form-check-inline">
+                                                    <input class="form-check-input daytype" type="radio" name="daytype-${formattedDate}" value="morning" />
+                                                    <label class="form-check-label mt-1">Morning</label>
+                                                </div>
+                                            </div>
+                                            <div class="n-chk">
+                                                <div class="form-check form-check-warning form-check-inline">
+                                                    <input class="form-check-input daytype" type="radio" name="daytype-${formattedDate}" value="evening" />
+                                                    <label class="form-check-label mt-1">Evening</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        } else {
+                            dayTypeContainers.innerHTML = '';
+                        }
+                        response.daytypes.forEach(detail => {
+                            $(`input[name="daytype-${detail.date}"][value="${detail.daytype}"]`).prop('checked', true);
+                        });
+                        // $("#bookingform input, #bookingform textarea, #bookingform select").prop("disabled", true);
                     
                         var myModal = new bootstrap.Modal(document.getElementById("eventModal"));
                         myModal.show();

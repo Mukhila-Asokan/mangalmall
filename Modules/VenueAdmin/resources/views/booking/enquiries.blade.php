@@ -2,6 +2,12 @@
 @section('content')
 <div class="row m-3">
     <div class="col-12">
+        <div class="input-group mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="search">
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+        </div>
         <div class="card">
             <table class="table text-nowrap mb-0 align-middle">
                 <thead class="text-dark fs-4">
@@ -15,7 +21,7 @@
                         <th width="100px">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="enquiryTableBody">
                     @php
                         $i = 1;                                              
                     @endphp
@@ -47,3 +53,22 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+	<script>
+		document.getElementById('searchInput').addEventListener('keyup', function() {
+			let searchValue = this.value.toLowerCase();
+			let tableRows = document.querySelectorAll('#enquiryTableBody tr');
+
+			tableRows.forEach(row => {
+				let venueName = row.cells[1].textContent.toLowerCase();
+				let websiteName = row.cells[2].textContent.toLowerCase();
+
+				if (venueName.includes(searchValue) || websiteName.includes(searchValue)) {
+				row.style.display = '';
+				} else {
+				row.style.display = 'none';
+				}
+			});
+		});
+	</script>
+@endpush

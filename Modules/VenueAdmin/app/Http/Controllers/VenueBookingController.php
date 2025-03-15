@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\VenueAdmin\Models\VenueBooking;
 use Modules\VenueAdmin\Models\VenueBookingContact;
-use Modules\VenueAdmin\Models\{VenueBookingDetails, UserVenue};
+use Modules\VenueAdmin\Models\{VenueBookingDetails, UserVenue, VenueStaff};
 use Illuminate\Support\Facades\Log;
 use App\Models\OccasionType;
 use Carbon\Carbon;
@@ -111,8 +111,9 @@ class VenueBookingController extends Controller
         $pagetitle = "Venue Booking";
         $pageroot = "Home"; 
         $venueid = $id;
+        $venue = VenueDetails::where('id', $id)->where('delete_status', 0)->first();
         $occasion_types = OccasionType::where('delete_status','0')->get();
-        return view('venueadmin::booking.create',compact('pagetitle','pageroot','occasion_types','venueid'));
+        return view('venueadmin::booking.create',compact('pagetitle','pageroot','occasion_types','venueid', 'venue'));
     }
 
     /**
@@ -547,14 +548,14 @@ public function getEventsbyid($id)
         'id' => $venuebooking->id,
         'title' => $venuebooking->event_title,
         'event_name' => $venuebooking->event_name,
-        'event_type' => $venuebooking->event_type,
+        'event_type' => $venuebooking->event_id,
         'person_name' => $booking->person_name,
         'contact_address' => $booking->contact_address,
         'mobileno' => $booking->mobileno,
         'booking_status' => $venuebooking->booking_status,
         'special_requirements' => $venuebooking->special_requirements,
         'start_date' => Carbon::parse($venuebooking->start_date)->format('Y-m-d'),
-        'end_date' => date('Y-m-d', strtotime($venuebooking->end_date . ' +1 day')),          
+        'end_date' => date('Y-m-d', strtotime($venuebooking->end_date)),          
         'daytypes' => $daytypes,
     ];
     return response()->json($formattedEvents, 200);
@@ -661,11 +662,31 @@ public function show()
         $pagetitle = "Venue Booking";
         $pageroot = "Home"; 
         $venueuserid =  Session::get('venueuserid');
-        $venues = VenueDetails::whereIn('id', function ($query) use ($venueuserid) {
-            $query->select('venueid')
-                ->from('uservenue') // Ensure this is the correct table name
-                ->where('venueuserid', '=', $venueuserid);
-        })->get();    
+        // $venues = VenueDetails::whereIn('id', function ($query) use ($venueuserid) {
+        //     $query->select('venueid')
+        //         ->from('uservenue')
+        //         ->where('venueuserid', '=', $venueuserid);
+        // })->get();    
+        
+        $venueUser = VenueUser::where('id', Session::get('venueuserid'))->first();
+        $loggedInUserType = $venueUser->role;
+        
+        $venues = VenueDetails::when($loggedInUserType === 'Venue Admin', function($query) use ($venueuserid) {
+                $query->whereIn('id', function($subQuery) use ($venueuserid) {
+                    $subQuery->select('venueid')
+                            ->from('uservenue')
+                            ->where('venueuserid', $venueuserid);
+                });
+            })
+            ->when($loggedInUserType === 'Staff', function($query) use($venueuserid, $venueUser) {
+                $adminId = VenueStaff::where('id', $venueUser->venue_staff_id)->pluck('venue_admin_id')->first();
+                $query->whereIn('id', function($subQuery) use ($adminId) {
+                    $subQuery->select('venueid')
+                            ->from('uservenue')
+                            ->where('venueuserid', $adminId);
+                });
+            })
+            ->get();
         $venuebooking = VenueBooking::where('bookinguserid',$venueuserid)->where('booked_by','VenueUser')->get();
         
         return view('venueadmin::booking.venuebookinglist',compact('pagetitle','pageroot','venuebooking','venues','venueuserid'));   
@@ -735,7 +756,10 @@ public function show()
             ]);
         }
         catch(\Exception $e){
-            dd($e);
+            return response()->json([
+                'venueDetails' => null,
+                'uniqueVenueIds' => null
+            ]);
         }
     }
 
@@ -745,16 +769,29 @@ public function show()
         $pagetitle = 'Edit Venue Booking';
         $pageroot = 'Home';
         $occasion_types = OccasionType::where('delete_status','0')->get();
-        return view('venueadmin::booking.edit', compact('pagetitle', 'pageroot', 'venuebooking', 'booking', 'occasion_types'));
+        $venueDetails = VenueBookingDetails::where('venuebooking_id', $id)->get();
+        return view('venueadmin::booking.edit', compact('pagetitle', 'pageroot', 'venuebooking', 'booking', 'occasion_types', 'venueDetails'));
     }
 
     public function updateVenue(Request $request){
-        DB::beginTransaction();
         try{
+            DB::beginTransaction();
+            $validator = Validator::make($request->all(), [
+                'eventstartdate' => ['required', 'date'],
+                'eventenddate' => ['required', 'date', 'after_or_equal:eventstartdate'],
+                'venue_id' => ['required', 'exists:venuedetails,id', new VenueAvailability($request->eventstartdate, $request->eventenddate, $request->venue_id, $request->except(['eventstartdate', 'eventenddate', '_token', 'venue_id']), $request->id)],
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
             $venueBooking = VenueBooking::find($request->id);
             $venueBooking->event_name = $request->event_name;
             $venueBooking->event_title = $request->event_name;
             $venueBooking->special_requirements = $request->special_requirements;
+            $venueBooking->start_date = $request->eventstartdate;
+            $venueBooking->end_date = $request->eventenddate;
             $venueBooking->save();
 
             $venueBookingContact = VenueBookingContact::where('venuebooking_id',$request->id)->first();
@@ -762,10 +799,49 @@ public function show()
             $venueBookingContact->mobileno = $request->mobileno;
             $venueBookingContact->contact_address = $request->contact_address;
             $venueBookingContact->save();
+
+            $dayTypesRaw = $request->except(['eventstartdate', 'eventenddate', '_token', 'venue_id']);
+            $dayTypes = [];
+            foreach ($dayTypesRaw as $key => $value) {
+                if (strpos($key, 'daytype-') === 0) {
+                    $date = str_replace('daytype-', '', $key);
+                    $dayTypes[$date] = $value;
+                }
+                $deleteBookingDetails = VenueBookingDetails::where('venuebooking_id', $request->id)->delete();
+            }
+            foreach ($dayTypes as $date => $dayType) {
+                $actualDate = str_replace("daytype-", "", $date);
+                \Log::info('Processing date: ' . $date . ', dayType: ' . $dayType);
+                $bookingdetails = new VenueBookingDetails();
+                $bookingdetails->venue_id = $request->venue_id;
+                $bookingdetails->venuebooking_id = $venueBooking->id;
+                $bookingdetails->date = $actualDate;
+                $bookingdetails->daytype = $dayType;
+            
+                switch ($dayType) {
+                    case 'full':
+                        $bookingdetails->starttime = '05:00:00';
+                        $bookingdetails->endtime = '23:00:00';
+                        break;
+                    case 'morning':
+                        $bookingdetails->starttime = '05:00:00';
+                        $bookingdetails->endtime = '14:00:00';
+                        break;
+                    case 'evening':
+                        $bookingdetails->starttime = '14:00:00';
+                        $bookingdetails->endtime = '23:00:00';
+                        break;
+                }
+    
+                $bookingdetails->save();
+            }
+            DB::commit();
+
             DB::Commit();
-            return redirect()->route('venuebookinglist')->with('success', 'Venue Booking updated Successfully');
+            return redirect()->back()->with('success', 'Venue Booking updated Successfully');
         }
         catch(\Exception $e){
+            dd($e);
             DB::rollback();
             return response()->json([
                 'status' => 'error',
