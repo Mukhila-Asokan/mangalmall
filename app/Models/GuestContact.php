@@ -14,4 +14,8 @@ class GuestContact extends Model
     public function groups(){
         return $this->hasMany(GuestGroupContact::class, 'guest_id', 'id');
     }
+ 
+    public function guestCaretaker(){
+        return $this->hasOne(GuestCaretaker::class, 'guest_id', 'id');
+    }
 }

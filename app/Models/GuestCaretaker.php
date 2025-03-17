@@ -16,4 +16,8 @@ class GuestCaretaker extends Model
     public function contact(){
         return $this->belongsTo(GuestContact::class, 'guest_id', 'id');
     }
+
+    public function caretaker(){
+        return $this->hasOne(Caretaker::class, 'id', 'guest_id');
+    }
 }

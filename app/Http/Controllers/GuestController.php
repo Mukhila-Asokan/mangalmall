@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{GuestContact, GuestGroup, GuestGroupContact};
+use App\Models\{GuestContact, GuestGroup, GuestGroupContact, GuestCaretaker};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\GuestImport;
 use DB;
@@ -13,9 +13,14 @@ use App\Models\Caretaker;
 class GuestController extends Controller
 {
     public function getGuestContacts(){
-        $getGuestContacts = GuestContact::whereNull('deleted_at')->where('created_by', auth()->user()->id)->orderBy('created_at', 'desc')->take(30)->get();
+        $guests = GuestContact::whereNull('deleted_at')->where('created_by', auth()->user()->id)->orderBy('created_at', 'desc');
+        $getGuestContacts = $guests->take(30)->get();
+        $guests = $guests->get();
         $caretakers = Caretaker::where('created_by', auth()->user()->id)->get();
-        return view('guest.index', compact('getGuestContacts', 'caretakers'));
+        $groups = GuestGroup::where('created_by', auth()->user()->id)->get();
+        $assignedGuestIds = GuestCaretaker::where('created_by', auth()->user()->id)->pluck('guest_id')->toArray();
+        $unAssignedGuests = GuestContact::whereNotIn('id', $assignedGuestIds)->where('created_by', auth()->user()->id)->get();
+        return view('guest.index', compact('getGuestContacts', 'caretakers', 'guests', 'groups', 'unAssignedGuests'));
     }
 
     public function getGuestContactsAjax(Request $request){
@@ -158,31 +163,40 @@ class GuestController extends Controller
     public function createGuestGroup(Request $request){
         DB::beginTransaction();
         try{
-            $createGroup = new GuestGroup();
-            $createGroup->group_name = $request->groupName;
-            $createGroup->group_description = $request->groupDescription;
-            $createGroup->created_by = auth()->user()->id;
-            $createGroup->save();
+            if($request->group_name == 'add new'){
+                $createGroup = new GuestGroup;
+                $createGroup->group_name = $request->new_group_name;
+                $createGroup->group_description = $request->group_description;
+                $createGroup->created_by = auth()->user()->id;
+                $createGroup->save();
 
-            foreach($request->selectedValues as $data){
-                $createGroupContact = new GuestGroupContact();
-                $createGroupContact->group_id = $createGroup->id;
-                $createGroupContact->guest_id = $data;
-                $createGroupContact->created_by = auth()->user()->id;
-                $createGroupContact->save();
+                foreach($request->guest_lists as $data){
+                    $createGroupContact = new GuestGroupContact();
+                    $createGroupContact->group_id = $createGroup->id;
+                    $createGroupContact->guest_id = $data;
+                    $createGroupContact->created_by = auth()->user()->id;
+                    $createGroupContact->save();
+                }
+            }
+            else{
+                $createGroup = GuestGroup::where('id', $request->group_name)->first();
+                $createdGuests = GuestGroupContact::where('group_id', $createGroup->id)->pluck('guest_id')->toArray();
+                foreach($request->guest_lists as $data){
+                    if(!in_array($data, $createdGuests)){
+                        $createGroupContact = new GuestGroupContact();
+                        $createGroupContact->group_id = $createGroup->id;
+                        $createGroupContact->guest_id = $data;
+                        $createGroupContact->created_by = auth()->user()->id;
+                        $createGroupContact->save();
+                    }
+                }
             }
             DB::commit();
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Group created successfully'
-            ]);
+            return redirect()->route('guest.group.index')->with('success', 'Group Created Successfully');
         }
         catch(\Exception $e){
             DB::rollback();
-            return response()->json([
-                'status' => 'error',
-                'error' => 'Something went wrong'
-            ]);
+            return redirect()->back()->with('error', 'Something went wrong');
         }
     }
 
