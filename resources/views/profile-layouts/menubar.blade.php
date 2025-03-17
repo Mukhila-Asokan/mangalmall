@@ -131,7 +131,7 @@
 
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="#" aria-haspopup="true" aria-expanded="false">To do list</a>
+                                <a class="nav-link custom-nav-link" href="{{ route('home.checklist') }}" aria-haspopup="true" aria-expanded="false">Check list</a>
 
                             </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">

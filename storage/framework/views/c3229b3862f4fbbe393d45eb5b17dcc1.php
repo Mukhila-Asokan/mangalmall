@@ -1,12 +1,11 @@
-@extends('profile-layouts.profile')
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 <div class="col-lg-10 col-md-10">
                         <!-- Search widget-->
 
  <div class="row">
-        @include('profile-layouts.sticky')
+        <?php echo $__env->make('profile-layouts.sticky', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
         <div class="col-lg-11 col-md-11 stickymenucontent shadow-sm">
 
 <div class="row p-5 mt-md-4 mt-lg-4">  
@@ -24,19 +23,19 @@
                 </tr>                                
             </thead>
             <tbody>
-                @php
+                <?php
                     $i=1;
-                @endphp
-                    @foreach($useroccasion as $occasion)
+                ?>
+                    <?php $__currentLoopData = $useroccasion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $occasion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><p>{{ $i++ }}</p></td>
-                            <td><p>{{ $occasion->occasiondate }}</p></td>
-                            <td><p>{{ $occasion->Occasionname->eventtypename }}</p></td>
-                            <td><p>{{ $occasion->occasion_place }}</p></td>
-                            <td><p>{{ $occasion->notes }}</p></td>
-                            <td><a href="#" id = "editoccasion" onclick = "editoccasion({{ $occasion->id }})"><span class="ti-pencil"></span></a> <a href="#"><span class="ti-trash"></span></a></td>
+                            <td><p><?php echo e($i++); ?></p></td>
+                            <td><p><?php echo e($occasion->occasiondate); ?></p></td>
+                            <td><p><?php echo e($occasion->Occasionname->eventtypename); ?></p></td>
+                            <td><p><?php echo e($occasion->occasion_place); ?></p></td>
+                            <td><p><?php echo e($occasion->notes); ?></p></td>
+                            <td><a href="#" id = "editoccasion" onclick = "editoccasion(<?php echo e($occasion->id); ?>)"><span class="ti-pencil"></span></a> <a href="#"><span class="ti-trash"></span></a></td>
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
        </table>
    
@@ -51,7 +50,7 @@
 </div>
 <div class="col-lg-2 col-md-2">
 
-@include('profile-layouts.rightside')
+<?php echo $__env->make('profile-layouts.rightside', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </div>
 
 
@@ -65,23 +64,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-    <form method = "post" action = "{{ route('home/occasion/add')}}">
+    <form method = "post" action = "<?php echo e(route('home/occasion/add')); ?>">
       <div class="modal-body">
-           @csrf
+           <?php echo csrf_field(); ?>
             <div class="form-row">
             <div class="col-12">
                 <div class="form-group">
                     <input type="Date" class="form-control" name="occasiondate" id="occasiondate" placeholder="Select Date" required="required">
                 </div>
-                <input type = "hidden" name = "userid" value = "{{ $userid }}" />
+                <input type = "hidden" name = "userid" value = "<?php echo e($userid); ?>" />
             </div>
             <div class="col-12">
                 <div class="form-group">
                     <select class="form-control" name="occasiontype" id="occasiontype" required="required">
                         <option>Select Occasion</option>
-                        @foreach($occasiontype as $typename)
-                        <option value="{{ $typename->id }}" >{{ $typename->eventtypename }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $occasiontype; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $typename): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($typename->id); ?>" ><?php echo e($typename->eventtypename); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
             </div>
@@ -110,7 +109,7 @@
   </div>
 </div>
 
-@php
+<?php
 
 	$str = '[';
 	foreach($areaname as $aname):
@@ -121,10 +120,10 @@
 	 $str = rtrim($str, ','); 
 	 $str .= ']';
  
-@endphp
+?>
 
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css"></script>
    <script>
         const countries =  <?PHP echo $str; ?>
@@ -194,4 +193,5 @@
         });
 		}
 	</script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('profile-layouts.profile', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/occasion.blade.php ENDPATH**/ ?>

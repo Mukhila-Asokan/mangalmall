@@ -307,6 +307,16 @@
                                     </a>
                                 </li>   
                                 <li class="menu-item">
+                                    <a href="<?php echo e(route('admin.checklist')); ?>" class="menu-link">
+                                        <span class="menu-text">Checklist</span>
+                                    </a>
+                                </li>   
+                                <li class="menu-item">
+                                    <a href="<?php echo e(route('admin/occasion')); ?>" class="menu-link">
+                                        <span class="menu-text">Budget Categories</span>
+                                    </a>
+                                </li>  
+                                <li class="menu-item">
                                     <a href="<?php echo e(route('admin/occasiondatafield')); ?>" class="menu-link">
                                         <span class="menu-text">Occasion Data Field</span>
                                     </a>

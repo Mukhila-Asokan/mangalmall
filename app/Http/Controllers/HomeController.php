@@ -147,6 +147,9 @@ public function venuesearchresults(Request $request)
                ->orderBy('created_at','desc')->limit(5)->get();
         return view('layouts.showblog',compact('userblog','categories','tags','recentpost'));
     }
-
+    public function checklist()
+    {
+       return view('checklist.list');
+    }   
 
 }
