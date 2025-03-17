@@ -280,6 +280,7 @@ Route::get('guest/search', [GuestController::class, 'searchGuest'])->name('guest
 Route::get('get/guest/new-group', [GuestController::class, 'getNewGroupGuest'])->name('guest.new-group');
 Route::get('download/guest/contact/format', [GuestController::class, 'downloadGuestFormat'])->name('download.guest.format');
 Route::post('upload/guest/contacts', [GuestController::class, 'uploadGuestContacts'])->name('upload.guest.contacts');
+Route::post('check/unique/validation/guests', [GuestController::class, 'checkUniqueGuests'])->name('guest.checkUnique');
 
 //Guest group
 Route::get('/guest/group/ajax', [GuestController::class, 'getGuestGroupAjax'])->name('guest.group');
@@ -291,6 +292,7 @@ Route::post('update/group/text', [GuestController::class, 'updateGuestGroupText'
 Route::get('guest/group/search', [GuestController::class, 'searchGuestGroup'])->name('guest.group.search');
 Route::post('add/guest/group/', [GuestController::class, 'addGuestInGroup'])->name('add.guest.group');
 Route::post('delete/guest/group', [GuestController::class, 'deleteGuestGroup'])->name('guest.group.delete');
+Route::post('check/unique/validation/group', [GuestController::class, 'checkUniqueGroup'])->name('group.checkUnique');
 
 //caretaker
 Route::post('create/caretaker', [CaretakerController::class, 'createCaretaker'])->name('create.caretaker');
@@ -302,6 +304,7 @@ Route::get('caretaker/search', [CaretakerController::class, 'searchCaretaker'])-
 Route::get('edit/caretaker/{id}', [CaretakerController::class, 'editCaretaker'])->name('caretaker.edit');
 Route::post('update/caretaker', [CaretakerController::class, 'updateCaretaker'])->name('caretaker.update');
 Route::post('delete/caretaker', [CaretakerController::class, 'deleteCaretaker'])->name('caretaker.delete');
+Route::post('check/unique/validation/caretaker', [CaretakerController::class, 'checkUnique'])->name('caretaker.checkUnique');
 
 Route::get('/get/group/carteaker/details', [CaretakerController::class, 'viewDetails'])->name('guest.group.caretaker.view');
 

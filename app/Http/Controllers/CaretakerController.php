@@ -194,4 +194,9 @@ class CaretakerController extends Controller
         $guests = GuestContact::whereNull('deleted_at')->where('created_by', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return view('guest.view', compact('guests'));
     }
+
+    public function checkUnique(Request $request){
+        $exists = Caretaker::where($request->field, $request->value)->exists();
+        return response()->json(['exists' => $exists]);
+    }
 }

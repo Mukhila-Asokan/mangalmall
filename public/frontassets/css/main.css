@@ -56435,11 +56435,16 @@ button.scroll-top:focus {
             background: rgba(0, 0, 0, 0.2);
         }
         
-        .venue-card, .contact-card {
+        .venue-card{
             transition: all 0.3s ease;
             border-top: 5px solid #58111A;
             border-bottom: 5px solid #58111A;
             box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #f5ecf1 !important;  
+        }
+        .contact-card{
+            transition: all 0.3s ease;
+            border-top: 5px solid #58111A;
+            box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #f5ecf1 !important; 
         }
         .venue-card:hover {
             transform: translateY(-5px);
