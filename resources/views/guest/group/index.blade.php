@@ -367,5 +367,10 @@
         $(document).on('click', '[data-dismiss="modal"]', function() {
             $('.modal').modal('hide');
         });
+        $(document).on('hidden.bs.modal', function() {
+            $('form').trigger('reset');
+            $('form').find('.is-invalid').removeClass('is-invalid');
+            $('form').find('span.text-danger').remove();
+        });
     </script>
 @endpush

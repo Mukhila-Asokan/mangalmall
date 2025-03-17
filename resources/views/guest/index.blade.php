@@ -5,9 +5,6 @@
         @include('guest.guest_list', $getGuestContacts)
     </div>
 </div>
-<div class="col-lg-2 col-md-2">
-    @include('profile-layouts.rightside')
-</div>
 <div class="modal" id="add_contact_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="homemodal-content">
@@ -266,7 +263,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('guest.create.group') }}" method="POST">
+            <form action="{{ route('guest.create.group') }}" id="group_contact_form" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="container">
@@ -441,6 +438,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script>
     $('.edit_contact').on('click', function(){
         var id = $(this).data('id');
@@ -574,36 +572,6 @@
             }
         });
     });
-
-    // $(document).on('click', '#assign_caretaker', function(){
-    //     let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {
-    //         return $(this).attr('data-id');
-    //     }).get();
-    //     if(selectedValues.length < 1){
-    //         alert('Please select atleast one contact to assing caretaker');
-    //         return false;
-    //     }
-    //     else{
-    //         $('#caretaker_id').append('<option value="add new">Add New Caretaker</option>');
-    //         $.each(<?=$caretakers?>, function(key, value){
-    //             $('#caretaker_id').append(`<option value="${value.id}">${value.name}</option>`);
-    //         })
-    //         $('#selected_guests').val(JSON.stringify(selectedValues));
-    //         $('#assign_care_taker_model').modal('show');
-
-    //         $('#caretaker_id').on('change', function(){
-    //             if($(this).val() == 'add new'){
-    //                 $('#cartaker_details').removeClass('d-none');
-    //             }
-    //             else{
-    //                 document.querySelectorAll('.d-none input[required]').forEach(input => {
-    //                     input.removeAttribute('required');
-    //                 });
-    //                 $('#cartaker_details').addClass('d-none');
-    //             }
-    //         })
-    //     }
-    // })
 
     $("#caretaker_id").on('change', function(){
         if($(this).val() == 'add new'){
@@ -789,6 +757,358 @@
 
     $(document).on('click', '[data-dismiss="modal"]', function() {
         $('.modal').modal('hide');
+    });
+    $(document).on('hidden.bs.modal', function() {
+        $('form').trigger('reset');
+        $('form').find('.is-invalid').removeClass('is-invalid');
+        $('form').find('span.text-danger').remove();
+    });
+
+    // Guest unique check
+    $.validator.addMethod("uniqueCheck", function(value, element, params) {
+        var isUnique = false;
+        var contactId = $('#contact_id').val();
+
+        $.ajax({
+            url: "{{ route('guest.checkUnique') }}",
+            type: "POST",
+            async: false,
+            data: {
+                _token: "{{ csrf_token() }}",
+                field: params.field,
+                value: value,
+                id: contactId
+            },
+            success: function(response) {
+                isUnique = !response.exists;
+            }
+        });
+
+        return isUnique;
+
+    }, "This value is already taken.");
+    
+    $(function() {
+        $('#add_contact_form').validate({
+            rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            mobile_number: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10,
+                uniqueCheck: { field: 'mobile_number' }
+            },
+            whatsapp_number: {
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            relationship: {
+                required: true
+            },
+            location: {
+                required: true
+            }
+            },
+            messages: {
+            name: {
+                required: "Please enter the name",
+                minlength: "Name must be at least 3 characters"
+            },
+            mobile_number: {
+                required: "Please enter mobile number",
+                digits: "Only numbers allowed",
+                minlength: "Must be 10 digits",
+                maxlength: "Must be 10 digits"
+            },
+            whatsapp_number: {
+                digits: "Only numbers allowed",
+                minlength: "Must be 10 digits",
+                maxlength: "Must be 10 digits"
+            },
+            email: {
+                required: "Please enter email",
+                email: "Enter a valid email"
+            },
+            relationship: {
+                required: "Please select relationship"
+            },
+            location: {
+                required: "Please enter location"
+            }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+            error.addClass('text-danger');
+            error.insertAfter(element);
+            },
+            highlight: function(element) {
+            $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+            $(element).removeClass('is-invalid');
+            }
+        });
+    });
+
+    // Group unique check
+    $.validator.addMethod("uniqueCheckGroup", function(value, element, params) {
+        var isUnique = false;
+
+        $.ajax({
+            url: "{{ route('group.checkUnique') }}",
+            type: "POST",
+            async: false,
+            data: {
+                _token: "{{ csrf_token() }}",
+                field: params.field,
+                value: value
+            },
+            success: function(response) {
+                isUnique = !response.exists;
+            }
+        });
+
+        return isUnique;
+
+    }, "This value is already taken.");
+
+    $(function() {
+        $('#group_contact_form').validate({
+            rules: {
+                'guest_lists[]': {
+                    required: true
+                },
+                group_name: {
+                    required: true
+                },
+                new_group_name: {
+                    required: function() {
+                        return $('#group_name').val() === 'add new';
+                    },
+                    uniqueCheckGroup: { field: 'group_name' }
+                },
+                group_description: {
+                    required: function() {
+                        return $('#group_name').val() === 'add new';
+                    }
+                }
+            },
+            messages: {
+                'guest_lists[]': {
+                    required: "Please select at least one guest"
+                },
+                group_name: {
+                    required: "Please select a group"
+                },
+                new_group_name: {
+                    required: "Please enter the new group name",
+                    uniqueCheck: "Group name already exists"
+                },
+                group_description: {
+                    required: "Please enter group description"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                if (element.hasClass('guest_list_multiple') || element.hasClass('guest_list_multiple')) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+
+    // Caretaker check
+    $.validator.addMethod("uniqueCaretaker", function(value, element, params) {
+        var isUnique = false;
+        $.ajax({
+            url: "{{ route('caretaker.checkUnique') }}",
+            type: "POST",
+            async: false,
+            data: {
+                _token: "{{ csrf_token() }}",
+                field: params.field,
+                value: value
+            },
+            success: function(response) {
+                isUnique = !response.exists;
+            }
+        });
+
+        return isUnique;
+
+    }, "This value is already taken.");
+
+    $(function() {
+        $('#caretaker_add_form').validate({
+            rules: {
+                'selected_guests[]': {
+                    required: true
+                },
+                caretaker_id: {
+                    required: true
+                },
+                caretaker_name: {
+                    required: function() {
+                        return $('#caretaker_id').val() === 'add new';
+                    }
+                },
+                caretaker_email: {
+                    required: function() {
+                        return $('#caretaker_id').val() === 'add new';
+                    },
+                    email: true,
+                    uniqueCaretaker:  { field: 'email' }
+                },
+                caretaker_mobile: {
+                    required: function() {
+                        return $('#caretaker_id').val() === 'add new';
+                    },
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10,
+                    uniqueCaretaker:  { field: 'mobile_number' }
+                }
+            },
+            messages: {
+                'selected_guests[]': {
+                    required: "Please select at least one guest"
+                },
+                caretaker_id: {
+                    required: "Please select a caretaker"
+                },
+                caretaker_name: {
+                    required: "Please enter caretaker name"
+                },
+                caretaker_email: {
+                    required: "Please enter email",
+                    email: "Enter a valid email",
+                    uniqueCaretaker: "Email already exists"
+                },
+                caretaker_mobile: {
+                    required: "Please enter mobile number",
+                    digits: "Only numbers allowed",
+                    minlength: "Must be 10 digits",
+                    maxlength: "Must be 10 digits",
+                    uniqueCaretaker: "Mobile number already exists"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                if (element.hasClass('guest_list_caretaker')) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+
+    // edit contact form
+    $(function() {
+        $('#edit_contact_form').validate({
+            rules: {
+                edit_name: {
+                    required: true,
+                    minlength: 3,
+                },
+                edit_mobile_number: {
+                    required: true,
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10,
+                    uniqueCheck: {field: 'mobile_number'}
+                },
+                edit_whatsapp_number: {
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10
+                },
+                edit_email: {
+                    required: true,
+                    email: true,
+                    uniqueCheck: {field: 'email'}
+                },
+                edit_relationship: {
+                    required: true
+                },
+                edit_location: {
+                    required: true
+                }
+            },
+            messages: {
+                edit_name: {
+                    required: "Name is required",
+                    minlength: "Name must be at least 3 characters",
+                    uniqueField: "Name already exists"
+                },
+                edit_mobile_number: {
+                    required: "Mobile number is required",
+                    digits: "Only numbers allowed",
+                    minlength: "Must be 10 digits",
+                    maxlength: "Must be 10 digits",
+                    uniqueField: "Mobile number already exists"
+                },
+                edit_whatsapp_number: {
+                    digits: "Only numbers allowed",
+                    minlength: "Must be 10 digits",
+                    maxlength: "Must be 10 digits"
+                },
+                edit_email: {
+                    required: "Email is required",
+                    email: "Enter a valid email",
+                    uniqueField: "Email already exists"
+                },
+                edit_relationship: {
+                    required: "Please select a relationship"
+                },
+                edit_location: {
+                    required: "Location is required"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                if (element.hasClass('guest_list_caretaker')) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid');
+            }
+        });
     });
 </script>
 @endpush

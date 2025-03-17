@@ -338,4 +338,19 @@ class GuestController extends Controller
             'data' => $getGuestContacts
         ]);
     }
+
+    public function checkUniqueGuests(Request $request){
+        if($request->id){
+            $exists = GuestContact::where($request->field, $request->value)->where('id', '!=', $request->id)->exists();
+        }
+        else{
+            $exists = GuestContact::where($request->field, $request->value)->exists();
+        }
+        return response()->json(['exists' => $exists]);
+    }
+
+    public function checkUniqueGroup(Request $request){
+        $exists = GuestGroup::where($request->field, $request->value)->exists();
+        return response()->json(['exists' => $exists]);
+    }
 }
