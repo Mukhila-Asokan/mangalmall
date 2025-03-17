@@ -2,7 +2,7 @@
     <div class="card-header pb-1 pr-3">
         <div class="row">
             <div class="col-md-6 d-flex">
-                <span class="font-20 font-color font-weight-bold"><i class="bi bi-card-list"></i> All Guests</span>
+                <span class="font-20 font-color font-weight-bold">All Guests</span>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
                 <button id="add_contact" class="font-14 btn btn-primary waves-effect waves-light">

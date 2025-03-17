@@ -31,7 +31,7 @@ const VenueBookingCalendar = () => {
       console.log(selectedYear, 'selectedYear');
       console.log(selectedMonth, 'selectedMonth');
       
-      const endpoint = `/home/${id}/${selectedMonth}/${selectedYear}`;
+      const endpoint = `/home/getBookings/${id}/${selectedMonth}/${selectedYear}`;
       try {
         const response = await fetch(endpoint, {
           method: "GET",

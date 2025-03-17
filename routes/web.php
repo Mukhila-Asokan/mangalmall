@@ -165,7 +165,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::any('/venuesearch/{id}/venuedetails',[VenueSearchController::class, 'venuedetails'])->name('venuesearch/venuedetails');
     Route::post('/submit-enquiry',[VenueSearchController::class, 'submitBookingEnquiry'])->name('submit/venue/booking');
     Route::get('/submit-enquiry',[VenueSearchController::class, 'submitBookingEnquiry'])->name('submit/venue/booking');
-    Route::get('/{id}/{month}/{year}',[VenueController::class, 'getBookingsOnMonth'])->name('get.bookings.on.date');
+    Route::get('getBookings/{id}/{month}/{year}',[VenueController::class, 'getBookingsOnMonth'])->name('get.bookings.on.date');
 
      
     Route::any('/ads/random', [VenueSearchController::class, 'adsrandom'])->name('venue/adsrandom');

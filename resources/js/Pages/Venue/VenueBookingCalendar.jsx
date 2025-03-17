@@ -23,7 +23,7 @@ const VenueBookingCalendar = () => {
       console.log(selectedYear, 'selectedYear');
       console.log(selectedMonth, 'selectedMonth');
       
-      const endpoint = `/admin/${id}/${selectedMonth}/${selectedYear}`;
+      const endpoint = `/admin/getBookings/${id}/${selectedMonth}/${selectedYear}`;
       try {
         const response = await fetch(endpoint, {
           method: "GET",

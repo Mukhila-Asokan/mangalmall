@@ -4,6 +4,21 @@
             <div class="col-md-6 d-flex">
                 <span class="font-20 font-color font-weight-bold">Guest Groups</span>
             </div>
+            <div class="col-md-6"></div>
+            <div class="breadcrumb-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="custom-breadcrumb">
+                                <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
+                                    <li class="list-inline-item breadcrumb-item"><a href="{{ route('guest.index', ['user_id' => auth()->user()->id]) }}">All Guests</a></li>
+                                    <li class="list-inline-item breadcrumb-item active"><a>Groups</a></li>                                            
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <hr>

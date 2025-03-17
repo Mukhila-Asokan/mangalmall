@@ -124,8 +124,22 @@
                     </div>
                     <div class="col-md-6 d-flex justify-content-end">
                         <button id="printDataBtn" class="font-14 btn btn-primary waves-effect waves-light ml-1" onclick="printTable();">
-                            <span><i class="bi bi-arrow-up"></i> Print</span>
+                            <span><i class="bi bi-printer"></i> Print</span>
                         </button>                    
+                    </div>
+                    <div class="breadcrumb-bar py-3">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="custom-breadcrumb">
+                                        <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
+                                            <li class="list-inline-item breadcrumb-item"><a href="{{ route('guest.index', ['user_id' => auth()->user()->id]) }}">All Guests</a></li>
+                                            <li class="list-inline-item breadcrumb-item active"><a>View Details</a></li>                                            
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,6 +170,9 @@
             </table>
         </div>
     </div>
+    <div class="col-lg-2 col-md-2">
+        @include('profile-layouts.rightside')
+    </div> 
 @endsection
 <script>
     function printTable() {
@@ -232,13 +249,6 @@
             scrollX: true,
             scrollY: true,
             responsive: true,
-            // columnDefs: [
-            //     { width: '110px', targets: 0 }, // Guest Name
-            //     { width: '130px', targets: 1 }, // Guest Mobile
-            //     { width: '250px', targets: 2 }, // Group Name
-            //     { width: '250px', targets: 3 }, // Caretaker Name
-            //     { width: '150px', targets: 4 },  // Caretaker Mobile
-            // ],
             language: {
                 paginate: {
                     first: '<<',
@@ -285,6 +295,9 @@
                         selectElement.append('<option value="' + value + '">' + value + '</option>');
                     });
                 });
+                setTimeout(() => {
+                    table.columns.adjust();
+                }, 100);
             }
         });
     });

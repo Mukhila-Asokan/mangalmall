@@ -56865,3 +56865,11 @@ body::before {
   font-weight: bold;
   color:#464646
 }
+
+select.form-control{
+  min-height: 44px !important;
+}
+
+.select2-container .select2-selection {
+  min-height: 44px !important;
+}
