@@ -56619,6 +56619,10 @@ button.scroll-top:focus {
     font-size: 14px !important;
   }
 
+  .font-16{
+    font-size: 16px !important;
+  }
+
   .font-20{
     font-size: 20px !important;
   }
@@ -56753,6 +56757,10 @@ button.scroll-top:focus {
   cursor: pointer;
 }
 
+.select2, .guest_list_multiple{
+  min-height: 44px !important;
+}
+
 .blog-image-wrapper {
   position: relative;
   overflow: hidden;
@@ -56856,4 +56864,12 @@ body::before {
   font-size: 1.8rem;
   font-weight: bold;
   color:#464646
+}
+
+select.form-control{
+  min-height: 44px !important;
+}
+
+.select2-container .select2-selection {
+  min-height: 44px !important;
 }

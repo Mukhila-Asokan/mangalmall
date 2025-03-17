@@ -5,6 +5,21 @@
                 <div class="col-md-6 d-flex">
                     <span class="font-20 font-color font-weight-bold">Caretakers</span>
                 </div>
+                <div class="col-md-6"></div>
+                <div class="breadcrumb-bar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="custom-breadcrumb">
+                                    <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0 pl-0">
+                                        <li class="list-inline-item breadcrumb-item"><a href="{{ route('guest.index', ['user_id' => auth()->user()->id]) }}">All Guests</a></li>
+                                        <li class="list-inline-item breadcrumb-item active"><a>Caretakers</a></li>                                            
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>
@@ -23,7 +38,7 @@
             @foreach($caretakers as $caretaker)
                 <div class="col-3 mb-4">
                     <div class="card contact-card m-1">
-                        <div class="card-header m-2">
+                        <div class="card-header ml-2 mt-2 mr-2">
                             <div class="row">
                                 <div class="col-8 text-start d-flex">
                                     <i class="bi bi-people-fill font-14"></i>
@@ -36,21 +51,21 @@
                             </div>
                         </div>
                         <hr class="m-0 p-0">
-                        <div class="card-body p-2 mb-2">
-                            <div class="row mt-2">
+                        <div class="card-body p-2 mb-1">
+                            <div class="row mt-1">
                                 <div class="col-md-12 d-flex">
                                     <i class="bi bi-telephone font-12"></i>
                                     <span class="font-12 ml-1">{{$caretaker->mobile_number}}</span>
                                 </div>
                             </div>
-                            <div class="row mt-2">
+                            <div class="row mt-1">
                                 <div class="col-md-12 d-flex">
                                     <i class="bi bi-envelope font-12"></i>
                                     <span class="font-12 ml-1">{{$caretaker->email}}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer bg-transparent">
+                        <div class="card-footer bg-transparent ml-2 mr-3 p-2">
                             <div class="row d-flex">
                                 <div class="col-md-6 d-flex justify-content-start p-0">
                                     <a id="delete_caretaker" class="delete_caretaker ml-2 pointer" data-id="{{$caretaker->id}}">
