@@ -3,10 +3,11 @@
  
 
              <div class="col-lg-9 col-md-9" >
-                 <h5> Welcome <?php echo e(Auth::user()->name); ?></h5> 
+             <h5>Welcome <?php echo e(ucwords(strtolower(Auth::user()->name))); ?></h5>
+
                    
 				   <?php $prurl = "frontassets/img/herobg-5.png"; ?>
-                <div class="page-header-section" style="background: url('<?php echo e(asset($prurl)); ?>')no-repeat center center / cover;height: 200px;">
+                <div class="page-header-section" style="background: url('<?php echo e(asset($prurl)); ?>')no-repeat center center / cover;height: 100px;">
                     <div class="row align-items-center">
                         <div class="col-md-7 col-lg-6">
                             <div class="page-header-content text-white">
@@ -18,9 +19,96 @@
                  </div>
 
             <hr>
+            <div class="row mt-2">
+            <div class="col-lg-2 col-md-2 mt-2">
+              <div class="hexagon">
+                  <div class="card-content">
+                      <!-- Heading at the Top -->
+                      <div class="mb-2 heading">Occasion</div>
+
+                      <!-- Value at the Bottom -->
+                      <div class="value">
+                          <div class="card-text">0</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-2 mt-2">
+              <div class="hexagon">
+                  <div class="card-content">
+                      <!-- Heading at the Top -->
+                      <div class="mb-2 heading">Guest</div>
+
+                      <!-- Value at the Bottom -->
+                      <div class="value">
+                          <div class="card-text">0</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+              
+              
+            <div class="col-lg-2 col-md-2 mt-2">
+              <div class="hexagon">
+                  <div class="card-content">
+                      <!-- Heading at the Top -->
+                      <div class="mb-2 heading">Card Design</div>
+
+                      <!-- Value at the Bottom -->
+                      <div class="value">
+                          <div class="card-text">0</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+            <div class="col-lg-2 col-md-2 mt-2">
+              <div class="hexagon">
+                  <div class="card-content">
+                      <!-- Heading at the Top -->
+                      <div class="mb-2 heading">Checklist Plan</div>
+
+                      <!-- Value at the Bottom -->
+                      <div class="value">
+                          <div class="card-text">0</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            <div class="col-lg-2 col-md-2 mt-2">
+                <div class="hexagon">
+                    <div class="card-content">
+                    <div class="mb-2 heading"> Budget</div>
+                           <!-- Value at the Bottom -->
+                      <div class="value">
+                          <div class="card-text">0</div>
+                      </div>
+                            </div>
+                            
+                        </div>
+             </div>
+               
+        
+            <div class="col-lg-2 col-md-2 mt-2">
+              <div class="hexagon">
+                  <div class="card-content">
+                      <!-- Heading at the Top -->
+                      <div class="mb-2 heading">Total Blog</div>
+
+                      <!-- Value at the Bottom -->
+                      <div class="value">
+                          <div class="card-text">0</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+            </div>
+            <hr>
+
                    
 
-                    <div class="row">
+                    <div class="row mt-2">
                     <div class="col-lg-12 col-md-12" >
                   
                     <?php echo $__env->make('profile-layouts.blog', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
@@ -29,7 +117,10 @@
                    
               
                 </div>
-                
+                	<div class="bg-flower-bot">
+                      <img src="<?php echo e(asset('frontassets/img/flower.png')); ?>">
+            </div>
+				
             </div>
             <div class="col-lg-3 col-md-3 widget widget-categories">
                 

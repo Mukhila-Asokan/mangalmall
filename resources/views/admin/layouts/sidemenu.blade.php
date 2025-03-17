@@ -307,6 +307,16 @@
                                     </a>
                                 </li>   
                                 <li class="menu-item">
+                                    <a href="{{ route('admin/occasion') }}" class="menu-link">
+                                        <span class="menu-text">Checklist</span>
+                                    </a>
+                                </li>   
+                                <li class="menu-item">
+                                    <a href="{{ route('admin/occasion') }}" class="menu-link">
+                                        <span class="menu-text">Budget Categories</span>
+                                    </a>
+                                </li>  
+                                <li class="menu-item">
                                     <a href="{{ route('admin/occasiondatafield') }}" class="menu-link">
                                         <span class="menu-text">Occasion Data Field</span>
                                     </a>
