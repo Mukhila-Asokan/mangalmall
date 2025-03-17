@@ -6,7 +6,6 @@
     </div>
 </div>
 <div class="col-lg-2 col-md-2">
-    @include('profile-layouts.rightside')
 </div>
 <div class="modal" id="add_contact_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -257,8 +256,8 @@
     </div>
 </div>
 
-<div class="modal" id="create_group_modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal" id="create_group_modal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="homemodal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-20 font-color">Create Group</h5>
@@ -266,30 +265,54 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="name" class="font-14">Group Name</label>
-                                <input type="text" name="group_name" id="group_name" class="form-control font-14">
+            <form action="{{ route('guest.create.group') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <label for="guest_lists" class="font-14 mt-2">Guest List</label>
+                            <select class="guest_list_multiple form-control w-100" multiple="multiple" name="guest_lists[]" id="guest_lists" required>
+                                @foreach($guests as $guest)
+                                    <option value="{{ $guest->id }}">{{ $guest->name }} - {{ $guest->mobile_number }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label for="group_name" class="font-14 mt-2">Group Name</label>
+                            <select class="select2 form-control w-100" name="group_name" id="group_name" required>
+                                <option value="" selected disabeld>Select a group</option>
+                                <option value="add new">Add New Group</option>
+                                @foreach($groups as $group)
+                                    <option value="{{ $group->id }}">{{ $group->group_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="group_details d-none card mt-3 p-3 row">
+                            <h6 class="font-color">Add New Group</h6>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name" class="font-14">Group Name</label>
+                                        <input type="text" name="new_group_name" id="new_group_name" class="form-control font-14" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name" class="font-14">Group Description</label>
+                                        <textarea name="group_description" id="group_description" class="form-control font-14"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="name" class="font-14">Group Description</label>
-                                <textarea name="group_description" id="group_description" class="form-control font-14"></textarea>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary create_group_btn font-14">Submit</button>
+                        <button type="button" class="btn btn-secondary font-14" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary create_group_btn font-14">Submit</button>
-                    <button type="button" class="btn btn-secondary font-14" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -345,14 +368,30 @@
             <div class="modal-body">
                 <form action="{{ route('create.caretaker') }}" method="POST" id="caretaker_add_form">
                     @csrf
-                    <input type="hidden" name="selected_guests" id="selected_guests">
                     <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="selected_guests" class="font-14">Select Guests</label>
+                                    <select class="guest_list_caretaker form-control w-100" multiple="multiple" name="selected_guests[]" id="selected_guests" required>
+                                        <option value="" disabled>Select Guest Name</option>
+                                        @foreach($unAssignedGuests as $guest)
+                                            <option value="{{ $guest->id }}">{{ $guest->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="caretaker_id" class="font-14">Caretaker</label>
                                     <select name="caretaker_id" class="form-control select2" id="caretaker_id" required>
                                         <option value="" disabled selected>Select Caretaker Name</option>
+                                        <option value="add new">Add New Caretaker</option>
+                                        @foreach($caretakers as $caretaker)
+                                            <option value="{{ $caretaker->id }}"> {{ $caretaker->name }} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -535,75 +574,204 @@
         });
     });
 
-    $(document).on('click', '#assign_caretaker', function(){
-        let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {
-            return $(this).attr('data-id');
-        }).get();
-        if(selectedValues.length < 1){
-            alert('Please select atleast one contact to assing caretaker');
-            return false;
+    // $(document).on('click', '#assign_caretaker', function(){
+    //     let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {
+    //         return $(this).attr('data-id');
+    //     }).get();
+    //     if(selectedValues.length < 1){
+    //         alert('Please select atleast one contact to assing caretaker');
+    //         return false;
+    //     }
+    //     else{
+    //         $('#caretaker_id').append('<option value="add new">Add New Caretaker</option>');
+    //         $.each(<?=$caretakers?>, function(key, value){
+    //             $('#caretaker_id').append(`<option value="${value.id}">${value.name}</option>`);
+    //         })
+    //         $('#selected_guests').val(JSON.stringify(selectedValues));
+    //         $('#assign_care_taker_model').modal('show');
+
+    //         $('#caretaker_id').on('change', function(){
+    //             if($(this).val() == 'add new'){
+    //                 $('#cartaker_details').removeClass('d-none');
+    //             }
+    //             else{
+    //                 document.querySelectorAll('.d-none input[required]').forEach(input => {
+    //                     input.removeAttribute('required');
+    //                 });
+    //                 $('#cartaker_details').addClass('d-none');
+    //             }
+    //         })
+    //     }
+    // })
+
+    $("#caretaker_id").on('change', function(){
+        if($(this).val() == 'add new'){
+            $('#cartaker_details').removeClass('d-none');
         }
         else{
-            $('#caretaker_id').append('<option value="add new">Add New Caretaker</option>');
-            $.each(<?=$caretakers?>, function(key, value){
-                $('#caretaker_id').append(`<option value="${value.id}">${value.name}</option>`);
-            })
-            $('#selected_guests').val(JSON.stringify(selectedValues));
-            $('#assign_care_taker_model').modal('show');
-
-            $('#caretaker_id').on('change', function(){
-                if($(this).val() == 'add new'){
-                    $('#cartaker_details').removeClass('d-none');
-                }
-                else{
-                    document.querySelectorAll('.d-none input[required]').forEach(input => {
-                        input.removeAttribute('required');
-                    });
-                    $('#cartaker_details').addClass('d-none');
-                }
-            })
+            document.querySelectorAll('.d-none input[required]').forEach(input => {
+                input.removeAttribute('required');
+            });
+            $('#cartaker_details').addClass('d-none');
         }
     })
 
-    $('#create_group').click(function() {
-        let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {
-            return $(this).attr('data-id');
-        }).get();
-        if(selectedValues.length < 2){
-            alert('Please select atleast two contact to create group');
-            return false;
-        }
-        $('#create_group_modal').modal('show');
-    });
+    $(document).on('click', '#assign_caretaker', function(){
+        $('#assign_care_taker_model').modal('show');
 
-    $('.create_group_btn').on('click', function(){
-        let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {
-            return $(this).attr('data-id');
-        }).get();
+        $('.guest_list_caretaker').select2({
+            placeholder: 'Select options',
+            closeOnSelect: false,
+            templateResult: formatStateCaretaker,
+            allowHtml: true,
+            allowClear: true,
+            tags: true,
+            dropdownParent: $('#assign_care_taker_model')
+        }).on('select2:open', function () {
+            if (!$('.custom-search-box').length) {
+                $('.select2-dropdown').prepend(
+                    '<input type="text" class="custom-search-box w-100" placeholder="Search...">'
+                );
 
-        let groupName = $('#group_name').val();
-        let groupDescription = $('#group_description').val();
-
-        $.ajax({
-            url: "{{ route('guest.create.group') }}",
-            type: "POST",
-            data: {
-                "selectedValues": selectedValues,
-                "groupName": groupName,
-                "groupDescription": groupDescription
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                if(response.status == 'success'){
-                    $('#create_group_modal').modal('hide');
-                    window.location.href = "{{ route('guest.group.index') }}";
-                }
+                $('.custom-search-box').on('input', function () {
+                    var searchText = $(this).val().toLowerCase();
+                    $('.select2-results__option').each(function () {
+                        if ($(this).text().toLowerCase().includes(searchText)) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                });
             }
         });
+
+        $('#selected_guests').on('select2:select', function(e) {
+            updateCheckboxState();
+        });
+
+        $('#selected_guests').on('select2:unselect', function(e) {
+            updateCheckboxState();
+        });
+
+        function updateCheckboxState() {
+            console.log($('.select2-results__option[aria-selected=true]'));
+            var selectedOptions = $('.select2-results__option[aria-selected=true]');
+            selectedOptions.each(function() {
+                var $checkbox = $(this).find('.select2-checkbox');
+                $checkbox.prop('checked', true);
+            });
+
+            var unselectedOptions = $('.select2-results__option[aria-selected=false]');
+            unselectedOptions.each(function() {
+                var $checkbox = $(this).find('.select2-checkbox');
+                $checkbox.prop('checked', false);
+            });
+        }
+
+        function formatStateCaretaker(state) {
+            if (!state.id) {
+                return state.text;
+            }
+
+            var $state = $(
+                '<span><input type="checkbox" class="select2-checkbox" /> ' + state.text + '</span>'
+            );
+
+            $state.find('.select2-checkbox').prop('checked', state.selected);
+
+            $state.find('.select2-checkbox').on('click', function() {
+                state.selected = !state.selected;
+                $(this).prop('checked', state.selected);
+                $('#multiSelect').trigger('change');
+            });
+
+            return $state;
+        }
     });
 
+    $('#create_group').on('click', function(){
+        $('#create_group_modal').modal('show');
+
+        $('.guest_list_multiple').select2({
+            placeholder: 'Select options',
+            closeOnSelect: false,
+            templateResult: formatState,
+            allowHtml: true,
+            allowClear: true,
+            tags: true,
+            dropdownParent: $('#create_group_modal')
+        }).on('select2:open', function () {
+            if (!$('.custom-search-box').length) {
+                $('.select2-dropdown').prepend(
+                    '<input type="text" class="custom-search-box w-100" placeholder="Search...">'
+                );
+
+                $('.custom-search-box').on('input', function () {
+                    var searchText = $(this).val().toLowerCase();
+                    $('.select2-results__option').each(function () {
+                        if ($(this).text().toLowerCase().includes(searchText)) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                });
+            }
+        });
+
+        $('#guest_lists').on('select2:select', function(e) {
+            updateCheckboxState();
+        });
+
+        $('#guest_lists').on('select2:unselect', function(e) {
+            updateCheckboxState();
+        });
+
+        function updateCheckboxState() {
+            console.log($('.select2-results__option[aria-selected=true]'));
+            var selectedOptions = $('.select2-results__option[aria-selected=true]');
+            selectedOptions.each(function() {
+                var $checkbox = $(this).find('.select2-checkbox');
+                $checkbox.prop('checked', true);
+            });
+
+            var unselectedOptions = $('.select2-results__option[aria-selected=false]');
+            unselectedOptions.each(function() {
+                var $checkbox = $(this).find('.select2-checkbox');
+                $checkbox.prop('checked', false);
+            });
+        }
+
+        function formatState(state) {
+            if (!state.id) {
+                return state.text;
+            }
+
+            var $state = $(
+                '<span><input type="checkbox" class="select2-checkbox" /> ' + state.text + '</span>'
+            );
+
+            $state.find('.select2-checkbox').prop('checked', state.selected);
+
+            $state.find('.select2-checkbox').on('click', function() {
+                state.selected = !state.selected;
+                $(this).prop('checked', state.selected);
+                $('#multiSelect').trigger('change');
+            });
+
+            return $state;
+        }
+    })
+
+    $('#group_name').on('change', function(){
+        if($(this).val() == 'add new'){
+            $('.group_details').removeClass('d-none');
+        }
+        else{
+            $('.group_details').addClass('d-none');
+        }
+    })
     
     $('#import_contact').on('click', function(){
         $('#import_contact_modal').modal('show');

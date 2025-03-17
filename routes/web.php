@@ -298,6 +298,8 @@ Route::get('edit/caretaker/{id}', [CaretakerController::class, 'editCaretaker'])
 Route::post('update/caretaker', [CaretakerController::class, 'updateCaretaker'])->name('caretaker.update');
 Route::post('delete/caretaker', [CaretakerController::class, 'deleteCaretaker'])->name('caretaker.delete');
 
+Route::get('/get/group/carteaker/details', [CaretakerController::class, 'viewDetails'])->name('guest.group.caretaker.view');
+
 require __DIR__.'/auth.php';
 
 require __DIR__.'/admin-auth.php';

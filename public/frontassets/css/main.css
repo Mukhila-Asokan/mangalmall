@@ -56618,6 +56618,10 @@ button.scroll-top:focus {
     font-size: 14px !important;
   }
 
+  .font-16{
+    font-size: 16px !important;
+  }
+
   .font-20{
     font-size: 20px !important;
   }
@@ -56750,4 +56754,8 @@ button.scroll-top:focus {
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+.select2, .guest_list_multiple{
+  min-height: 44px !important;
 }

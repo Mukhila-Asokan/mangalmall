@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{GuestCaretaker, Caretaker, GuestContact};
+use App\Models\{GuestCaretaker, Caretaker, GuestContact, GuestGroup};
 use App\Rules\CaretakerCheck;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\CaretakerCreateMail;
@@ -16,7 +16,7 @@ class CaretakerController extends Controller
         DB::beginTransaction();
         try{
             $validator = Validator::make($request->all(), [
-                'selected_guests' => ['required', new CaretakerCheck(json_decode($request->selected_guests))],
+                'selected_guests' => ['required', new CaretakerCheck($request->selected_guests)],
             ]);
             if ($validator->fails()) {
                 return redirect()->back()
@@ -34,7 +34,7 @@ class CaretakerController extends Controller
             else{
                 $caretaker = Caretaker::where('id', $request->caretaker_id)->first();
             }
-            $guestIds = json_decode($request->selected_guests);
+            $guestIds = $request->selected_guests;
             foreach($guestIds as $guestId){
                 $guestCaretaker = new GuestCaretaker;
                 $guestCaretaker->caretaker_id = $caretaker->id;
@@ -47,7 +47,6 @@ class CaretakerController extends Controller
             return redirect()->route('list.caretaker')->with('success', 'Guests assigned to caretaker successfully');
         }
         catch(\Exception $e){
-            dd($e);
             return redirect()->back()->with('error', 'Something went wrong');
         }
     }
@@ -189,5 +188,10 @@ class CaretakerController extends Controller
         $caretaker = Caretaker::where('id', $caretakerId)->first();
         $guestCaretakers = GuestCaretaker::with('contact')->where('caretaker_id', $caretakerId)->where('created_by', auth()->user()->id)->get();
         return Mail::to($caretaker->email)->send(new CaretakerCreateMail($caretaker, $guestCaretakers, $action));
+    }
+
+    public function viewDetails(){
+        $guests = GuestContact::whereNull('deleted_at')->where('created_by', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        return view('guest.view', compact('guests'));
     }
 }

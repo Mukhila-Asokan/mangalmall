@@ -11,9 +11,9 @@
                 <button id="import_contact" class="font-14 btn btn-primary waves-effect waves-light ml-1">
                     <span><i class="bi bi-arrow-up"></i> Import Guests</span>
                 </button>
-                <a href="{{ route('guest.group.caretaker.view') }}" class="font-14 btn btn-primary ml-1 waves-effect waves-light">
-                    <span>View Details</span>
-                </a>
+                <!-- <a href="{{ route('guest.group.index') }}" class="font-14 btn btn-primary ml-1 waves-effect waves-light">
+                    <span>View Groups</span>
+                </a> -->
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                 </div>
                 <button class="btn btn-primary ml-2 font-14 clear_search" type="button">Clear</button>
             </div>
-            <div class="mb-2 col-md-4 col-sm-12 d-flex justify-content-center align-items-center">
+            <div class="mb-2 col-md-4 col-sm-12 d-flex justify-content-end align-items-end">
                 <button id="create_group" class="font-14 btn btn-primary waves-effect waves-light ml-1">
                     <span>Create Group</span>
                 </button>
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-8 text-start d-flex">
                                 <i class="bi bi-person-circle"></i>
-                                <span class="font-14 font-weight-bold ml-1">{{$contact->name}} - {{$contact->relationship}}</span>
+                                <span class="font-14 font-weight-bold ml-1">{{$contact->name}}</span>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
                                 <a id="view_contact" class="view_contact pointer" data-id="{{$contact->id}}"><i class="bi bi-eye"></i></a>
@@ -63,12 +63,14 @@
                     </div>
                     <hr class="m-0 p-0">
                     <div class="card-body p-2 mb-2">
-                        <div class="row mt-1">
-                            <div class="col-md-6 col-sm-12 d-flex">
+                        <div class="row mt-2">
+                            <div class="col-md-12 d-flex">
                                 <i class="bi bi-telephone font-12"></i>
                                 <span class="font-12 ml-1">{{$contact->mobile_number}}</span>
                             </div>
-                            <div class="col-md-6 col-sm-12 d-flex">
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12 d-flex">
                                 <i class="bi bi-whatsapp font-12"></i>
                                 <span class="font-12 ml-1">{{$contact->whatsapp_number}}</span>
                             </div>
@@ -77,18 +79,18 @@
                                 <span class="font-14 ml-1">{{$contact->company}}</span>
                             </div> -->
                         </div>
-                        <div class="row mt-1">
+                        <div class="row mt-2">
                             <div class="col-md-12 d-flex">
                                 <i class="bi bi-envelope font-12"></i>
                                 <span class="font-12 ml-1">{{ Str::limit($contact->email, 30, '...') }}</span>
                             </div>
                         </div>
-                        <!-- <div class="row mt-1">
+                        <div class="row mt-1">
                             <div class="col-12 d-flex">
                                 <i class="bi bi-person-badge font-12"></i>
                                 <span class="font-12 ml-1">{{$contact->relationship}}</span>
                             </div>
-                        </div> -->
+                        </div>
                         <!-- <div class="row mt-1">
                             <div class="col-12 d-flex">
                                 <i class="bi bi-journal-text"></i>

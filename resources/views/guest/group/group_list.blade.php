@@ -22,7 +22,7 @@
         @foreach($guestGroups as $group)
             <div class="col-3 mb-4">
                 <div class="card contact-card m-1">
-                    <div class="card-header m-2">
+                    <div class="card-header m-1">
                         <div class="row">
                             <div class="col-8 text-start d-flex">
                                 <i class="bi bi-people-fill font-14"></i>
@@ -35,15 +35,15 @@
                         </div>
                     </div>
                     <hr class="m-0 p-0">
-                    <div class="card-body p-2 mb-2">
-                        <div class="row mt-2">
+                    <div class="card-body p-2 mb-1">
+                        <div class="row mt-1">
                             <div class="col-md-12 d-flex">
                                 <i class="bi bi-file-earmark-text font-12"></i>
                                 <span class="font-12 ml-1">{{ Str::limit($group->group_description, 30, '...') ?? '-' }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer bg-transparent">
+                    <div class="card-footer bg-transparent ml-2 mr-3 p-2">
                         <div class="row d-flex">
                             <div class="col-md-6 d-flex justify-content-start p-0">
                                 <a id="delete_group" class="delete_group ml-2 pointer" data-id="{{$group->id}}">
