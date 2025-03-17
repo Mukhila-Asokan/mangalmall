@@ -8143,6 +8143,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .bg-light {
   background-color: #f8f9fa !important;
+  
 }
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
@@ -51053,10 +51054,10 @@ strong, b {
 /* line 126, src/assets/scss/custom/_style.scss */
 .badge {
   display: inline;
-  padding: 0.25rem .45rem;
+  padding: 0.45rem .45rem;
   font-family: Poppins, sans-serif;
-  font-weight: 500;
-  font-size: 11px;
+  font-weight: bold;
+  font-size: 14px;
   line-height: 11px;
 }
 
@@ -51521,7 +51522,7 @@ select.form-control.has-value {
           animation-duration: 1s;
   -webkit-animation-name: slideInU;
           animation-name: slideInU;
-  background: linear-gradient(to bottom, rgba(255, 236, 219, 0.3), rgba(242, 126, 111, 0.3));
+  background: linear-gradient(to bottom, rgba(238, 147, 67, 0.3), rgb(244, 237, 220));
          
 }
 
@@ -55281,7 +55282,7 @@ a.view-details-link:hover span {
 .single-blog-card span.category {
   z-index: 2;
   top: 10px;
-  right: 10px;
+  left: 10px;
 }
 
 /* line 3618, src/assets/scss/custom/_style.scss */
@@ -55391,8 +55392,8 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 /* line 3702, src/assets/scss/custom/_style.scss */
 .post-header .post-title {
-  font-size: 1.0rem;
-  margin-bottom: 10px;
+  font-size: 1.5rem;
+  margin: 15px 0px;
   color: #333333;
 }
 
@@ -55409,7 +55410,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 /* line 3713, src/assets/scss/custom/_style.scss */
 .post-meta {
   list-style: none;
-  font-size: .8125rem;
+  font-size: 1.0 rem;
   padding: 0;
   margin: 0;
 }
@@ -56758,4 +56759,109 @@ button.scroll-top:focus {
 
 .select2, .guest_list_multiple{
   min-height: 44px !important;
+}
+
+.blog-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-icons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  gap: 5px;
+}
+
+.blog-image-wrapper:hover .blog-icons {
+  display: flex; /* Show icons on hover */
+}
+
+.blog-icons .btn {
+  padding: 5px 8px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.bg-flower-bot {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  opacity: .2;
+  z-index: -1;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+body::before {
+  content: "";
+  background: url('../img/profilebackground.png') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1; /* Keeps it behind content */
+  opacity: 0.3; /* Controls background opacity */
+}
+.hexagon {
+  position: relative;
+  width: 150px;  /* Adjust size here */
+  height: 150px;  /* Maintain proper aspect ratio */
+  background: rgb(231, 219, 185); /* 50% opacity */
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;  /* Text remains clear */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.display-5 {
+  font-size: 1.5rem;  
+  text-align: center;/* Smaller text size */
+  width:100%;
+}
+
+.icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-content .heading {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color:#464646
+} 
+
+.card-content .value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color:#464646
 }

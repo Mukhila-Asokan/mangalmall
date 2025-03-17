@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const baseImageUrl = window.location.origin + "/public/storage/";
+const baseImageUrl = window.location.origin + "/storage/";
 console.log(baseImageUrl);
 
 const AdsSlider = () => {

@@ -41,10 +41,10 @@ class UserBlogController extends Controller
         ->get();;       
         $userblog->views = $userblog->views + 1;
         $userblog->save();
-
-        $recentpost = UserBlog::where('delete_status','0')
+        $user_id = Auth::user()->id;
+        $recentpost = UserBlog::where('delete_status','0')->where('status','Active')->where('blogstatus','published')   
                 ->where('user_id',$userblog->user_id)->orderBy('created_at','desc')->limit(5)->get();
-        return view('blog.show',compact('userblog','categories','tags','recentpost'));
+        return view('blog.show',compact('userblog','categories','tags','recentpost','user_id'));
     }
     public function create()
     {
@@ -105,7 +105,10 @@ class UserBlogController extends Controller
     }
     public function edit($id)
     {
-        return view('blog.edit');
+        $categories = BlogCategory::where('delete_status','0')->get();
+        $tags = BlogTag::where('delete_status','0')->get();
+        $blog = UserBlog::findOrFail($id);
+        return view('blog.edit', compact('categories', 'tags', 'blog'));
     }
     public function update(Request $request, $id)
     {
@@ -113,6 +116,13 @@ class UserBlogController extends Controller
     }
     public function destroy($id)
     {
+        try {
+            $blog = UserBlog::findOrFail($id);
+            $blog->delete_status = 1;
+            $blog->save();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
         return redirect()->route('blog.index');
     }
     public function search(Request $request)

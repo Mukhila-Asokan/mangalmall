@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\UserBlog;    
 class BlogComment extends Model
 {
     use HasFactory;
@@ -25,15 +26,16 @@ class BlogComment extends Model
     }
 
     // Relationship: Replies
+    
     public function replies()
     {
-        return $this->hasMany(self::class, 'reply_id');
+        return $this->hasMany(BlogComment::class, 'reply_id')->with('replies.user'); 
     }
 
     // Relationship: Blog
     public function blog()
     {
-        return $this->belongsTo(Blog::class, 'blog_id');
+        return $this->belongsTo(UserBlog::class, 'blog_id');
     }
 
     // Relationship: User

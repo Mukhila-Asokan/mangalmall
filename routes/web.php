@@ -27,6 +27,8 @@ Use App\Http\Controllers\UserBlogController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\BlogCommentController;
 
+use App\Http\Controllers\BlogLikeController;
+
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -101,9 +103,11 @@ Route::post('/home/ajaxcitysearch', [HomeController::class, 'ajaxCitySearch'])->
 
 Route::get('/home/venue-search', [VenueSearchController::class, 'index'])->name('venue.search');
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
+
+Route::any('/dashboard', [HomeController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -114,6 +118,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
+Route::any('/guestblog/show/{id}',[HomeController::class, 'show'])->name('guestblog.show');
 
 Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
 
@@ -127,7 +132,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
 
      Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
 
-
+    
 
      Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
     Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');
@@ -138,20 +143,20 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
         return response()->json(['exists' => $slugExists]);
     })->name('blog.check-slug');
 
+    Route::any('/bloglike/{id}', [BlogLikeController::class, 'toggleLike'])->name('blog.like');
+    Route::any('/bloggetlikes/{id}', [BlogLikeController::class, 'getLikes'])->name('blog.likes');
+
     Route::any('/blog/store',[UserBlogController::class, 'store'])->name('blog.store');
     Route::any('/blog/{id}/edit',[UserBlogController::class, 'edit'])->name('blog.edit');
-    Route::any('/blog/{id}/update',[UserBlogController::class, 'update'])->name('blog.update');
-    Route::any('/blog/{id}/delete',[UserBlogController::class, 'destroy'])->name('blog.delete');
+    Route::any('/blog/update/{id}',[UserBlogController::class, 'update'])->name('blog.update');
+    Route::any('/blog/delete/{id}',[UserBlogController::class, 'destroy'])->name('blog.destroy');
     Route::any('/blog/show/{id}',[UserBlogController::class, 'show'])->name('blog.show');
     Route::any('/blog/{id}/preview',[UserBlogController::class, 'preview'])->name('blog.preview');
     Route::post('/comments/store', [BlogCommentController::class, 'store'])->name('comments.store');
     Route::get('/comments/{blogId}', [BlogCommentController::class, 'getComments'])->name('comments.get');
+    Route::get('/comments/get/{blogId}', [BlogCommentController::class, 'getComments'])->name('comments.get');
 
-
-
-
-
-
+  
 
     Route::any('/venuereact-search', [VenueSearchController::class, 'index'])->name('venuereact.search');
     Route::any('/venuesearch', [VenueSearchController::class, 'index'])->name('venuereact.search');

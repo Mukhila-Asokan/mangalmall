@@ -46,6 +46,8 @@ $url = "frontassets/img/hero-bg-4.jpg";
 
  @include('layouts.trustedvendor')
 
+ @include('layouts.blog')
+
  @include('layouts.builder')
 
    @include('layouts.testimonial')
@@ -168,7 +170,7 @@ $url = "frontassets/img/hero-bg-4.jpg";
                             <p class="card-text"><i class="bi bi-geo-alt-fill text-primary"></i> ${truncatedAddress}</p>
                         </div>
                         <div class="contact-info mb-2">
-                            <p class="card-text"><i class="bi bi-person-fill text-primary"></i> Contact: ${venue.contactperson}</p>
+                            <p class="card-text"><i class="bi bi-person-fill text-primary"></i> ${venue.contactperson}</p>
                         </div>
                         
                         <hr>

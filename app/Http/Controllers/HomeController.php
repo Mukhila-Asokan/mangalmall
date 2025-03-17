@@ -15,8 +15,11 @@ use Modules\Venue\Models\City;
 use Modules\Venue\Models\VenueDetails;
 use Illuminate\Support\Facades\Session;
 use Modules\Venue\Models\Area;
-use Illuminate\Support\Facades\Response;
+use Modules\Blog\Models\BlogCategory;
+use Modules\Blog\Models\BlogTag;
 
+use Illuminate\Support\Facades\Response;
+use App\Models\UserBlog;
 class HomeController extends Controller
 {
     public function home()
@@ -26,7 +29,8 @@ class HomeController extends Controller
         $arealocation = indialocation::where('delete_status',0)->get();
         $state = State::where('delete_status',0)->get();
         $city = City::where('delete_status',0)->get();
-        return view('layouts.home',compact('venuetypes','arealocation','city','state'));
+        $userblog  = UserBlog::where('delete_status',0)->where('status','Active')->where('blogstatus','published')->orderby('created_at', 'desc')->limit(5)->get();
+        return view('layouts.home',compact('venuetypes','arealocation','city','state','userblog'));
     }
     public function ajaxcvenuesubtypelist(Request $request)
     {
@@ -117,6 +121,31 @@ public function venuesearchresults(Request $request)
         $aarea = City::where('cityname', 'LIKE', "%{$query}%")->pluck('cityname')->toArray();
 
         return response()->json($aarea);
+    }
+
+    public function dashboard()
+    {
+        $userblog = UserBlog::where('delete_status', '0')->orderby('created_at', 'desc')->limit(6)->get();
+        return view('dashboard',compact('userblog'));
+    }
+
+    public function show($id)
+    {       
+        $userblog = UserBlog::where('id',$id)->first(); 
+        $categories = BlogCategory::withCount('blogs') 
+        ->where('delete_status', '0')          
+        ->inRandomOrder()                      
+        ->limit(6)                             
+        ->get();
+
+        $tags = BlogTag::where('delete_status','0')->inRandomOrder()   // Randomize order
+        ->limit(6)          // Limit to 6 records
+        ->get();;       
+        $userblog->views = $userblog->views + 1;
+        $userblog->save();       
+        $recentpost = UserBlog::where('delete_status','0')->where('status','Active')->where('blogstatus','published')   
+               ->orderBy('created_at','desc')->limit(5)->get();
+        return view('layouts.showblog',compact('userblog','categories','tags','recentpost'));
     }
 
 

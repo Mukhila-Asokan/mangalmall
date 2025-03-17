@@ -1,36 +1,23 @@
 <div class="row">
-    <div class ="col-lg-6 col-md-6">
-    <article class="post white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
-        <div class="post-preview"><a href="#"><img src="{{ asset('frontassets/img/blog1.png') }}" alt="blog" style = "width:100px;" /></a></div>
-        <div class="post-wrapper">
-            <div class="post-header">
-                <h6 class="post-title"><a href="#">Objectively communicate business core competencies </a></h6>
-                <ul class="post-meta">
-                    <li>November 18, 2016</li>                                
-                </ul>
+    @foreach($userblog as $blog)
+    <div class="col-md-4">
+    <div class="single-blog-card card border-0 shadow-sm">
+            <span class="category position-absolute badge badge-pill badge-primary">{{ $blog->category->categoryname ?? 'No Category' }}</span>
+            <img src="{{ url('/').Storage::url($blog->image) }}" class="card-img-top position-relative" alt="blog">
+            <div class="card-body">
+                <div class="post-meta mb-2">
+                    <ul class="list-inline meta-list">
+                        <li class="list-inline-item">{{ $blog->created_at->format('F d, Y') }}</li>
+                        <li class="list-inline-item"><span class="fas fa-comments"></span> <span>{{ $blog->comments }}</span></li>
+                        <li class="list-inline-item"><span class="fas fa-thumbs-up"></span> <span>{{ $blog->likes }}</span></li>
+                        <li class="list-inline-item"><span class="fas fa-eye"></span> <span>{{ $blog->views }}</span> </li>
+                    </ul>
+                </div>
+                <h3 class="h5 card-title"><a href="{{ route('blog.show', $blog->id) }}">{{ $blog->title }}</a></h3>
+                
+                <a href="{{ route('blog.show', $blog->id) }}" class="detail-link">Read more <span class="ti-arrow-right"></span></a>
             </div>
-            <div class="post-content">
-                <p>Just then her head struck against the roof of the hall in fact she was now more than nine feet high </p>
-            </div>
-            <div class="post-more pt-2 align-items-center d-flex"><a href="#" class="btn primary-solid-btn" style ="color:white;">Read more <span class="ti-arrow-right"></span></a></div>
         </div>
-    </article>
     </div>
-    <div class ="col-lg-6 col-md-6">
-    <article class="post white-bg shadow-sm p-5 mt-md-4 mt-lg-4">
-        <div class="post-preview"><a href="#"><img src="{{ asset('frontassets/img/blog1.png') }}" alt="blog" style = "width:100px;" /></a></div>
-        <div class="post-wrapper">
-            <div class="post-header">
-                <h5 class="post-title"><a href="#">Objectively communicate business core competencies </a></h5>
-                <ul class="post-meta">
-                    <li>November 18, 2016</li>                                
-                </ul>
-            </div>
-            <div class="post-content">
-                <p>Just then her head struck against the roof of the hall in fact she was now more than nine feet high </p>
-            </div>
-            <div class="post-more pt-2 align-items-center d-flex"><a href="#" class="btn primary-solid-btn" style ="color:white;">Read more <span class="ti-arrow-right"></span></a></div>
-        </div>
-    </article>
-    </div>
+    @endforeach
 </div>
