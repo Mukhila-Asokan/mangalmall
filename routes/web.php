@@ -132,9 +132,14 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
 
      Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
 
-    
+    /*To do */
 
-     Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
+    Route::any('/checklist',[HomeController::class, 'checklist'])->name('home.checklist');
+    Route::any('/checklist/create',[HomeController::class, 'checklist'])->name('checklist.create');
+    Route::any('/checklist/list',[HomeController::class, 'checklist'])->name('checklist.index');
+
+    
+    Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
     Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');
     /*check-slug*/
     

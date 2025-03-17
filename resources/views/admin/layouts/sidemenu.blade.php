@@ -307,7 +307,7 @@
                                     </a>
                                 </li>   
                                 <li class="menu-item">
-                                    <a href="{{ route('admin/occasion') }}" class="menu-link">
+                                    <a href="{{ route('admin.checklist') }}" class="menu-link">
                                         <span class="menu-text">Checklist</span>
                                     </a>
                                 </li>   

@@ -56817,7 +56817,6 @@ body::before {
   justify-content: center;
   align-items: center;
 }
-
 .card-content {
   position: absolute;
   top: 0;
@@ -56851,9 +56850,79 @@ body::before {
   font-weight: bold;
   color:#464646
 } 
-
 .card-content .value {
   font-size: 1.8rem;
   font-weight: bold;
   color:#464646
+}
+
+.stickymenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stickymenu li {
+  position: relative;
+  padding: 10px;
+  text-align: center;
+  z-index: 10; /* Ensure li itself is above .stickymenucontent */
+  background-color: rgba(253, 251, 248, 0.8);
+  padding: 10px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stickymenu a {
+
+  text-decoration: none;
+  color: #333;
+  position: relative;
+  z-index: 10; /* Ensures content is above */
+}
+
+.stickymenu i {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+  transition: transform 0.3s ease;
+}
+
+.stickymenu span {
+  position: absolute;
+  top: 50%;
+  left: 110%; /* Moves text beside the icon */
+  white-space: nowrap;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: visibility 0s linear 0.3s, opacity 0.3s, transform 0.3s;
+  z-index: 999; /* Ensure span is on top */
+}
+
+.stickymenu a:hover i {
+  transform: scale(1.1); /* Slight zoom on icon hover */
+}
+
+.stickymenu a:hover span {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0); /* Smooth slide-in effect */
+}
+
+/* .stickymenucontent with lower z-index */
+.stickymenucontent {
+  position: relative;
+  background-color: rgba(253, 251, 248, 0.8) !important;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  
+  z-index: 1; /* Keep this layer below the hover span */
 }
