@@ -493,13 +493,9 @@ const VenueSearch = ({ areas = [], venuetypes = [], venueamenities = [], venueli
                             </div> */}
                             
                             <div className="card-body pb-0"> 
-                                <h6 className="card-title mb-2">{venue.venuename}</h6>
+                                <h6 className="card-title mb-2 overflow-hidden">{venue.venuename}</h6>
                                 <div className="card-text d-flex align-items-center">
-                                <div style={{ verticalAlign: 'middle' }}>
-                                    {venue.venueaddress.length > 45 
-                                    ? venue.venueaddress.slice(0, 45) + "..." 
-                                    : venue.venueaddress}
-                                </div>
+                                <div className='overflow-hidden' style={{ verticalAlign: 'middle' }}>{ venue.venueaddress }</div>
 
                                  </div>
                                

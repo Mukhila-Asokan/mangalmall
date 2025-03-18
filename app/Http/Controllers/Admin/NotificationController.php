@@ -46,7 +46,7 @@ class NotificationController extends Controller
 
     return view('venue::mobilechangerequest', compact(
         'pagetitle', 
-        'pageroot', 
+        'pageroot',     
         'username',        
         'id', 
         'notifications'
@@ -73,7 +73,12 @@ class NotificationController extends Controller
             $notification->markAsRead();
         }
 
-        return redirect()->back()->with('success', 'Notification marked as read.');
+        if($notification->type == 'App\Notifications\ChangeMobileNo'){
+            return redirect()->route('venue.mobilechangerequest')->with('success', 'Notification marked as read.');
+        }
+        else{
+            return redirect()->back()->with('success', 'Notification marked as read.');
+        }
     }
 
     

@@ -156,12 +156,12 @@ Route::prefix('admin')->middleware('admin.role')->group(function () {
     Route::any('/venueportalrequest',[VenueController::class,'venueportalrequest'])->name('venue.venueportalrequest');
     Route::any('/venueportalrequest/{id}/updatestatus',[VenueController::class,'venueuserupdatestatus']);
     
-    Route::any('/mobilechangerequest/',[NotificationController::class,'index'])->name('venue.mobilechangerequest');
+    Route::any('/mobilechangerequest',[NotificationController::class,'index'])->name('venue.mobilechangerequest');
 
     Route::any('/mobilechangerequest/approveRequest/{userid}',[NotificationController::class,'unreadNotification'])->name('mobilechange.approve');
  
 
-    Route::any('/markNotification/{id}',[NotificationController::class,'markNotification'])->name('admin.markNotification');
+    Route::any('/markNotification/{id}',[NotificationController::class,'markAsRead'])->name('admin.markNotification');
 
 
      Route::any('/mobilechangerequest/markAsRead/{id}',[NotificationController::class,'markAsRead'])->name('admin.notifications.markAsRead');

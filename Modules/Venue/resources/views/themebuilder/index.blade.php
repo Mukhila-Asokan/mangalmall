@@ -56,10 +56,21 @@
         serverSide: true,
         ajax: "{{ route('admin/themebuilder') }}",
         columns: [
-            {data: 'id', name: 'id'},
+            {
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
             {data: 'themename', name: 'themename'},
             {data: 'theme_type', name: 'theme_type'},
-            {data: 'preview_image', name: 'preview_image'},           
+            {
+                render: function (data, type, row, meta) {
+                    console.log(row);
+                    var imageUrl = "{{ asset('preview_image') }}/" + row.preview_image;
+                    console.log(imageUrl, 'imageUrl');
+                    return '<img src="' + imageUrl + '" style="width: 100px;">';
+                }
+            },           
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });

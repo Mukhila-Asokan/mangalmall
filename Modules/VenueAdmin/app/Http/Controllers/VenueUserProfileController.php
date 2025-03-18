@@ -120,6 +120,7 @@ class VenueUserProfileController extends Controller
         $venueuserid =  Session::get('venueuserid'); 
         $pagetitle = "Profile Page";
         $pageroot = "Home"; 
-        return view('venueadmin::profile.changemobileno',compact('pagetitle','pageroot'));
+        $staffs = VenueStaff::where('venue_admin_id', Session::get('venueuserid'))->get();
+        return view('venueadmin::profile.changemobileno',compact('pagetitle','pageroot', 'staffs'));
     }
 }

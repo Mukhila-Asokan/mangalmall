@@ -58,12 +58,13 @@ $url = asset("venueasset/images/flower.png");
           @error('mobileotp')
             <div class="alert alert-danger">{{ $message }}</div>
           @enderror
+          <a href="" class="font-14 font-color d-flex justify-content-center" id="resend_otp">Resend OTP</a>
       </div>
 
       <div class="infomessage">
       </div>
 
-
+      
       <div class="d-flex align-items-center justify-content-between mb-4">
         <div class="form-check d-flex">
           <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
@@ -114,8 +115,8 @@ $url = asset("venueasset/images/flower.png");
 <script type="text/javascript">
   
 
-  $("#loginsubmit").click(function(e) {
-
+  $("#loginsubmit, #resend_otp").click(function(e) {
+    e.preventDefault();
     var mobileno = $("#mobileno").val();
 
     $.ajax({
