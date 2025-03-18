@@ -5,9 +5,6 @@
         @include('guest.guest_list', $getGuestContacts)
     </div>
 </div>
-<div class="col-lg-2 col-md-2">
-    @include('profile-layouts.rightside')
-</div>
 <div class="modal" id="add_contact_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="homemodal-content">
@@ -22,13 +19,13 @@
                     @csrf
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="name">Name</label>
                                     <input type="text" name="name" id="name" placeholder="Contact Name" class="form-control font-14">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="mobile_number">Mobile Number</label>
                                     <input type="text" name="mobile_number" id="mobile_number" placeholder="Mobile Number" class="form-control font-14">
@@ -36,13 +33,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="whatsapp_number">WhatsApp Number</label>
                                     <input type="text" name="whatsapp_number" id="whatsapp_number" placeholder="WhatsApp Number" class="form-control font-14">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="email">Email</label>
                                     <input type="email" name="email" id="email" placeholder="Email" class="form-control font-14">
@@ -50,36 +47,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label class="font-14" for="relationship">Relation</label>
+                                    <label class="font-14" for="relationship">Select Relation</label>
                                     <select name="relationship" id="relationship" class="form-control select2">
                                         <option value="" selected disabled>Select Relationship</option>
-                                        <option value="Brother">Brother</option>
-                                        <option value="Sister">Sister</option>
-                                        <option value="Father">Father</option>
-                                        <option value="Mother">Mother</option>
-                                        <option value="Uncle">Uncle</option>
-                                        <option value="Aunt">Aunt</option>
-                                        <option value="Nephew">Nephew</option>
-                                        <option value="Niece">Niece</option>
-                                        <option value="Grand Father">Grand Father</option>
-                                        <option value="Grand Mother">Grand Mother</option>
-                                        <option value="Cousin">Cousin</option>
-                                        <option value="Friend">Friend</option>
-                                        <option value="Colleague">Colleague</option>
-                                    </select>
+                                        <option value="add new">Add New Relation</option>
+                                        @foreach($relatipships as $relatipship)
+                                            <option value="{{ $relatipship->value }}">{{ $relatipship->label }}</option>
+                                        @endforeach
+                                    </select>                                    
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-none" id="add_new_relationship">
+                                <label class="font-14" for="relationshipInput">Relation</label>
+                                <input type="text" id="relationshipInput" name="relationship" placeholder="Relationship" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="location">Location</label>
                                     <textarea name="location" id="location" placeholder="Location" class="form-control font-14"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="notes">Notes</label>
                                     <textarea name="notes" id="notes" placeholder="Notes" class="form-control font-14"></textarea>
@@ -112,13 +104,13 @@
                     <div class="container">
                         <input type="hidden" name="contact_id" id="contact_id">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_name">Name</label>
                                     <input type="text" name="edit_name" id="edit_name" placeholder="Contact Name" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_mobile_number">Mobile Number</label>
                                     <input type="text" name="edit_mobile_number" id="edit_mobile_number" placeholder="Mobile Number" class="form-control">
@@ -126,13 +118,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_whatsapp_number">WhatsApp Number</label>
                                     <input type="text" name="edit_whatsapp_number" id="edit_whatsapp_number" placeholder="WhatsApp Number" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_email">Email</label>
                                     <input type="email" name="edit_email" id="edit_email" placeholder="Email" class="form-control">
@@ -140,36 +132,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label class="font-14" for="edit_relationship">Relation</label>
+                                    <label class="font-14" for="edit_relationship">Select Relation</label>
                                     <select name="edit_relationship" id="edit_relationship" class="form-control select2">
-                                        <option value="">Select Relationship</option>
-                                        <option value="Brother">Brother</option>
-                                        <option value="Sister">Sister</option>
-                                        <option value="Father">Father</option>
-                                        <option value="Mother">Mother</option>
-                                        <option value="Uncle">Uncle</option>
-                                        <option value="Aunt">Aunt</option>
-                                        <option value="Nephew">Nephew</option>
-                                        <option value="Niece">Niece</option>
-                                        <option value="Grand Father">Grand Father</option>
-                                        <option value="Grand Mother">Grand Mother</option>
-                                        <option value="Cousin">Cousin</option>
-                                        <option value="Friend">Friend</option>
-                                        <option value="Colleague">Colleague</option>
+                                        <option value="" selected disabled>Select Relationship</option>
+                                        <option value="add new">Add New Relation</option>
+                                        @foreach($relatipships as $relatipship)
+                                            <option value="{{ $relatipship->value }}">{{ $relatipship->label }}</option>
+                                        @endforeach
                                     </select>
                                 </div>        
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-none" id="edit_new_relationship">
+                                <label class="font-14" for="relationshipInput">Relation</label>
+                                <input type="text" id="editRelationshipInput" name="edit_relationship" placeholder="Relationship" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_location">Location</label>
                                     <textarea name="edit_location" id="edit_location" placeholder="Location" class="form-control"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_notes">Notes</label>
                                     <textarea name="edit_notes" id="edit_notes" placeholder="Notes" class="form-control"></textarea>
@@ -199,13 +186,13 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Name</label>
                                 <span id="view_name" class="form-control-plaintext font-12"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Mobile Number</label>
                                 <span id="view_mobile_number" class="form-control-plaintext font-12"></span>
@@ -213,13 +200,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">WhatsApp Number</label>
                                 <span id="view_whatsapp_number" class="form-control-plaintext font-12"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Email</label>
                                 <span id="view_email" class="form-control-plaintext font-12"></span>
@@ -227,13 +214,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Relationship</label>
                                 <span id="view_relationship" class="form-control-plaintext font-12"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Location</label>
                                 <span id="view_location" class="form-control-plaintext font-12"></span>
@@ -241,7 +228,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Notes</label>
                                 <span id="view_notes" class="form-control-plaintext font-12"></span>
@@ -266,7 +253,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('guest.create.group') }}" method="POST">
+            <form action="{{ route('guest.create.group') }}" id="group_contact_form" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="container">
@@ -441,6 +428,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script>
     $('.edit_contact').on('click', function(){
         var id = $(this).data('id');
@@ -458,6 +446,17 @@
                     $('#edit_relationship').val(response.data.relationship);
                     $('#edit_location').val(response.data.location);
                     $('#edit_notes').val(response.data.notes);
+                }
+                alert(response.data.relationship);
+                alert($('#edit_relationship option[value="' + response.data.relationship + '"]').length);
+                if ($('#edit_relationship option[value="' + response.data.relationship + '"]').length === 0) {
+                    $('#edit_new_relationship').removeClass('d-none');
+                    // $('#edit_relationship').addClass('d-none');
+                    $('#editRelationshipInput').val(response.data.relationship);
+                } else {
+                    $('#edit_new_relationship').addClass('d-none');
+                    $('#edit_relationship').removeClass('d-none');
+                    $('#edit_relationship').val(response.data.relationship);
                 }
                 $('#edit_contact_modal').modal('show');
             }
@@ -574,36 +573,6 @@
             }
         });
     });
-
-    // $(document).on('click', '#assign_caretaker', function(){
-    //     let selectedValues = $('input[name="contact_list[]"]:checked').map(function () {
-    //         return $(this).attr('data-id');
-    //     }).get();
-    //     if(selectedValues.length < 1){
-    //         alert('Please select atleast one contact to assing caretaker');
-    //         return false;
-    //     }
-    //     else{
-    //         $('#caretaker_id').append('<option value="add new">Add New Caretaker</option>');
-    //         $.each(<?=$caretakers?>, function(key, value){
-    //             $('#caretaker_id').append(`<option value="${value.id}">${value.name}</option>`);
-    //         })
-    //         $('#selected_guests').val(JSON.stringify(selectedValues));
-    //         $('#assign_care_taker_model').modal('show');
-
-    //         $('#caretaker_id').on('change', function(){
-    //             if($(this).val() == 'add new'){
-    //                 $('#cartaker_details').removeClass('d-none');
-    //             }
-    //             else{
-    //                 document.querySelectorAll('.d-none input[required]').forEach(input => {
-    //                     input.removeAttribute('required');
-    //                 });
-    //                 $('#cartaker_details').addClass('d-none');
-    //             }
-    //         })
-    //     }
-    // })
 
     $("#caretaker_id").on('change', function(){
         if($(this).val() == 'add new'){
@@ -790,5 +759,376 @@
     $(document).on('click', '[data-dismiss="modal"]', function() {
         $('.modal').modal('hide');
     });
+    $(document).on('hidden.bs.modal', function() {
+        $('form').trigger('reset');
+        $('form').find('.is-invalid').removeClass('is-invalid');
+        $('form').find('span.text-danger').remove();
+    });
+
+    // Guest unique check
+    $.validator.addMethod("uniqueCheck", function(value, element, params) {
+        var isUnique = false;
+        var contactId = $('#contact_id').val();
+
+        $.ajax({
+            url: "{{ route('guest.checkUnique') }}",
+            type: "POST",
+            async: false,
+            data: {
+                _token: "{{ csrf_token() }}",
+                field: params.field,
+                value: value,
+                id: contactId
+            },
+            success: function(response) {
+                isUnique = !response.exists;
+            }
+        });
+
+        return isUnique;
+
+    }, "This value is already taken.");
+    
+    $(function() {
+        $('#add_contact_form').validate({
+            rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            mobile_number: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10,
+                uniqueCheck: { field: 'mobile_number' }
+            },
+            whatsapp_number: {
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            relationship: {
+                required: true
+            },
+            location: {
+                required: true
+            }
+            },
+            messages: {
+            name: {
+                required: "Please enter the name",
+                minlength: "Name must be at least 3 characters"
+            },
+            mobile_number: {
+                required: "Please enter mobile number",
+                digits: "Only numbers allowed",
+                minlength: "Must be 10 digits",
+                maxlength: "Must be 10 digits"
+            },
+            whatsapp_number: {
+                digits: "Only numbers allowed",
+                minlength: "Must be 10 digits",
+                maxlength: "Must be 10 digits"
+            },
+            email: {
+                required: "Please enter email",
+                email: "Enter a valid email"
+            },
+            relationship: {
+                required: "Please select relationship"
+            },
+            location: {
+                required: "Please enter location"
+            }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+            error.addClass('text-danger');
+            error.insertAfter(element);
+            },
+            highlight: function(element) {
+            $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+            $(element).removeClass('is-invalid');
+            }
+        });
+    });
+
+    // Group unique check
+    $.validator.addMethod("uniqueCheckGroup", function(value, element, params) {
+        var isUnique = false;
+
+        $.ajax({
+            url: "{{ route('group.checkUnique') }}",
+            type: "POST",
+            async: false,
+            data: {
+                _token: "{{ csrf_token() }}",
+                field: params.field,
+                value: value
+            },
+            success: function(response) {
+                isUnique = !response.exists;
+            }
+        });
+
+        return isUnique;
+
+    }, "This value is already taken.");
+
+    $(function() {
+        $('#group_contact_form').validate({
+            rules: {
+                'guest_lists[]': {
+                    required: true
+                },
+                group_name: {
+                    required: true
+                },
+                new_group_name: {
+                    required: function() {
+                        return $('#group_name').val() === 'add new';
+                    },
+                    uniqueCheckGroup: { field: 'group_name' }
+                },
+                group_description: {
+                    required: function() {
+                        return $('#group_name').val() === 'add new';
+                    }
+                }
+            },
+            messages: {
+                'guest_lists[]': {
+                    required: "Please select at least one guest"
+                },
+                group_name: {
+                    required: "Please select a group"
+                },
+                new_group_name: {
+                    required: "Please enter the new group name",
+                    uniqueCheck: "Group name already exists"
+                },
+                group_description: {
+                    required: "Please enter group description"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                if (element.hasClass('guest_list_multiple') || element.hasClass('guest_list_multiple')) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+
+    // Caretaker check
+    $.validator.addMethod("uniqueCaretaker", function(value, element, params) {
+        var isUnique = false;
+        $.ajax({
+            url: "{{ route('caretaker.checkUnique') }}",
+            type: "POST",
+            async: false,
+            data: {
+                _token: "{{ csrf_token() }}",
+                field: params.field,
+                value: value
+            },
+            success: function(response) {
+                isUnique = !response.exists;
+            }
+        });
+
+        return isUnique;
+
+    }, "This value is already taken.");
+
+    $(function() {
+        $('#caretaker_add_form').validate({
+            rules: {
+                'selected_guests[]': {
+                    required: true
+                },
+                caretaker_id: {
+                    required: true
+                },
+                caretaker_name: {
+                    required: function() {
+                        return $('#caretaker_id').val() === 'add new';
+                    }
+                },
+                caretaker_email: {
+                    required: function() {
+                        return $('#caretaker_id').val() === 'add new';
+                    },
+                    email: true,
+                    uniqueCaretaker:  { field: 'email' }
+                },
+                caretaker_mobile: {
+                    required: function() {
+                        return $('#caretaker_id').val() === 'add new';
+                    },
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10,
+                    uniqueCaretaker:  { field: 'mobile_number' }
+                }
+            },
+            messages: {
+                'selected_guests[]': {
+                    required: "Please select at least one guest"
+                },
+                caretaker_id: {
+                    required: "Please select a caretaker"
+                },
+                caretaker_name: {
+                    required: "Please enter caretaker name"
+                },
+                caretaker_email: {
+                    required: "Please enter email",
+                    email: "Enter a valid email",
+                    uniqueCaretaker: "Email already exists"
+                },
+                caretaker_mobile: {
+                    required: "Please enter mobile number",
+                    digits: "Only numbers allowed",
+                    minlength: "Must be 10 digits",
+                    maxlength: "Must be 10 digits",
+                    uniqueCaretaker: "Mobile number already exists"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                if (element.hasClass('guest_list_caretaker')) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+
+    // edit contact form
+    $(function() {
+        $('#edit_contact_form').validate({
+            rules: {
+                edit_name: {
+                    required: true,
+                    minlength: 3,
+                },
+                edit_mobile_number: {
+                    required: true,
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10,
+                    uniqueCheck: {field: 'mobile_number'}
+                },
+                edit_whatsapp_number: {
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10
+                },
+                edit_email: {
+                    required: true,
+                    email: true,
+                    uniqueCheck: {field: 'email'}
+                },
+                edit_relationship: {
+                    required: true
+                },
+                edit_location: {
+                    required: true
+                }
+            },
+            messages: {
+                edit_name: {
+                    required: "Name is required",
+                    minlength: "Name must be at least 3 characters",
+                    uniqueField: "Name already exists"
+                },
+                edit_mobile_number: {
+                    required: "Mobile number is required",
+                    digits: "Only numbers allowed",
+                    minlength: "Must be 10 digits",
+                    maxlength: "Must be 10 digits",
+                    uniqueField: "Mobile number already exists"
+                },
+                edit_whatsapp_number: {
+                    digits: "Only numbers allowed",
+                    minlength: "Must be 10 digits",
+                    maxlength: "Must be 10 digits"
+                },
+                edit_email: {
+                    required: "Email is required",
+                    email: "Enter a valid email",
+                    uniqueField: "Email already exists"
+                },
+                edit_relationship: {
+                    required: "Please select a relationship"
+                },
+                edit_location: {
+                    required: "Location is required"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                if (element.hasClass('guest_list_caretaker')) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+    $('#relationship').on('change', function(){
+        if($(this).val() == 'add new'){
+            $('#add_new_relationship').removeClass('d-none').focus();
+        }
+        else{
+            $('#relationshipInput').val($(this).val());
+            $('#add_new_relationship').addClass('d-none');
+        }
+    })
+
+    $('#edit_relationship').on('change', function(){
+        if($(this).val() == 'add new'){
+            $('#edit_new_relationship').removeClass('d-none').focus();
+        }
+        else{
+            $('#editRelationshipInput').val($(this).val());
+            $('#edit_new_relationship').addClass('d-none');
+        }
+    })
 </script>
 @endpush

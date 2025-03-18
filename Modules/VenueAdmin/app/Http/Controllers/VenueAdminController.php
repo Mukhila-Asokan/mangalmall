@@ -38,6 +38,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AdminUser;
 use Illuminate\Support\Facades\Log;
+use Modules\Venue\Models\MobileNumberChangeRequest;
 
 class VenueAdminController extends Controller
 {
@@ -55,7 +56,7 @@ class VenueAdminController extends Controller
             'mobileno' => 'required', 'string', 'regex:/^[0-9]{10}$/'
         ]);
 
-      
+        $otp = rand(1000, 9999);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422); 
@@ -65,13 +66,15 @@ class VenueAdminController extends Controller
 
         if(!empty($mobilenocheck))
         {
+            $mobilenocheck->otp = $otp;
+            $mobilenocheck->save();
             $browserResponse['status']   = 'success';
-            $browserResponse['message']  = 'OTP Send your mobile, Please check';
+            $browserResponse['message']  = "OTP Send your mobile, Please check - $otp";
         }
         else
         {
             $browserResponse['status']   = 'failed';
-            $browserResponse['message']  = 'Please check your mobile no';
+            $browserResponse['message']  = 'Please check your mobile no or otp';
         }
 
        
@@ -119,10 +122,7 @@ class VenueAdminController extends Controller
             'mobileno' => 'required', 'string', 'regex:/^[0-9]{10}$/',
             'mobileotp' => 'required'
         ]);
-
-        $mobilenocheck = VenueUser::where('mobileno',$request->mobileno)->first();
-
-
+        $mobilenocheck = VenueUser::where('mobileno',$request->mobileno)->where('otp', implode('', $request->mobileotp))->first();
 
         if(!empty($mobilenocheck))
         {
@@ -675,37 +675,38 @@ class VenueAdminController extends Controller
     public function storeRequest(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'new_mobile' => 'required|regex:/^[0-9]{10}$/|unique:venueuser,mobileno'
+            'new_mobile' => 'required|regex:/^[0-9]{10}$/|unique:venueuser,mobileno',
+            'staff_id' => 'required'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-     
+
         $venueuserid =  Session::get('venueuserid');
         $admincheck = VenueUser::where('id',$venueuserid)->first();
+
+        $changeRequest = new MobileNumberChangeRequest;
+        $changeRequest->venue_admin_id = $request->staff_id == 'admin' ? '1' : $request->staff_id;
+        $changeRequest->exisiting_mobile_number = $admincheck->mobileno;
+        $changeRequest->new_mobile_number = $request->new_mobile;
+        $changeRequest->save();
         
         /* Send Confirmation Notification to Admin */      
-      /*  $admin = Auth::guard('admin')->user(); */
+        /*  $admin = Auth::guard('admin')->user(); */
 
         $admins = AdminUser::where('delete_status', '0')
                    ->whereIn('role', ['Super Admin', 'Admin'])
                    ->get(); // Fetch all admin users
 
          
-          if (!$admins) {
-                    return redirect()->back()->with('error', 'Admin not found or not authenticated.');
-                }
+        if (!$admins) {
+            return redirect()->back()->with('error', 'Admin not found or not authenticated.');
+        }
 
         foreach ($admins as $admin) {
             $admin->notify(new ChangeMobileNo($request->new_mobile, 'User requested to change their mobile number.'));
         }
-
-     
-       
-       
-       // $admin->notify(new ChangeMobileNo($request->new_mobile, 'User requested to change their mobile number.'));
-
         return redirect()->back()->with('success', 'Your request has been sent to the admin for approval.');
     }   
 

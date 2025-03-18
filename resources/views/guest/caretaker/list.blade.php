@@ -3,9 +3,6 @@
 <div class="mt-1 col-lg-10 col-md-10">
     @include('guest.caretaker.caretaker_list')
 </div>
-<div class="col-lg-2 col-md-2">
-    @include('profile-layouts.rightside')
-</div>
 <div class="modal" id="add_guest_caretaker_modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="homemodal-content" style="height: 18rem !important;">
@@ -56,6 +53,7 @@
 
 @endsection
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script>
         $(document).on('click', '#search_caretaker', function(){
             var value = $('#search_caretaker_value').val();
@@ -76,6 +74,12 @@
             })
         })
 
+        $(document).on('hidden.bs.modal', function() {
+            $('form').trigger('reset');
+            $('form').find('.is-invalid').removeClass('is-invalid');
+            $('form').find('span.text-danger').remove();
+        });
+
         $(document).on('click', '#add_caretaker_guest', function(){
             var id = $(this).data('id');
             $.ajax({
@@ -91,8 +95,8 @@
                         newGroupContacts += `<input type="hidden" value='${id}' name="caretaker_id" id="caretaker_id">`;
                         newGroupContacts += '<div class="row align-items-center">';
                         newGroupContacts += '<div class="col-12">';
-                        newGroupContacts += '<label for="guest_select_option" class="font-14">Select Guests</label>';
-                        newGroupContacts += '<select class="form-control guest-select2 font-14" id="guest_select_option" name="selected_contacts[]" multiple>';
+                        newGroupContacts += '<label for="selected_contacts" class="font-14">Select Guests</label>';
+                        newGroupContacts += '<select class="form-control guest-select2 font-14" id="selected_contacts" name="selected_contacts[]" multiple required>';
 
                         $.each(response.guestList, function(index, value){
                             newGroupContacts += '<option value="'+ value.id +'">'+ value.name +'</option>';
@@ -286,5 +290,38 @@
         $(document).on('click', '[data-dismiss="modal"]', function() {
             $('.modal').modal('hide');
         });
+
+        $(function() {
+        $('#caretaker_form').validate({
+            rules: {
+                'selected_contacts[]': {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                'selected_contacts[]': {
+                    required: "Please select the guest",
+                    minlength: "Name must be at least 3 characters"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                if (element.hasClass('guest-select2')) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.addClass('text-danger');
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function(element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
     </script>
 @endpush

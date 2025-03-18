@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{GuestContact, GuestGroup, GuestGroupContact, GuestCaretaker};
+use App\Models\{GuestContact, GuestGroup, GuestGroupContact, GuestCaretaker, Relationship};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\GuestImport;
 use DB;
@@ -20,7 +20,8 @@ class GuestController extends Controller
         $groups = GuestGroup::where('created_by', auth()->user()->id)->get();
         $assignedGuestIds = GuestCaretaker::where('created_by', auth()->user()->id)->pluck('guest_id')->toArray();
         $unAssignedGuests = GuestContact::whereNotIn('id', $assignedGuestIds)->where('created_by', auth()->user()->id)->get();
-        return view('guest.index', compact('getGuestContacts', 'caretakers', 'guests', 'groups', 'unAssignedGuests'));
+        $relatipships = Relationship::get();
+        return view('guest.index', compact('getGuestContacts', 'caretakers', 'guests', 'groups', 'unAssignedGuests', 'relatipships'));
     }
 
     public function getGuestContactsAjax(Request $request){
@@ -337,5 +338,20 @@ class GuestController extends Controller
             'status' => 'success',
             'data' => $getGuestContacts
         ]);
+    }
+
+    public function checkUniqueGuests(Request $request){
+        if($request->id){
+            $exists = GuestContact::where($request->field, $request->value)->where('id', '!=', $request->id)->exists();
+        }
+        else{
+            $exists = GuestContact::where($request->field, $request->value)->exists();
+        }
+        return response()->json(['exists' => $exists]);
+    }
+
+    public function checkUniqueGroup(Request $request){
+        $exists = GuestGroup::where($request->field, $request->value)->exists();
+        return response()->json(['exists' => $exists]);
     }
 }

@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Session;
 use Modules\Venue\Models\Area;
 use Modules\Blog\Models\BlogCategory;
 use Modules\Blog\Models\BlogTag;
-
+use App\Models\VenueRating;
 use Illuminate\Support\Facades\Response;
 use App\Models\UserBlog;
+
 class HomeController extends Controller
 {
     public function home()
@@ -51,7 +52,17 @@ public function venuesearchresults(Request $request)
         $query->where('venuetypeid', '=', $request->venuetype);
     }
 
-   
+    $venueIds = $query->pluck('id');
+    $venueRatings = VenueRating::whereIn('venue_id', $venueIds)
+        ->where('user_id', auth()->id())
+        ->get();
+
+    $overAllVenueRatings = VenueRating::whereIn('venue_id', $venueIds)
+        ->selectRaw('venue_id, COUNT(*) as rating_count, ROUND(AVG(rating),1) as rating_avg')
+        ->groupBy('venue_id')
+        ->get();
+
+    $ratingsData = $overAllVenueRatings->keyBy('venue_id');
     $perPage = 10;
     $venues = $query->paginate($perPage);
 
@@ -63,6 +74,7 @@ public function venuesearchresults(Request $request)
         'current_page' => $venues->currentPage(),
         'last_page' => $venues->lastPage(),
         'per_page' => $venues->perPage(),
+        'ratingsData' => $ratingsData
     ]);
     }
 
