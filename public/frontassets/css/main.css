@@ -56946,3 +56946,9 @@ select.form-control{
 .select2-container .select2-selection {
   min-height: 44px !important;
 }
+
+.overflow-hidden{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

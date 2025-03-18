@@ -36,10 +36,11 @@ class ThemeBuilderController extends Controller
                     })
                     ->addColumn('preview_image',function($row)
                     {
-                        $preview_imageurl = url("admin/venue/themebuilder/".$row->id."/preview");
-                        $url = url('/').Storage::url('/');
-                        $image = '<a href = "'.$preview_imageurl.'" target = "_new"><img src="'.$url.$row->preview_image.'" width="100px"/></a>';
-                         return $image;
+                        // $preview_imageurl = url("admin/venue/themebuilder/".$row->id."/preview");
+                        // $url = url('/').Storage::url('/');
+                        // $image = '<a href = "'.$preview_imageurl.'" target = "_new"><img src="'.$url.$row->preview_image.'" width="100px"/></a>';
+                        //  return $image;
+                        return $row->preview_image;
                     })
                     ->addColumn('action', function($row){
 
@@ -119,10 +120,13 @@ class ThemeBuilderController extends Controller
 
         $filename1 = '';
         if($request->hasFile('preview_image')){               
-            $filename1 = $request->file('preview_image')->store('preview_image', 'public');
+            $filename = time().'.'.$request->file('preview_image')->getClientOriginalExtension();
+            $request->file('preview_image')->move(public_path('preview_image'), $filename);
+
+            // $filename1 = $request->file('preview_image')->store('preview_image', 'public');
 
         }
-        $themebuilder->preview_image = $filename1;
+        $themebuilder->preview_image = $filename;
         $themebuilder->save();
 
         return redirect('admin/venue/themebuilder')->with('success', 'New Theme  successfully uploaded');

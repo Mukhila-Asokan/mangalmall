@@ -144,8 +144,7 @@ $url = "frontassets/img/hero-bg-4.jpg";
     let venueLink = "{{ route('login') }}";
 
     response.venue.forEach((venue, i) => {
-      /*  let venueLink = `{{ url('/home/') }}/${venue.id}/venuedetails`;*/ 
-
+        const venueRating = response.ratingsData[venue.id]; // Direct lookup
         let onclickheart = "this.classList.toggle('bi-heart-fill'); this.classList.toggle('text-danger')";
         let truncatedAddress = venue.venueaddress.length > 40 ? venue.venueaddress.slice(0, 40) + "..." : venue.venueaddress;
         content += `
@@ -156,18 +155,15 @@ $url = "frontassets/img/hero-bg-4.jpg";
                         <img src="{{ url('/') }}/storage/${venue.bannerimage}" class="venue-img" alt="Venue Image">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title mb-2">${venue.venuename}</h5>
-                      
-                        <div class="rating mb-2">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                            <span class="text-muted ms-2">(4.5)</span>
+                        <h5 class="card-title mb-2 overflow-hidden">${venue.venuename}</h5>
+                        <div class="d-inline-flex">
+                            <div class="rating pl-2 pr-2 rounded ml-0 mt-2 mb-2" style="background: #58111A;">
+                                <span class="text-white ms-2"><i class="bi bi-star-fill" style="color: gold;"></i>${venueRating !== undefined ? venueRating.rating_avg : 0.0}</span>
+                            </div>
+                            <span class="ml-1 mt-2 text-muted" style="font-size:13px;">(${venueRating !== undefined ? venueRating.rating_count : 0})</span>
                         </div>
                         <div class="contact-info mb-2">
-                            <p class="card-text"><i class="bi bi-geo-alt-fill text-primary"></i> ${truncatedAddress}</p>
+                            <p class="card-text overflow-hidden"><i class="bi bi-geo-alt-fill text-primary"></i> ${truncatedAddress}</p>
                         </div>
                         <div class="contact-info mb-2">
                             <p class="card-text"><i class="bi bi-person-fill text-primary"></i> ${venue.contactperson}</p>
