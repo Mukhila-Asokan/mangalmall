@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('checklists', function (Blueprint $table) {
+        Schema::create('checklistcategories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('maintitle');
-            $table->foreignId('occasion_id')->constrained('occasion_types')->onDelete('cascade');
-            $table->boolean('completed')->default(false);
+            $table->string('name'); // e.g., "Pre-Event Planning"
             $table->enum('status',['Active', 'Inactive'])->default('Active'); 
             $table->tinyInteger('delete_status')->default('0'); 
             $table->timestamps();
@@ -28,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('checklists', function (Blueprint $table) {
-            $table->dropColumn('maintitle');
-        });
+        Schema::dropIfExists('checklistcategories');
     }
 };

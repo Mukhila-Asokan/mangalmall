@@ -133,7 +133,8 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
      Route::any(session('userpath').'/occasion/edit', [UserOccasionController::class, 'edit'])->name('home/occasion/edit');
 
     /*To do */
-
+    Route::any('/eventplan',[HomeController::class, 'eventplan'])->name('home.eventplan');
+    
     Route::any('/checklist',[HomeController::class, 'checklist'])->name('home.checklist');
     Route::any('/checklist/create',[HomeController::class, 'checklist'])->name('checklist.create');
     Route::any('/checklist/list',[HomeController::class, 'checklist'])->name('checklist.index');

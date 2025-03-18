@@ -1,3 +1,12 @@
+<?php $__env->startPush('styles'); ?>
+.card {
+    background-color: ##faf0dc;
+    border: 1px solid #f8f9fa;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+<?php $__env->stopPush(); ?>
 <?php $__env->startSection('content'); ?>
 
 
@@ -10,34 +19,35 @@
 
 <div class="row p-5 mt-md-4 mt-lg-4">  
     <div class="col-11"> 
-     
-       <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Occasion</th>
-                    <th>Place</th>
-                    <th>Notes</th>
-                    <th>Action</th>
-                </tr>                                
-            </thead>
-            <tbody>
-                <?php
-                    $i=1;
-                ?>
-                    <?php $__currentLoopData = $useroccasion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $occasion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr>
-                            <td><p><?php echo e($i++); ?></p></td>
-                            <td><p><?php echo e($occasion->occasiondate); ?></p></td>
-                            <td><p><?php echo e($occasion->Occasionname->eventtypename); ?></p></td>
-                            <td><p><?php echo e($occasion->occasion_place); ?></p></td>
-                            <td><p><?php echo e($occasion->notes); ?></p></td>
-                            <td><a href="#" id = "editoccasion" onclick = "editoccasion(<?php echo e($occasion->id); ?>)"><span class="ti-pencil"></span></a> <a href="#"><span class="ti-trash"></span></a></td>
-                        </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </tbody>
-       </table>
+    <div class="row">
+    <?php $__currentLoopData = $useroccasion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $occasion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title text-primary mb-0"><?php echo e($occasion->Occasionname->eventtypename); ?></h5>
+                    <div>
+                        <a href="#" class="btn btn-warning btn-sm" id="editoccasion" onclick="editoccasion(<?php echo e($occasion->id); ?>)" title="Edit">
+                            <i class="ti-pencil"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm" title="Delete">
+                            <i class="ti-trash"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <hr class="my-3">
+
+                <p class="card-text"><strong>Date:</strong> <?php echo e(\Carbon\Carbon::parse($occasion->occasiondate)->format('d/m/y')); ?></p>
+                <p class="card-text"><strong>Place:</strong> <?php echo e($occasion->occasion_place); ?></p>
+                <p class="card-text"><strong>Notes:</strong> <?php echo e($occasion->notes); ?></p>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+</div>
+
+
    
     </div>
     <div class="col-1">

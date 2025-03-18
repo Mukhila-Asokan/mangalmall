@@ -1,4 +1,13 @@
 @extends('profile-layouts.profile')
+@push('styles')
+.card {
+    background-color: ##faf0dc;
+    border: 1px solid #f8f9fa;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+@endpush
 @section('content')
 
 
@@ -11,34 +20,35 @@
 
 <div class="row p-5 mt-md-4 mt-lg-4">  
     <div class="col-11"> 
-     
-       <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Occasion</th>
-                    <th>Place</th>
-                    <th>Notes</th>
-                    <th>Action</th>
-                </tr>                                
-            </thead>
-            <tbody>
-                @php
-                    $i=1;
-                @endphp
-                    @foreach($useroccasion as $occasion)
-                        <tr>
-                            <td><p>{{ $i++ }}</p></td>
-                            <td><p>{{ $occasion->occasiondate }}</p></td>
-                            <td><p>{{ $occasion->Occasionname->eventtypename }}</p></td>
-                            <td><p>{{ $occasion->occasion_place }}</p></td>
-                            <td><p>{{ $occasion->notes }}</p></td>
-                            <td><a href="#" id = "editoccasion" onclick = "editoccasion({{ $occasion->id }})"><span class="ti-pencil"></span></a> <a href="#"><span class="ti-trash"></span></a></td>
-                        </tr>
-                    @endforeach
-            </tbody>
-       </table>
+    <div class="row">
+    @foreach($useroccasion as $occasion)
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title text-primary mb-0">{{ $occasion->Occasionname->eventtypename }}</h5>
+                    <div>
+                        <a href="#" class="btn btn-warning btn-sm" id="editoccasion" onclick="editoccasion({{ $occasion->id }})" title="Edit">
+                            <i class="ti-pencil"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm" title="Delete">
+                            <i class="ti-trash"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <hr class="my-3">
+
+                <p class="card-text"><strong>Date:</strong> {{ \Carbon\Carbon::parse($occasion->occasiondate)->format('d/m/y') }}</p>
+                <p class="card-text"><strong>Place:</strong> {{ $occasion->occasion_place }}</p>
+                <p class="card-text"><strong>Notes:</strong> {{ $occasion->notes }}</p>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
+
+
    
     </div>
     <div class="col-1">

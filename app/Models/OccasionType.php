@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Settings\Models\Checklist;
+use Modules\Settings\Models\ChecklistCategory;
 
 class OccasionType extends Model
 {
@@ -15,8 +15,8 @@ class OccasionType extends Model
     {
         return $this->hasMany(OccasionDataField::class, 'occasion_id'); 
     }
-    public function checklists()
+    public function checklistcategories()
     {
-        return $this->hasMany(Checklist::class);
+        return $this->belongsToMany(ChecklistCategory::class, 'event_checklist_assignments');
     }
 }

@@ -16,15 +16,29 @@
             @csrf
             <div class="col-6">
             <div class="mb-4 row">
-                <label class="col-md-4 col-form-label" for="checklistname">Checklist Name</label>
+                <label class="col-md-4 col-form-label" for="name">Checklist Name</label>
                 <div class="col-md-8">
-                        <input type="text" id="checklistname" name="checklistname" class="form-control" placeholder="Enter the Checklist name" value = "{{ old('checklistname') }}">
-                        @error('checklistname')
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter the Checklist name" value = "{{ old('checklistname') }}">
+                        @error('name')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                 </div>
             </div>
-
+        <div class="mb-4 row">
+            <label class="col-md-4 col-form-label" for="maintitle">Main Title</label>
+            <div class="col-md-8">
+                <select id="maintitle" name="maintitle" class="form-control">
+                    <option value="">Select Main Title</option>
+                    <option value = "0">None</option>
+                    @foreach($maintitles as $maintitle)
+                        <option value="{{ $maintitle->id }}" {{ old('maintitle') == $maintitle->id ? 'selected' : '' }}>{{ $maintitle->name }}</option>
+                    @endforeach
+                </select>
+                @error('maintitle')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
             <div class="mb-4 row">
                 <label class="col-md-4 col-form-label" for="occasion">Occasion</label>
                 <div class="col-md-8">
