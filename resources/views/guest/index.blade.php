@@ -19,13 +19,13 @@
                     @csrf
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="name">Name</label>
                                     <input type="text" name="name" id="name" placeholder="Contact Name" class="form-control font-14">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="mobile_number">Mobile Number</label>
                                     <input type="text" name="mobile_number" id="mobile_number" placeholder="Mobile Number" class="form-control font-14">
@@ -33,13 +33,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="whatsapp_number">WhatsApp Number</label>
                                     <input type="text" name="whatsapp_number" id="whatsapp_number" placeholder="WhatsApp Number" class="form-control font-14">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="email">Email</label>
                                     <input type="email" name="email" id="email" placeholder="Email" class="form-control font-14">
@@ -47,36 +47,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label class="font-14" for="relationship">Relation</label>
+                                    <label class="font-14" for="relationship">Select Relation</label>
                                     <select name="relationship" id="relationship" class="form-control select2">
                                         <option value="" selected disabled>Select Relationship</option>
-                                        <option value="Brother">Brother</option>
-                                        <option value="Sister">Sister</option>
-                                        <option value="Father">Father</option>
-                                        <option value="Mother">Mother</option>
-                                        <option value="Uncle">Uncle</option>
-                                        <option value="Aunt">Aunt</option>
-                                        <option value="Nephew">Nephew</option>
-                                        <option value="Niece">Niece</option>
-                                        <option value="Grand Father">Grand Father</option>
-                                        <option value="Grand Mother">Grand Mother</option>
-                                        <option value="Cousin">Cousin</option>
-                                        <option value="Friend">Friend</option>
-                                        <option value="Colleague">Colleague</option>
-                                    </select>
+                                        <option value="add new">Add New Relation</option>
+                                        @foreach($relatipships as $relatipship)
+                                            <option value="{{ $relatipship->value }}">{{ $relatipship->label }}</option>
+                                        @endforeach
+                                    </select>                                    
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-none" id="add_new_relationship">
+                                <label class="font-14" for="relationshipInput">Relation</label>
+                                <input type="text" id="relationshipInput" name="relationship" placeholder="Relationship" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="location">Location</label>
                                     <textarea name="location" id="location" placeholder="Location" class="form-control font-14"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="font-14" for="notes">Notes</label>
                                     <textarea name="notes" id="notes" placeholder="Notes" class="form-control font-14"></textarea>
@@ -109,13 +104,13 @@
                     <div class="container">
                         <input type="hidden" name="contact_id" id="contact_id">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_name">Name</label>
                                     <input type="text" name="edit_name" id="edit_name" placeholder="Contact Name" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_mobile_number">Mobile Number</label>
                                     <input type="text" name="edit_mobile_number" id="edit_mobile_number" placeholder="Mobile Number" class="form-control">
@@ -123,13 +118,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_whatsapp_number">WhatsApp Number</label>
                                     <input type="text" name="edit_whatsapp_number" id="edit_whatsapp_number" placeholder="WhatsApp Number" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_email">Email</label>
                                     <input type="email" name="edit_email" id="edit_email" placeholder="Email" class="form-control">
@@ -137,36 +132,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label class="font-14" for="edit_relationship">Relation</label>
+                                    <label class="font-14" for="edit_relationship">Select Relation</label>
                                     <select name="edit_relationship" id="edit_relationship" class="form-control select2">
-                                        <option value="">Select Relationship</option>
-                                        <option value="Brother">Brother</option>
-                                        <option value="Sister">Sister</option>
-                                        <option value="Father">Father</option>
-                                        <option value="Mother">Mother</option>
-                                        <option value="Uncle">Uncle</option>
-                                        <option value="Aunt">Aunt</option>
-                                        <option value="Nephew">Nephew</option>
-                                        <option value="Niece">Niece</option>
-                                        <option value="Grand Father">Grand Father</option>
-                                        <option value="Grand Mother">Grand Mother</option>
-                                        <option value="Cousin">Cousin</option>
-                                        <option value="Friend">Friend</option>
-                                        <option value="Colleague">Colleague</option>
+                                        <option value="" selected disabled>Select Relationship</option>
+                                        <option value="add new">Add New Relation</option>
+                                        @foreach($relatipships as $relatipship)
+                                            <option value="{{ $relatipship->value }}">{{ $relatipship->label }}</option>
+                                        @endforeach
                                     </select>
                                 </div>        
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-none" id="edit_new_relationship">
+                                <label class="font-14" for="relationshipInput">Relation</label>
+                                <input type="text" id="editRelationshipInput" name="edit_relationship" placeholder="Relationship" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_location">Location</label>
                                     <textarea name="edit_location" id="edit_location" placeholder="Location" class="form-control"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="edit_notes">Notes</label>
                                     <textarea name="edit_notes" id="edit_notes" placeholder="Notes" class="form-control"></textarea>
@@ -196,13 +186,13 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Name</label>
                                 <span id="view_name" class="form-control-plaintext font-12"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Mobile Number</label>
                                 <span id="view_mobile_number" class="form-control-plaintext font-12"></span>
@@ -210,13 +200,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">WhatsApp Number</label>
                                 <span id="view_whatsapp_number" class="form-control-plaintext font-12"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Email</label>
                                 <span id="view_email" class="form-control-plaintext font-12"></span>
@@ -224,13 +214,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Relationship</label>
                                 <span id="view_relationship" class="form-control-plaintext font-12"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Location</label>
                                 <span id="view_location" class="form-control-plaintext font-12"></span>
@@ -238,7 +228,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="font-14 font-weight-bold mb-0">Notes</label>
                                 <span id="view_notes" class="form-control-plaintext font-12"></span>
@@ -456,6 +446,17 @@
                     $('#edit_relationship').val(response.data.relationship);
                     $('#edit_location').val(response.data.location);
                     $('#edit_notes').val(response.data.notes);
+                }
+                alert(response.data.relationship);
+                alert($('#edit_relationship option[value="' + response.data.relationship + '"]').length);
+                if ($('#edit_relationship option[value="' + response.data.relationship + '"]').length === 0) {
+                    $('#edit_new_relationship').removeClass('d-none');
+                    // $('#edit_relationship').addClass('d-none');
+                    $('#editRelationshipInput').val(response.data.relationship);
+                } else {
+                    $('#edit_new_relationship').addClass('d-none');
+                    $('#edit_relationship').removeClass('d-none');
+                    $('#edit_relationship').val(response.data.relationship);
                 }
                 $('#edit_contact_modal').modal('show');
             }
@@ -1110,5 +1111,24 @@
             }
         });
     });
+    $('#relationship').on('change', function(){
+        if($(this).val() == 'add new'){
+            $('#add_new_relationship').removeClass('d-none').focus();
+        }
+        else{
+            $('#relationshipInput').val($(this).val());
+            $('#add_new_relationship').addClass('d-none');
+        }
+    })
+
+    $('#edit_relationship').on('change', function(){
+        if($(this).val() == 'add new'){
+            $('#edit_new_relationship').removeClass('d-none').focus();
+        }
+        else{
+            $('#editRelationshipInput').val($(this).val());
+            $('#edit_new_relationship').addClass('d-none');
+        }
+    })
 </script>
 @endpush

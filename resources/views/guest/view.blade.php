@@ -244,7 +244,7 @@
 <script>
     $(document).ready(function () {
         var table = $('#view_guests_table').DataTable({
-            autoWidth: false, // Disable auto width
+            autoWidth: false,
             ordering: false,
             scrollX: true,
             scrollY: true,
