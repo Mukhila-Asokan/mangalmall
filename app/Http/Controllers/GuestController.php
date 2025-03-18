@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{GuestContact, GuestGroup, GuestGroupContact, GuestCaretaker};
+use App\Models\{GuestContact, GuestGroup, GuestGroupContact, GuestCaretaker, Relationship};
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\GuestImport;
 use DB;
@@ -20,7 +20,8 @@ class GuestController extends Controller
         $groups = GuestGroup::where('created_by', auth()->user()->id)->get();
         $assignedGuestIds = GuestCaretaker::where('created_by', auth()->user()->id)->pluck('guest_id')->toArray();
         $unAssignedGuests = GuestContact::whereNotIn('id', $assignedGuestIds)->where('created_by', auth()->user()->id)->get();
-        return view('guest.index', compact('getGuestContacts', 'caretakers', 'guests', 'groups', 'unAssignedGuests'));
+        $relatipships = Relationship::get();
+        return view('guest.index', compact('getGuestContacts', 'caretakers', 'guests', 'groups', 'unAssignedGuests', 'relatipships'));
     }
 
     public function getGuestContactsAjax(Request $request){
