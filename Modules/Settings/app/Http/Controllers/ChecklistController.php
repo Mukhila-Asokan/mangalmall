@@ -20,7 +20,12 @@ class ChecklistController extends Controller
         $username = Session::get('username');
         $userid = Session::get('userid');
         $pagetitle = "Checklist";
-        $checklists = Checklist::where('delete_status', '0')->paginate(10);
+        $checklists = Checklist::with('occasion')
+        ->orderBy('occasion_id')
+        ->orderBy('maintitle')
+        ->orderBy('name')
+        ->get()
+        ->groupBy('occasion_id');
         return view('settings::checklist.index', compact('pagetitle', 'pageroot', 'checklists', 'username'));      
     }
 
@@ -34,7 +39,8 @@ class ChecklistController extends Controller
         $userid = Session::get('userid');
         $pagetitle = "Checklist";
         $occasions = OccasionType::where('delete_status', '0')->get();
-        return view('settings::checklist.create', compact('pagetitle', 'pageroot', 'occasions', 'username'));
+        $maintitles = Checklist::where('delete_status', '0')->where('maintitle','0')->get();
+        return view('settings::checklist.create', compact('pagetitle', 'pageroot', 'occasions', 'username','maintitles'));
     }
 
     /**
@@ -42,7 +48,30 @@ class ChecklistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:checklists',
+            'occasion' => 'required|exists:occasion_types,id'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(url()->previous())
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        try {
+            $checklist = new Checklist();
+            $checklist->name = $request->name;
+            $checklist->maintitle = $request->maintitle;
+            $checklist->occasion_id = $request->occasion;
+            $checklist->status = 'Active';
+            $checklist->delete_status = 0;
+            $checklist->save();
+
+            return redirect()->route('admin.checklist')->with('success', 'Checklist added successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.checklist')->with('error', $e->getMessage());
+        }
     }
 
     /**

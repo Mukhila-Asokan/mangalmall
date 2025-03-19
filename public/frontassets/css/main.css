@@ -56824,7 +56824,7 @@ body::before {
   position: relative;
   width: 150px;  /* Adjust size here */
   height: 150px;  /* Maintain proper aspect ratio */
-  background: rgb(231, 219, 185); /* 50% opacity */
+  background: rgb(223, 183, 70); /* 50% opacity */
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
   display: flex;
   justify-content: center;

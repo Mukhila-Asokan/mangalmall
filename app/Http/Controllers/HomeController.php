@@ -163,5 +163,9 @@ public function venuesearchresults(Request $request)
     {
        return view('checklist.list');
     }   
+    public function eventplan()
+    {
+       return view('eventplan.index');
+    }  
 
 }

@@ -127,13 +127,10 @@
                             </li>
           
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('home.occasion') }}" aria-haspopup="true" aria-expanded="false">Occasion Plan</a>
+                                <a class="nav-link custom-nav-link" href="{{ route('home.eventplan') }}" aria-haspopup="true" aria-expanded="false">Event Plan</a>
 
                             </li>
-                            <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('home.checklist') }}" aria-haspopup="true" aria-expanded="false">Check list</a>
 
-                            </li>
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
                                 <a class="nav-link custom-nav-link" href="{{ route('blog.index') }}" aria-haspopup="true" aria-expanded="false">Blog Writing</a>
                             </li>

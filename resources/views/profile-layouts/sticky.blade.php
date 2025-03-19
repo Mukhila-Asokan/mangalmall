@@ -5,11 +5,9 @@
         <li>
             <a href="{{ route('checklist.index') }}"><i class="fa-solid fa-clipboard-list fa-2xl"></i><span>Checklist</span></a>
         </li>
-        <li>
-            <a href="{{ route('checklist.create') }}"><i class="fa-solid fa-plus fa-2xl"></i><span>Add Checklist</span></a>
-        </li>
+       
         <li><a href="{{ route('checklist.create') }}"><i class="fa-solid fa-scale-balanced fa-2xl"></i><span>Budget</span></a></li>
-        <li><a href="{{ route('checklist.create') }}"><i class="fas fa-file-invoice-dollar fa-2xl"></i><span>Add Budget</span></a></li>
+        
     </ul> 
     </div>        
 </div>
