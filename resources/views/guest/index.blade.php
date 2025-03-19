@@ -447,8 +447,6 @@
                     $('#edit_location').val(response.data.location);
                     $('#edit_notes').val(response.data.notes);
                 }
-                alert(response.data.relationship);
-                alert($('#edit_relationship option[value="' + response.data.relationship + '"]').length);
                 if ($('#edit_relationship option[value="' + response.data.relationship + '"]').length === 0) {
                     $('#edit_new_relationship').removeClass('d-none');
                     // $('#edit_relationship').addClass('d-none');

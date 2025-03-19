@@ -9,6 +9,7 @@ Use Auth;
 use App\Notifications\ChangeMobileNo;
 use Illuminate\Support\Facades\Session;
 Use Modules\VenueAdmin\Models\VenueUser;
+use Modules\Venue\Models\MobileNumberChangeRequest;
 
 class NotificationController extends Controller
 {
@@ -37,6 +38,12 @@ class NotificationController extends Controller
 
     // Fetch notifications
     $notifications = $admin->unreadNotifications;
+    foreach($notifications as $notification){
+        if($notification->type == 'App\Notifications\ChangeMobileNo'){
+            $notification->markAsRead();
+        }
+    }
+    $requests = MobileNumberChangeRequest::where('is_approved', false)->get();
 
     $username = Session::get('username');
     $userid = Session::get('userid');       
@@ -49,7 +56,7 @@ class NotificationController extends Controller
         'pageroot',     
         'username',        
         'id', 
-        'notifications'
+        'requests'
     ));
 }
 
@@ -92,6 +99,9 @@ class NotificationController extends Controller
             'mobileno' => $request->new_mobile
         ]);
 
+        $requests = MobileNumberChangeRequest::where('venue_admin_id', $userid)->update([
+            'is_approved' => true
+        ]);
        
         $statusMessage = "Your confirmation is approved, please check.";
         $user->notify(new ChangeMobileNo($request->new_mobile, $statusMessage));

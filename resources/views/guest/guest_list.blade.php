@@ -80,7 +80,7 @@
                         <div class="row mt-1">
                             <div class="col-md-12 d-flex">
                                 <i class="bi bi-envelope font-12"></i>
-                                <span class="font-12 ml-1">{{ Str::limit($contact->email, 30, '...') }}</span>
+                                <span class="font-12 ml-1 overflow-hidden">{{ $contact->email }}</span>
                             </div>
                         </div>
                         <!-- <div class="row mt-1">

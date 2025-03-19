@@ -91,12 +91,12 @@
                                         <div class="tab-pane" id="first">
                                             <form id="bookingForm" method="post" action="#" class="form-horizontal">
                                                 <div class="row">
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Enter Start Date</label>
                                                         <input id="event-start-date" type="date" class="form-control" name="eventstartdate" required value="{{$date}}"/>
                                                     </div>
 
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Enter End Date</label>
                                                         <input id="event-end-date" type="date" class="form-control" name="eventenddate" required />
                                                     </div>
@@ -130,11 +130,11 @@
                                         <div class="tab-pane fade" id="third">
                                             <form id="contactForm" method="post" action="#" class="form-horizontal">
                                                 <div class="row">
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Event Name</label>
                                                         <input id="event_name" type="text" name="event_name" class="form-control" value="" required />
                                                     </div>
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Event Type</label>
                                                         <select name="event_id" id="event_id" class="form-select" required>
                                                             <option value="">Select Events</option>
@@ -147,21 +147,21 @@
                                                 <div class="row">
                                                     <input type="hidden" name="bookinguserid" id="bookinguserid" value="{{ Session::get('venueuserid') }}" />
                                                     <input type="hidden" name="booking_id" id="booking_id" value="0" />
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Contact Person Name</label>
                                                         <input id="person_name" name="person_name" type="text" class="form-control" required />
                                                     </div>
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Phone No</label>
                                                         <input id="mobileno" type="text" name="mobileno" class="form-control" required />
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Special Requirements</label>
                                                         <textarea id="special_requirements" class="form-control" name="special_requirements"></textarea>
                                                     </div>
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
                                                         <label class="form-label">Address</label>
                                                         <textarea id="contact_address" name="contact_address" class="form-control" required></textarea>
                                                     </div>
@@ -264,7 +264,7 @@
                             response.venueDetails.forEach(venue => {
                                 if(response.uniqueVenueIds.includes(venue.id)){
                                     venueHtml += `
-                                        <div class="col-4">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="card position-relative disabled-card">
                                                 <input type="radio" name="venue" disabled id="venue-${venue.id}" value="${venue.id}" class="venue-radio" required>
                                                 <label for="venue-${venue.id}" class="custom-radio"></label>
@@ -307,7 +307,7 @@
                                 }
                                 else{
                                     venueHtml += `
-                                        <div class="col-4">
+                                        <div class="col-md-4 col-sm-12">
                                             <div class="card position-relative">
                                                 <input type="radio" name="venue" id="venue-${venue.id}" value="${venue.id}" class="venue-radio" required>
                                                 <label for="venue-${venue.id}" class="custom-radio"></label>
@@ -362,13 +362,19 @@
             }
         })
 
-        $('#confirm_booking').on('click', function(){
+        $('#confirm_booking').on('click', function(e) {
+            let contactForm = $('#contactForm')[0];
+            if (!contactForm.checkValidity()) {
+                contactForm.reportValidity();
+                return;
+            }
+
             var daytypes = {};
             $('input[type="radio"][class="form-check-input daytype"]:checked').each(function () {
                 let dateKey = $(this).attr('name');
                 daytypes[dateKey] = $(this).val();
             });
-            console.log(daytypes);
+
             let daytypesInput = $('<input>')
                 .attr('type', 'hidden')
                 .attr('name', 'daytypes')
@@ -382,12 +388,13 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 },
-                success: function(response){
+                success: function(response) {
                     console.log(response, 'response');
                     window.location.href = `{{ url('/venueadmin/venuebookinglist') }}`;
                 }
-            })
-        })
+            });
+        });
+
         $(document).ready(function () {
             $('.disabled-tab').on('click', function (e) {
                 e.preventDefault();
@@ -409,14 +416,6 @@
                     $('.nav-pills .nav-link[href="#third"]').removeClass('disabled-tab').tab('show');
                 } else {
                     $('#venueForm')[0].reportValidity();
-                }
-            });
-
-            $('#confirm_booking').on('click', function () {
-                if ($('#contactForm')[0].checkValidity()) {
-                    $('#contactForm')[0].reportValidity();
-                } else {
-                    $('#contactForm')[0].reportValidity();
                 }
             });
 

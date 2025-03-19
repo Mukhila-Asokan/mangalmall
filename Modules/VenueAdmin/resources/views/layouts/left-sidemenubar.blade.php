@@ -44,7 +44,7 @@
 
                         <li class="side-nav-item">
                             <a href="{{ route('venueadmin/dashboard') }}" class="side-nav-link">
-                                <i class="ri-dashboard-2-fill"></i>
+                                <i class="ri-dashboard-fill"></i>
                                 <span> Dashboard </span>
                             </a>
                         </li>
@@ -78,7 +78,7 @@
 
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarBaseUI" aria-expanded="false" aria-controls="sidebarBaseUI" class="side-nav-link">
-                                <i class="ri-home-heart-fill"></i>
+                                <i class="ri-hotel-line"></i>
                                 <span>Venues </span>
                                 <span class="menu-arrow"></span>
                             </a>
@@ -111,7 +111,7 @@
                         </li>
                         <li class="side-nav-item">
                             <a href="{{ route('get.all.enquiries') }}" class="side-nav-link">
-                                <i class="ri-calendar-event-fill"></i>
+                                <i class="ri-calendar-check-fill"></i>
                                 <span> Booking Enquiries </span>
                             </a>
                         </li>
@@ -158,7 +158,7 @@
                 <li class="side-nav-title">Settings</li>
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarsettings" aria-expanded="false" aria-controls="sidebarStaff" class="side-nav-link">
-                        <i class="ri-team-fill"></i>
+                        <i class="ri-settings-5-fill"></i>
                         <span> Settings</span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -178,7 +178,7 @@
             
             <li class="side-nav-item">
                             <a href="{{ route('venueadmin/logout') }}" class="side-nav-link">
-                                <i class="ri-logout-circle-r-fill"></i>
+                                <i class="ri-logout-box-r-fill"></i>
                                 <span>Logout</span>
                             </a>
                         </li>

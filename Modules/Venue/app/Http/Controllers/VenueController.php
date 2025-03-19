@@ -497,7 +497,7 @@ class VenueController extends Controller
             $resData = "";
             $filename = "";
             if($request->hasFile('upload_file')){   
-                 $filename = $request->file('upload_file')->store('uploads/medialibrary', 'public_uploads');;
+                 $filename = $request->file('upload_file')->store('uploads/medialibrary', 'public_uploads');
             }
             if($filename != '')
             {
