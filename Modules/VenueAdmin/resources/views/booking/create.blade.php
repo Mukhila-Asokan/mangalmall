@@ -215,6 +215,27 @@
                     <label class="form-label">Special Requirements</label>
                     <textarea id="add-special_requirements" class="form-control" name="special_requirements"></textarea>
                 </div>
+                <div class="col-md-6 mt-2">
+                    <label class="form-label d-block">For Mangal Mall User?</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="yes" name="for_mangal_mall_user" value="Yes">
+                        <label class="form-check-label mt-1" for="yes">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="no" name="for_mangal_mall_user" value="No">
+                        <label class="form-check-label mt-1" for="no">No</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mt-2 d-none" id="mangalmall_users">
+                    <label for="user_id">Mangal Mall User</label>
+                    <select name="user_id" id="user_id" class="form-control select2" required>
+                        <option value="">Select an option</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}"> {{ $user->name }} </option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <div class="col-md-6 mt-2">
                     <label class="form-label">Enter Start Date</label>
@@ -302,6 +323,18 @@
             dayTypeContainers.innerHTML = ''; // Clear if no dates
         }
     }
+
+    $(document).ready(function(){;
+        $('input[name="for_mangal_mall_user"]').change(function () {
+            var selectedValue = $('input[name="for_mangal_mall_user"]:checked').val();
+            if(selectedValue == 'Yes'){
+                $('#mangalmall_users').removeClass('d-none');
+            }
+            else{
+                $('#mangalmall_users').addClass('d-none');
+            }
+        });
+    })
 </script>
 
 <script>

@@ -61,32 +61,34 @@ class InvitationWebpageController extends Controller
             $invitationwebpage->webpagename = $request->webpagename;
             $invitationwebpage->occasion_id = $request->occasiontype;
 
+
             if ($request->hasFile('preview_image')) {
-            $image = $request->file('preview_image');
-            $imagePath = $image->store('images', 'public');
-            $invitationwebpage->preview_image = $imagePath;
+                $image = $request->file('preview_image');            
+                $imagePath = $image->store('images', 'public');
+                $invitationwebpage->preview_image = $imagePath;
             }
-
+        
             if ($request->hasFile('pathname')) {
-            $filename = $request->file('pathname')->store('template_zips', 'public');
-            $zip = new ZipArchive;
-                
-            $pathname = base_path().'/public/storage/'.$filename; 
-
-            $cleanedString = str_replace(' ', '', $request->webpagename); 
-            $cleanedString = trim($cleanedString);
-            $randomNumber = rand(1, 100); 
-            $extractpath = base_path().'/public/storage/template/unzipped/'.$cleanedString.$randomNumber;
-            $zip_path = '/storage/template/unzipped/'.$cleanedString.$randomNumber;
-
-            if ($zip->open($pathname) === TRUE) {
-                $zip->extractTo($extractpath);
-                $zip->close();
-                $invitationwebpage->theme_zipfile = $filename;
-                $invitationwebpage->pathname = $zip_path;
-            } else {
-                throw new \Exception('Failed to open the zip file.');
-            }
+                $filename = $request->file('pathname')->store('template_zips', 'public');
+                $zip = new ZipArchive;
+            
+                $pathname = storage_path('app/public/'.$filename);
+                $cleanedString = str_replace(' ', '', $request->webpagename);
+                $cleanedString = trim($cleanedString);
+                $randomNumber = rand(1, 100);
+            
+                $extractPath = storage_path('app/public/template/unzipped/'.$cleanedString.$randomNumber);
+                $zip_url_path = '/storage/template/unzipped/'.$cleanedString.$randomNumber;
+                if ($zip->open($pathname) === TRUE) {
+                    $zip->extractTo($extractPath);
+                    $zip->close();
+            
+                    $invitationwebpage->theme_zipfile = $filename;
+                    $invitationwebpage->pathname = $zip_url_path;
+                }
+                else {
+                    throw new \Exception('Failed to open the zip file.');
+                }
             }
 
             $invitationwebpage->status = 'Active';
@@ -145,31 +147,32 @@ class InvitationWebpageController extends Controller
             $invitationwebpage->occasion_id = $request->occasiontype;
 
             if ($request->hasFile('preview_image')) {
-            $image = $request->file('preview_image');
-            $imagePath = $image->store('images', 'public');
-            $invitationwebpage->preview_image = $imagePath;
+                $image = $request->file('preview_image');            
+                $imagePath = $image->store('images', 'public');
+                $invitationwebpage->preview_image = $imagePath;
             }
-
+            
             if ($request->hasFile('pathname')) {
-            $filename = $request->file('pathname')->store('template_zips', 'public');
-            $zip = new ZipArchive;
-
-            $pathname = base_path().'/public/storage/'.$filename; 
-
-            $cleanedString = str_replace(' ', '', $request->webpagename); 
-            $cleanedString = trim($cleanedString);
-            $randomNumber = rand(1, 100); 
-            $extractpath = base_path().'/public/storage/template/unzipped/'.$cleanedString.$randomNumber;
-            $zip_path = '/storage/template/unzipped/'.$cleanedString.$randomNumber;
-
-            if ($zip->open($pathname) === TRUE) {
-                $zip->extractTo($extractpath);
-                $zip->close();
-                $invitationwebpage->theme_zipfile = $filename;
-                $invitationwebpage->pathname = $zip_path;
-            } else {
-                throw new \Exception('Failed to open the zip file.');
-            }
+                $filename = $request->file('pathname')->store('template_zips', 'public');
+                $zip = new ZipArchive;
+            
+                $pathname = storage_path('app/public/'.$filename);
+                $cleanedString = str_replace(' ', '', $request->webpagename);
+                $cleanedString = trim($cleanedString);
+                $randomNumber = rand(1, 100);
+            
+                $extractPath = storage_path('app/public/template/unzipped/'.$cleanedString.$randomNumber);
+                $zip_url_path = '/storage/template/unzipped/'.$cleanedString.$randomNumber; // Accessible path
+            
+                if ($zip->open($pathname) === TRUE) {
+                    $zip->extractTo($extractPath);
+                    $zip->close();
+            
+                    $invitationwebpage->theme_zipfile = $filename;
+                    $invitationwebpage->pathname = $zip_url_path;
+                } else {
+                    throw new \Exception('Failed to open the zip file.');
+                }
             }
 
             $invitationwebpage->status = 'Active';
@@ -177,7 +180,8 @@ class InvitationWebpageController extends Controller
             $invitationwebpage->save();
 
             return redirect('admin/invitation/webpage')->with('success', 'Invitation Webpage updated successfully.');
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return redirect('admin/invitation/webpage')->with('error', $e->getMessage());
         }
     }

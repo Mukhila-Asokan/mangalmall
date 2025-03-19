@@ -24,7 +24,7 @@
         </div>
         <hr>
         <div class="d-flex justify-content-between row mb-4">
-            <div class="mb-2 col-7 d-flex">
+            <div class="mb-2 col-md-7 col-sm-12 d-flex">
                 <div class="input-group">
                     <input type="text" id="search_caretaker_value" class="form-control" placeholder="Search Guest group details here..." aria-label="Search Guest details here..." aria-describedby="basic-addon2">
                     <div class="input-group-append">
@@ -36,7 +36,7 @@
         </div>
         <div class="row d-flex justify-content contact-list">
             @foreach($caretakers as $caretaker)
-                <div class="col-3 mb-4">
+                <div class="col-md-3 col-sm-12 mb-4">
                     <div class="card contact-card m-1">
                         <div class="card-header ml-2 mt-2 mr-2">
                             <div class="row">
