@@ -28,6 +28,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\BlogCommentController;
 
 use App\Http\Controllers\BlogLikeController;
+use App\Http\Controllers\UserChecklistController;
 
 
 use Illuminate\Support\Facades\Artisan;
@@ -136,8 +137,11 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::any('/eventplan',[HomeController::class, 'eventplan'])->name('home.eventplan');
     
     Route::any('/checklist',[HomeController::class, 'checklist'])->name('home.checklist');
-    Route::any('/checklist/create',[HomeController::class, 'checklist'])->name('checklist.create');
-    Route::any('/checklist/list',[HomeController::class, 'checklist'])->name('checklist.index');
+    Route::any('/checklist/create/{occasion_id}',[UserChecklistController::class, 'create'])->name('checklist.create');
+    Route::any('/checklist/list',[UserChecklistController::class, 'index'])->name('checklist.index');
+    Route::post('/checklist/store', [UserChecklistController::class, 'store'])->name('checklist.store');
+    Route::post('/checklist/update-status', [UserChecklistController::class, 'updateStatus'])->name('checklist.updateStatus');
+
 
     
     Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');

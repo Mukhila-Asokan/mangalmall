@@ -20,6 +20,10 @@ use Modules\Blog\Models\BlogTag;
 use App\Models\VenueRating;
 use Illuminate\Support\Facades\Response;
 use App\Models\UserBlog;
+use App\Models\UserOccasion;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon; 
+use App\Models\UserChecklist;
 
 class HomeController extends Controller
 {
@@ -165,7 +169,17 @@ public function venuesearchresults(Request $request)
     }   
     public function eventplan()
     {
-       return view('eventplan.index');
+        try {
+            $userid = Auth::user()->id;  
+            $userOccasion = UserOccasion::where('delete_status', 0)
+            ->where('userid', $userid)
+            ->where('occasiondate', '>=', now())
+            ->get();
+           
+            return view('eventplan.index', compact('userOccasion'));
+        } catch (\Exception $e) {
+            return redirect()->route('login')->withErrors(['error' => 'Please log in to access the event plan.']);
+        }
     }  
 
 }

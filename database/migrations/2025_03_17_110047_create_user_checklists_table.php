@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');            
             $table->foreignId('occasion_id')->constrained('occasion_types')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->boolean('completed')->default(false);
+            $table->enum('completed',['not_started', 'doing', 'completed'])->default('not_started');
             $table->enum('status',['Active', 'Inactive'])->default('Active'); 
             $table->tinyInteger('delete_status')->default('0');
             $table->timestamps();

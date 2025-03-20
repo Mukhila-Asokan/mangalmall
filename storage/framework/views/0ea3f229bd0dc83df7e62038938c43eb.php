@@ -1,1 +1,0 @@
-<?php /**PATH C:\xampp\htdocs\mangalmall\Modules/Settings\resources/views/checklistcat/edit.blade.php ENDPATH**/ ?>
