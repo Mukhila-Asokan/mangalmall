@@ -33,16 +33,26 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::put('/staff/update', [StaffManagementController::class,'update'])->name('staff.update');
     Route::any('/staff/{id}/destroy', [StaffManagementController::class,'destroy']);
     Route::any('/staff/{id}/updatestatus', [StaffManagementController::class,'updatestatus']);
+    Route::any('/staff/delete/{id}', [StaffManagementController::class,'deleteStaff']);
 
     
     Route::any('/staff/getroleusingdepid', [StaffManagementController::class,'getroleusingdepid'])->name('staff.getroleusingdepid');
     Route::any('/staff/ajaxstore', [StaffManagementController::class,'ajaxstore'])->name('staff.ajaxstore');
     Route::any('/staff/detailview/{id}',[StaffManagementController::class,'detailview'])->name('staff.detailview');
+    Route::any('/staff/edit/{id}',[StaffManagementController::class,'editStaff'])->name('staff.edit');
     Route::any('/staff/ajaxqualification',[StaffManagementController::class,'ajaxqualification'])->name('staff.ajaxqualification');
     Route::any('/staff/ajaxworkingdetails',[StaffManagementController::class,'ajaxworkingdetails'])->name('staff.ajaxworkingdetails');
     Route::any('/staff/ajaxskillset',[StaffManagementController::class,'ajaxskillset'])->name('staff.ajaxskillset');
     Route::any('/staff/ajaxdocuments',[StaffManagementController::class,'ajaxdocuments'])->name('staff.ajaxdocuments');
-    
+
+    //update
+    Route::any('/staff/ajax/update', [StaffManagementController::class,'ajaxupdate'])->name('staff.ajaxupdate');
+    Route::any('/staff/ajax/qualification/delete', [StaffManagementController::class,'qualificationDelete'])->name('staff.qualification.delete');
+    Route::any('/staff/ajax/workhistory/delete', [StaffManagementController::class,'workhistoryDelete'])->name('staff.workhistory.delete');
+    Route::any('/staff/ajax/skill/delete', [StaffManagementController::class,'skillDelete'])->name('staff.skill.delete');
+    Route::any('/staff/ajax/doc/delete', [StaffManagementController::class,'docDelete'])->name('staff.doc.delete');
+    Route::post('/staff/update', [StaffManagementController::class,'updateStaff'])->name('staff.staff_update');
+
     Route::any('/staff/ajaxphotoadd',[StaffManagementController::class,'ajaxphotoadd'])->name('staff.ajaxphotoadd');
     Route::any('/staff/profile',[StaffManagementController::class, 'profile'])->name('staff/profile');
     
@@ -66,4 +76,6 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('/staff/roles/{id}/destroy', [RolesController::class,'destroy']);
     Route::any('/staff/roles/{id}/updatestatus', [RolesController::class,'updatestatus']);
 
+    //venue user
+    Route::any('create/venue/user/{id}', [StaffManagementController::class,'createVenueUser'])->name('admin/create/venue/user');
 });

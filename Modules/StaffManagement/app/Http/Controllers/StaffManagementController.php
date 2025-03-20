@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\AdminUser;
 use DataTables;
 use Session;
-
+use Illuminate\Validation\Rule;
 
 class StaffManagementController extends Controller
 {
@@ -42,10 +42,12 @@ class StaffManagementController extends Controller
             return Datatables::of($staff)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-       
-                            $btn = '<a href="'.url('admin/staff/detailview/'.$row->id).'" class="edit btn btn-primary btn-sm">View</a>';
-      
-                            return $btn;
+                        $btn = '<div class="d-flex gap-2">
+                            <a href="' . url('admin/staff/edit/' . $row->id) . '" class="edit btn btn-warning btn-sm"><i class="fa-solid fa-user-pen"></i></a>
+                            <a href="' . url('admin/staff/detailview/' . $row->id) . '" class="view btn btn-primary btn-sm"><i class="tf-icon mdi mdi-eye"></i></a>
+                            <a href="' . url('admin/staff/delete/' . $row->id) . '" class="view btn btn-danger btn-sm" id="delete_staff"><i class="fa fa-trash action_icon"></i></a>
+                        </div>';
+                        return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -59,7 +61,7 @@ class StaffManagementController extends Controller
     {
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Staff List";
+        $pagetitle = "Staff Details";
         $pageroot = "Staff";   
         $staff = Staff::where('id',$id)->first();
         $staff_qualification = StaffQualification::where('staffid',$id)->get();
@@ -78,7 +80,7 @@ class StaffManagementController extends Controller
     {
         $username = Session::get('username');
         $userid = Session::get('userid');       
-        $pagetitle = "Staff List";
+        $pagetitle = "Staff";
         $pageroot = "Staff";    
         $department = Departments::where('delete_status','0')->get();
 
@@ -101,7 +103,17 @@ class StaffManagementController extends Controller
         $emcont->relationship = $request->relationship;
         $emcont->save();
         return redirect('admin/staff')->with('success', 'New Staff added Successfully,');
+    }
 
+    public function updateStaff(Request $request){
+        $staffid = $request->staffid;
+        $emcont = StaffEmergency::where('staffid', $staffid)->first();
+        $emcont->personname = $request->personname;
+        $emcont->mobileno = $request->mobileno;
+        $emcont->address = $request->address;
+        $emcont->relationship = $request->relationship;
+        $emcont->save();
+        return redirect('admin/staff')->with('success', 'New Staff updated Successfully,');
     }
 
     public function profile()
@@ -177,21 +189,17 @@ class StaffManagementController extends Controller
             'date_of_birth' => 'required',
             'hire_date' => 'required',
             'roleid' => 'required',
-            'departmentid' => 'required',         
+            'departmentid' => 'required',
+            'email' => ['required', 'email', 'unique:admin_users,email']
         ]);
-
-      
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422); 
         }
 
         $mobilenocheck = Staff::where('phone',$request->phone)->first();
-
         if(empty($mobilenocheck))
         {
-
-            
             $role = ($request->supervisor_id == "") ? 'Admin' : 'Staff';
             $admin_user = new AdminUser;
             $admin_user->name = $request->first_name .' '.$request->last_name;
@@ -202,7 +210,7 @@ class StaffManagementController extends Controller
             $admin_user->delete_status = 0;
             $admin_user->save();
 
-            $staff = new staff;
+            $staff = new Staff;
             $staff->adminuserid = $admin_user->id;
             $staff->first_name =  $first_name;
             $staff->last_name = $last_name;
@@ -216,21 +224,18 @@ class StaffManagementController extends Controller
             $staff->departmentid = $departmentid;
             $staff->roleid = $roleid;
             $staff->employee_code = "000";
-           
             
             if($supervisor_id== "")
                 $supervisor_id = 0;
 
             $staff->adminsupervisor_id =  $supervisor_id;
-           
-            
             $staff->status = "Active";
             $staff->delete_status = 0;
-
-            
-
             $staff->save();
 
+            $admin_user->staff_id = $staff->id;
+            $admin_user->save();
+            
             $browserResponse['id']  = $staff->id;
             $browserResponse['status']   = 'success';
             $browserResponse['message']  = 'New Staff Created, Please check';
@@ -280,14 +285,14 @@ class StaffManagementController extends Controller
             $browserResponse['status']   = 'success';
             $browserResponse['message']  = 'New Qualification details added, Please check';
             $browserResponse['details'] = $details;
-            }
-            else
-            {
-                    $browserResponse['status']   = 'failed';
-                    $browserResponse['message']  = 'Please check your entered details';
-            }
+        }
+        else
+        {
+            $browserResponse['status']   = 'failed';
+            $browserResponse['message']  = 'Please check your entered details';
+        }
 
-    return response()->json($browserResponse, 200);
+     return response()->json($browserResponse, 200);
 
     }
     public function ajaxworkingdetails(Request $request)
@@ -336,7 +341,7 @@ class StaffManagementController extends Controller
                     $browserResponse['message']  = 'Please check your entered details';
             }
 
-    return response()->json($browserResponse, 200);
+        return response()->json($browserResponse, 200);
     }
 
     public function ajaxskillset(Request $request)
@@ -352,8 +357,6 @@ class StaffManagementController extends Controller
             'proficiency_level' => 'required',           
         ]);
 
-      
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422); 
         }
@@ -361,23 +364,23 @@ class StaffManagementController extends Controller
         if($staffid)
         {
             $staff_skills = new StaffSkills;
-            $staff_skills->staffid = $staffid;          
-            $staff_skills->desgination = $proficiency_level;
-          
+            $staff_skills->staffid = $staffid;    
+            $staff_skills->skill_name = $skill_name;          
+            $staff_skills->proficiency_level = $proficiency_level;
             $staff_skills->save();
 
             $details = StaffSkills::where('staffid',$staffid)->get();
             $browserResponse['status']   = 'success';
             $browserResponse['message']  = 'New Skill set added, Please check';
             $browserResponse['details'] = $details;
-            }
-            else
-            {
-                    $browserResponse['status']   = 'failed';
-                    $browserResponse['message']  = 'Please check your entered details';
-            }
+        }
+        else
+        {
+            $browserResponse['status']   = 'failed';
+            $browserResponse['message']  = 'Please check your entered details';
+        }
 
-    return response()->json($browserResponse, 200);
+        return response()->json($browserResponse, 200);
     }
 
     public function ajaxdocuments(Request $request)
@@ -397,8 +400,7 @@ class StaffManagementController extends Controller
         }
 
         if($request->hasFile('file_path')){         
-            $filename = $request->file('file_path')->store('staff_documents', 'public');;
-
+            $filename = $request->file('file_path')->store('staff_documents', 'public');
         }
 
         if($staffid)
@@ -429,15 +431,161 @@ class StaffManagementController extends Controller
         $staffid = $request->staffid;
         if($request->hasFile('staff_photo')){         
             $filename = $request->file('staff_photo')->store('staff_photo', 'public');;
-
         }
         $staff = Staff::find($staffid);
         $staff->staff_photo = $filename;
         $staff->save();
         $browserResponse['status']   = 'success';
-        $browserResponse['message']  = 'New Skill set added, Please check';
+        $browserResponse['message']  = 'Profile photo added, Please check';
         return response()->json($browserResponse, 200);
-
     }
 
+    public function editStaff($id){
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Staff Details";
+        $pageroot = "Staff";
+        
+        $staff = Staff::where('id', $id)->first();
+        $staff_qualification = StaffQualification::where('staffid',$id)->get();
+        $staff_work = StaffWorkHistory::where('staffid',$id)->get();
+        $staff_doc = StaffDocuments::where('staffid',$id)->get();
+        $staff_skill = StaffSkills::where('staffid',$id)->get();
+        $staff_em = StaffEmergency::where('staffid',$id)->first();
+
+        $staffs = AdminUser::where('delete_status','0')->where('role','Admin')->orwhere('role','Staff')->get();
+        $department = Departments::where('delete_status','0')->get();
+
+        return view('staffmanagement::staff.edit',compact('username','userid','pagetitle','pageroot','staff','staff_qualification','staff_work','staff_doc','staff_skill','staff_em', 'staffs', 'department'));
+    }
+
+    public function qualificationDelete(Request $request){
+        StaffQualification::where('id', $request->id)->delete();
+        $staff_qualification = StaffQualification::where('staffid', $request->staff_id)->get();
+        $browserResponse['status']   = 'success';
+        $browserResponse['data']   = $staff_qualification;
+        $browserResponse['message']  = 'Qualification deleted!, Please check';
+        return response()->json($browserResponse, 200);
+    }
+
+    public function workhistoryDelete(Request $request){
+        StaffWorkHistory::where('id', $request->id)->delete();
+        $staff_history = StaffWorkHistory::where('staffid', $request->staff_id)->get();
+        $browserResponse['status']   = 'success';
+        $browserResponse['data']   = $staff_history;
+        $browserResponse['message']  = 'Work History deleted!, Please check';
+        return response()->json($browserResponse, 200);
+    }
+
+    public function skillDelete(Request $request){
+        StaffSkills::where('id', $request->id)->delete();
+        $staff_skill = StaffSkills::where('staffid', $request->staff_id)->get();
+        $browserResponse['status']   = 'success';
+        $browserResponse['data']     = $staff_skill;
+        $browserResponse['message']  = 'Work History deleted!, Please check';
+        return response()->json($browserResponse, 200);
+    }
+
+    public function docDelete(Request $request){
+        StaffDocuments::where('id', $request->id)->delete();
+        $staff_docs = StaffDocuments::where('staffid', $request->staff_id)->get();
+        $browserResponse['status']   = 'success';
+        $browserResponse['data']     = $staff_docs;
+        $browserResponse['message']  = 'Document deleted!, Please check';
+        return response()->json($browserResponse, 200);
+    }
+
+    public function ajaxupdate(Request $request){
+        try{
+            $first_name = $request->first_name;
+            $last_name = $request->last_name;
+            $email = $request->email;
+            $phone = $request->phone;
+            $contact_address = $request->contact_address;
+            $location = $request->location;
+            $date_of_birth = $request->date_of_birth;
+            $hire_date = $request->hire_date;
+            $roleid = $request->roleid;
+            $departmentid = $request->departmentid;
+            $supervisor_id = $request->supervisor_id ?? '';
+
+            $validator = Validator::make($request->all(),[
+                'phone' => 'required', 'string', 'regex:/^[0-9]{10}$/',
+                'first_name' => 'required',
+                'last_name' => 'required',         
+                'contact_address' => 'required',
+                'location' => 'required',
+                'date_of_birth' => 'required',
+                'hire_date' => 'required',
+                'roleid' => 'required',
+                'departmentid' => 'required',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('admin_users', 'email')->ignore($request->staff_id, 'staff_id') 
+                ]
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422); 
+            }
+
+            $role = ($request->supervisor_id == "") ? 'Admin' : 'Staff';
+            $admin_user = AdminUser::where('staff_id', $request->staff_id)->first();
+            $admin_user->name = $request->first_name .' '.$request->last_name;
+            $admin_user->email  = $request->email;
+            $admin_user->password = md5('123456789'); 
+            $admin_user->role = $role;
+            $admin_user->status = "Active";
+            $admin_user->delete_status = 0;
+            $admin_user->save();
+
+            $staff = Staff::where('id', $request->staff_id)->first();
+            $staff->adminuserid = $admin_user->id;
+            $staff->first_name =  $first_name;
+            $staff->last_name = $last_name;
+            $staff->email = $email;
+            $staff->phone = $phone;
+            $staff->contact_address = $contact_address;
+            $staff->location = $location;
+            $staff->date_of_birth = $date_of_birth;
+            $staff->hire_date = $hire_date;
+            $staff->departmentid = $departmentid;
+            $staff->roleid = $roleid;
+            $staff->employee_code = "000";
+            
+            if($supervisor_id == "")
+            $supervisor_id = 0;
+
+            $staff->adminsupervisor_id =  $supervisor_id;
+            $staff->status = "Active";
+            $staff->delete_status = 0;
+            $staff->save();
+
+            $browserResponse['id']  = $staff->id;
+            $browserResponse['status']   = 'success';
+            $browserResponse['message']  = 'New Staff Created, Please check';
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
+
+        return response()->json($browserResponse, 200);
+    }
+
+    public function deleteStaff($id){
+        try{
+            $deleteAdmin = AdminUser::where('staff_id', $id)->update(['delete_status' => 1]);
+            $deleteStaff = Staff::where('id', $id)->update(['delete_status' => 1]);
+            return redirect('admin/staff')->with('success', 'Staff Deleted Successfully');
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
+    }
+
+    //venue user
+    public function createVenueUser($id){
+        return view('staffmanagement::staff.venue_user.create');
+    }
 }

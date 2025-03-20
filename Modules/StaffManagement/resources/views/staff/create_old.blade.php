@@ -13,48 +13,49 @@
          <div class="card-body">
             <h4 class="header-title mb-4">Add {!! $pagetitle !!}</h4>
             <div class="text-end">
-               <a href = "{{ route('admin/staff') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+               <a href = "{{ route('staff/departments') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
                <span class="tf-icon mdi mdi-eye me-1"></span> Staff List
                </a>
             </div>
             <ul class="nav nav-pills navtab-bg nav-justified">
                <li class="nav-item">
-                  <a href="#profiledetails" aria-expanded="false" class="nav-link active">
+                  <a href="#profiledetails" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
                   <span class="d-inline-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
                   <span class="d-none d-sm-inline-block">Profile Details</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a href="#qualification" aria-expanded="true" class="nav-link navqualification">
+                  <a href="#qualification" data-bs-toggle="tab" aria-expanded="true" class="nav-link navqualification">
                   <span class="d-inline-block d-sm-none"><i class="mdi mdi-account"></i></span>
                   <span class="d-none d-sm-inline-block">Qualification</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a href="#workhistory" aria-expanded="false" class="nav-link navworkhistory">
+                  <a href="#workhistory" data-bs-toggle="tab" aria-expanded="false" class="nav-link navworkhistory">
                   <span class="d-inline-block d-sm-none"><i class="mdi mdi-email-variant"></i></span>
                   <span class="d-none d-sm-inline-block">Work History</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a href="#skillset" aria-expanded="false" class="nav-link navskillset">
+                  <a href="#skillset" data-bs-toggle="tab" aria-expanded="false" class="nav-link navskillset">
                   <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
                   <span class="d-none d-sm-inline-block">Skill Set</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a href="#docs" aria-expanded="false" class="nav-link navdocs">
+                  <a href="#docs" data-bs-toggle="tab" aria-expanded="false" class="nav-link navdocs">
                   <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
                   <span class="d-none d-sm-inline-block">Upload Docs & Photos</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a href="#contact" aria-expanded="false" class="nav-link navContact">
+                  <a href="#contact" data-bs-toggle="tab" aria-expanded="false" class="nav-link navContact">
                   <span class="d-inline-block d-sm-none"><i class="mdi mdi-cog"></i></span>
                   <span class="d-none d-sm-inline-block">Emergency Contact</span>
                   </a>
                </li>
             </ul>
+            <!-- Profile details -->
             <div class="tab-content">
                <div class="tab-pane show active" id="profiledetails">
                   <div class ="row">
@@ -95,7 +96,7 @@
                            </div>
                         </div>
                         <div class="mb-4 row">
-                           <label class="col-md-4 col-form-label" for="supervisor_id">Reporting</label>
+                           <label class="col-md-4 col-form-label" for="email">Reporting</label>
                            <div class="col-md-8">
                               <select id="supervisor_id" name="supervisor_id" class="form-control" >
                                  <option value= "">Select</option>
@@ -112,7 +113,6 @@
                            <label class="col-md-4 col-form-label" for="email">Email ID</label>
                            <div class="col-md-8">
                               <input type="text" id="email" name="email" class="form-control" placeholder="Enter the Email Id" value = "{{ old('email') }}" required>
-                              <div class="alert alert-danger failmessage email mt-3" style="display:none"></div>
                            </div>
                         </div>
                         <div class="mb-4 row">
@@ -354,54 +354,50 @@
                   </div>
                </div>
                <div class="tab-pane" id="docs">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="mb-4 row">
-                            <label for="formFile" class="form-label">Employee Profile Photo</label>
-                            <input class="form-control imageUpload" type="file" id="formFile" name = "staff_photo">
-                            </div>
+                  <div class="row">
+                     <div class="col-6">
+                        <div class="mb-4 row">
+                           <label for="formFile" class="form-label">Employee Profile Photo</label>
+                           <input class="form-control imageUpload" type="file" id="formFile" name = "staff_photo">
                         </div>
-                        <div class="col-6">
-                            <div class="justify-content-start row mb-4">
-                            <div class="col-sm-6">
-                                <button type="button" class="btn btn-primary waves-effect waves-light mt-4 p-2" id="uploadimage">Upload Image</button>	
-                            </div>
-                            </div>
+                     </div>
+                     <div class="col-6">
+                        <div id = "categoryiconimage" class="imageOutput" style="width:200px;height:200px;border:1px solid #333"></div>
+                        <br>
+                        <div class="justify-content-end row mb-4">
+                           <div class="col-sm-6">
+                              <button type="button" class="btn btn-primary waves-effect waves-light" id="uploadimage">Upload Image</button>	
+                           </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div id = "categoryiconimage" class="imageOutput" style="width:200px;height:200px;border:1px solid #333">
-                        </div>
-                    </div>
+                     </div>
+                  </div>
                   <br>
                   <div class="row">
-                     <div class="col-5">
+                     <div class="col-6">
                         <div class="mb-4 row">
-                           <label class="col-md-3 col-form-label" for="document_name">Document Name</label>
-                           <div class="col-md-9">
+                           <label class="col-md-4 col-form-label" for="document_name">Document Name</label>
+                           <div class="col-md-8">
                               <input type="text" id="document_name" name="document_name" class="form-control" value = "{{ old('document_name') }}" required>
                               <div class="alert alert-danger failmessage document_name mt-3" style="display:none"></div>
                            </div>
                         </div>
                      </div>
-                     <div class="col-5">
+                     <div class="col-6">
                         <div class="mb-4 row">
-                           <label class="col-md-3 col-form-label" for="file_path">Uplaod File</label>
-                           <div class="col-md-9">
+                           <label class="col-md-4 col-form-label" for="file_path">Uplaod File</label>
+                           <div class="col-md-8">
                               <input type="file" id="file_path" name="file_path" class="form-control" value = "{{ old('file_path') }}" required>
                               <div class="alert alert-danger failmessage file_path mt-3" style="display:none"></div>
                            </div>
                         </div>
                      </div>
-                     <div class="col-2">
-                        <div class="justify-content-end row">
-                            <div class="upload-btn">
-                                <button type="button" class="btn btn-primary waves-effect waves-light uploadfiles"> <span class="tf-icon mdi mdi-plus me-1"></span> Add</button>	
-                            </div>
-                        </div>
-                     </div>
                   </div>
                   <div class="row mt-3">
+                     <div class="justify-content-end row">
+                        <div class="col-sm-2">
+                           <button type="button" class="btn btn-primary waves-effect waves-light uploadfiles"> <span class="tf-icon mdi mdi-plus me-1"></span> Add</button>	
+                        </div>
+                     </div>
                      <div class= "table-responsive mt-3">
                         <table class="table table-bordered">
                            <thead>
@@ -419,7 +415,7 @@
                   <div class="row mt-3">
                      <div class="justify-content-end row">
                         <div class="col-sm-4">
-                           <button type="button" class="btn btn-primary waves-effect waves-light savedocs">Update & Continue</button>	
+                           <button type="button" class="btn btn-primary waves-effect waves-light savedocs">Save & Continue</button>	
                         </div>
                      </div>
                   </div>
@@ -546,10 +542,8 @@
 			data:{ "_token": "{{ csrf_token() }}", "first_name" :first_name, "last_name" :last_name, "email" :email, "phone" :phone, "contact_address" :contact_address, "location" :location, "date_of_birth" :date_of_birth,"hire_date" :hire_date,"roleid" :roleid,"departmentid" :departmentid,"supervisor_id" :supervisor_id},
      		success:function(response){  
       			console.log(response);
-               if(response['status'] == 'success'){
-                  $('#staffid').val(response['id']);
-                  $('.nav-pills .active').parent().next('li').find('a').tab('show');
-               }
+   				$('#staffid').val(response['id']);
+   	 			$('.nav-pills .active').parent().next('li').find('a').trigger('click');
 			},
           	error: function(response) {
             	console.log(response);
@@ -566,19 +560,19 @@
    	});
    
    	$(".savedegree").click(function(){
-		$('.nav-pills .active').parent().next('li').find('a').tab('show');
+		$('.nav-pills .active').parent().next('li').find('a').trigger('click');
 	});
 	
 	$(".saveworking").click(function(){
-		$('.nav-pills .active').parent().next('li').find('a').tab('show');
+		$('.nav-pills .active').parent().next('li').find('a').trigger('click');
 	});
 	
 	$(".savedocs").click(function(){
-		$('.nav-pills .active').parent().next('li').find('a').tab('show');
+		$('.nav-pills .active').parent().next('li').find('a').trigger('click');
 	});
 	
 	$(".saveskills").click(function(){
-		$('.nav-pills .active').parent().next('li').find('a').tab('show');
+		$('.nav-pills .active').parent().next('li').find('a').trigger('click');
 	});
    
    	$(".addqualification").click(function(){
@@ -599,7 +593,7 @@
              	if(returnData.length > 0){
                  	let casestr = '';
                  	for(i=0;i<returnData.length;i++){
-                     	casestr  += '<tr><td>' + (parseInt(i)+1) +'</td><td>' + returnData[i]['degreename'] + '</td><td>' + returnData[i]['qualification_type'] + '</td><td>'+ returnData[i]['institution'] +'</td><td>'+ returnData[i]['completion_date'] + '</td></tr>';
+                     	casestr  += '<tr><td>' + i +'</td><td>' + returnData[i]['degreename'] + '</td><td>' + returnData[i]['qualification_type'] + '</td><td>'+ returnData[i]['institution'] +'</td><td>'+ returnData[i]['completion_date'] + '</td></tr>';
                  	}
 					console.log(casestr);       
 					$("#qualificationtable").append(casestr);
@@ -641,7 +635,7 @@
              	if(returnData.length > 0){
                  	let casestr = '';
                  	for(i=0;i<returnData.length;i++){
-                     	casestr  += '<tr><td>' + (parseInt(i)+1) +'</td><td>' + returnData[i]['employeername'] + '</td><td>' + returnData[i]['desgination'] + '</td><td>'+ returnData[i]['start_date'] +'</td><td>'+ returnData[i]['end_date'] +'</td><td>'+ returnData[i]['leavereason'] + '</td></tr>';
+                     	casestr  += '<tr><td>' + i +'</td><td>' + returnData[i]['employeername'] + '</td><td>' + returnData[i]['desgination'] + '</td><td>'+ returnData[i]['start_date'] +'</td><td>'+ returnData[i]['end_date'] +  +'</td><td>'+ returnData[i]['leavereason'] + '</td></tr>';
                  	}
               		console.log(casestr);       
               		$("#workdetailstable").append(casestr);
@@ -680,7 +674,7 @@
              	if(returnData.length > 0){
                  	let casestr = '';
                  	for(i=0;i<returnData.length;i++){
-                     	casestr  += '<tr><td>' + (parseInt(i)+1) +'</td><td>' + returnData[i]['skill_name'] + '</td><td>' + returnData[i]['proficiency_level'] +'</td></tr>';
+                     	casestr  += '<tr><td>' + i +'</td><td>' + returnData[i]['skill_name'] + '</td><td>' + returnData[i]['proficiency_level'] +'</td></tr>';
                  	}
              		console.log(casestr);
               		$("#skillsettable").append(casestr);
@@ -705,25 +699,12 @@
       
    	$("#uploadimage").click(function(){
 		var staffid = $('#staffid').val(); 
-		var staff_photo = $('#formFile')[0].files[0];
-
-        if (!staff_photo) {
-            alert("Please select an image before uploading.");
-            return;
-        }
-
-        var formData = new FormData();
-        formData.append("_token", "{{ csrf_token() }}");
-        formData.append("staff_photo", staff_photo);
-        formData.append("staffid", staffid);
-
-        $.ajax({
+		var staff_photo = $('#formFile').prop('files');
+		$.ajax({
 			type:'POST',
 			url:"{{ route('staff.ajaxphotoadd') }}",
 			dataType: 'json',
-            data: formData,
-            contentType: false,
-            processData: false, 
+			data:{ "_token": "{{ csrf_token() }}", "staff_photo" :staff_photo,"staffid":staffid},
 			success:function(response){
 				alert("Image added successfully");
 			},
@@ -732,51 +713,34 @@
 		});
    	});
    
-    $(".uploadfiles").click(function(){
-        var staffid = $('#staffid').val(); 
-        var document_name = $('#document_name').val(); 
-        var file_path = $('#file_path')[0].files[0];
-
-        if (!file_path) {
-            alert("Please select a file before uploading.");
-            return;
-        }
-        var formData = new FormData();
-        formData.append("_token", "{{ csrf_token() }}");
-        formData.append("file_path", file_path);
-        formData.append("staffid", staffid);
-        formData.append("document_name", document_name);
-
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('staff.ajaxdocuments') }}",
-            data: formData,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
-            success: function(response){
-                $("#uploadfilestable").empty();  
-                var returnData = response['details'];   
-
-                if(returnData.length > 0){
-                    let casestr = '';
-                    for(let i = 0; i < returnData.length; i++){
-                        casestr += `<tr>
-                            <td>${i + 1}</td>
-                            <td>${returnData[i]['document_name']}</td>
-                            <td><a href="/storage/${returnData[i]['file_path']}" target="_blank">View File</a></td>
-                        </tr>`;
-                    }
-                    $("#uploadfilestable").append(casestr);
-                } else {
-                    alert("No Data");
-                }
-            },
-            error: function(response) {
-                alert("Error uploading file.");
-            }
-        });
-    });
-
+   	$("#uploadfiles").click(function(){
+		var staffid = $('#staffid').val(); 
+		var document_name = $('#document_name').val(); 
+		var file_path = $('#file_path').prop('files'); 
+		$.ajax({
+			type:'POST',
+			url:"{{ route('staff.ajaxdocuments') }}",
+			dataType: 'json',
+			data:{ "_token": "{{ csrf_token() }}", "file_path" :file_path,"staffid":staffid, "document_name":document_name },
+			success:function(response){
+				$("#uploadfilestable").empty();  
+				var returnData = response['details'];   
+				if(returnData.length>0){
+					let casestr = '';
+					for(i=0;i<returnData.length;i++){
+						casestr  += '<tr><td>' + i +'</td><td>' + returnData[i]['document_name'] + '</td><td>' + returnData[i]['file_path'] +'</td></tr>';
+					}
+					console.log(casestr);       
+				
+					$("#uploadfilestable").append(casestr);
+				}
+				else{
+					alert("No Data")
+				}
+			},
+			error: function(response) {
+			}
+		});
+   }); 
 </script>
 @endpush
