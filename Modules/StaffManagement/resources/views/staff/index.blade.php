@@ -14,7 +14,7 @@
 			   
 				<div class="text-end">
 				 <a href = "{{ route('staff/create') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-								  <span class="tf-icon mdi mdi-plus me-1"></span>Add Staff
+						<span class="tf-icon mdi mdi-plus me-1"></span>Add Staff
 				   </a>
 				</div>
 			
@@ -52,7 +52,11 @@
         serverSide: true,
         ajax: "{{ route('admin/staff') }}",
         columns: [
-            {data: 'id', name: 'id'},
+            {
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
             {data: 'first_name', name: 'first_name'},
             {data: 'last_name', name: 'last_name'},
             {data: 'email', name: 'email'},
@@ -60,7 +64,15 @@
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
-        
+
+    $(document).on('click', '#delete_staff', function(){
+        if (confirm("Are you sure you want to delete this staff?")) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    })
   });
 </script>
 @endpush
