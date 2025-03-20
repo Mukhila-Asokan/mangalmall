@@ -56872,7 +56872,7 @@ body::before {
 .stickymenu ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 5px;
 }
 
 .stickymenu li {
@@ -56881,7 +56881,7 @@ body::before {
   text-align: center;
   z-index: 10; /* Ensure li itself is above .stickymenucontent */
   background-color: rgba(253, 251, 248, 0.8);
-  padding: 10px;
+  padding: 20px;
   margin-bottom: 16px;
   border-radius: 4px;
   display: flex;
@@ -56951,4 +56951,28 @@ select.form-control{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.stickymenucontent .bg-success
+{
+    background-color: #f1ce99 !important;
+}
+.stickymenucontent .bg-warning
+{
+    background-color: #eedfbf !important;
+}
+.stickymenucontent .bg-info {
+  background-color: #f1ce99 !important;
+}
+.stickymenucontent .bg-danger
+{
+  background-color: #f1ce99 !important;
+}
+.stickymenucontent .card-text
+{
+  font-size: 16px!important;
+}
+.swal2-confirm
+{
+  background-color: #58111A !important;
+  color: #fff !important;
 }
