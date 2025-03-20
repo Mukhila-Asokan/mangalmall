@@ -192,7 +192,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::any('/webpage/template',[UserWebPageController::class, 'template'])->name('user.webpage.template');
     Route::any('/webpage/showtemplate',[UserWebPageController::class, 'showtemplate'])->name('user.showtemplate');
     Route::any('/webpage/{id}/preview',[UserWebPageController::class, 'preview']);
-    Route::any('/webpage/{userid}/{id}/editor', [UserWebPageController::class,'themeeditor'])->name('webpage/themelistview/editor');
+    Route::any('/webpage/{userid}/{id}/editor/', [UserWebPageController::class,'themeeditor'])->name('webpage/themelistview/editor');
 
 
     /* Invitation Card Design*/

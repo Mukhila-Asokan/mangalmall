@@ -21,6 +21,7 @@ use Modules\VenueAdmin\Models\VenuePricing;
 use Modules\VenueAdmin\Models\VenueUser;
 use App\Rules\VenueAvailability;
 use Illuminate\Support\Facades\Validator;
+use App\Models\{BookingEnquiry, User};
 
 class VenueBookingController extends Controller
 {
@@ -113,7 +114,9 @@ class VenueBookingController extends Controller
         $venueid = $id;
         $venue = VenueDetails::where('id', $id)->where('delete_status', 0)->first();
         $occasion_types = OccasionType::where('delete_status','0')->get();
-        return view('venueadmin::booking.create',compact('pagetitle','pageroot','occasion_types','venueid', 'venue'));
+        $requestUsers = BookingEnquiry::where('venue_id', $id)->distinct('user_id')->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $requestUsers)->get();
+        return view('venueadmin::booking.create',compact('pagetitle','pageroot','occasion_types','venueid', 'venue', 'users'));
     }
 
     /**
@@ -409,8 +412,8 @@ public function updatebooking(Request $request, $id)
 
             $venuebooking = new VenueBooking();
             $venuebooking->venue_id = $request->venue_id;
-            $venuebooking->booked_by = 'VenueUser';
-            $venuebooking->bookinguserid = Session::get('venueuserid'); 
+            $venuebooking->booked_by = $request->user_id ? 'VenueUserMangal' : 'VenueUser';
+            $venuebooking->bookinguserid = $request->user_id ?? Session::get('venueuserid'); 
             $venuebooking->event_id = $request->event_id;
             $venuebooking->event_title = $request->event_name;
             $venuebooking->event_name = $request->event_name;

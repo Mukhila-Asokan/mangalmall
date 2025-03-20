@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Venue\Models\VenueDetails;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Modules\VenueAdmin\Database\Factories\VenueUserFactory;
+use Modules\Venue\Models\MobileNumberChangeRequest;
 
 class VenueUser extends Model
 {
@@ -19,14 +19,14 @@ class VenueUser extends Model
 
     protected $table = 'venueuser';
 
-    // protected static function newFactory(): VenueUserFactory
-    // {
-    //     // return VenueUserFactory::new();
-    // }
-
     public function venue()
     {
         return $this->belongsTo(VenueDetails::class, 'venueid', 'id');
+    }
+
+    public function request()
+    {
+        return $this->belongsTo(MobileNumberChangeRequest::class, 'venue_admin_id', 'id');
     }
 
 }

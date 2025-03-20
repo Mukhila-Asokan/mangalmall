@@ -36,7 +36,7 @@
                             <td>
                                 @if($enquiry->status != 'ENQUIRED')
                                     <a href = "{{ route('update.enquiry.status', ['id' => $enquiry->id]) }}" class="btn btn-warning" title = "Invoice">
-                                        Click here to update status
+                                        Update Status
                                     </a>
                                 @endif
                             </td>
@@ -55,18 +55,20 @@
 @endsection
 @push('scripts')
 	<script>
-		document.getElementById('searchInput').addEventListener('keyup', function() {
+        document.getElementById('searchInput').addEventListener('input', function() {
 			let searchValue = this.value.toLowerCase();
 			let tableRows = document.querySelectorAll('#enquiryTableBody tr');
 
 			tableRows.forEach(row => {
-				let venueName = row.cells[1].textContent.toLowerCase();
-				let websiteName = row.cells[2].textContent.toLowerCase();
+				let rowData = '';
+				Array.from(row.cells).forEach(cell => {
+					rowData += cell.textContent.toLowerCase() + ' ';
+				});
 
-				if (venueName.includes(searchValue) || websiteName.includes(searchValue)) {
-				row.style.display = '';
+				if (rowData.includes(searchValue)) {
+					row.style.display = '';
 				} else {
-				row.style.display = 'none';
+					row.style.display = 'none';
 				}
 			});
 		});

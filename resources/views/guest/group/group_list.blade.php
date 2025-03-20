@@ -1,10 +1,10 @@
 <div class="card p-3 m-3  border-0">
     <div class="card-header pb-1 pr-3">
         <div class="row">
-            <div class="col-md-6 d-flex">
+            <div class="col-md-6 col-sm-12 d-flex">
                 <span class="font-20 font-color font-weight-bold">Guest Groups</span>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-6 col-sm-12"></div>
             <div class="breadcrumb-bar">
                 <div class="container">
                     <div class="row">
@@ -23,7 +23,7 @@
     </div>
     <hr>
     <div class="d-flex justify-content-between row mb-4">
-        <div class="mb-2 col-7 d-flex">
+        <div class="mb-2 col-md-7 col-sm-12 d-flex">
             <div class="input-group">
                 <input type="text" id="search_guest_group_value" class="form-control" placeholder="Search Guest group details here..." aria-label="Search Guest details here..." aria-describedby="basic-addon2">
                 <div class="input-group-append">
@@ -35,15 +35,15 @@
     </div>
     <div class="row d-flex justify-content contact-list">
         @foreach($guestGroups as $group)
-            <div class="col-3 mb-4">
+            <div class="col-md-3 col-sm-12 mb-4">
                 <div class="card contact-card m-1">
                     <div class="card-header m-1">
                         <div class="row">
-                            <div class="col-8 text-start d-flex">
+                            <div class="col-md-8 col-sm-12 text-start d-flex">
                                 <i class="bi bi-people-fill font-14"></i>
                                 <span class="font-14 font-weight-bold ml-1">{{$group->group_name}}</span>
                             </div>
-                            <div class="col-4 d-flex justify-content-end align-items-center">
+                            <div class="col-md-4 col-sm-12 d-flex justify-content-end align-items-center">
                                 <a id="add_group" data-id="{{$group->id}}" class="add_group_contact pointer"><i class="bi bi-person-plus-fill font-20"></i></a>
                                 <a id="edit_group" class="edit_group ml-2 pointer" data-id="{{$group->id}}"><i class="bi bi-pencil-square font-20"></i></a>
                             </div>
@@ -54,18 +54,18 @@
                         <div class="row mt-1">
                             <div class="col-md-12 d-flex">
                                 <i class="bi bi-file-earmark-text font-12"></i>
-                                <span class="font-12 ml-1">{{ Str::limit($group->group_description, 30, '...') ?? '-' }}</span>
+                                <span class="font-12 ml-1 overflow-hidden">{{ $group->group_description ?? '-' }}</span>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer bg-transparent ml-2 mr-3 p-2">
                         <div class="row d-flex">
-                            <div class="col-md-6 d-flex justify-content-start p-0">
+                            <div class="col-md-6 col-sm-3 d-flex justify-content-start p-0">
                                 <a id="delete_group" class="delete_group ml-2 pointer" data-id="{{$group->id}}">
                                     <i class="bi bi-trash3"></i>
                                 </a>
                             </div>
-                            <div class="col-md-6 d-flex justify-content-end p-0">
+                            <div class="col-md-6 col-sm-9 d-flex justify-content-end p-0">
                                 <button class="btn btn-primary waves-effect waves-light text-end ml-1 pl-2 pr-2 pt-1 pb-1 font-12 view_group" id="view_group" data-id="{{$group->id}}">
                                     View Group
                                 </button>

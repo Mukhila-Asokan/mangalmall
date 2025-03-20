@@ -54,7 +54,7 @@
                         <div class="mb-4 row">
                             <label class="col-md-4 col-form-label" for="imagePreview">Image Preview</label>
                             <div class="col-md-8">
-                                <img id="imagePreview" src="{{ $webpage->image ? asset('storage/' . $webpage->image) : '#' }}" alt="Image Preview" style="max-width: 100%; height: auto; {{ $webpage->image ? '' : 'display: none;' }}">
+                                <img id="imagePreview" src="{{ $webpage->preview_image ?  url('storage/' . $webpage->preview_image) : '#' }}" alt="Image Preview" style="max-width: 100%; height: auto; {{ $webpage->preview_image ? '' : 'display: none;' }}">
                             </div>
                         </div>
 
