@@ -4,6 +4,7 @@ namespace Modules\Settings\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SettingsController extends Controller
 {
@@ -61,5 +62,13 @@ class SettingsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function budget()
+    {
+        $pageroot = "Settings";
+        $username = Session::get('username');
+        $userid = Session::get('userid');
+        $pagetitle = "Budget";
+        return view('settings::budget',compact('username','pageroot','pagetitle'));
     }
 }

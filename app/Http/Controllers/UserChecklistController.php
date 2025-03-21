@@ -15,21 +15,23 @@ class UserChecklistController extends Controller
 {
     public function create($id)
     {
+      
         try {
             $userid = Auth::user()->id;
+            
+            $useroccasion = UserOccasion::where('id', $id)->first();            
+            $checklistcatIds = EventChecklistAssignments::where('occasion_id',$useroccasion->occasiontypeid)->pluck('category_id');
          
-            $useroccasion = UserOccasion::where('userid', $userid)->where('occasiontypeid', $id)->first();
-            $checklistcatIds = EventChecklistAssignments::where('occasion_id', $id)->pluck('category_id');
-
             $checklistitems = ChecklistItems::whereIn('category_id', $checklistcatIds)->get();
             // Group data by status
-           
+        
             foreach ($checklistitems as $checklistitem) {
             $existingChecklist = UserChecklist::where('name', $checklistitem->item_name)
                 ->where('user_id', $userid)
-                ->where('occasion_id', $id)
-                ->first();
-        
+                ->where('occasion_id', $useroccasion->occasiontypeid)
+                ->first();        
+
+               
             if (!$existingChecklist) { // Prevent duplicates
                 $usechecklist = new UserChecklist();
                 $usechecklist->name = $checklistitem->item_name;
@@ -40,6 +42,7 @@ class UserChecklistController extends Controller
                 $usechecklist->delete_status = 0;
                 $usechecklist->save();
             }
+            
             }
         
             $checklist = UserChecklist::where('user_id', $userid)
