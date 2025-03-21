@@ -6,6 +6,9 @@ use Modules\Settings\Http\Controllers\ChecklistController;
 use Modules\Settings\Http\Controllers\ChecklistCategoryController;
 use Modules\Settings\Http\Controllers\ChecklistItemsController;
 use Modules\Settings\Http\Controllers\EventChecklistAssignmentsController;
+use Modules\Settings\Http\Controllers\BudgetCategoryController;
+use Modules\Settings\Http\Controllers\BudgetItemsController; 
+use Modules\Settings\Http\Controllers\BudgetCatAssignEventController;
 
 
 /*
@@ -53,6 +56,32 @@ Route::prefix('admin/settings')->middleware('auth:admin')->group(function () {
     Route::any('/checklistitems/show', [ChecklistItemsController::class,'index'])->name('admin.checklistitems.index');
     Route::any('/checklistitems/getitems', [ChecklistItemsController::class,'getitems'])->name('admin.checklistitems.get');    
 
+    /*Budget*/
+    Route::any('/budget', [SettingsController::class,'budget'])->name('admin.budget');
 
+    Route::any('/budgetcat/create', [BudgetCategoryController::class,'create'])->name('admin.budgetcat.create');
+    Route::any('/budgetcat/store', [BudgetCategoryController::class,'store'])->name('admin.budgetcat.store');
+    Route::any('/budgetcat/edit/{id}', [BudgetCategoryController::class,'edit'])->name('admin.budgetcat.edit');
+    Route::any('/budgetcat/update/{id}', [BudgetCategoryController::class,'update'])->name('admin.budgetcat.update');
+    Route::any('/budgetcat/{id}/destroy', [BudgetCategoryController::class,'destroy'])->name('admin.budgetcat.delete');
+    Route::any('/budgetcat/{id}/updatestatus', [BudgetCategoryController::class,'updatestatus'])->name('admin.budgetcat.updatestatus');
+    Route::any('/budgetcat/show', [BudgetCategoryController::class,'index'])->name('admin.budgetcat.index');
+    
+    Route::any('/budgetitems/create', [BudgetItemsController::class,'create'])->name('admin.budgetitems.create');
+    Route::any('/budgetitems/store', [BudgetItemsController::class,'store'])->name('admin.budgetitems.store');
+    Route::any('/budgetitems/edit/{id}', [BudgetItemsController::class,'edit'])->name('admin.budgetitems.edit');
+    Route::any('/budgetitems/update/{id}', [BudgetItemsController::class,'update'])->name('admin.budgetitems.update');
+    Route::any('/budgetitems/{id}/destroy', [BudgetItemsController::class,'destroy'])->name('admin.budgetitems.delete');
+    Route::any('/budgetitems/{id}/updatestatus', [BudgetItemsController::class,'updatestatus'])->name('admin.budgetitems.updatestatus');
+    Route::any('/budgetitems/show', [BudgetItemsController::class,'index'])->name('admin.budgetitems.index');
+    Route::any('/budgetitems/getitems', [BudgetItemsController::class,'getitems'])->name('admin.budgetitems.get');  
+    
+    Route::any('/eventbudget/create', [BudgetCatAssignEventController::class,'create'])->name('admin.eventbudget.create');
+    Route::any('/eventbudget/store', [BudgetCatAssignEventController::class,'store'])->name('admin.eventbudget.store');
+    Route::any('/eventbudget/edit/{id}', [BudgetCatAssignEventController::class,'edit'])->name('admin.eventbudget.edit');
+    Route::any('/eventbudget/update/{id}', [BudgetCatAssignEventController::class,'update'])->name('admin.eventbudget.update');
+    Route::any('/eventbudget/{id}/destroy', [BudgetCatAssignEventController::class,'destroy'])->name('admin.eventbudget.delete');
+    Route::any('/eventbudget/{id}/updatestatus', [BudgetCatAssignEventController::class,'updatestatus'])->name('admin.eventbudget.updatestatus');
+    Route::any('/eventbudget/show', [BudgetCatAssignEventController::class,'index'])->name('admin.eventbudget.index');
 
 });

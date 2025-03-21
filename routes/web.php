@@ -29,6 +29,7 @@ use App\Http\Controllers\BlogCommentController;
 
 use App\Http\Controllers\BlogLikeController;
 use App\Http\Controllers\UserChecklistController;
+use App\Http\Controllers\UserBudgetController;
 
 
 use Illuminate\Support\Facades\Artisan;
@@ -142,7 +143,17 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::post('/checklist/store', [UserChecklistController::class, 'store'])->name('checklist.store');
     Route::post('/checklist/update-status', [UserChecklistController::class, 'updateStatus'])->name('checklist.updateStatus');
 
+    /*Budget*/
+    Route::any('/budget',[UserBudgetController::class, 'index'])->name('home.budget');
+    Route::any('/budget/create/{budget_id}',[UserBudgetController::class, 'create'])->name('homebudget.create');
+    Route::any('/budget/list',[UserBudgetController::class, 'index'])->name('budget.index');
+    Route::post('/budget/store', [UserBudgetController::class, 'store'])->name('userbudget.store');
+    Route::post('/budget/update-status', [UserBudgetController::class, 'updateStatus'])->name('budget.updateStatus');
+    Route::post('/budget/update', [UserBudgetController::class, 'update'])->name('userbudget.update');
+    Route::delete('/budget/destroy/{id}', [UserBudgetController::class, 'destroy'])->name('userbudget.destroy');
 
+
+    
     
     Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
     Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');

@@ -8142,7 +8142,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 
 /* line 6, src/assets/scss/vendors/bootstrap.min.css */
 .bg-light {
-  background-color: #f8f9fa !important;
+  background-color: #ffffff !important;
   
 }
 
@@ -51522,7 +51522,7 @@ select.form-control.has-value {
           animation-duration: 1s;
   -webkit-animation-name: slideInU;
           animation-name: slideInU;
-  background: linear-gradient(to bottom, rgba(238, 147, 67, 0.3), rgb(244, 237, 220));
+  background: linear-gradient(to bottom, rgba(225, 225, 225, 0.3), rgb(255, 255, 255));
          
 }
 
@@ -56818,7 +56818,7 @@ body::before {
   height: 100%;
   width: 100%;
   z-index: -1; /* Keeps it behind content */
-  opacity: 0.3; /* Controls background opacity */
+  opacity: 0.1; /* Controls background opacity */
 }
 .hexagon {
   position: relative;
@@ -56880,7 +56880,7 @@ body::before {
   padding: 10px;
   text-align: center;
   z-index: 10; /* Ensure li itself is above .stickymenucontent */
-  background-color: rgba(253, 251, 248, 0.8);
+  background-color: rgba(238, 192, 123, 0.8);
   padding: 20px;
   margin-bottom: 16px;
   border-radius: 4px;

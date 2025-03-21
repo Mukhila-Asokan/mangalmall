@@ -4,12 +4,12 @@
             <div class="logo-box">
                 <!-- Brand Logo Light -->
                 <a href="#" class="logo-light">
-                    <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="" height="75">
+                    <img src="<?php echo e(asset('adminassets/images/logo-light.png')); ?>" alt="" height="75">
                 </a>
 
                 <!-- Brand Logo Dark -->
                 <a href="#" class="logo-dark">
-                    <img src="{{ asset('adminassets/images/logo-light.png') }}" alt="" height="75">
+                    <img src="<?php echo e(asset('adminassets/images/logo-light.png')); ?>" alt="" height="75">
                 </a>
             </div>
 
@@ -20,7 +20,7 @@
                     <li class="menu-title">Menu</li>
 
                     <li class="menu-item">
-                        <a href="{{ route('admin/dashboard') }}" class="menu-link waves-effect">
+                        <a href="<?php echo e(route('admin/dashboard')); ?>" class="menu-link waves-effect">
                             <span class="menu-icon"><i data-lucide="airplay "></i></span>
                             <span class="menu-text"> Dashboard </span>
                          
@@ -35,14 +35,14 @@
                         <div class="collapse" id="menuExpages">
                             <ul class="sub-menu">
                                  <li class="menu-item">
-                                    <a href="{{ route('venue') }}" class="menu-link">
+                                    <a href="<?php echo e(route('venue')); ?>" class="menu-link">
                                         <span class="menu-text">Venue</span>
                                     </a>
                                 </li>
 
                                  
                                 <li class="menu-item">
-                                    <a href="{{ route('venue.venueportalrequest') }}" class="menu-link">
+                                    <a href="<?php echo e(route('venue.venueportalrequest')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Portal Request</span>
                                     </a>
                                 </li>
@@ -53,34 +53,34 @@
                                     </a>
                                 </li>
                                 <!--li class="menu-item">
-                                    <a href="{{-- route('admin/venuetype') --}}" class="menu-link">
+                                    <a href="" class="menu-link">
                                         <span class="menu-text">Venue Categories</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('venue/venueamenities') }}" class="menu-link">
+                                    <a href="<?php echo e(route('venue/venueamenities')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Amenities</span>
                                     </a>
                                 </li-->                              
                                   
                                  <li class="menu-item">
-                                    <a href="{{ route('admin/venuethemes') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin/venuethemes')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Themes</span>
                                     </a>
                                 </li>
                            
                                 <li class="menu-item">
-                                    <a href="{{ route('venuesettings') }}" class="menu-link">
+                                    <a href="<?php echo e(route('venuesettings')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Settings</span>
                                     </a>
                                 </li>     
                                 <li class="menu-item">
-                                    <a href="{{ route('venue.deletedrecords') }}" class="menu-link">
+                                    <a href="<?php echo e(route('venue.deletedrecords')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Deleted Records</span>
                                     </a>
                                 </li>   
                                 <li class="menu-item">
-                                    <a href="{{ route('venue.comments') }}" class="menu-link">
+                                    <a href="<?php echo e(route('venue.comments')); ?>" class="menu-link">
                                         <span class="menu-text">Venue Comments Approve</span>
                                     </a>
                                 </li>
@@ -98,57 +98,57 @@
                          <div class="collapse" id="invitationExpages">
                             <ul class="sub-menu">
                                  <li class="menu-item">
-                                    <a href="{{ route('invitation/invitationmodel') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation/invitationmodel')); ?>" class="menu-link">
                                         <span class="menu-text">Design & Style</span>
                                     </a>
                                 </li>
                                 
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation/invitationsize') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation/invitationsize')); ?>" class="menu-link">
                                         <span class="menu-text">Size</span>
                                     </a>
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.silhouette') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.silhouette')); ?>" class="menu-link">
                                         <span class="menu-text">Silhouette</span>
                                     </a>
                                 </li>
 
                                 
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.cardthickness') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.cardthickness')); ?>" class="menu-link">
                                         <span class="menu-text">Card Thickness</span>
                                     </a>
                                 </li>
                                 
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.invitationcolor') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.invitationcolor')); ?>" class="menu-link">
                                         <span class="menu-text">Color</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.printingmethod') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.printingmethod')); ?>" class="menu-link">
                                         <span class="menu-text">Printing Method</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.printingmaterial') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.printingmaterial')); ?>" class="menu-link">
                                         <span class="menu-text">Material</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.budget') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.budget')); ?>" class="menu-link">
                                         <span class="menu-text">Budget</span>
                                     </a>
                                 </li>     
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.webpage') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.webpage')); ?>" class="menu-link">
                                         <span class="menu-text">Webpage</span>
                                     </a>
                                 </li>     
                                 <li class="menu-item">
-                                    <a href="{{ route('invitation.cardtemplate') }}" class="menu-link">
+                                    <a href="<?php echo e(route('invitation.cardtemplate')); ?>" class="menu-link">
                                         <span class="menu-text">Card Template</span>
                                     </a>
                                 </li>    
@@ -172,12 +172,12 @@
                     
                         <li class="menu-item">
 
-                            <a href="{{ route('venue.venueportalrequest') }}" class="menu-link">
+                            <a href="<?php echo e(route('venue.venueportalrequest')); ?>" class="menu-link">
                                 <span class="menu-text">Vendor List</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="{{ route('venue.venueportalrequest') }}" class="menu-link">
+                            <a href="<?php echo e(route('venue.venueportalrequest')); ?>" class="menu-link">
                                 <span class="menu-text">Vendor Portal Request</span>
                             </a>
                         </li>
@@ -196,32 +196,32 @@
                     <div class="collapse" id="menublogpages">
                             <ul class="sub-menu">
                             <li class="menu-item">
-                                    <a href="{{ route('subcriptionplan') }}" class="menu-link">
+                                    <a href="<?php echo e(route('subcriptionplan')); ?>" class="menu-link">
                                         <span class="menu-text">Blog Analytics</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('subcriptionplan') }}" class="menu-link">
+                                    <a href="<?php echo e(route('subcriptionplan')); ?>" class="menu-link">
                                         <span class="menu-text">Blog</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('subcriptionplan') }}" class="menu-link">
+                                    <a href="<?php echo e(route('subcriptionplan')); ?>" class="menu-link">
                                         <span class="menu-text">User Request</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.blogcategory') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.blogcategory')); ?>" class="menu-link">
                                         <span class="menu-text">Blog Category</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.blogtag') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.blogtag')); ?>" class="menu-link">
                                         <span class="menu-text">Blog Tags</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.subscriptionmenupermission') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.subscriptionmenupermission')); ?>" class="menu-link">
                                         <span class="menu-text">Social Login</span>
                                     </a>
                                 </li>
@@ -241,12 +241,12 @@
                     <div class="collapse" id="menusubcriptionpages">
                             <ul class="sub-menu">
                                 <li class="menu-item">
-                                    <a href="{{ route('subcriptionplan') }}" class="menu-link">
+                                    <a href="<?php echo e(route('subcriptionplan')); ?>" class="menu-link">
                                         <span class="menu-text">Subcription Plan</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.subscriptionmenupermission') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.subscriptionmenupermission')); ?>" class="menu-link">
                                         <span class="menu-text">Permission Module</span>
                                     </a>
                                 </li>
@@ -264,22 +264,22 @@
                          <div class="collapse" id="menustaffpages">
                             <ul class="sub-menu">
                                 <li class="menu-item">
-                                    <a href="{{ route('admin/staff') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin/staff')); ?>" class="menu-link">
                                         <span class="menu-text">Staff</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="{{ route('staff/departments') }}" class="menu-link">
+                                    <a href="<?php echo e(route('staff/departments')); ?>" class="menu-link">
                                         <span class="menu-text">Departments</span>
                                     </a>
                                 </li>  
                                  <li class="menu-item">
-                                    <a href="{{ route('staff/roles') }}" class="menu-link">
+                                    <a href="<?php echo e(route('staff/roles')); ?>" class="menu-link">
                                         <span class="menu-text">Roles</span>
                                     </a>
                                 </li>  
                                  <li class="menu-item">
-                                    <a href="{{ route('staff/roles') }}" class="menu-link">
+                                    <a href="<?php echo e(route('staff/roles')); ?>" class="menu-link">
                                         <span class="menu-text">Module Access</span>
                                     </a>
                                 </li>  
@@ -302,37 +302,37 @@
                          <div class="collapse" id="menuSettpages">
                             <ul class="sub-menu">
                                 <li class="menu-item">
-                                    <a href="{{ route('admin/occasion') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin/occasion')); ?>" class="menu-link">
                                         <span class="menu-text">Occasion</span>
                                     </a>
                                 </li>   
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.checklist') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.checklist')); ?>" class="menu-link">
                                         <span class="menu-text">Checklist</span>
                                     </a>
                                 </li>   
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.budget') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.budget')); ?>" class="menu-link">
                                         <span class="menu-text">Budget</span>
                                     </a>
                                 </li>  
                                 <li class="menu-item">
-                                    <a href="{{ route('admin/occasiondatafield') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin/occasiondatafield')); ?>" class="menu-link">
                                         <span class="menu-text">Occasion Data Field</span>
                                     </a>
                                 </li>   
                                 <li class="menu-item">
-                                    <a href="{{ route('admin/religion') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin/religion')); ?>" class="menu-link">
                                         <span class="menu-text">Religion</span>
                                     </a>
                                 </li>  
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.menu') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.menu')); ?>" class="menu-link">
                                         <span class="menu-text">Menu</span>
                                     </a>
                                 </li>  
                                 <li class="menu-item">
-                                    <a href="{{ route('admin.usermenu') }}" class="menu-link">
+                                    <a href="<?php echo e(route('admin.usermenu')); ?>" class="menu-link">
                                         <span class="menu-text">User Menu</span>
                                     </a>
                                 </li>      
@@ -354,4 +354,4 @@
 
         </div>
 
-        
+        <?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/admin/layouts/sidemenu.blade.php ENDPATH**/ ?>

@@ -129,7 +129,7 @@
                     </div>
 
                     <!-- Hidden Occasion ID -->
-                    <input type="hidden" name="occasion_id" value="{{ $useroccasion->occasiontypeid }}">
+                    <input type="hidden" name="occasion_id" value="{{ $useroccasion->occasiontypeid ?? '' }}">
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Save Item</button>
