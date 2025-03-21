@@ -62,35 +62,35 @@
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="first_name">First Name</label>
                            <div class="col-md-8">
-                              <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Enter the First name" value = "{{ $staff->first_name }}" required>
+                              <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Enter the First name" value = "{{ $staff->first_name ?? '' }}" required>
                               <div class="alert alert-danger failmessage first_name mt-3" style="display:none"></div>
                            </div>
                         </div>
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="last_name">Last Name</label>
                            <div class="col-md-8">
-                              <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Enter the Last name" value = "{{ $staff->last_name }}" required>
+                              <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Enter the Last name" value = "{{ $staff->last_name ?? '' }}" required>
                               <div class="alert alert-danger failmessage last_name mt-3" style="display:none"></div>
                            </div>
                         </div>
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="contact_address">Contact Address</label>
                            <div class="col-md-8">
-                              <textarea type="text" id="contact_address" name="contact_address" class="form-control" placeholder="Enter the Contact Address" required>{{ $staff->contact_address }}</textarea>
+                              <textarea type="text" id="contact_address" name="contact_address" class="form-control" placeholder="Enter the Contact Address" required>{{ $staff->contact_address ?? '' }}</textarea>
                               <div class="alert alert-danger failmessage contact_address mt-3" style="display:none"></div>
                            </div>
                         </div>
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="date_of_birth">Date of Birth</label>
                            <div class="col-md-8">
-                              <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" value = "{{ $staff->date_of_birth }}" required>
+                              <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" value = "{{ $staff->date_of_birth ?? '' }}" required>
                               <div class="alert alert-danger failmessage date_of_birth mt-3" style="display:none"></div>
                            </div>
                         </div>
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="hire_date">Hire Date</label>
                            <div class="col-md-8">
-                              <input type="date" id="hire_date" name="hire_date" class="form-control" value = "{{ $staff->hire_date }}" required>
+                              <input type="date" id="hire_date" name="hire_date" class="form-control" value = "{{ $staff->hire_date ?? '' }}" required>
                               <div class="alert alert-danger failmessage hire_date mt-3" style="display:none"></div>
                            </div>
                         </div>
@@ -113,21 +113,21 @@
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="email">Email ID</label>
                            <div class="col-md-8">
-                              <input type="text" id="email" name="email" class="form-control" placeholder="Enter the Email Id" value = "{{ $staff->email }}" required>
+                              <input type="text" id="email" name="email" class="form-control" placeholder="Enter the Email Id" value = "{{ $staff->email ?? '' }}" required>
                               <div class="alert alert-danger failmessage email mt-3" style="display:none"></div>
                            </div>
                         </div>
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="phone">Mobile No</label>
                            <div class="col-md-8">
-                              <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter the Mobile No" value = "{{ $staff->phone }}" required>
+                              <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter the Mobile No" value = "{{ $staff->phone ?? '' }}" required>
                               <div class="alert alert-danger failmessage phone mt-3" style="display:none"></div>
                            </div>
                         </div>
                         <div class="mb-4 row">
                            <label class="col-md-4 col-form-label" for="location">Location</label>
                            <div class="col-md-8">
-                              <input type="text" id="location" name="location" class="form-control" placeholder="Enter the Location" value = "{{ $staff->location }}" required>
+                              <input type="text" id="location" name="location" class="form-control" placeholder="Enter the Location" value = "{{ $staff->location ?? '' }}" required>
                               <div class="alert alert-danger failmessage location mt-3" style="display:none"></div>
                            </div>
                         </div>
@@ -439,14 +439,14 @@
                            <div class="mb-4 row">
                               <label class="col-md-4 col-form-label" for="personname">Person Name</label>
                               <div class="col-md-8">
-                                 <input type="text" id="personname" name="personname" class="form-control" placeholder="Enter the Person Name" value = "{{ $staff_em->personname }}" required>
+                                 <input type="text" id="personname" name="personname" class="form-control" placeholder="Enter the Person Name" value = "{{ $staff_em->personname ?? '' }}" required>
                                  <div class="alert alert-danger failmessage personname mt-3" style="display:none"></div>
                               </div>
                            </div>
                            <div class="mb-4 row">
                               <label class="col-md-4 col-form-label" for="mobileno">Mobile No</label>
                               <div class="col-md-8">
-                                 <input type="text" id="mobileno" name="mobileno" class="form-control" placeholder="Enter the Mobile No" value = "{{ $staff_em->mobileno }}" required>
+                                 <input type="text" id="mobileno" name="mobileno" class="form-control" placeholder="Enter the Mobile No" value = "{{ $staff_em->mobileno ?? '' }}" required>
                                  <div class="alert alert-danger failmessage mobileno mt-3" style="display:none"></div>
                               </div>
                            </div>
@@ -455,14 +455,14 @@
                            <div class="mb-4 row">
                               <label class="col-md-4 col-form-label" for="address">Contact Address</label>
                               <div class="col-md-8">
-                                 <textarea type="text" id="address" name="address" class="form-control" placeholder="Enter the Contact Address" required>{{ $staff_em->address }}</textarea>
+                                 <textarea type="text" id="address" name="address" class="form-control" placeholder="Enter the Contact Address" required>{{ $staff_em->address ?? '' }}</textarea>
                                  <div class="alert alert-danger failmessage address mt-3" style="display:none"></div>
                               </div>
                            </div>
                            <div class="mb-4 row">
                               <label class="col-md-4 col-form-label" for="relationship">Relationship</label>
                               <div class="col-md-8">
-                                 <input type="text" id="relationship" name="relationship" class="form-control" placeholder="Enter the relationship" value = "{{ $staff_em->relationship }}" required>
+                                 <input type="text" id="relationship" name="relationship" class="form-control" placeholder="Enter the relationship" value = "{{ $staff_em->relationship ?? '' }}" required>
                                  <div class="alert alert-danger failmessage relationship mt-3" style="display:none"></div>
                               </div>
                            </div>

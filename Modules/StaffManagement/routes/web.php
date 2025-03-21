@@ -78,4 +78,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
 
     //venue user
     Route::any('create/venue/user/{id}', [StaffManagementController::class,'createVenueUser'])->name('admin/create/venue/user');
+    Route::any('store/venue-user/{staffId}', [StaffManagementController::class,'storeVenueUser'])->name('admin/store/venue/user');
+    Route::any('list/venue-user/{staffId}', [StaffManagementController::class,'listVenueUser'])->name('admin/list/venue/user');
+    Route::any('details/venue-user/{id}', [StaffManagementController::class,'venueUserDetails'])->name('admin/venue/user/details');
 });
+
+Route::get('/verify/account/{id}', [StaffManagementController::class, 'verifyAccount'])->name('verify-account');
