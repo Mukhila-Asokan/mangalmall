@@ -32,11 +32,11 @@
          <div class="card-body">
             <h4 class="header-title mb-4">Add Venue User</h4>
             <div class="text-end">
-                <a href = "{{ route('venue/index') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-                        <span class="tf-icon mdi mdi-eye me-1"></span>Venue User List
+                <a href = "{{ route('admin/list/venue/user', ['staffId' => $staffId]) }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                    <span class="tf-icon mdi mdi-eye me-1"></span>Venue User List
                 </a>
             </div>
-            <form class="form-horizontal" role="form" method = "post" action="{{ route('venue.venue_add') }}" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" method = "post" action="{{ route('admin/store/venue/user', ['staffId' => $staffId]) }}" enctype="multipart/form-data">
                @csrf
                 @if ($errors->any())
                 <div class="alert alert-danger">
@@ -63,8 +63,8 @@
                         <input type="text" id="mobile" name="mobile" class="form-control mt-2" placeholder="Enter venue user mobile number" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="mobile">City</label>
-                        <input type="text" id="mobile" name="mobile" class="form-control mt-2" placeholder="Enter venue user city" required>
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" class="form-control mt-2" placeholder="Enter venue user city" required>
                     </div>
                 </div>
                 <div class="row mt-4">

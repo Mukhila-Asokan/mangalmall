@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\VenueRating;
 use Modules\VenueAdmin\Models\VenueBooking;
 use Modules\VenueAdmin\Models\VenuePricing;
+use App\Models\BookingEnquiry;
 
 class VenueDetails extends Model
 {
@@ -111,6 +112,7 @@ class VenueDetails extends Model
         return $this->hasMany(VenuePricing::class, 'venue_id', 'id');
     }
   
-  
-
+    public function bookingEnquiry(){
+        return $this->belongsTo(BookingEnquiry::class, 'venue_id', 'id');
+    }
 }
