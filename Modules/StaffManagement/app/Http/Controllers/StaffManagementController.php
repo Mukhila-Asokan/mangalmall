@@ -19,9 +19,15 @@ Use Modules\StaffManagement\Models\StaffSkills;
 Use Modules\StaffManagement\Models\StaffWorkHistory;
 use Illuminate\Support\Facades\Validator;
 use App\Models\AdminUser;
+use Modules\VenueAdmin\Models\{VenueUser, VenueUserProfile};
 use DataTables;
 use Session;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
+use App\Mail\VenueUserMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\BookingEnquiry;
+use Modules\VenueAdmin\Models\UserVenue;
 
 class StaffManagementController extends Controller
 {
@@ -586,6 +592,74 @@ class StaffManagementController extends Controller
 
     //venue user
     public function createVenueUser($id){
-        return view('staffmanagement::staff.venue_user.create');
+        $staffId = $id;
+        return view('staffmanagement::staff.venue_user.create', compact('staffId'));
+    }
+
+    public function storeVenueUser($staffId, Request $request){
+        DB::beginTransaction();
+        try{
+            $venueUser = new VenueUser;
+            $venueUser->name = $request->name;
+            $venueUser->email = $request->email;
+            $venueUser->mobileno = $request->mobile;
+            $venueUser->city = $request->city;
+            $venueUser->status = 'Inactive';
+            $venueUser->save();
+
+            $venueUserProfile = new VenueUserProfile;
+            $venueUserProfile->venueuserid = $venueUser->id;
+            $venueUserProfile->refferanceid = $staffId;
+            $venueUserProfile->contact_address = $request->mobile;
+            $venueUserProfile->	lostlogindetails = Carbon::now();
+            $venueUserProfile->save();
+
+            Mail::to($venueUser->email)->send(new VenueUserMail($venueUser, $venueUserProfile));
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Venue User Created Successfully');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            dd($e);
+        }
+    }
+
+    public function listVenueUser($staffId){
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue User List";
+        $pageroot = "Venue User";
+
+        $staff = Staff::where('id', $staffId)->first();
+        $admin = AdminUser::where('id', $staff->adminuserid)->first();
+
+        $venueUserProfile = VenueUserProfile::where('refferanceid', $staffId)->pluck('venueuserid')->toArray();
+        $venueUsers = VenueUser::whereIn('id', $venueUserProfile)->get();
+        return view('staffmanagement::staff.venue_user.list', compact('venueUsers', 'staff', 'username', 'userid', 'pagetitle', 'pageroot'));
+    }
+
+    public function venueUserDetails($id){
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Venue User";
+        $pageroot = "Venue User List";
+
+        $venueUserProfile = VenueUserProfile::where('venueuserid', $id)->pluck('refferanceid')->first();
+        $staff = Staff::where('id', $venueUserProfile)->first();
+
+        $venueUser = VenueUser::where('id', $id)->where('delete_status', 0)->first();
+        $venueIds = UserVenue::where('venueuserid', $venueUser->id)->pluck('venueid')->toArray();
+        $bookingEnquiries = BookingEnquiry::whereIn('venue_id', $venueIds)->get();
+
+        return view('staffmanagement::staff.venue_user.details', compact('venueUser', 'bookingEnquiries', 'staff', 'username', 'userid', 'pagetitle', 'pageroot'));
+    }
+
+    public function verifyAccount($id){
+        $venueUser = VenueUser::Where('id', $id)->where('delete_status', 0)->first();
+        $venueUser->status = 'Active';
+        $venueUser->save();
+
+        return redirect('venue/login')->with('success', 'Account Activate Successfully, Please login in');
     }
 }

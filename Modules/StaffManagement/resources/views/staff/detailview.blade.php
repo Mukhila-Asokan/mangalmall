@@ -6,8 +6,11 @@
          <div class="card-body">
             <h4 class="header-title mb-4">{{ $pagetitle }}</h4>
             <div class="text-end">
+				<a href = "{{ route('admin/list/venue/user', ['staffId' => $staff->id]) }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
+                    <span class="tf-icon mdi mdi-eye me-1"></span>Venue User List
+                </a>
 				<a href ="{{ route('admin/create/venue/user', ['id' => $staff->id]) }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
-					<span class="tf-icon mdi mdi-eye me-1"></span>Create Venue User
+					<span class="tf-icon mdi mdi-plus me-1"></span>Create Venue User
 				</a>
 				<a href ="{{ route('admin/staff') }}" class="btn btn-primary waves-effect waves-light mb-4 text-end">
 					<span class="tf-icon mdi mdi-eye me-1"></span> Staff List
