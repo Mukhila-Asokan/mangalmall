@@ -85,14 +85,17 @@ class UserBudgetController extends Controller
                 }
             }
                 $budget = UserBudget::where('user_id', $userid)
+                    ->where('delete_status', 0)
                     ->where('useroccasion_id', $id)
                     ->get();
 
                 $planned_amount = UserBudget::where('user_id', $userid)
+                    ->where('delete_status', 0)
                     ->where('useroccasion_id', $id)
                     ->sum('planned_amount');
 
                 $completed_amount = UserBudget::where('user_id', $userid)
+                    ->where('delete_status', 0)
                     ->where('useroccasion_id', $id)
                     ->sum('completed_amount');  
 
@@ -155,7 +158,8 @@ class UserBudgetController extends Controller
             $budget = UserBudget::find($id);
 
             if ($budget) {
-                $budget->delete();
+                $budget->delete_status = 1;
+                $budget->save();
 
                 return response()->json([
                     'success' => true
