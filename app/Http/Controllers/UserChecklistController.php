@@ -18,25 +18,30 @@ class UserChecklistController extends Controller
       
         try {
             $userid = Auth::user()->id;
+
+          
             
             $useroccasion = UserOccasion::where('id', $id)->first();            
             $checklistcatIds = EventChecklistAssignments::where('occasion_id',$useroccasion->occasiontypeid)->pluck('category_id');
          
             $checklistitems = ChecklistItems::whereIn('category_id', $checklistcatIds)->get();
             // Group data by status
-        
+            
+
             foreach ($checklistitems as $checklistitem) {
             $existingChecklist = UserChecklist::where('name', $checklistitem->item_name)
                 ->where('user_id', $userid)
-                ->where('occasion_id', $useroccasion->occasiontypeid)
+                ->where('useroccasion_id', $id)
                 ->first();        
+                
+           
 
                
             if (!$existingChecklist) { // Prevent duplicates
                 $usechecklist = new UserChecklist();
                 $usechecklist->name = $checklistitem->item_name;
                 $usechecklist->user_id = $userid;
-                $usechecklist->occasion_id = $id;            
+                $usechecklist->useroccasion_id = $id;            
                 $usechecklist->completed_status = 'not_started';
                 $usechecklist->status = 'Active';
                 $usechecklist->delete_status = 0;
@@ -44,12 +49,15 @@ class UserChecklistController extends Controller
             }
             
             }
+
+           
+          
         
             $checklist = UserChecklist::where('user_id', $userid)
-            ->where('occasion_id', $id)
+            ->where('useroccasion_id', $id)->where('delete_status','0')
             ->get()
             ->groupBy('completed_status');
-
+         
             return view('eventplan.create', compact('useroccasion', 'checklistcatIds', 'checklistitems', 'checklist'));
 
         } catch (\Exception $e) {
@@ -84,13 +92,43 @@ public function store(Request $request)
     $usechecklist = new UserChecklist();
     $usechecklist->name = $request->item_name;
     $usechecklist->user_id = $userid;
-    $usechecklist->occasion_id = $request->occasion_id;
+    $usechecklist->useroccasion_id = $request->occasion_id;
     $usechecklist->completed_status = 'not_started';
     $usechecklist->status = 'Active';
     $usechecklist->delete_status = 0;
     $usechecklist->save();
 
     return redirect()->back()->with('success', 'Checklist item added successfully!');
+}
+
+
+public function update(Request $request, $id)
+{
+    $checklist = UserChecklist::find($id);
+
+    if ($checklist) {
+        $checklist->name = $request->name;
+        $checklist->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false]);
+}
+
+// Delete Checklist
+public function destroy($id)
+{
+    $checklist = UserChecklist::find($id);
+
+    if ($checklist) {
+        $checklist->delete_status = 1;
+        $checklist->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false]);
 }
 
 }
