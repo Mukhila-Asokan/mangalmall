@@ -166,6 +166,14 @@
                                                         <textarea id="contact_address" name="contact_address" class="form-control" required></textarea>
                                                     </div>
                                                 </div>
+                                                <div class="row mangalmalluser d-none">
+                                                    <div class="col-md-6 col-sm-12 mt-2">
+                                                        <label for="user_id" class="form-label">Mangal Mall User</label>
+                                                        <select name="user_id" id="user_id" class="form-select" required>
+                                                            <option value="">Select Mangal Mall User</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </form>
                                             <ul class="pager wizard mb-0 list-inline mt-3">
                                                 <li class="previous list-inline-item">
@@ -412,9 +420,34 @@
 
             $('#venue_next').on('click', function () {
                 if ($('#venueForm')[0].checkValidity()) {
-                    $('#venueForm')[0].reportValidity();
+                    let selectedVenue = $(".venue-radio:checked").val();
+
+                    $.ajax({
+                        url: "{{ route('venue.enquired.users') }}",
+                        type: "GET",
+                        data: {
+                            'venueId': selectedVenue
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        success: function(response){
+                            console.log(response, 'response');
+                            if(response.users.length > 0){
+                                $('.mangalmalluser').removeClass('d-none');
+                                $.each(response.users, function (index, user) {
+                                    $("#user_id").append(`<option value="${user.id}">${user.name}</option>`);
+                                });
+                            }
+                            else{
+                                $('.mangalmalluser').addClass('d-none');
+                            }
+                        }, async: false
+                    })
                     $('.nav-pills .nav-link[href="#third"]').removeClass('disabled-tab').tab('show');
-                } else {
+                    $('#venueForm')[0].reportValidity();
+                }
+                else {
                     $('#venueForm')[0].reportValidity();
                 }
             });

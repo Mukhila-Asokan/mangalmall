@@ -594,8 +594,8 @@ public function show()
 
             $venuebooking = new VenueBooking();
             $venuebooking->venue_id = $request->venue;
-            $venuebooking->booked_by = 'VenueUser';
-            $venuebooking->bookinguserid = $request->bookinguserid; 
+            $venuebooking->booked_by = isset($request->user_id) ?  'VenueUserMangal' :'VenueUser';
+            $venuebooking->bookinguserid = $request->user_id ?? Session::get('venueuserid'); 
             $venuebooking->event_id = $request->event_id;
             $venuebooking->event_title = $request->event_name;
             $venuebooking->event_name = $request->event_name;
@@ -851,5 +851,13 @@ public function show()
                 'message' => $e->getMessage()
             ]);
         }
+    }
+
+    public function getVenueEnquiredUsers(Request $request){
+        $userIds = BookingEnquiry::where('venue_id', $request->venueId)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->get();
+        return response()->json([
+            'users' => $users
+        ]);
     }
 }
