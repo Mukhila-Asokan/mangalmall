@@ -27,7 +27,8 @@ Route::prefix('admin')->middleware('guest:admin')->group(function () {
 
 Route::get('/adminrole', [RoleController::class, 'redirectRoutes'])->name('adminrole');
 
-Route::prefix('admin')->middleware(IsAdminRoleCheck::class)->group(function () {
+// Route::prefix('admin')->middleware(IsAdminRoleCheck::class)->group(function () {
+Route::prefix('admin')->group(function () {
 
  /*   Route::get('/dashboard', function () {
         return view('admin/dashboard');
