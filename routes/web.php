@@ -142,6 +142,8 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::any('/checklist/list',[UserChecklistController::class, 'index'])->name('checklist.index');
     Route::post('/checklist/store', [UserChecklistController::class, 'store'])->name('checklist.store');
     Route::post('/checklist/update-status', [UserChecklistController::class, 'updateStatus'])->name('checklist.updateStatus');
+    Route::put('/checklist/update/{id}', [UserChecklistController::class, 'update'])->name('checklist.update');
+    Route::delete('/checklist/destroy/{id}', [UserChecklistController::class, 'destroy'])->name('checklist.destroy');
 
     /*Budget*/
     Route::any('/budget',[UserBudgetController::class, 'index'])->name('home.budget');
