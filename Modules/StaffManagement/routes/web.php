@@ -81,6 +81,11 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::any('store/venue-user/{staffId}', [StaffManagementController::class,'storeVenueUser'])->name('admin/store/venue/user');
     Route::any('list/venue-user/{staffId}', [StaffManagementController::class,'listVenueUser'])->name('admin/list/venue/user');
     Route::any('details/venue-user/{id}', [StaffManagementController::class,'venueUserDetails'])->name('admin/venue/user/details');
+
+    //module access
+    Route::any('module/access', [StaffManagementController::class,'viewModuleAccess'])->name('admin.module.access');
+    Route::any('module/access/edit/{id}', [StaffManagementController::class,'editModuleAccess'])->name('admin.module.access.edit');
+    Route::any('module/access/update', [StaffManagementController::class,'updateModuleAccess'])->name('admin.module.access.update');
 });
 
 Route::get('/verify/account/{id}', [StaffManagementController::class, 'verifyAccount'])->name('verify-account');

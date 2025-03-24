@@ -55,6 +55,9 @@ $(document).ready(function() {
         $('#selectedid').val(0);
     });
 
+    $('.select2').select2({
+        placeholder: "Select Menu"
+    });
     
     
     

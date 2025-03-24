@@ -28,6 +28,8 @@ use App\Mail\VenueUserMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\BookingEnquiry;
 use Modules\VenueAdmin\Models\UserVenue;
+use Modules\Venue\Models\ModuleAccess;
+Use Modules\Venue\Models\Menu;
 
 class StaffManagementController extends Controller
 {
@@ -661,5 +663,50 @@ class StaffManagementController extends Controller
         $venueUser->save();
 
         return redirect('venue/login')->with('success', 'Account Activate Successfully, Please login in');
+    }
+
+    public function viewModuleAccess(){
+        $username = Session::get('username');
+        $userid = Session::get('userid');       
+        $pagetitle = "Module Access";
+        $pageroot = "Module Access List";
+
+        $roles = Roles::Where('delete_status', 0)->paginate(10);
+        return view('staffmanagement::staff.module_access.list', compact('roles', 'username', 'userid', 'pagetitle', 'pageroot'));
+    }
+
+    public function editModuleAccess($id){
+        try{
+            $username = Session::get('username');
+            $userid = Session::get('userid');       
+            $pagetitle = "Module Access";
+            $pageroot = "Module Access Edit";
+
+            $role = Roles::where('id', $id)->first();
+            $moduleAccess = ModuleAccess::where('role_id', $id)->pluck('menu_id')->toArray() ?? [];
+            $menues = Menu::where('delete_status','0')->get();
+            
+            return view('staffmanagement::staff.module_access.edit', compact('menues', 'moduleAccess', 'username', 'userid', 'pagetitle', 'pageroot', 'role'));
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error', 'Something went wrong');
+            dd($e);
+        }
+    }
+
+    public function updateModuleAccess(Request $request){
+        try{
+            ModuleAccess::where('role_id', $request->role_id)->delete();
+            foreach($request->menu as $menu){
+                ModuleAccess::create([
+                    'menu_id' => $menu,
+                    'role_id' => $request->role_id
+                ]);
+            }
+            return redirect()->route('admin.module.access')->with('success', 'Module Access updated successfully');
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
     }
 }
