@@ -89,7 +89,8 @@ class MenuController extends Controller
         $pagetitle = "Edit Menu";
         $pageroot = "Menu Settings";
         $menu = Menu::findOrFail($id);
-        return view('admin.menu.edit', compact('pagetitle', 'pageroot', 'menu'));
+        $menus = Menu::where('delete_status', 0)->paginate(20);
+        return view('admin.menu.edit', compact('pagetitle', 'pageroot', 'menu', 'menus'));
     }
 
     /**
