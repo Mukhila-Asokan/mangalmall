@@ -30,6 +30,8 @@ use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogLikeController;
 use App\Http\Controllers\UserChecklistController;
 use App\Http\Controllers\{UserBudgetController, UserEventGalleryController};
+use App\Http\Controllers\InvitationCardController;
+
 
 
 use Illuminate\Support\Facades\Artisan;
@@ -272,6 +274,9 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
     /* Video Making */
     Route::get('/video/index', [VideoController::class, 'index'])->name('video.index');
     Route::get('/video/create', [VideoController::class, 'create'])->name('video.create');
+
+    Route::any('/api/create-video', [VideoController::class, 'usercreateVideo']);
+
     Route::post('/video/store', [VideoController::class, 'store'])->name('video.store');
     Route::get('/video/download/{id}', [VideoController::class, 'download'])->name('video.download');
     Route::get('/video/show/{id}', [VideoController::class, 'show'])->name('video.show');
@@ -286,7 +291,13 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
     Route::get('/media/upload', [VideoController::class, 'uploadImagesView'])->name('media.upload');
     Route::post('/media/images/upload', [VideoController::class, 'uploadImages'])->name('images.upload');
     Route::post('/media/audio/upload', [VideoController::class, 'uploadAudio'])->name('audio.upload');
+    
     Route::post('/media/video/create', [VideoController::class, 'createVideo'])->name('video.create');
+
+
+    Route::any('/inviationcard', [InvitationCardController::class, 'index'])->name('inviationcard');
+    Route::any('/inviationcard/create', [InvitationCardController::class, 'create'])->name('invitationcard.create');
+    Route::any('/inviationcard/store', [InvitationCardController::class, 'store'])->name('invitationcard.store');
 
 
 });

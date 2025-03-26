@@ -5,8 +5,8 @@
            <div class="pg-header-row">
                <div class="pg-header-col">
                    <div class="pg-logo-wrap">
-                          <a href="{{ route('user.carddesign') }}" class="pg-logo">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="Mangal Mall">
+                          <a href="<?php echo e(route('user.carddesign')); ?>" class="pg-logo">
+                            <img src="<?php echo e(asset('assets/images/logo.png')); ?>" alt="Mangal Mall">
                           </a>
                    </div>
                    <div class="pg-menu-toggle">
@@ -14,13 +14,14 @@
                     </div>
                     <div class="pg_nav">
                         <!--ul>
-                            <li><a href="{{ route('home') }}">Home</a></li>                       
+                            <li><a href="<?php echo e(route('home')); ?>">Home</a></li>                       
                         </ul-->   
                        
                     </div>
                     
-					<!--div class="pg_template_name" title="Template Name - {{ $template->templatename ?? 'Template' }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
-						{{ $template->templatename ?? 'Template' }}
+					<!--div class="pg_template_name" title="Template Name - <?php echo e($template->templatename ?? 'Template'); ?>" data-bs-toggle="tooltip" data-bs-placement="bottom">
+						<?php echo e($template->templatename ?? 'Template'); ?>
+
 					</div-->
                  
 
@@ -29,7 +30,7 @@
                     <div class="pg-header-options-wrap">
 						<div class="pg-action-btns">
 							<ul>
-								<li><a href = "#" >Welcome {{ Auth::user()->name ?? '' }}</a></li>
+								<li><a href = "#" >Welcome <?php echo e(Auth::user()->name ?? ''); ?></a></li>
 							<li><a href="javascript:void(0);" class="has-tooltip btn"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
 								<i class="ti ti-download" data-bs-toggle="modal" data-bs-target="#templateDownloadModal" ></i>	
 									</a>
@@ -43,7 +44,7 @@
          </div>
          <!-- Header End  -->
             <!-- Sidebar Content Start  -->   
-            @include('cardeditior.Sidebar')
+            <?php echo $__env->make('cardeditior.Sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
 
             <!-- Sidebar Content End  -->  
@@ -83,8 +84,8 @@
 							<div class="pg-grid-tollge-btn">
 								<input type="checkbox" class="pg_grid" name="pg_grid_system" id="pg_grid_system">
 								<label for="pg_grid_system">
-                                    <img src="{{ asset('assets/images/grid.png') }}" alt="" class="has-grid">
-                                    <img src="{{ asset('assets/images/no-grid.png') }}" alt="" class="no-grid">
+                                    <img src="<?php echo e(asset('assets/images/grid.png')); ?>" alt="" class="has-grid">
+                                    <img src="<?php echo e(asset('assets/images/no-grid.png')); ?>" alt="" class="no-grid">
 								</label>
 							</div>
 							<!-- Grid Toggle Button  -->
@@ -149,7 +150,7 @@
 					<div class="check_ad_wrapper perfect">
 						<h3>Are you sure</h3>
 						<p>You want to Publish this ad<br>Or click to Cancel for continue editing</p>
-                        <a href="{{ url('ad/facebook') }}" class="pg-btn">Publish</a>
+                        <a href="<?php echo e(url('ad/facebook')); ?>" class="pg-btn">Publish</a>
 						<a class="pg-btn mfp-close">Cancel</a>
 					</div>
 				</div>
@@ -187,3 +188,4 @@
 				</div>
 			</div>
 		</div>
+<?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/cardeditior/maindesign.blade.php ENDPATH**/ ?>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95390bc8cad9c0db9f53da45e9186ba5",
+    "content-hash": "6551373a4c3928c3c677052a5b8fe55c",
     "packages": [
         {
             "name": "astra-techno/data-forge",

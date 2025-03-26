@@ -1,22 +1,22 @@
-@extends('profile-layouts.profile')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="mt-1 col-lg-10 col-md-10">
     <div class="row">
-        @include('profile-layouts.invitationmenu')
+        <?php echo $__env->make('profile-layouts.invitationmenu', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
         <div class="col-lg-11 col-md-11 stickymenucontent"> 
 
             <!--blog section start-->
     
         <div class="container">
     <div class="row justify-content-center">
-    <center><h2 class="text-center">{{ __('Create Slideshow Video') }}</h2></center>
+    <center><h2 class="text-center"><?php echo e(__('Create Slideshow Video')); ?></h2></center>
     <div class="col-md-12 mb-12">
             <div class="card shadow-lg border-0 rounded-3">
            
 
                 <div class="card-body">
                     <form id="imageUploadForm" enctype="multipart/form-data">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="form-group mb-3">
                             <label for="images">Choose Images:</label>
                             <input type="file" class="form-control" name="images[]" id="images" multiple required>
@@ -30,7 +30,7 @@
                     </div>
 
                     <form id="audioUploadForm" enctype="multipart/form-data" class="mt-4" style="display: none;">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="form-group mb-3">
                             <label for="audio">Choose Background Audio:</label>
                             <input type="file" class="form-control" name="audio" id="audio" accept="audio/*" required>
@@ -68,10 +68,10 @@
 </div>
 
 <div class="col-lg-2 col-md-2">
-    @include('profile-layouts.rightside')
+    <?php echo $__env->make('profile-layouts.rightside', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </div>
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
 <script>
     $(document).ready(function () {
         // Image upload handling
@@ -81,7 +81,7 @@
             let formData = new FormData(this);
             
             $.ajax({
-                url: "{{ route('images.upload') }}",
+                url: "<?php echo e(route('images.upload')); ?>",
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -146,7 +146,7 @@
             let formData = new FormData(this);
             
             $.ajax({
-                url: "{{ route('audio.upload') }}",
+                url: "<?php echo e(route('audio.upload')); ?>",
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -210,12 +210,12 @@
     }
 
     $.ajax({
-        url: "{{ route('video.create') }}",
+        url: "<?php echo e(route('video.create')); ?>",
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json', // Ensure the data is treated as JSON
         data: JSON.stringify({
-            _token: "{{ csrf_token() }}",
+            _token: "<?php echo e(csrf_token()); ?>",
             images: images,
             audio_id: audioId
         }),
@@ -249,4 +249,5 @@
     });
 </script>
 
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('profile-layouts.profile', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/videos/index.blade.php ENDPATH**/ ?>
