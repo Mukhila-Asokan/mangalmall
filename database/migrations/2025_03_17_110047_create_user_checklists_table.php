@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('user_checklists', function (Blueprint $table) {
             $table->id();
             $table->string('name');            
-            $table->foreignId('occasion_id')->constrained('occasion_types')->onDelete('cascade');
+            $table->foreignId('useroccasion_id')->constrained('occasion_types')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('completed',['not_started', 'doing', 'completed'])->default('not_started');
+            $table->enum('completed_status',['not_started', 'doing', 'completed'])->default('not_started');
             $table->enum('status',['Active', 'Inactive'])->default('Active'); 
             $table->tinyInteger('delete_status')->default('0');
             $table->timestamps();

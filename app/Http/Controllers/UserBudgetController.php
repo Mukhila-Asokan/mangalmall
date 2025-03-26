@@ -25,8 +25,8 @@ class UserBudgetController extends Controller
             $budgetStats = [];
     
         foreach ($userOccasion as $occasion) {
-            $totalBudget = UserBudget::where('useroccasion_id', $occasion->id)->sum('planned_amount');
-            $actualAmount = UserBudget::where('useroccasion_id', $occasion->id)->sum('completed_amount');
+            $totalBudget = UserBudget::where('delete_status', 0)->where('useroccasion_id', $occasion->id)->sum('planned_amount');
+            $actualAmount = UserBudget::where('delete_status', 0)->where('useroccasion_id', $occasion->id)->sum('completed_amount');
             $remainingAmount = $totalBudget - $actualAmount;
     
             $budgetStats[$occasion->id] = [
@@ -102,6 +102,7 @@ class UserBudgetController extends Controller
                 return view('userbudget.create', compact('userOccasion', 'budget','planned_amount','completed_amount'));    
 
             } catch (\Exception $e) {
+                dd($e);
                 return redirect()->route('home')->with('error', 'Session expired, please log in again.');
             }
         }

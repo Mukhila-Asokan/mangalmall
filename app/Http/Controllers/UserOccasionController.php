@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserOccasion;
+use App\Models\{UserOccasion, UserBudget, UserChecklist, EventCollaborator};
 use App\Http\Requests\StoreUserOccasionRequest;
 use App\Http\Requests\UpdateUserOccasionRequest;
 Use App\Models\OccasionType;
@@ -23,11 +23,17 @@ class UserOccasionController extends Controller
      */
     public function index()
     {
-       
-     
-        $userid = Auth::user()->id;  
+        $userid = Auth::user()->id;
+        $loggedInEmail = auth()->user()->email;
+        $collaboratorUserIds = EventCollaborator::where('email', $loggedInEmail)
+            ->pluck('user_id')
+            ->toArray();
+        $collaboratorUserIds[] = $userid;
+
+        $useroccasion = UserOccasion::whereIn('userid', $collaboratorUserIds)->get();
+  
         $occasiontype = OccasionType::where('delete_status','0')->get();
-        $useroccasion = UserOccasion::where('userid',$userid)->get();
+        // $useroccasion = UserOccasion::where('userid',$userid)->get();
         $areaname = Area::select("areaname")->groupBy('Areaname')->get();
         return view('occasion',compact('occasiontype','useroccasion','userid','areaname'));
     }
@@ -62,6 +68,7 @@ class UserOccasionController extends Controller
             $occasion = new UserOccasion;
             $occasion->userid = $request->userid;
             $occasion->occasiontypeid = $request->occasiontype;
+            $occasion->occasion_name = $request->event_name;
             $occasion->occasion_place = $request->occasion_place;
             $occasion->notes = $request->message ?? '-';
             $occasion->occasiondate = $request->occasiondate;
@@ -95,9 +102,10 @@ class UserOccasionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'event_id' => 'required|integer',
             'userid' => 'required|integer',
             'occasiontype' => 'required',
             'occasion_place' => 'required',
@@ -106,14 +114,15 @@ class UserOccasionController extends Controller
 
         if ($validator->fails()) {
             return redirect(url()->previous())
-                ->withErrors($validator)
-                ->withInput();
+            ->withErrors($validator)
+            ->withInput();
         }
 
         try {
-            $occasion = UserOccasion::findOrFail($id);
+            $occasion = UserOccasion::findOrFail($request->event_id);
             $occasion->userid = $request->userid;
             $occasion->occasiontypeid = $request->occasiontype;
+            $occasion->occasion_name = $request->event_name;
             $occasion->occasion_place = $request->occasion_place;
             $occasion->notes = $request->message ?? '-';
             $occasion->occasiondate = $request->occasiondate;
@@ -121,9 +130,9 @@ class UserOccasionController extends Controller
             $occasion->delete_status = 0;
             $occasion->save();
 
-            return redirect('home/occasion')->with('success', 'Occasion Type successfully updated');
+            return redirect()->route('view.event.page', ['id' => $request->event_id])->with('success', 'Occasion successfully updated');
         } catch (\Exception $e) {
-            return redirect('home/occasion')->with('error', 'Failed to update Occasion Type: ' . $e->getMessage());
+            return redirect()->route('view.event.page', ['id' => $request->event_id])->with('error', 'Failed to update Occasion: ' . $e->getMessage());
         }
     }
 
@@ -133,5 +142,16 @@ class UserOccasionController extends Controller
     public function destroy(UserOccasion $userOccasion)
     {
         //
+    }
+
+    public function view($id){
+        $event = UserOccasion::with(['occasionGallery', 'occasionCollaborate'])->where('id', $id)->first();
+        $budget = UserBudget::where('delete_status', 0)->where('useroccasion_id', $id)->get();
+        $checkList = UserChecklist::dashboardStats($id);
+        $occasiontype = OccasionType::where('delete_status','0')->get();
+        $loggedInEmail = auth()->user()->email;
+        $collaborators = EventCollaborator::where('event_id', $id)->where('email', $loggedInEmail)->orWhere('user_id', auth()->user()->id)->get();
+        // $collaborators = EventCollaborator::where('event_id', $id)->where('user_id', auth()->user()->id)->get();
+        return view('admin.layouts.event.list', compact('event', 'budget', 'checkList', 'occasiontype', 'collaborators'));
     }
 }
