@@ -3,7 +3,7 @@
 <div class="col-lg-10 col-md-10">
     <div class="row mt-2">
         <div class="col-md-2" id="verticalScrollspy">
-            <div id="event" class="list-group">
+            <div id="event" class="list-group share_list_group">
                 <a class="list-group-item list-group-item-action" href="#list-item-1">Event Details</a>
                 <a class="list-group-item list-group-item-action" href="#list-item-2">Event Gallery</a>
                 <a class="list-group-item list-group-item-action" href="#list-item-3">Event Budget</a>
@@ -27,6 +27,9 @@
                                     <i class="fa-solid fa-handshake-simple"></i>
                                 </a>
                             @endif
+                            <a title="Share Event" data-target="#share_occasion" data-toggle="modal" class="font-14 btn btn-primary waves-effect waves-light ml-1">
+                                <i class="bi bi-share-fill"></i>
+                            </a>
                         </div>
                     </div>
                     <p class="text-muted d-flex justify-content-start font-14">Event - {{ $event->Occasionname->eventtypename }}</p>
@@ -110,17 +113,17 @@
                     <div class="row mb-4">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-sm-12">
                                     <h4 class="font-color">Budget</h4>
                                 </div>
-                                <div class="col-md-6 d-flex justify-content-end">
+                                <div class="col-md-6 col-sm-12 d-flex justify-content-end">
                                     <a id="add_budget" target="_blank" href="{{ route('homebudget.create', ['budget_id' => $event->id]) }}" class="font-14 btn btn-primary waves-effect waves-light">
                                         <span>+ Add / Update Budget</span>
                                     </a>
                                 </div>
                             </div>
                             <div class="row mt-3 stickymenucontent">
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-12">
                                     <div class="card shadow-lg text-center bg-danger text-white">
                                         <div class="card-body">
                                             <h5>Total Budget</h5>
@@ -133,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-12">
                                     <div class="card shadow-lg text-center bg-warning text-white">
                                         <div class="card-body">
                                             <h5>Planned Budget</h5>
@@ -141,7 +144,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-12">
                                     <div class="card shadow-lg text-center bg-success text-white">
                                         <div class="card-body">
                                             <h5>Actual Amount</h5>
@@ -149,7 +152,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-sm-12">
                                     <div class="card shadow-lg text-center bg-warning text-white">
                                         <div class="card-body">
                                             <h5>Remaining Amount</h5>
@@ -239,7 +242,7 @@
                                                     <p class="text-muted mb-0">{{ date('F d, Y', strtotime($itinerary->date)) }}</p>
                                                 </div>
                                                 <div class="col-md-6 d-flex justify-content-between align-items-center">
-                                                    <p class="mb-0">{{ $itinerary->start_time_value }} {{ $itinerary->start_time_label }} - {{ $itinerary->end_time_value }} {{ $itinerary->end_time_label }}</p>
+                                                    <p class="mb-0 font-14">{{ $itinerary->start_time_value }} {{ $itinerary->start_time_label }} - {{ $itinerary->end_time_value }} {{ $itinerary->end_time_label }}</p>
                                                     <button class="btn btn-danger btn-sm delete-itinerary" data-id="{{ $itinerary->id }}">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -279,7 +282,7 @@
         <div class="homemodal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="collaborateModalLabel">Add Collaborator</h5>
-                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">X</button>
             </div>
             <div class="modal-body">
                 <form id="collaborateForm" method="post" action="{{ route('collaborate.event') }}">
@@ -298,11 +301,93 @@
                         <input type="text" class="form-control" name="mobile_number" required>
                     </div>
                     <div class="modal-footer mt-3">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-slide-right" id="share_occasion" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="homemodal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalLabel">Share Event</h5>
+                <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <!-- Nav Pills -->
+                <ul class="nav nav-pills mb-3 whatsapp-pills" id="collabTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link font-14 active" id="guest-tab" data-bs-toggle="pill" href="#guests" role="tab">Guests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-14 ml-2" id="group-tab" data-bs-toggle="pill" href="#groups" role="tab">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-14 ml-2" id="relation-tab" data-bs-toggle="pill" href="#relations" role="tab">Relations</a>
+                    </li>
+                </ul>
+
+                
+                <!-- Search Box -->
+                <div class="mb-3">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search Guests, Groups, Relations...">
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Guests Tab -->
+                    <div class="tab-pane fade show active" id="guests" role="tabpanel">
+                        <ul class="list-group share_list_group" id="guestList">
+                            @foreach($guests as $guest)
+                                <li class="list-group-item search-item">
+                                    <input type="checkbox" name="guests[]" value="{{ $guest->id }}" class="guest-checkbox" id="guest_checkbox_{{ $guest->id }}"> 
+                                    <label for="guest_checkbox_{{ $guest->id }}">{{ $guest->name }}</label>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <!-- Groups Tab -->
+                    <div class="tab-pane fade" id="groups" role="tabpanel">
+                        <ul class="list-group share_list_group" id="groupList">
+                            @foreach($guestGroups as $group)
+                                <li class="list-group-item search-item">
+                                    <input type="checkbox" name="groups[]" value="{{ $group->id }}" class="group-checkbox" id="group_checkbox_{{ $group->id }}">
+                                    <label for="group_checkbox_{{ $group->id }}">{{ $group->group_name }}</label>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <!-- Relations Tab -->
+                    <div class="tab-pane fade" id="relations" role="tabpanel">
+                        <ul class="list-group share_list_group" id="relationList">
+                            @foreach($guestRelation as $rel)
+                                <li class="list-group-item search-item">
+                                    <input type="checkbox" name="relations[]" value="{{ $rel->relationship }}" class="relation-checkbox" id="relation_checkbox_{{ $rel->relationship }}">
+                                    <label for="relation_checkbox_{{ $rel->relationship }}">{{ $rel->relationship }}</label>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <form action="{{ route('share.event') }}" method="post">
+                @csrf
+                <input type="hidden" name="event_id" value="{{ $event->id }}">
+                <input type="hidden" id="selectedGuests" name="selectedGuests">
+                <input type="hidden" id="selectedGroups" name="selectedGroups">
+                <input type="hidden" id="selectedRelations" name="selectedRelations">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Share</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -312,7 +397,7 @@
         <div class="homemodal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="itineraryModalLabel">Add Itinerary</h5>
-                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">X</button>
             </div>
             <div class="modal-body">
                 <form id="itineraryForm">
@@ -357,7 +442,7 @@
                     </div>
 
                     <div class="modal-footer mt-3">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Save Itinerary</button>
                     </div>
                 </form>
@@ -482,7 +567,7 @@
                                             <p class="text-muted mb-0">${formattedDate}</p>
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-between align-items-center">
-                                            <p class="mb-0">${response.itinerary.start_time_value} ${response.itinerary.start_time_label} - ${response.itinerary.end_time_value} ${response.itinerary.end_time_label}</p>
+                                            <p class="mb-0 font-14">${response.itinerary.start_time_value} ${response.itinerary.start_time_label} - ${response.itinerary.end_time_value} ${response.itinerary.end_time_label}</p>
                                             <button class="btn btn-danger btn-sm delete-itinerary" data-id="${response.itinerary.id}">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -539,5 +624,46 @@
     $(document).ready(function() {
         $('body').scrollspy({ target: '#verticalScrollspy' });
     });
+
+    $(document).on('click', '[data-dismiss="modal"]', function () {
+        $('.modal').modal('hide');
+    });
+
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(".search-item").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        function updateSelectedValues() {
+            var selectedGuests = [];
+            var selectedGroups = [];
+            var selectedRelations = [];
+
+            $(".guest-checkbox:checked").each(function () {
+                selectedGuests.push($(this).val());
+            });
+
+            $(".group-checkbox:checked").each(function () {
+                selectedGroups.push($(this).val());
+            });
+
+            $(".relation-checkbox:checked").each(function () {
+                selectedRelations.push($(this).val());
+            });
+
+            // Assign values to hidden inputs
+            $("#selectedGuests").val(selectedGuests.join(","));
+            $("#selectedGroups").val(selectedGroups.join(","));
+            $("#selectedRelations").val(selectedRelations.join(","));
+        }
+
+        $(".guest-checkbox, .group-checkbox, .relation-checkbox").on("change", function () {
+            updateSelectedValues();
+        });
+    });
+
 </script>
 @endpush

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{UserEventGallery, UserOccasion, EventItinerary, EventCollaborator};
-use App\Mail\CollaborateMail;
+use App\Models\{UserEventGallery, UserOccasion, EventItinerary, EventCollaborator, EventShare};
+use App\Mail\{CollaborateMail, ShareMail};
 use Illuminate\Support\Facades\Mail;
+use App\Models\GuestContact;
+use App\Models\GuestGroup;
+use App\Models\GuestGroupContact;
 
 class UserEventGalleryController extends Controller
 {
@@ -127,5 +130,44 @@ class UserEventGalleryController extends Controller
         Mail::to($collaborate->email)->send(new CollaborateMail($collaborate, $event));
 
         return redirect()->back()->with('success', 'Collaborator Added Successfully!');
+    }
+
+    public function share(Request $request){
+        try{
+            $selectedGuests = explode(',',$request->selectedGuests);
+            $selectedGroups = explode(',',$request->selectedGroups);
+            $selectedRelations = explode(',',$request->selectedRelations);
+
+            $eventShare = new EventShare;
+            $eventShare->user_id = auth()->user()->id;
+            $eventShare->event_id = $request->event_id;
+            $eventShare->selected_guests = json_encode($selectedGuests);
+            $eventShare->selected_groups = json_encode($selectedGroups);
+            $eventShare->selected_relations = json_encode($selectedRelations);
+            $eventShare->save();
+
+            $guests = GuestContact::whereIn('id', $selectedGuests)->pluck('id')->toArray();
+            $groups = GuestGroupContact::whereIn('group_id', $selectedGroups)->pluck('guest_id')->toArray();
+            $relations = GuestContact::whereIn('relationship', $selectedRelations)->pluck('id')->toArray();
+
+            $allGuestIds = array_unique(array_merge($guests, $groups, $relations));
+            $allGuestIds = array_values($allGuestIds);
+            $event = UserOccasion::where('id', $request->event_id)->first();
+            $eventGallery = UserEventGallery::where('event_id', $request->event_id)->get();
+            $eventItinerary = EventItinerary::where('event_id', $request->event_id)->get();
+            $attachments = [];
+            foreach ($eventGallery as $gallery) {
+                $attachments[] = storage_path('app/public/' . $gallery->gallery_image);
+            }
+
+            foreach($allGuestIds as $guestId){
+                $guest = GuestContact::where('id', $guestId)->first();
+                Mail::to($guest->email)->send(new ShareMail($guest, $event, $eventItinerary, $attachments));
+            }
+            return redirect()->back()->with('success', 'Event Shared Successfully!');
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
     }
 }
