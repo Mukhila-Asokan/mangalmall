@@ -209,6 +209,11 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::any('/webpage/{id}/preview',[UserWebPageController::class, 'preview']);
     Route::any('/webpage/{userid}/{id}/editor/', [UserWebPageController::class,'themeeditor'])->name('webpage/themelistview/editor');
 
+    Route::any('/theme/load_media_library_img', [UserWebPageController::class,'load_media_library_img'])->name('home.load_media_library_img');
+    Route::any('/theme/load_api_img', [UserWebPageController::class,'load_api_img'])->name('home.load_api_img');
+    Route::any('/theme/saveMyTemplate', [UserWebPageController::class,'saveMyTemplate'])->name('home.saveMyTemplate');
+    Route::any('/fileupload', [UserWebPageController::class,'fileupload'])->name('home.fileupload');
+
 
     /* Invitation Card Design*/
 
@@ -284,7 +289,8 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
     Route::any('/inviationcard', [InvitationCardController::class, 'index'])->name('inviationcard');
     Route::any('/inviationcard/create', [InvitationCardController::class, 'create'])->name('invitationcard.create');
     Route::any('/inviationcard/store', [InvitationCardController::class, 'store'])->name('invitationcard.store');
-
+    Route::any('/inviationcard/edit/{id}', [InvitationCardController::class, 'edit'])->name('invitationcard.edit');
+    Route::any('/invitationcard/delete/{id}', [InvitationCardController::class, 'destroy'])->name('invitationcard.delete');
 
 });
 
@@ -301,7 +307,11 @@ Route::any('/cardinvitation/loadajax/ai_text_generator', [CardImageAjaxLoadContr
 
 Route::any('/cardinvitation/uploadMedia', [CardEditorController::class, 'uploadMedia']);
 Route::any('/cardinvitation/moreImages', [CardEditorController::class, 'moreImages']);
-Route::any('/cardinvitation/save_template', [CardEditorController::class, 'saveTemplate']);
+Route::any('/cardinvitation/save_template', [CardEditorController::class, 'saveTemplate'])->name('cardinvitation.save_template');
+
+/*
+Route::any('/cardinvitation/openBgClippingEditor', [CardEditorController::class, 'openBgClippingEditor'])->name('cardinvitation.openBgClippingEditor');
+Route::any('/cardinvitation/downloadBgClippingImage', [CardEditorController::class, 'downloadBgClippingImage'])->name('cardinvitation.downloadBgClippingImage');*/
 
 // Guest
 Route::get('/guest/contacts/ajax', [GuestController::class, 'getGuestContactsAjax'])->name('guest.contacts');

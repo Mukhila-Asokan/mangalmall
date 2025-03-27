@@ -94,7 +94,7 @@
 						<div class="mt_select_editor">
 							<p>Upload Image</p>
 							<div class="mt_dropzon">
-								<form action="/file-upload" class="dropzone" id="imgbackgroundupload"></form>
+								<form action="{{ route('home.fileupload') }}" class="dropzone" id="imgbackgroundupload">@csrf</form>
 							</div>
 						</div>
 					</div>

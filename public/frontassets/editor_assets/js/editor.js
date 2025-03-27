@@ -617,16 +617,32 @@ Project: PixelPages
 	});
 
 	$(document).on('click', '.mt_use_img', function () {
-
+		alert("hao");
 		var src = $(this).attr('src');
+		alert(src);
 		var type = $(this).attr('data-type');	
+		alert(type);
 		useThisImage(src, type);
 
 	});
 
+	function processStatus(isLoading) {
+    if (isLoading) {
+        // Show loading indicator or disable UI elements
+        console.log("Loading started..."); // Replace with your actual loading logic
+        // Example: $('#loadingIndicator').show();
+        // Example: $('button').prop('disabled', true);
+    } else {
+        // Hide loading indicator or enable UI elements
+        console.log("Loading finished."); // Replace with your actual loading logic
+        // Example: $('#loadingIndicator').hide();
+        // Example: $('button').prop('disabled', false);
+    }
+}
+
 	function useThisImage(src, type) {
 		
-		processStatus(true)
+		processStatus(true);
 		if (type == 'image_src') {
 			
 			$('.editableElementActive').attr('src', src);
@@ -642,6 +658,7 @@ Project: PixelPages
 		}
 		else
 		{
+			alert("hdddd");
 			$('.editableElementActive').attr('src', src);
 		}
 		processStatus(false)
@@ -804,7 +821,7 @@ Project: PixelPages
 		var targetElement = $('#' + img_container_id);		
 		$.ajax({
 			method: 'post',			
-			url: baseurl + "/admin/venue/theme/load_media_library_img",
+			url: baseurl + "/home/theme/load_media_library_img",
 			contentType: "application/json",
 			dataType: 'json',
 			data: LoadData,
@@ -879,7 +896,7 @@ Project: PixelPages
 		var targetElement = $('#' + img_container_id);
 		$.ajax({
 			method: 'post',
-			url: baseurl + '/admin/venue/theme/load_api_img',
+			url: baseurl + '/home/theme/load_api_img',
 			data: LoadData,
 			success: function (resp) {
 				
@@ -1105,7 +1122,7 @@ $(document).on('click', '.mt_edt_save_button', function () {
 	obj.append('venuename', $('#venuename').val())
 	obj.append('themname', $('#themname').val())
 	obj.append('template_content', $('.mt_edit_template_container').html())
-	initiateAjaxRequest('/admin/venue/theme/saveMyTemplate', obj, (resp) => {
+	initiateAjaxRequest('/home/theme/saveMyTemplate', obj, (resp) => {
 		$('.mt_main_structure').addClass('mt_hide_sidebar')
 		  console.log('Success:', resp); 
 

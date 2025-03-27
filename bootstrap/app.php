@@ -8,6 +8,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Log;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\CustomVerifyCsrfToken;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+       
+
+        $middleware->replace(
+            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\CustomVerifyCsrfToken::class
+        );
 
         
 
@@ -27,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'HandleSessionExpiration' => \App\Http\Middleware\HandleSessionExpiration::class,
             'HandleInertiaRequests' => HandleInertiaRequests::class,
             'RedirectIfNotFound' => \App\Http\Middleware\RedirectIfNotFound::class,
-            
+            'CustomVerifyCsrfToken' => CustomVerifyCsrfToken::class,
             
         ]);
       

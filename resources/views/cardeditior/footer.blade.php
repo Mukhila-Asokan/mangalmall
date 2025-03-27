@@ -21,6 +21,7 @@
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>window.Modernizr || document.write('<script src="js/modernizr.min.js"><\/script>')</script>
 <!-- <script src="{{ asset('assets/js/bootstrap-colorpicker.min.js') }}"></script> -->
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
@@ -38,6 +39,9 @@
 <script src="{{ asset('assets/js/canvas-custom.js') }}?q={{ time() }}"></script>
 <script src="{{ asset('assets/js/editor-custom.js') }}?q={{ time() }}"></script>
 <span id="pg_ajax_url" data-ajax_url="{{ url('/') }}"></span>
+<script>
+    const saveTemplateUrl = "{{ route('cardinvitation.save_template') }}";
+</script>
 <script>
 /**
  * Color Switcher
@@ -65,6 +69,17 @@ for (let i = 0; i < elements.length; i++) {
         elements[0].checked = false;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 

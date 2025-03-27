@@ -1,41 +1,96 @@
+<!-- CSS for Improved Design -->
+<style>
+    .sidebar {
+     	 position: fixed;
+        top: 0;
+        right: -320px;
+        width: 320px;
+        height: 100%;
+        background-color: rgba(255, 255, 255,0.8);
+        background-image: url("<?php echo e(asset('assets/images/sidebar-bg.png')); ?>");
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: overlay;
+        opacity: 1;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        transition: right 0.3s ease;
+        padding: 20px;
+    }
+
+    .sidebar.active {
+        right: 0;
+    }
+
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 15px;
+    }
+
+    .mangalmall-template-formate ul, .sub-options {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .mangalmall-template-formate li, .sub-options li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        cursor: pointer;
+    }
+
+    .mangalmall-template-formate li:hover, .sub-options li:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+    .sub-options{
+    	margin-left:50px;
+    	padding-left:5px;
+    }
+</style>
+
 <body class="pg-editor-body">
 	   
        <!-- Header Start  -->
        <div class="pg-header-wrapper pg-editor-header">
            <div class="pg-header-row">
-               <div class="pg-header-col">
-                   <div class="pg-logo-wrap">
-                          <a href="<?php echo e(route('user.carddesign')); ?>" class="pg-logo">
+               <div class="pg-header-col col-md-6">
+					<div class = "row">
+                   <div class="pg-logo-wrap col-md-2">
+                          <a href="<?php echo e(route('inviationcard')); ?>" class="pg-logo">
                             <img src="<?php echo e(asset('assets/images/logo.png')); ?>" alt="Mangal Mall">
                           </a>
                    </div>
-                   <div class="pg-menu-toggle">
-                            <span></span><span></span><span></span>
-                    </div>
-                    <div class="pg_nav">
-                        <!--ul>
-                            <li><a href="<?php echo e(route('home')); ?>">Home</a></li>                       
-                        </ul-->   
-                       
-                    </div>
-                    
-					<!--div class="pg_template_name" title="Template Name - <?php echo e($template->templatename ?? 'Template'); ?>" data-bs-toggle="tooltip" data-bs-placement="bottom">
-						<?php echo e($template->templatename ?? 'Template'); ?>
+                  
+              
+					<div class="col-md-2" title="Template Name - <?php echo e($template->template_name ?? 'Template'); ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" style="float: right;position: relative;top: 20px;margin-left: 30px;">
+						Title - <?php echo e($template->template_name ?? 'Template'); ?>
 
-					</div-->
-                 
-
+					</div>
+					<div class = "col-md-2">
+						<a href = "<?php echo e(route('inviationcard')); ?>" class="btn btn-primary" style="margin-top:20px;">Back</a>	
+					</div>					
+					</div>
                </div>
                <div class="pg-header-col">										
                     <div class="pg-header-options-wrap">
 						<div class="pg-action-btns">
 							<ul>
 								<li><a href = "#" >Welcome <?php echo e(Auth::user()->name ?? ''); ?></a></li>
-							<li><a href="javascript:void(0);" class="has-tooltip btn"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
+							<!--li><a href="javascript:void(0);" class="has-tooltip btn"  data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
+								
 								<i class="ti ti-download" data-bs-toggle="modal" data-bs-target="#templateDownloadModal" ></i>	
 									</a>
+							</li-->
+							<li>
+							<a href="javascript:void(0);" class="btn has-tooltip" id="download-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
+                                <i class="ti ti-download"></i>
+                            </a>
 							</li>
-							
                             </ul>
                         </div>  
                     </div>
@@ -162,7 +217,7 @@
 		<div class="modal fade" id="templateDownloadModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="templateDownloadModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="homemodal-content">
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
 					<div class="modal-body">
 							<h5 class="modal-title" id="templateDownloadModalLabel">Select Image Formate  </h5>
 							<div class="mangalmall-template-formate">
@@ -188,4 +243,58 @@
 				</div>
 			</div>
 		</div>
+
+	<!-- Right Sidebar for Download Options -->
+<div id="right-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h5>Download Options</h5>
+        <button class="btn-close" id="close-sidebar">X</button>
+    </div>
+    <h5 class="modal-title" id="templateDownloadModalLabel">Select Image Format</h5>
+    <div class="mangalmall-template-formate">
+        <ul>
+            <li>
+                <a class="get_canvas_image" data-format="image/png"><i class="ti ti-save"></i></a>
+                <span>PNG</span>
+            </li>
+            <li>
+                <a class="get_canvas_image" data-format="image/jpeg"><i class="ti ti-save"></i></a>
+                <span>JPG</span>
+            </li>
+            <li>
+                <a href="javascript:void(0);" class="get_canvas_image" id="save_template"><i class="ti ti-save"></i></a>
+                <span>Save</span>      
+            </li>
+            <li>
+                <a href="javascript:void(0);" class="get_canvas_image" id="saveCard">
+                    <i class="fa fa-whatsapp"></i>
+                </a>
+                <span>Share</span>
+            </li>
+        </ul>
+    </div>
+    <h5 class="modal-title" id="templateDownloadModalLabel">Share Options</h5>
+    <ul>
+        <li>
+            <a class="get_canvas_image" href="#"> Share <i class="ti ti-share"></i></a>
+            <ul class="sub-options">
+                <li><a href="#">Guest</a></li>
+                <li><a href="#">Group</a></li>
+                <li><a href="#">Relationship Group</a></li>
+            </ul>
+        </li>
+    </ul> 
+</div>
+v>
+
+<!-- JavaScript for Sidebar Toggle -->
+<script>
+    document.getElementById('download-icon').addEventListener('click', function() {
+        document.getElementById('right-sidebar').classList.add('active');
+    });
+
+    document.getElementById('close-sidebar').addEventListener('click', function() {
+        document.getElementById('right-sidebar').classList.remove('active');
+    });
+</script>
 <?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/cardeditior/maindesign.blade.php ENDPATH**/ ?>

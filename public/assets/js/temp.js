@@ -692,6 +692,7 @@
 			}
 		});
 			$(document).on('click','#save_template',function(e){
+				alert('temp');
 			e.preventDefault();
 			var data = {};
 			var m = canvas.toDataURL({format: "jpg"});

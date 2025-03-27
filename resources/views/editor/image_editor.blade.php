@@ -10,9 +10,9 @@
 							<div class="mt_select_editor">
 								<p>Upload Image</p>
 								<div class="mt_dropzon mt_dropzon2">
-									<form action="/file-upload"
+									<form action="{{ route('home.fileupload') }}"
 									  class="dropzone"
-									  id="imgsrcupload" name="imgsrcupload"></form> 
+									  id="imgsrcupload" name="imgsrcupload">@csrf</form> 
 								</div>
 							</div>
 									<div class="mt_editor_tabs">

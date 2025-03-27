@@ -36,7 +36,7 @@
                          
                         </a>
                     </li>
-                    @if (hasMenuAccess($role, 'Venue'))
+                    @if ($role == 1 || hasMenuAccess($role, 'Venue'))
                         <li class="menu-item">
                             <a href="#menuExpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                 <span class="menu-icon"><i data-lucide="copy"></i></span>
@@ -100,7 +100,7 @@
                             </div>
                         </li>
                     @endif
-                    @if (hasMenuAccess($role, 'Invitation'))
+                    @if ($role == 1 || hasMenuAccess($role, 'Invitation'))
                         <li class="menu-item">
                             <a href="#invitationExpages" data-bs-toggle="collapse" class="menu-link waves-effect" >
                                 <span class="menu-icon"><i data-lucide="file-image"></i></span>
@@ -172,7 +172,7 @@
                         </li>
                     @endif
                     
-                    @if (hasMenuAccess($role, 'Vendor'))
+                    @if ($role == 1 || hasMenuAccess($role, 'Vendor'))
                         <li class="menu-item">
                             <a href="#menuvendor" data-bs-toggle="collapse" class="menu-link waves-effect"> 
                                 <span class="menu-icon"><i data-lucide="fan"></i></span>
@@ -201,7 +201,7 @@
                         </li>
                     @endif
 
-                    @if (hasMenuAccess($role, 'Blog'))
+                    @if ($role == 1 || hasMenuAccess($role, 'Blog'))
                         <li class= "menu-item">
                             <a href="#menublogpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                     <span class="menu-icon"><i data-lucide="person-standing"></i></span>
@@ -246,7 +246,7 @@
                     @endif
 
 
-                    @if (hasMenuAccess($role, 'Subscription'))
+                    @if ($role == 1 || hasMenuAccess($role, 'Subscription'))
                         <li class= "menu-item">
                             <a href="#menusubcriptionpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                     <span class="menu-icon"><i data-lucide="person-standing"></i></span>
@@ -272,7 +272,7 @@
 
 
 
-                    @if (hasMenuAccess($role, 'Subscription'))
+                    @if ($role == 1 || hasMenuAccess($role, 'Subscription'))
                         <li class="menu-item">
                             <a href="#menustaffpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                 <span class="menu-icon"><i data-lucide="person-standing"></i></span>

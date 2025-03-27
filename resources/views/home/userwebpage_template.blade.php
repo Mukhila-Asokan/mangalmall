@@ -3,13 +3,10 @@
 @section('content')
 
 
-<div class="col-lg-8 col-md-8">
-<aside class="widget widget-search">
-        <form>
-            <input class="form-control" type="search" placeholder="Type Search Words">
-            <button class="search-button" type="submit"><span class="ti-search"></span></button>
-        </form>
-</aside>
+<div class="mt-1 col-lg-10 col-md-10">
+<div class="row">
+        @include('profile-layouts.invitationmenu')
+        <div class="col-lg-11 col-md-11 stickymenucontent"> 
 
 <div class="container py-5">
         <h5 class="mb-4 text-center text-primary">Make a Website for Your Event</h5>
@@ -53,7 +50,12 @@
 
 
 </div>
-<div class="col-lg-2 col-md-2"></div>
+</div>
+</div>
+</div>
+<div class="col-lg-2 col-md-2">
+    @include('profile-layouts.rightside')
+</div>
 @endsection
 @push('scripts')
 

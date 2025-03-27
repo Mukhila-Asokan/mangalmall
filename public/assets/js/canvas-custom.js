@@ -3,7 +3,7 @@
 	
 	var canvas_width = 1200,
 	canvas_height = 628;
-
+	const baseImageUrl = window.location.origin + "/storage/";
 	setTimeout(function(){$('.mangalmall-loader').hide();},1000);	
 	
 	var Unsaved = false;
@@ -22,6 +22,76 @@
 	var element_background = $('.pg_element_background');
 	var element_image = $('.ed_element_image');
 	var element_overlay = $('.pg_element_overlay');   
+
+
+	document.getElementById('pg_crop').addEventListener('click', function (e) {
+		e.preventDefault();
+	  
+		const activeObject = canvas.getActiveObject();
+	  
+		if (!activeObject || activeObject.type !== 'image') {
+		  alert("Please select an image to crop.");
+		  return;
+		}
+	  
+		if (!isCropping) {
+		  isCropping = true;
+		  originalImage = activeObject;
+	  
+		  // Disable image interaction
+		  originalImage.selectable = false;
+	  
+		  // Add cropping rectangle
+		  cropRect = new fabric.Rect({
+			left: originalImage.left + 20,
+			top: originalImage.top + 20,
+			width: 100,
+			height: 100,
+			fill: 'rgba(0,0,0,0.3)',
+			stroke: 'red',
+			strokeWidth: 1,
+			hasBorders: true,
+			hasControls: true,
+			selectable: true,
+			objectCaching: false,
+		  });
+	  
+		  canvas.add(cropRect);
+		  canvas.setActiveObject(cropRect);
+		  canvas.renderAll();
+	  
+		  // Optional: change crop button text/icon or show confirm crop button
+		} else {
+		  // Crop confirmed
+		  const rect = cropRect.getBoundingRect();
+		  const scaleX = originalImage.scaleX;
+		  const scaleY = originalImage.scaleY;
+	  
+		  const cropped = new fabric.Image(originalImage.getElement(), {
+			left: rect.left,
+			top: rect.top,
+			cropX: (rect.left - originalImage.left) / scaleX,
+			cropY: (rect.top - originalImage.top) / scaleY,
+			width: rect.width / scaleX,
+			height: rect.height / scaleY,
+			scaleX: scaleX,
+			scaleY: scaleY,
+		  });
+	  
+		  canvas.remove(originalImage);
+		  canvas.remove(cropRect);
+		  canvas.add(cropped);
+		  canvas.setActiveObject(cropped);
+	  
+		  isCropping = false;
+		  cropRect = null;
+		  originalImage = null;
+	  
+		  canvas.renderAll();
+		}
+	  });
+	  
+
 
 	
 	var canvas = new fabric.Canvas("pg_canvas", {
@@ -434,6 +504,8 @@
 		}		
     });
 	/* crop image canvas */
+
+
 	/* crop bg canvas */
 	var crop_bg_canvas = new fabric.Canvas("crop_bg");
     crop_bg_canvas.setWidth(230);
@@ -475,6 +547,7 @@
         canvas.renderAll()
     });
 	/* crop bg canvas */
+
 	/* align with arrow */
 	const STEP = 5;
 
@@ -697,7 +770,7 @@
 				history_redo();
 			}
 		});
-		$(document).on('click','#save_template',function(e){
+		$(document).on('click','#save_template',function(e){			
 			e.preventDefault();
 			var data = {};
 			var m = canvas.toDataURL({format: "jpg"});
@@ -711,20 +784,25 @@
 			$('.mangalmall-loader').show();			
 			$.ajax({
 				url: ajaxurl + '/cardinvitation/save_template', 
-				type: "POST",         
+				type: "POST",  
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				},       
 				data: data, 
 				success: function(data){
-					var result = JSON.parse(data);
-					if(result.status){						
-						$.toaster(result.msg, 'Success', 'success');
-						Unsaved = false;
-					}else{
-						$.toaster(result.msg, 'Error', 'error');
+					var result = (typeof data === 'string') ? JSON.parse(data) : data;
+					console.log('Parsed Result:', result);			
+					if (result.status) {
+						Swal.fire('Success', result.msg, 'success');
+					} else {
+						Swal.fire('Error', result.msg, 'error');
 					}
 					setTimeout(function(){$('.mangalmall-loader').hide();},2000);
 				}
 			});
 		});
+
+
 		
 		$(document).on('click','.pg-element-svg',function(e){
 			e.preventDefault();
@@ -2966,16 +3044,17 @@
 			})
 			.then(response => response.json())
 			.then(result => {
+				console.log("Image upload result:", baseImageUrl + result.thumb_url);
 				if (result.success) {
 					let bgContainer = document.querySelector('.pg-image-list.pg-recent-uploaded.bg');
 					let imgContainer = document.querySelector('.pg-image-list.pg-recent-uploaded.image');
-		
+					let imageurl = baseImageUrl + result.image_url;
 					if (type === 'bg' && bgContainer) {
 						bgContainer.parentElement.classList.remove('hide');
 						bgContainer.insertAdjacentHTML('afterbegin', `
 							<div class="pg-imglist-item">
-								<div class="ed_image pg_canvas_bg_image" data-url="${result.image_url}">
-									<img src="${result.thumb_url}" alt="">
+								<div class="ed_image pg_canvas_bg_image" data-url="${imageurl}">
+									<img src="${imageurl}" alt="">
 								</div>
 								<span class="pg-remove-image pg_canvas_bg_remove_image" data-id="${result.id}"></span>
 							</div>
@@ -2984,8 +3063,8 @@
 						imgContainer.parentElement.classList.remove('hide');
 						imgContainer.insertAdjacentHTML('afterbegin', `
 							<div class="pg-imglist-item">
-								<div class="ed_image pg_canvas_add_image" data-url="${result.image_url}">
-									<img src="${result.thumb_url}" alt="">
+								<div class="ed_image pg_canvas_add_image" data-url="${imageurl}">
+									<img src="${imageurl}" alt="">
 								</div>
 								<span class="pg-remove-image pg_canvas_add_remove_image" data-id="${result.id}"></span>
 							</div>
@@ -3437,11 +3516,12 @@
 			image_url: currentBgImage,
 			};
 			$.ajax({
-			url: ajaxurl + "editor/open_bg_clipping_editor",
+			url: ajaxurl + '/cardinvitation/openBgClippingEditor', 			
 			type: "POST",
 			data: data,
 			success: function (data) {				
-				var result = jQuery.parseJSON(data);
+				var result = (typeof data === 'string') ? JSON.parse(data) : data;
+				console.log('openBgClippingEditor Parsed Result:', result);	
 				if(result.status==1){
 					$('.mangalmall-loader').hide();
 					if (tp == "image") {

@@ -36,7 +36,7 @@
                          
                         </a>
                     </li>
-                    <?php if(hasMenuAccess($role, 'Venue')): ?>
+                    <?php if($role == 1 || hasMenuAccess($role, 'Venue')): ?>
                         <li class="menu-item">
                             <a href="#menuExpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                 <span class="menu-icon"><i data-lucide="copy"></i></span>
@@ -100,7 +100,7 @@
                             </div>
                         </li>
                     <?php endif; ?>
-                    <?php if(hasMenuAccess($role, 'Invitation')): ?>
+                    <?php if($role == 1 || hasMenuAccess($role, 'Invitation')): ?>
                         <li class="menu-item">
                             <a href="#invitationExpages" data-bs-toggle="collapse" class="menu-link waves-effect" >
                                 <span class="menu-icon"><i data-lucide="file-image"></i></span>
@@ -172,7 +172,7 @@
                         </li>
                     <?php endif; ?>
                     
-                    <?php if(hasMenuAccess($role, 'Vendor')): ?>
+                    <?php if($role == 1 || hasMenuAccess($role, 'Vendor')): ?>
                         <li class="menu-item">
                             <a href="#menuvendor" data-bs-toggle="collapse" class="menu-link waves-effect"> 
                                 <span class="menu-icon"><i data-lucide="fan"></i></span>
@@ -201,7 +201,7 @@
                         </li>
                     <?php endif; ?>
 
-                    <?php if(hasMenuAccess($role, 'Blog')): ?>
+                    <?php if($role == 1 || hasMenuAccess($role, 'Blog')): ?>
                         <li class= "menu-item">
                             <a href="#menublogpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                     <span class="menu-icon"><i data-lucide="person-standing"></i></span>
@@ -246,7 +246,7 @@
                     <?php endif; ?>
 
 
-                    <?php if(hasMenuAccess($role, 'Subscription')): ?>
+                    <?php if($role == 1 || hasMenuAccess($role, 'Subscription')): ?>
                         <li class= "menu-item">
                             <a href="#menusubcriptionpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                     <span class="menu-icon"><i data-lucide="person-standing"></i></span>
@@ -272,7 +272,7 @@
 
 
 
-                    <?php if(hasMenuAccess($role, 'Subscription')): ?>
+                    <?php if($role == 1 || hasMenuAccess($role, 'Subscription')): ?>
                         <li class="menu-item">
                             <a href="#menustaffpages" data-bs-toggle="collapse" class="menu-link waves-effect">
                                 <span class="menu-icon"><i data-lucide="person-standing"></i></span>

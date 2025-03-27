@@ -14,6 +14,23 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/typekitcss.css'); }}">
     <link rel="stylesheet" href="{{ asset('adminassets/editor_assets/css/style.css'); }}">
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>window.websitelink = "{{ url('/') }}";</script>
+    <script>window.baseurl = "{{ url('/') }}";</script>
+	<script src="{{ asset('frontassets/editor_assets/js/jquery.nice-select.min.js') }}"></script>
+	<script src="{{ asset('frontassets/editor_assets/js/range.js') }}"></script>
+	<script src="{{ asset('frontassets/editor_assets/js/dropzone.min.js') }}"></script>
+	<script src="{{ asset('frontassets/editor_assets/js/spectrum.js') }}"></script>
+    <script src="{{ asset('frontassets/editor_assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('frontassets/editor_assets/js/editor.js') }}"></script>
+    <script src="{{ asset('frontassets/js/custom.js') }}"></script>
+   
+
+    <script src="{{ asset('frontassets/editor_assets/js/common.js') }}"></script>
+    <script src="{{ asset('frontassets/editor_assets/js/custom.js') }}"></script>
+    <script src="{{ asset('frontassets/js/page_js/admin.js') }}"></script>
+  
 <style>
 		
 		/*=============================
