@@ -172,6 +172,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
 
     // Event Collaborate
     Route::post('/event/collaborate',[UserEventGalleryController::class, 'collaborate'])->name('collaborate.event');
+    Route::post('/event/share',[UserEventGalleryController::class, 'share'])->name('share.event');
     
     Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
     Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');

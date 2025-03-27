@@ -13,7 +13,9 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Modules\Venue\Models\Area;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\GuestContact;
+use App\Models\GuestGroup;
+use App\Models\GuestGroupContact;
 Use session;
 use DB;
 class UserOccasionController extends Controller
@@ -145,13 +147,24 @@ class UserOccasionController extends Controller
     }
 
     public function view($id){
-        $event = UserOccasion::with(['occasionGallery', 'occasionCollaborate'])->where('id', $id)->first();
-        $budget = UserBudget::where('delete_status', 0)->where('useroccasion_id', $id)->get();
-        $checkList = UserChecklist::dashboardStats($id);
-        $occasiontype = OccasionType::where('delete_status','0')->get();
-        $loggedInEmail = auth()->user()->email;
-        $collaborators = EventCollaborator::where('event_id', $id)->where('email', $loggedInEmail)->orWhere('user_id', auth()->user()->id)->get();
-        // $collaborators = EventCollaborator::where('event_id', $id)->where('user_id', auth()->user()->id)->get();
-        return view('admin.layouts.event.list', compact('event', 'budget', 'checkList', 'occasiontype', 'collaborators'));
+        try{
+            $event = UserOccasion::with(['occasionGallery', 'occasionCollaborate'])->where('id', $id)->first();
+            $budget = UserBudget::where('delete_status', 0)->where('useroccasion_id', $id)->get();
+            $checkList = UserChecklist::dashboardStats($id);
+            $occasiontype = OccasionType::where('delete_status','0')->get();
+            $loggedInEmail = auth()->user()->email;
+            $collaborators = EventCollaborator::where('event_id', $id)->where('email', $loggedInEmail)->orWhere('user_id', auth()->user()->id)->get();
+            $guests = GuestContact::where('created_by', auth()->user()->id)->get();
+            $guestGroups = GuestGroup::where('created_by', auth()->user()->id)->get();
+            $guestRelation = GuestContact::where('created_by', auth()->user()->id)
+                            ->selectRaw('MIN(id) as id, relationship, MIN(name) as name, MIN(email) as email') 
+                            ->groupBy('relationship')
+                            ->get();
+            return view('admin.layouts.event.list', compact('event', 'budget', 'checkList', 'occasiontype', 'collaborators', 'guests', 'guestGroups', 'guestRelation'));
+        }
+        catch(\Exception $e){
+            dd($e);
+            return redirect()->back()->with('error', 'Failed to view event: ' . $e->getMessage());
+        }
     }
 }
