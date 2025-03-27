@@ -7,7 +7,8 @@
         </li>
        
         <li><a href="{{ route('home.budget') }}"><i class="fa-solid fa-scale-balanced fa-2xl"></i><span>Budget</span></a></li>
-        <li><a href="{{ route('home.budget') }}"><i class="fa-solid fa-file-image fa-2xl"></i><span>Gallery</span></a></li>
+        <li><a href="{{ route('home.event.gallery') }}"><i class="fa-solid fa-file-image fa-2xl"></i><span>Gallery</span></a></li>
+        <li><a href="{{ route('home.event.itinerary') }}"><i class="bi bi-list-check"></i><span>Itinerary</span></a></li>
     </ul> 
     </div>        
 </div>

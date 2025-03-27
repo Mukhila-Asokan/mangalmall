@@ -127,7 +127,7 @@
                             </li>
           
                             <li class="nav-item hs-has-mega-menu custom-nav-item" data-position="left">
-                                <a class="nav-link custom-nav-link" href="{{ route('home.eventplan') }}" aria-haspopup="true" aria-expanded="false">Event Plan</a>
+                                <a class="nav-link custom-nav-link" href="{{ route('home.occasion') }}" aria-haspopup="true" aria-expanded="false">Event Plan</a>
 
                             </li>
 

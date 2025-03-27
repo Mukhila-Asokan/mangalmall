@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('userbudget', function (Blueprint $table) {
             $table->id();          
             $table->string('name');
-            $table->foreignId('occasion_id')->constrained('occasion_types')->onDelete('cascade');
+            $table->foreignId('useroccasion_id')->constrained('occasion_types')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('planned_amount', 12, 2)->default(0);
             $table->decimal('completed_amount', 12, 2)->default(0);

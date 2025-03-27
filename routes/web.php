@@ -29,7 +29,7 @@ use App\Http\Controllers\BlogCommentController;
 
 use App\Http\Controllers\BlogLikeController;
 use App\Http\Controllers\UserChecklistController;
-use App\Http\Controllers\UserBudgetController;
+use App\Http\Controllers\{UserBudgetController, UserEventGalleryController};
 use App\Http\Controllers\InvitationCardController;
 
 
@@ -128,6 +128,7 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
 
     Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home.occasion');
     Route::any(session('userpath').'/occasion/add', [UserOccasionController::class, 'store'])->name('home/occasion/add');
+    Route::any(session('userpath').'/occasion/update', [UserOccasionController::class, 'update'])->name('home/occasion/update');
 
     Route::any(session('userpath').'/venue/search', [VenueController::class, 'index'])->name('home/venue/search');
 
@@ -156,8 +157,22 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::post('/budget/update', [UserBudgetController::class, 'update'])->name('userbudget.update');
     Route::delete('/budget/destroy/{id}', [UserBudgetController::class, 'destroy'])->name('userbudget.destroy');
 
+    // Event Gallery
+    Route::any('/event/gallery',[UserEventGalleryController::class, 'index'])->name('home.event.gallery');
+    Route::get('/event/gallery/add/{event_id}',[UserEventGalleryController::class, 'add'])->name('home.gallery.add');
+    Route::post('/event/gallery/create',[UserEventGalleryController::class, 'create'])->name('home.gallery.create');
+    Route::post('/event/gallery/delete',[UserEventGalleryController::class, 'delete'])->name('home.gallery.delete');
 
-    
+    // Event Itinerary
+    Route::any('/event/itinerary',[UserEventGalleryController::class, 'itineraryList'])->name('home.event.itinerary');
+    Route::any('/event/itinerary/add/{id}',[UserEventGalleryController::class, 'itineraryAdd'])->name('home.itinerary.add');
+    Route::any('/event/itinerary/store',[UserEventGalleryController::class, 'itineraryStore'])->name('home.itinerary.store');
+    Route::any('/event/itinerary/delete/{id}',[UserEventGalleryController::class, 'itineraryDelete'])->name('home.itinerary.delete');
+    Route::get('/event/{id}',[UserOccasionController::class, 'view'])->name('view.event.page');
+
+    // Event Collaborate
+    Route::post('/event/collaborate',[UserEventGalleryController::class, 'collaborate'])->name('collaborate.event');
+    Route::post('/event/share',[UserEventGalleryController::class, 'share'])->name('share.event');
     
     Route::any('/blog/list',[UserBlogController::class, 'index'])->name('blog.index');
     Route::any('/blog/create',[UserBlogController::class, 'create'])->name('blog.create');
