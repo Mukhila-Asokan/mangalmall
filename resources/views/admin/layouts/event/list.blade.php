@@ -1,7 +1,7 @@
 @extends('profile-layouts.profile')
 @section('content')
 <div class="col-lg-10 col-md-10">
-    <div class="row mt-2">
+    <div class="row mt-4">
         <div class="col-md-2" id="verticalScrollspy">
             <div id="event" class="list-group share_list_group">
                 <a class="list-group-item list-group-item-action" href="#list-item-1">Event Details</a>
@@ -11,12 +11,25 @@
                 <a class="list-group-item list-group-item-action" href="#list-item-5">Event Itinerary</a>
             </div>
         </div>
-        <div class="col-md-10 card">
-            <div id="scrollspy-example" class="scrollspy-example p-3" style="height: 500px; overflow-y: auto;">
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="font-color">{{ $event->occasion_name }}</h4>
+                    <p class="text-muted d-flex justify-content-start font-14">Event - {{ $event->Occasionname->eventtypename }}</p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <div class="back-btn">
+                        <a id="edit_event" href="{{ route('home.occasion') }}" class="font-14 btn btn-primary waves-effect waves-light">
+                            <i class="bi bi-arrow-left"><span class="ml-1"></i>Back</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="scrollspy-example" class="scrollspy-example card p-3" style="height: 500px; overflow-y: auto;">
                 <div id="list-item-1" class="mb-2 mt-2">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="font-color">{{ $event->occasion_name }}</h4>
+                            <h4 class="font-color">Details</h4>
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
                             <a id="edit_event" data-target="#edit_occasion_popup" data-toggle="modal" class="font-14 btn btn-primary waves-effect waves-light">
@@ -32,7 +45,6 @@
                             </a>
                         </div>
                     </div>
-                    <p class="text-muted d-flex justify-content-start font-14">Event - {{ $event->Occasionname->eventtypename }}</p>
                     @if($collaborators->pluck('user_id')->contains(auth()->user()->id))
                         <?php $collaboratorNames = $collaborators->pluck('name')->toArray() ?>
                         <div class="row">
