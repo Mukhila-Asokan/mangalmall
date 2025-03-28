@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 
@@ -24,7 +26,7 @@ class Handler extends ExceptionHandler
         parent::report($exception);
     }
 
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $exception) : \Symfony\Component\HttpFoundation\Response
     {
     // 404 Error Handling
     if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
@@ -52,11 +54,30 @@ class Handler extends ExceptionHandler
         ]);
     }
 
-    // CSRF Token Error Handling (Common in Laravel)
-    if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
-        return redirect()->back()->withErrors([
-            'csrf_error' => 'Your session has expired. Please try again.'
-        ]);
+    if ($exception instanceof TokenMismatchException) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Your session expired or the page was open too long. Please try again.');
+    }
+
+
+    if ($exception instanceof TokenMismatchException) {
+        Log::info('Custom CSRF handler triggered');
+        if ($request->expectsJson() || $request->isJson() || $request->wantsJson()) {
+            return response()->json([
+                'success' => false,
+                'status' => 'error',
+                'message' => 'CSRF token mismatch or session expired.',
+                'exception' => get_class($exception),
+            ], 419);
+        }
+
+        return redirect()->back()
+            ->withInput()
+            ->withErrors([
+                'csrf_error' => 'Your session has expired. Please refresh the page and try again.'
+            ]);
     }
 
     // Handle Database or Query Exceptions (Helpful for debugging)

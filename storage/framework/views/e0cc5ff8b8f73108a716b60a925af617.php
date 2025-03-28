@@ -3,7 +3,7 @@
  
 
              <div class="col-lg-9 col-md-9" >
-             <h5>Welcome <?php echo e(ucwords(strtolower(Auth::user()->name))); ?></h5>
+             <h5 class="m-3">Welcome <?php echo e(ucwords(strtolower(Auth::user()->name))); ?></h5>
 
                    
 				   <?php $prurl = "frontassets/img/herobg-5.png"; ?>

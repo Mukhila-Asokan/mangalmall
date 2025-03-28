@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\OtpController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\FlashMessageMiddleware;
+use App\Http\Middleware\CustomVerifyCsrfToken;
 
 Route::prefix('home')->middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])

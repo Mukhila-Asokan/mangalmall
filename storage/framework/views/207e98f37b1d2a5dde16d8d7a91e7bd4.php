@@ -7,7 +7,7 @@
 								<span>Design</span></a>
 						</li>
 						<li>
-							<a href="#" id = "" data-element = "pg_crop" title="Crop"> <div><i class="fa-solid fa-crop" style="font-size: 25px;"></i></div>
+							<a href="#" id = "pg_crop" data-element = "pg_crop" title="Crop"> <div><i class="fa-solid fa-crop" style="font-size: 25px;"></i></div>
 								<span>Crop</span></a>
 						</li>
 						<li>
@@ -65,14 +65,14 @@
 								<span>Overlay</span>
 							</a>
 						</li>	
-						<li>
+						<!--li>
 							<a id="main_tab_ai_text" data-element="pg_element_ai_text" title="Ai Text"> 
 								<div>
 								<svg width="25" height="25" version="1.1" x="0" y="0" viewBox="0 0 32 32" style="enable-background:new 0 0 512 512"><g><path d="M19.5 10a1 1 0 0 0 .71-1.71 1 1 0 0 0-1.42 0A1 1 0 0 0 19.5 10zM24.5 10a1 1 0 0 0 .71-1.71 1 1 0 0 0-1.42 0A1 1 0 0 0 24.5 10zM24.12 11.12a3.08 3.08 0 0 1-4.24 0 1 1 0 0 0-1.42 1.42 5 5 0 0 0 7.08 0 1 1 0 0 0-1.42-1.42z"/><path d="M27 5h-4V4a1 1 0 0 0 0-2h-2a1 1 0 0 0 0 2v1h-4a3 3 0 0 0-3 3H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h2v3a1 1 0 0 0 .53.88 1 1 0 0 0 1-.05L14.3 26H21a3 3 0 0 0 3-3v-6h3a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3zm-5 18a1 1 0 0 1-1 1h-7a1 1 0 0 0-.55.17L9 27.13V25a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h9v4a3 3 0 0 0 3 3h5zm6-9a1 1 0 0 1-1 1H17a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1z"/></g></svg>
 								</div>
 								<span>AI Text</span>
 							</a>
-						</li>
+						</li-->
 									
 					</ul>
 				</div>
@@ -1080,9 +1080,9 @@
 							<div class="nav nav-tabs" role="tablist">
 								<button class="nav-link active" id="pg_my_images" data-bs-toggle="tab" data-bs-target="#my_images_tab_main" type="button" role="tab" aria-controls="nav-home" aria-selected="true">My Images</button>
 								<button class="nav-link" id="pg_library_load_im" data-bs-toggle="tab" data-bs-target="#system_images_tab_main" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Library</button>
-								<button class="nav-link" id="pg_pixabay_load_im" data-bs-toggle="tab" data-bs-target="#pixabay_tab_main" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Pixabay</button>
+								<!--button class="nav-link" id="pg_pixabay_load_im" data-bs-toggle="tab" data-bs-target="#pixabay_tab_main" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Pixabay</button-->
 								<!-- AI IMAGES OPTION -->
-								<button class="nav-link" id="pg_ai_images_load_im" data-bs-toggle="tab" data-bs-target="#ai_image_tab_main" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">AI images</button>
+								<!--button class="nav-link" id="pg_ai_images_load_im" data-bs-toggle="tab" data-bs-target="#ai_image_tab_main" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">AI images</button-->
 								<!-- AI IMAGES OPTION -->
 							</div> 
 						</div>
@@ -1094,7 +1094,7 @@
                                     <div class="pg-image-list pg-recent-uploaded image">
                                         <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="pg-imglist-item">
-                                               <div class="ed_image pg_canvas_add_image" data-url="<?php echo e(asset('/'.$image->image_url)); ?>"><img src="<?php echo e(asset('/'.$image->image_url)); ?>" alt="canvas add image"></div>
+                                               <div class="ed_image pg_canvas_add_image" data-url="<?php echo e(asset('storage/'.$image->image_url)); ?>"><img src="<?php echo e(asset('storage/'.$image->image_url)); ?>" alt="canvas add image"></div>
                                                <span class="pg-remove-image pg_canvas_add_remove_image" data-id="<?php echo e($image->id); ?>"></span>
                                            </div>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -1278,7 +1278,7 @@
 						</div>
                         <!-- Position start -->
 						<div class="pg-property-widget edp_pos">
-							<h3 class="pg-sidebar-heading">Position</h3>
+							<h3 class="pg-sidebar-heading">Image Position</h3>
 							<div class="pg-property-body">
 								<div class="row">
 									<div class="col-lg-6 col-xs-4">
@@ -1295,7 +1295,7 @@
 									</div>
 									<div class="col-lg-6 col-xs-4">
 										<div class="pg-sidebar-input">
-											<label>Angle</label>
+											<label>Image Angle</label>
 											<input type="number"  value="0" id="ed_object_rotation_angle">
 										</div>
 									</div>
@@ -1307,6 +1307,8 @@
 						<!-- background croper canvas start -->
 						<div class="pg-property-widget ed_background_croper">
 							<canvas id="crop_bg"></canvas>
+							<a class="hange_image_btn"><i class="fa-solid fa-crop" style="font-size: 25px;"></i></a>
+
 						</div>
 
 						<!-- image croper canvas start -->
@@ -1326,7 +1328,7 @@
 							</div>
 						</div>		
 						<!-- remove background start -->
-						<div class="pg-property-widget ed_image_croper">
+						<!--div class="pg-property-widget ed_image_croper">
 							<h3 class="pg-sidebar-heading">Remove Background</h3>
 							<div class="ed_property_body">
 								<a class="pg-btn" id="remove-image-bg-content" data-type="image" title="Remove Background">
@@ -1334,7 +1336,7 @@
 									Remove BG
 								</a>
 							</div>
-						</div>						
+						</div-->						
                        <!-- Shadow Start -->
 						<div class="pg-property-widget edp_shadow">
 							<h3 class="pg-sidebar-heading">Shadow</h3>

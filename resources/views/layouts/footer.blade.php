@@ -148,4 +148,15 @@
             document.getElementById('selectedCategory').value = this.getAttribute('data-value');
         });
     });
+
+    $.ajax({
+    // your AJAX options
+    error: function(xhr) {
+        if (xhr.status === 419) {
+            alert('Session expired. Please refresh the page.');
+            // Optionally: window.location.reload();
+        }
+    }
+});
+
 </script>

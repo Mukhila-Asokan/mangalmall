@@ -34,7 +34,7 @@
                         <tr>
                             <th scope="row">{{ $start++ }}</th>
                             <td>{{ $webpage->webpagename }}</td>
-                            <td><img src="{{ url('storage/' . $webpage->preview_image) }}" alt="{{ $webpage->name }}" width="100"></td>
+                            <td><img src="{{ asset('storage/' . $webpage->preview_image ) }}" alt="{{ $webpage->name }}" width="100"></td>
                           
                             <td>
                                 @if($webpage->status == 'Active')

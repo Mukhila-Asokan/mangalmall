@@ -39,7 +39,7 @@ body {
 	font-size: 15px;
 	line-height: 1.5;
 	color: var(--mangalmall-global-color);
-	background: var(--mangalmall-body-bg);
+	/*background: var(--mangalmall-body-bg);*/
     margin: 0;
     padding: 0;
 	-webkit-font-smoothing: antialiased;
@@ -48,18 +48,18 @@ body {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--mangalmall-border-color);
+  /*  background: var(--mangalmall-border-color);*/
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--mangalmall-primary);
+   /* background: var(--mangalmall-primary);*/
     width: 4px;
 }
 ::-moz-selection {
-    background-color: #f0f0f0;
+  /*  background-color: #f0f0f0;*/
     text-shadow: none;
 }
 ::selection {
-    background-color: #f0f0f0;
+  /*  background-color: #f0f0f0;*/
     text-shadow: none;
 }
 .table-responsive::-webkit-scrollbar {
@@ -199,7 +199,7 @@ body.pg-user-login .pg-template-status-center .pg-btn:first-child {
     right: 0;
     bottom: 0;
     z-index: 99999;
-    background-color: rgb(255 255 255 / 98%);
+   /* background-color: rgb(255 255 255 / 98%);*/
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -793,7 +793,7 @@ a {
     margin: 0 0 30px;
     grid-gap: 20px;
     align-items: center;
-    background: #ffffff;
+    background: #e7bc3c;
     padding: 20px 20px;
     border-radius: 10px;
 }

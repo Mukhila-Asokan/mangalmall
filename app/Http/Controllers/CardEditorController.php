@@ -15,12 +15,17 @@ use App\Models\SubUser;
 use App\Models\OccasionType;
 
 use Illuminate\Routing\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class CardEditorController extends Controller
 {
+    protected $clippingmagic;
+
     public function __construct()
     {
         $this->middleware('auth');
+       /* $this->clippingmagic = new \App\Services\ClippingMagicService();*/
     }
 
     public function index()
@@ -74,7 +79,7 @@ class CardEditorController extends Controller
         //return redirect()->route('dashboard');
     }
 
-    public function uploadMedia(Request $request)
+    /*public function uploadMedia(Request $request)
     {
         $user = Auth::user();
       
@@ -106,7 +111,47 @@ class CardEditorController extends Controller
             return response()->json(['success' => 1, 'image_url' => Storage::url($image->image_url), 'thumb_url' => Storage::url($image->thumb_url), 'id' => $image->id]);
         }
         return response()->json(['error' => 'File upload failed'], 400);
+    }*/
+
+
+
+
+    public function uploadMedia(Request $request)
+{
+    $user = Auth::user();
+
+    if ($request->hasFile('mediafile')) {
+        $file = $request->file('mediafile');
+        $name = uniqid() . '.' . $file->getClientOriginalExtension();
+        $path = 'uploads/user_' . $user->id . '/images/';
+
+        // Store the file in the 'public_uploads' disk
+        $file->storeAs($path, $name, 'public_uploads');
+
+        // Generate the file paths
+        $imagePath = $path . $name;
+        $thumbPath = $path . 'thumb';
+        $thumbPathname = $thumbPath . '/' . $name;
+        $file->storeAs($thumbPath, $name, 'public_uploads');
+
+        // Save file data in the database
+        $image = UserImage::create([
+            'user_id' => $user->id,
+            'image_url' => $imagePath,
+            'thumb_url' => $thumbPathname
+        ]);
+
+        // Return URLs for the uploaded image
+        return response()->json([
+            'success' => 1,
+            'image_url' => $imagePath,
+            'thumb_url' => $thumbPathname,
+            'id' => $image->id
+        ]);
     }
+
+    return response()->json(['error' => 'File upload failed'], 400);
+}
 
     public function deleteImage(Request $request)
     {
@@ -121,12 +166,13 @@ class CardEditorController extends Controller
         return response()->json(['result' => 'notexist']);
     }
 
-    public function saveTemplate(Request $request)
+    /*public function saveTemplate(Request $request)
     {
         $user = Auth::user();
         $templateData = $request->template_data;
         $templateID = $request->template_id;
-
+      
+        
         if ($templateID == 0) {
             $template = UserTemplate::create([
                 'user_id' => $user->id,
@@ -137,7 +183,9 @@ class CardEditorController extends Controller
             ]);
             return response()->json(['status' => 1, 'insert_id' => $template->id]);
         } else {
+            
             $template = UserTemplate::where('id', $templateID)->where('user_id', $user->id)->first();
+          
             if ($template) {
                 $template->update(['template_data' => $templateData]);
                 return response()->json(['status' => 1, 'msg' => 'Template updated successfully']);
@@ -145,6 +193,90 @@ class CardEditorController extends Controller
             return response()->json(['status' => 0, 'msg' => 'Template not found']);
         }
     }
+*/
+
+public function saveTemplate(Request $request)
+{
+    $request->validate([
+        'template_data' => 'required|string',
+        'template_id' => 'required|integer',
+        'template_name' => 'nullable|string',
+        'thumb' => 'required|string',
+    ]);
+
+    $user = Auth::user();
+    $userID = $user->id;
+
+    // Handle New Template Creation
+    if ($request->template_id == 0) {
+        // Save Image
+        $fileData = base64_decode(str_replace('data:image/jpeg;base64,', '', $request->thumb));
+        $imageName = Str::random(10) . '.jpg';
+        $imagePath = "uploads/user_{$userID}/images/{$imageName}";
+
+        Storage::disk('public_uploads')->put($imagePath, $fileData);
+
+        $template = UserTemplate::create([
+            'user_id' => $userID,
+            'template_name' => $request->template_name ?? '',
+            'template_data' => $request->template_data,
+            'thumb' => $imagePath,
+            'datetime' => Carbon::now()->toDateTimeString(),
+            'status' => 1
+        ]);
+
+        return response()->json([
+            'status' => 1,
+            'insert_id' => $template->id
+        ]);
+    }
+
+    // Handle Existing Template Update
+    else {
+        $template = UserTemplate::where('id', $request->template_id)
+                                ->where('user_id', $userID)
+                                ->first();
+
+        if (!$template) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Campaign or Template has been deleted.'
+            ]);
+        }
+
+        // Delete Old Image if Exists
+        if (!empty($template->thumb) && Storage::disk('public_uploads')->exists($template->thumb)) {
+            Storage::disk('public_uploads')->delete($template->thumb);
+        }
+
+        // Save New Image
+        $fileData = base64_decode(str_replace('data:image/jpeg;base64,', '', $request->thumb));
+        $imageName = Str::random(10) . '.jpg';
+        $imagePath = "uploads/user_{$userID}/images/{$imageName}";
+
+        Storage::disk('public_uploads')->put($imagePath, $fileData);
+
+        // Update Template Data
+        $template->update([
+            'template_data' => $request->template_data,
+            'gradient_background' => $request->gradient_background ?? '',
+            'thumb' => $imagePath,
+            'modifydate' => Carbon::now()->toDateTimeString()
+        ]);
+
+        return response()->json([
+            'status' => 1,
+            'msg' => 'Template updated successfully',
+            'thumb' => $imagePath,
+            'size' => $template->template_size ?? '',
+            'access_level' => session('access_level')
+        ]);
+    }
+}
+
+
+
+
 
 
     public function getObject(Request $request)
@@ -152,22 +284,22 @@ class CardEditorController extends Controller
     
         if ($request->has('template_id')) {            
             $template_id = $request->template_id;
+
             //$where = ['sub_user_id' => $userID, 'template_id' => $template_id];
             
-            $template_data = CardTemplate::where('id', $template_id)->first();
+            //$template_data = CardTemplate::where('id', $template_id)->first();
 
-            //$template_data = UserTemplate::where($where)->first(['template_data', 'gradient_background', 'sub_cat_id', 'template_size', 'template_custom_size']);
-
-            if ($template_data) {
+            $template = UserTemplate::where('id', $template_id)->first();           
+            if ($template) {
                 $suggestion = $tips = '';
                
 
-                $template_size = $template_data->template_size == 'create_custom_size' ? $template_data->template_custom_size : $template_data->template_size;
-
+                $template_size = $template->template_size == 'create_custom_size' ? $template->template_custom_size : $template->template_size;
+                
                 return response()->json([
                     'status' => 1,
-                    'data' => $template_data->template_data ?? '',
-                    'gradient_background' => $template_data->gradient_background ?? '' ,
+                    'data' => $template->template_data ?? '',
+                    'gradient_background' => $template->gradient_background ?? '' ,
                     'suggestion' => $suggestion,
                     'tips' => $tips,
                     'size' => $template_size
@@ -221,7 +353,7 @@ class CardEditorController extends Controller
         }
     }
 
-    public function openClippingEditor(Request $request)
+   /* public function openClippingEditor(Request $request)
     {
         if ($request->has('action') && $request->action == 'cls_open' && $request->has('template_id')) {
             $user = Auth::user();
@@ -410,7 +542,7 @@ class CardEditorController extends Controller
             return response()->json(['status' => 0, 'msg' => 'Something went wrong.']);
         }
     }
-
+*/
 
 
 
