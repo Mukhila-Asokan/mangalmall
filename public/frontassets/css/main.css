@@ -56877,7 +56877,7 @@ body::before {
 
 .stickymenu li {
   position: relative;
-  padding: 10px;
+  padding: 10px !important;
   text-align: center;
   z-index: 10; /* Ensure li itself is above .stickymenucontent */
   background-color: rgba(238, 192, 123, 0.8);

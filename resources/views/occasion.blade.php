@@ -87,9 +87,9 @@ margin-bottom: 10px;
                                                         </div>
 
                                                         <hr class="my-3">
-                                                        <p class="card-text"><strong>Date:</strong> {{ \Carbon\Carbon::parse($occasion->occasiondate)->format('d/m/y') }}</p>
-                                                        <p class="card-text"><strong>Place:</strong> {{ $occasion->occasion_place }}</p>
-                                                        <p class="card-text overflow-hidden"><strong>Notes:</strong> {{ $occasion->notes }}</p>
+                                                        <p class="card-text mb-2"><strong>Date:</strong> {{ \Carbon\Carbon::parse($occasion->occasiondate)->format('d/m/y') }}</p>
+                                                        <p class="card-text mb-2"><strong>Place:</strong> {{ $occasion->occasion_place }}</p>
+                                                        <p class="card-text mb-2 overflow-hidden"><strong>Notes:</strong> {{ $occasion->notes }}</p>
                                                         </div>
                                                     </div>
                                                 </a>
