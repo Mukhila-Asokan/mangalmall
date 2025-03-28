@@ -36,7 +36,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('user.profile')->with('status', 'profile-updated');
     }
 
     /**
@@ -64,5 +64,11 @@ class ProfileController extends Controller
     {
         $occasion = OccasionType::where('delete_status','0')->get();
         return view('occasion',compact('occasion'));
+    }
+
+    public function profile(){
+        return view('profile.add', [
+            'user' => Auth::user(),
+        ]);
     }
 }

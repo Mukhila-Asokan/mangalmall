@@ -115,7 +115,7 @@ Route::any('/dashboard', [HomeController::class, 'dashboard'])->middleware(['aut
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
@@ -274,7 +274,7 @@ Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests:
     Route::post('/api/home/invitationcard-search/{id}/design', [InvitationCardDesignController::class, 'saveDesign'])->name('invitationcard.saveDesign');
     Route::post('/api/home/invitationcard-search/{id}/design/{designId}', [InvitationCardDesignController::class, 'saveDesign'])->name('invitationcard.saveDesign');    
 
-    Route::post('/user/profile', [InvitationCardDesignController::class, 'profile'])->name('user.profile');   
+    Route::get('/user/profile', [ProfileController::class, 'profile'])->name('user.profile');   
     Route::any('/home/pricing', [PricingController::class, 'index'])->name('home.pricing');  
 
     /* Video Making */
