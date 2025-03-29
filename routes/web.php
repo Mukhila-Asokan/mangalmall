@@ -227,6 +227,8 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
     Route::any('/theme/load_media_library_img', [UserWebPageController::class,'load_media_library_img'])->name('home.load_media_library_img');
     Route::any('/theme/load_api_img', [UserWebPageController::class,'load_api_img'])->name('home.load_api_img');
     Route::any('/theme/saveMyTemplate', [UserWebPageController::class,'saveMyTemplate'])->name('home.saveMyTemplate');
+    Route::any('/theme/upload_image', [UserWebPageController::class,'upload_image'])->name('home.upload_image');
+    Route::any('/theme/uploadImageUrl', [UserWebPageController::class,'uploadImageUrl'])->name('home.uploadImageUrl');
     Route::any('/fileupload', [UserWebPageController::class,'fileupload'])->name('home.fileupload');
 
 

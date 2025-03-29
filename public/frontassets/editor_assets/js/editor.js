@@ -1,7 +1,3 @@
-/*--------------------- Copyright (c) 2020 -----------------------
-[Master Javascript]
-Project: PixelPages
--------------------------------------------------------------------*/
 (function ($) {
 
 
@@ -617,11 +613,11 @@ Project: PixelPages
 	});
 
 	$(document).on('click', '.mt_use_img', function () {
-		alert("hao");
+		
 		var src = $(this).attr('src');
-		alert(src);
+
 		var type = $(this).attr('data-type');	
-		alert(type);
+	
 		useThisImage(src, type);
 
 	});
@@ -658,7 +654,7 @@ Project: PixelPages
 		}
 		else
 		{
-			alert("hdddd");
+			
 			$('.editableElementActive').attr('src', src);
 		}
 		processStatus(false)
@@ -770,7 +766,7 @@ Project: PixelPages
 	function initialisedDropzone(elementid, type = 'image_src') {	
 
 		$("#" + elementid).dropzone({
-			url: baseurl + "/admin/venue/theme/upload_image",
+			url: baseurl + "/home/theme/upload_image",
 			uploadMultiple: false,
 			createImageThumbnails: true,
 			acceptedFiles: ".jpg,.jpeg,.png",
@@ -948,7 +944,7 @@ Project: PixelPages
 		processStatus(true)
 		$.ajax({
 			method: 'post',
-			url: baseurl + 'admin/venue/uploadImageUrl',
+			url: baseurl + 'home/theme/uploadImageUrl',
 			data: LoadData,
 			success: function (resp) {
 				resp = JSON.parse(resp);
@@ -1112,24 +1108,48 @@ Project: PixelPages
 
 
 $(document).on('click', '.mt_edt_save_button', function () {
-	$( ".mt_edit_template_container" ).sortable(); 
-	$('.mt_bgtempconatainer,.editableElement').removeClass('editableElementActive').removeClass('active');
-	// 105 destroy drag and drop before save
-	$(".mt_edit_template_container").sortable("destroy");
-	let obj = new FormData()
-	obj.append('template_id', $(this).data('temp-id'))
-	obj.append('venueid', $('#venueid').val())
-	obj.append('venuename', $('#venuename').val())
-	obj.append('themname', $('#themname').val())
-	obj.append('template_content', $('.mt_edit_template_container').html())
-	initiateAjaxRequest('/home/theme/saveMyTemplate', obj, (resp) => {
-		$('.mt_main_structure').addClass('mt_hide_sidebar')
-		  console.log('Success:', resp); 
+    $(".mt_edit_template_container").sortable(); 
+    $('.mt_bgtempconatainer, .editableElement').removeClass('editableElementActive').removeClass('active');
 
-	});
+    // Destroy sortable before saving
+    $(".mt_edit_template_container").sortable("destroy");
 
-	$('#preloader').fadeOut('slow');
-})
+    let obj = new FormData();
+    obj.append('template_id', $(this).data('temp-id'));	
+    obj.append('themname', $('#themname').val());
+    obj.append('template_content', $('.mt_edit_template_container').html());
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch('/home/theme/saveMyTemplate', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest'
+            // DO NOT set 'Content-Type' manually for FormData
+        },
+        body: obj
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Something went wrong with the request.');
+        }
+        return response.json();
+    })
+    .then(resp => {
+        if (resp.status === 'success') {
+            document.querySelector('.mt_main_structure').classList.add('mt_hide_sidebar');
+            console.log('Success:', resp.message);
+        } else {
+            console.warn('Server responded with an error:', resp.message);
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
+
+    $('#preloader').fadeOut('slow');
+});
 
 
 function openSection(_this, type) {

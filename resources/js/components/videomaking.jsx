@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Upload, Play, Download, Loader2, X, FilePlus, CheckCircle, AlertCircle, Trash2, Edit } from 'lucide-react';
+import {
+  Upload, Play, Download, Loader2, X, FilePlus, CheckCircle, AlertCircle, Trash2, Edit, Type, PlusCircle
+} from 'lucide-react';
 
 export default function VideoCreator() {
   const [images, setImages] = useState([]);
@@ -12,12 +14,24 @@ export default function VideoCreator() {
   const [duration, setDuration] = useState(2);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editDuration, setEditDuration] = useState(2);
+  const [animationEffect, setAnimationEffect] = useState('fade');
+  
+  // New state for text overlays
+  const [textOverlays, setTextOverlays] = useState([]);
+  const [newTextOverlay, setNewTextOverlay] = useState({
+    text: '',
+    color: '#000000',
+    fontSize: 24,
+    position: 'center',
+    duration: 2
+  });
 
   const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
   const MAX_AUDIO_SIZE = 20 * 1024 * 1024;
 
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
+ 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     const validFiles = [];
@@ -40,7 +54,7 @@ export default function VideoCreator() {
       setImages(prev => [...prev, ...validFiles]);
       setError('');
     }
-    e.target.value = ''; // Reset input to allow same file re-upload
+    e.target.value = '';
   };
 
   const handleAudioUpload = (e) => {
@@ -62,7 +76,7 @@ export default function VideoCreator() {
       name: file.name
     });
     setError('');
-    e.target.value = ''; // Reset input
+    e.target.value = '';
   };
 
   const handleRemoveImage = (index) => {
@@ -91,6 +105,29 @@ export default function VideoCreator() {
     setEditingIndex(null);
   };
 
+  // New method to add text overlay
+  const addTextOverlay = () => {
+    if (newTextOverlay.text.trim()) {
+      setTextOverlays(prev => [...prev, { ...newTextOverlay }]);
+      // Reset the form
+      setNewTextOverlay({
+        text: '',
+        color: '#000000',
+        fontSize: 24,
+        position: 'center',
+        duration: 2
+      });
+    }
+  };
+
+  // Method to remove text overlay
+  const removeTextOverlay = (index) => {
+    const newTextOverlays = [...textOverlays];
+    newTextOverlays.splice(index, 1);
+    setTextOverlays(newTextOverlays);
+  };
+
+  // Update createVideo method to include text overlays
   const createVideo = async () => {
     if (images.length === 0) {
       setError('Please upload at least one image');
@@ -108,10 +145,21 @@ export default function VideoCreator() {
     try {
       const formData = new FormData();
       images.forEach((image, index) => {
-        formData.append(`images[${index}][file]`, image.file);
-        formData.append(`images[${index}][duration]`, image.duration);
+        formData.append(`images[]`, image.file);
+        formData.append(`durations[]`, image.duration);
       });
       formData.append('audio', audio.file);
+      formData.append('duration', duration);
+      formData.append('effect', animationEffect);
+      
+      // Add text overlays to form data
+      textOverlays.forEach((overlay, index) => {
+        formData.append(`texts[${index}][text]`, overlay.text);
+        formData.append(`texts[${index}][color]`, overlay.color);
+        formData.append(`texts[${index}][fontSize]`, overlay.fontSize);
+        formData.append(`texts[${index}][position]`, overlay.position);
+        formData.append(`texts[${index}][duration]`, overlay.duration);
+      });
 
       const response = await fetch('/api/create-video', {
         method: 'POST',
@@ -135,206 +183,333 @@ export default function VideoCreator() {
     }
   };
 
-  useEffect(() => {
-    return () => {
-      images.forEach(image => URL.revokeObjectURL(image.preview));
-      if (audio) URL.revokeObjectURL(audio.preview);
-    };
-  }, [images, audio]);
-
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Create Video from Images and Audio</h1>
-      
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Default duration per image (seconds):</label>
-        <div className="flex items-center gap-4">
-          <input 
-            type="range" 
-            min="1" 
-            max="10" 
-            value={duration} 
-            onChange={(e) => setDuration(parseInt(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-          />
-          <span className="w-12 text-center">{duration}s</span>
-        </div>
-      </div>
+    <div className="container-fluid my-5 border-0" >
+      <div className="row">
+        <div className="col-lg-12 col-md-12 col-sm-12 mx-auto">
+          <div className="card shadow-lg rounded-3">
+            <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+              <h2 className="mb-0 text-white p-3"> Video Creator</h2>
+            </div>
+            <div className="card-body">
+              {/* Images Upload Section */}
+              <div className="row mb-4">
+                <div className="col-md-6">
+                  <div className="card h-100">
+                    <div className="card-header">
+                      <h5 className="mb-0 p-3">Upload Images </h5>
+                    </div>
+                    <div className="card-body">
+                      <div className="d-flex flex-wrap gap-2">
+                        {images.map((image, index) => (
+                          <div key={index} className="position-relative border rounded p-2" style={{ width: '120px' }}>
+                            <img
+                              src={image.preview}
+                              alt="preview"
+                              className="img-thumbnail"
+                              style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                            />
+                            <button
+                              onClick={() => handleRemoveImage(index)}
+                              className="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                              title="Remove"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                            <div className="mt-2 text-center">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {/* Image Upload Section */}
-        <div className="space-y-4">
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-            <label className="cursor-pointer flex flex-col items-center justify-center gap-2 p-4">
-              <Upload className="w-8 h-8 text-gray-400" />
-              <span className="text-sm font-medium text-gray-700">Upload Images</span>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                className="hidden"
-                onChange={handleImageUpload}
-              />
-            </label>
-          </div>
-
-          {/* Image Previews */}
-          <div className="space-y-3">
-            {images.map((image, index) => (
-              <div key={index} className="border rounded-lg p-3 flex items-start gap-3">
-                <img 
-                  src={image.preview} 
-                  alt={`Preview ${index}`} 
-                  className="w-16 h-16 object-cover rounded"
-                />
-                <div className="flex-1">
-                  <div className="flex justify-between items-start">
-                    <span className="text-sm font-medium truncate">{image.file.name}</span>
-                    <button 
-                      onClick={() => handleRemoveImage(index)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <Trash2 size={16} />
-                    </button>
+                            {editingIndex === index ? (
+                              <>
+                                <input
+                                  type="number"
+                                  min="1"
+                                  max="10"
+                                  value={editDuration}
+                                  onChange={(e) => setEditDuration(parseInt(e.target.value))}
+                                  className="form-control form-control-sm"
+                                />
+                                <button
+                                  onClick={saveEditDuration}
+                                  className="btn btn-success btn-sm mt-1"
+                                >
+                                  Save
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <small>{image.duration}s</small>
+                                <button
+                                  onClick={() => startEditDuration(index)}
+                                  className="btn btn-link btn-sm"
+                                >
+                                  <Edit size={14} />
+                                </button>
+                              </>
+                            )}
+                            </div>
+                          </div>
+                        ))}
+                        <label
+                          className="border rounded d-flex flex-column align-items-center justify-content-center text-muted"
+                          style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                        >
+                          <Upload size={20} />
+                          <input
+                            type="file"
+                            multiple
+                            accept="image/*"
+                            className="d-none"
+                            onChange={handleImageUpload}
+                          />
+                          <small>Add Images</small>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  
-                  {editingIndex === index ? (
-                    <div className="flex items-center gap-2 mt-2">
+                </div>
+
+                {/* Audio Upload Section */}
+                <div className="col-md-6">
+                  <div className="card h-100">
+                    <div className="card-header">
+                      <h5 className="mb-0 p-3">  Upload Audio </h5>
+                    </div>
+                    <div className="card-body">
+                      <div className="text-center">
+                        <label className="btn btn-outline-primary w-100">
+                          <FilePlus className="me-2" />
+                          Choose Audio File
+                          <input
+                            type="file"
+                            accept="audio/*"
+                            className="d-none"
+                            onChange={handleAudioUpload}
+                          />
+                        </label>
+                        {audio && (
+                          <div className="mt-3">
+                            <audio controls className="w-100">
+                              <source src={audio.preview} type={audio.file.type} />
+                            </audio>
+                            <button
+                              onClick={handleRemoveAudio}
+                              className="btn btn-danger btn-sm mt-2"
+                            >
+                              Remove Audio
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Overlay Section */}
+              <div className="card mb-4">
+                <div className="card-header">
+                  <h5 className="mb-0 p-3">
+                    <Type className="me-2" /> Text Overlays
+                  </h5>
+                </div>
+                <div className="card-body">
+                  <div className="row g-3">
+                    <div className="col-md-6">
                       <input
-                        type="number"
-                        min="1"
-                        max="10"
-                        value={editDuration}
-                        onChange={(e) => setEditDuration(parseInt(e.target.value))}
-                        className="w-16 px-2 py-1 border rounded text-sm"
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter text to overlay"
+                        value={newTextOverlay.text}
+                        onChange={(e) => setNewTextOverlay(prev => ({
+                          ...prev,
+                          text: e.target.value
+                        }))}
                       />
-                      <span className="text-sm">seconds</span>
-                      <button 
-                        onClick={saveEditDuration}
-                        className="text-green-500 hover:text-green-700"
+                    </div>
+                    <div className="col-md-2">
+                      <input
+                        type="color"
+                        className="form-control form-control-color"
+                        value={newTextOverlay.color}
+                        onChange={(e) => setNewTextOverlay(prev => ({
+                          ...prev,
+                          color: e.target.value
+                        }))}
+                        title="Choose text color"
+                      />
+                    </div>
+                    <div className="col-md-2">
+                      <select
+                        className="form-select"
+                        value={newTextOverlay.fontSize}
+                        onChange={(e) => setNewTextOverlay(prev => ({
+                          ...prev,
+                          fontSize: parseInt(e.target.value)
+                        }))}
                       >
-                        <CheckCircle size={16} />
+                        <option value={16}>Small</option>
+                        <option value={24}>Medium</option>
+                        <option value={32}>Large</option>
+                      </select>
+                    </div>
+                    <div className="col-md-2">
+                      <select
+                        className="form-select"
+                        value={newTextOverlay.position}
+                        onChange={(e) => setNewTextOverlay(prev => ({
+                          ...prev,
+                          position: e.target.value
+                        }))}
+                      >
+                        <option value="center">Center</option>
+                        <option value="top">Top</option>
+                        <option value="bottom">Bottom</option>
+                      </select>
+                    </div>
+                    <div className="col-12 p-3">
+                      <button
+                        onClick={addTextOverlay}
+                        className="btn btn-success"
+                        disabled={!newTextOverlay.text.trim()}
+                      >
+                        <PlusCircle className="me-2" /> Text Overlay
                       </button>
                     </div>
-                  ) : (
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="text-sm">{image.duration} seconds</span>
-                      <button 
-                        onClick={() => startEditDuration(index)}
-                        className="text-blue-500 hover:text-blue-700"
-                      >
-                        <Edit size={16} />
-                      </button>
+                  </div>
+
+                  {/* List of Added Text Overlays */}
+                  {textOverlays.length > 0 && (
+                    <div className="mt-3">
+                      <h6>Added Text Overlays:</h6>
+                      <div className="list-group">
+                        {textOverlays.map((overlay, index) => (
+                          <div 
+                            key={index} 
+                            className="list-group-item d-flex justify-content-between align-items-center"
+                          >
+                            <span 
+                              style={{ 
+                                color: overlay.color, 
+                                fontSize: `${overlay.fontSize}px` 
+                              }}
+                            >
+                              {overlay.text} 
+                              <small className="text-muted ms-2">
+                                ({overlay.position} | {overlay.fontSize}px)
+                              </small>
+                            </span>
+                            <button
+                              onClick={() => removeTextOverlay(index)}
+                              className="btn btn-sm btn-outline-danger"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Audio Upload Section */}
-        <div className="space-y-4">
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-            <label className="cursor-pointer flex flex-col items-center justify-center gap-2 p-4">
-              <FilePlus className="w-8 h-8 text-gray-400" />
-              <span className="text-sm font-medium text-gray-700">Upload Audio</span>
-              <input
-                type="file"
-                accept="audio/*"
-                className="hidden"
-                onChange={handleAudioUpload}
-              />
-            </label>
-          </div>
-
-          {/* Audio Preview */}
-          {audio && (
-            <div className="border rounded-lg p-3 flex items-start gap-3">
-              <div className="bg-gray-100 p-3 rounded-full">
-                <FilePlus className="w-6 h-6 text-gray-500" />
-              </div>
-              <div className="flex-1">
-                <div className="flex justify-between items-start">
-                  <span className="text-sm font-medium truncate">{audio.name}</span>
-                  <button 
-                    onClick={handleRemoveAudio}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <Trash2 size={16} />
-                  </button>
+              {/* Video Settings */}
+              <div className="card mb-4">
+                <div className="card-header">
+                  <h5 className="mb-0 p-3">Video Settings</h5>
                 </div>
-                <audio 
-                  src={audio.preview} 
-                  controls 
-                  className="w-full mt-2 h-8"
-                />
+                <div className="card-body">
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <label className="form-label">Image Duration: {duration}s</label>
+                      <input
+                        type="range"
+                        className="form-range"
+                        min="1"
+                        max="10"
+                        value={duration}
+                        onChange={(e) => setDuration(parseInt(e.target.value))}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Animation Effect</label>
+                      <select
+                        className="form-select"
+                        value={animationEffect}
+                        onChange={(e) => setAnimationEffect(e.target.value)}
+                      >
+                        <option value="fade">Fade In/Out</option>
+                        <option value="zoom">Zoom In</option>
+                        <option value="slide">Slide</option>
+                        <option value="none">None</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              {/* Error and Success Messages */}
+              {error && (
+                <div className="alert alert-danger d-flex align-items-center">
+                  <AlertCircle className="me-2" size={18} />
+                  {error}
+                </div>
+              )}
+              {success && (
+                <div className="alert alert-success d-flex align-items-center">
+                  <CheckCircle className="me-2" size={18} />
+                  {success}
+                </div>
+              )}
+
+              {/* Create Video Button */}
+              <button
+                onClick={createVideo}
+                disabled={isLoading || images.length === 0 || !audio}
+                className={`btn btn-primary btn-lg w-100 d-flex justify-content-center align-items-center gap-2 ${
+                  isLoading || images.length === 0 || !audio ? 'disabled' : ''
+                }`}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="spinner-border spinner-border-sm me-2" />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <Play size={18} />
+                    <span>Create Video</span>
+                  </>
+                )}
+              </button>
+
+              {/* Video Preview */}
+              {videoUrl && (
+                <div className="mt-5 card">
+                  <div className="card-header bg-success text-white">
+                    <h4 className="mb-0">Video Preview</h4>
+                  </div>
+                  <div className="card-body">
+                    <video
+                      ref={videoRef}
+                      controls
+                      src={videoUrl}
+                      className="w-100 rounded border"
+                    />
+                    <a
+                      href={videoUrl}
+                      download="created-video.mp4"
+                      className="btn btn-success mt-3 d-inline-flex align-items-center gap-2"
+                    >
+                      <Download size={16} />
+                      <span>Download Video</span>
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
-
-      {/* Status Messages */}
-      {error && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded flex items-center gap-2">
-          <AlertCircle size={16} />
-          <span>{error}</span>
-        </div>
-      )}
-      {success && (
-        <div className="mb-4 p-3 bg-green-100 text-green-700 rounded flex items-center gap-2">
-          <CheckCircle size={16} />
-          <span>{success}</span>
-        </div>
-      )}
-
-      {/* Create Video Button */}
-      <button
-        type="button"
-        onClick={createVideo}
-        disabled={isLoading || images.length === 0 || !audio}
-        className={`w-full py-3 rounded-md flex items-center justify-center gap-2 ${
-          isLoading || images.length === 0 || !audio
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-blue-600 hover:bg-blue-700'
-        } text-white`}
-      >
-        {isLoading ? (
-          <>
-            <Loader2 className="animate-spin" size={18} />
-            <span>Processing...</span>
-          </>
-        ) : (
-          <>
-            <Play size={18} />
-            <span>Create Video</span>
-          </>
-        )}
-      </button>
-
-      {/* Video Preview */}
-      {videoUrl && (
-        <div className="mt-6 space-y-3">
-          <h2 className="text-lg font-medium">Your Video</h2>
-          <div className="border rounded-lg overflow-hidden">
-            <video
-              ref={videoRef}
-              controls
-              src={videoUrl}
-              className="w-full rounded-md"
-            />
-          </div>
-          <a 
-            href={videoUrl} 
-            download="created-video.mp4"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          >
-            <Download size={16} />
-            <span>Download Video</span>
-          </a>
-        </div>
-      )}
     </div>
   );
 }

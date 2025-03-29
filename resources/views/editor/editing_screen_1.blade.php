@@ -33,6 +33,10 @@
 											
 						
 					@php 
+					if(isset($template)) {
+						$file_contents = $template->template_html;
+						$webpagename = $template->themename;
+					} else {
 						 $themefullpath = $theme->pathname;
 
 						 $publicurl = str_replace('\\', '/', public_path());
@@ -40,8 +44,9 @@
 						 $filePath = $url.'/index.html'; 
 						 $asseturl = url('/').$themefullpath;
        					 $file_contents = file_get_contents( $filePath );
-       					  $file_contents = str_replace("asset",$asseturl.'/asset' , $file_contents );
-       					
+       					$file_contents = str_replace("asset",$asseturl.'/asset' , $file_contents );
+						$webpagename = $theme->webpagename;
+					}	
 
 					@endphp
 					 {!! $file_contents !!} 
@@ -57,4 +62,4 @@
 					</div>
 				</div>
 				<input type="hidden" id="userid" name = "userid" value="{{ $userid }}">	
-				<input type="hidden" id="themname" name = "themname" value="{{ $theme->webpagename }}">
+				<input type="hidden" id="themname" name = "themname" value="{{ $webpagename }}">

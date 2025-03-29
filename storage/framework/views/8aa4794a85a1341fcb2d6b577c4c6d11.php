@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+        <meta name="_token" content="<?php echo e(csrf_token()); ?>" />
 
         <title>Mangal Mall</title>
         <?php echo app('Tighten\Ziggy\BladeRouteGenerator')->generate(); ?> 
