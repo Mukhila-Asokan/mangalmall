@@ -32,10 +32,10 @@
                         </li>
 
                         <li class="dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown"
+                            <!-- <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown"
                                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <i class="mdi mdi-magnify font-size-24"></i>
-                            </a>
+                            </a> -->
                             <div class="dropdown-menu dropdown-menu-animated dropdown-menu-end dropdown-lg p-0">
                                 <form class="input-group p-3">
                                     <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
@@ -71,13 +71,13 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a href="{{ route('admin/user') }}" class="dropdown-item notify-item">
                                     <i data-lucide="user" class="font-size-16 me-2"></i>
                                     <span>My Account</span>
                                 </a>
 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a href="{{ route('admin/occasion') }}" class="dropdown-item notify-item">
                                     <i data-lucide="settings" class="font-size-16 me-2"></i>
                                     <span>Settings</span>
                                 </a>

@@ -24,6 +24,8 @@ use Modules\VenueAdmin\Models\VenueBooking;
 use DB; 
 use App\NotificationFilterTrait;
 use App\Models\User;
+use Modules\StaffManagement\Models\Staff;
+
 class DashboardController extends Controller
 {
     use AuthorizesRequests; 
@@ -224,4 +226,44 @@ public function getNotifications()
         ]);
     }
 
+    public function user(){
+        $username = Session::get('username');
+        $userid = Session::get('userid');
+        $user = auth()->guard('admin')->user();
+        $notifications = $user->unreadNotifications;
+        $filteredNotifications = $this->filterNotificationsByDate($notifications); 
+       
+        $todayNotifications = $filteredNotifications['today'];
+        $yesterdayNotifications  = $filteredNotifications['yesterday'];
+        $olderNotifications  = $filteredNotifications['older'];
+     
+        if($user->role == 'Staff'){
+            $staff = Staff::where('id', $user->staff_id)->first();
+        }
+        else{
+            $staff = null;
+        }
+        $pagetitle = "Dashboard";
+        $pageroot = "Home";
+        return view('admin.user', compact('pagetitle','pageroot','username','todayNotifications','yesterdayNotifications','olderNotifications', 'user', 'staff'));
+    }
+
+    public function userUpdate(Request $request){
+        try{
+            $user = AdminUser::where('id', $request->id)->first();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+
+            if($user->staff_id){
+                $staff = Staff::where('id', $user->staff_id)->first();
+                $staff->phone = $request->phone;
+                $staff->save();
+            }
+            return redirect()->route('admin/dashboard')->with('success', 'User updated successfully');
+        }
+        catch(\Exception $e){
+            dd($e);
+        }
+    }
 }

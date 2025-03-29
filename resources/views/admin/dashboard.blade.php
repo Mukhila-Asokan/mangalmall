@@ -41,7 +41,7 @@
                                     <label class="h4 font-color font-bold">Open Booking Enquiries</label>
                                 </div>
                                 <div class="card-body">
-                                    @if($bookings->isEmpty())
+                                    @if(isset($bookings) && $bookings->isEmpty())
                                         <p class="text-muted text-center">No booking enquiries available.</p>
                                     @else
                                         <div class="list-group">
