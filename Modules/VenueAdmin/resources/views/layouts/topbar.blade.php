@@ -141,7 +141,7 @@
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                                 <!-- item-->
                                 <div class=" dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                    <h6 class="text-overflow m-0">Welcome {{ $username }} !</h6>
                                 </div>
 
                                 <!-- item-->
@@ -151,16 +151,16 @@
                                 </a>
 
                                 <!-- item-->
-                                <a href="{{ route('venueadmin.userprofile'); }}" class="dropdown-item">
+                                <a href="{{ route('venueadmin.changemobileno'); }}" class="dropdown-item">
                                     <i class="ri-settings-4-line fs-18 align-middle me-1"></i>
                                     <span>Settings</span>
                                 </a>
 
                                 <!-- item-->
-                                <a href="#" class="dropdown-item">
+                                <!-- <a href="#" class="dropdown-item">
                                     <i class="ri-customer-service-2-line fs-18 align-middle me-1"></i>
                                     <span>Support</span>
-                                </a>
+                                </a> -->
 
                               
                                 <!-- item-->

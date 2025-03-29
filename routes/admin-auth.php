@@ -35,6 +35,9 @@ Route::prefix('admin')->group(function () {
     })->name('admin.dashboard');*/
 
 
+    Route::any('/user', [DashboardController::class, 'user'])->name('admin/user');
+    Route::any('/user/update', [DashboardController::class, 'userUpdate'])->name('admin/user/update');
+
     Route::any('/dashboard', [DashboardController::class, 'dashboard'])->name('admin/dashboard');
     Route::get('/dashboard/data',[DashboardController::class, 'dashboardChart'])->name('admin/get-dashboard-data');
     Route::get('/view/all/enquiries', [DashboardController::class, 'allEnquiries'])->name('admin/get.all.enquiries');

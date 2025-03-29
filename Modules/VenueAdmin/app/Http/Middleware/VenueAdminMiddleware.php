@@ -14,7 +14,7 @@ class VenueAdminMiddleware
     public function handle(Request $request, Closure $next)
     {
 
-        if (!$request->session()->has('mobile_verified')) {  
+        if (!$request->session()->has('mobile_verified') && \Session::get('venueuserid') == null) {  
 
             return redirect()->route('venue/login'); 
         }
