@@ -5,10 +5,10 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use App\Exceptions\InvalidOrderException;
 Use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Auth\Middleware\Authenticate;
+// use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Log;
 use App\Http\Middleware\HandleInertiaRequests;
-use App\Http\Middleware\CustomVerifyCsrfToken;
+use App\Http\Middleware\{CustomVerifyCsrfToken, Authenticate};
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'HandleInertiaRequests' => HandleInertiaRequests::class,
             'RedirectIfNotFound' => \App\Http\Middleware\RedirectIfNotFound::class,
             'CustomVerifyCsrfToken' => CustomVerifyCsrfToken::class,
-            
+            'authendicate' => Authenticate::class,
         ]);
       
     })

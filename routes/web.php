@@ -5,7 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserOccasionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use App\Http\Middleware\FlashMessageMiddleware;
+use App\Http\Middleware\{FlashMessageMiddleware, Authenticate};
 use App\Http\Controllers\VenueController;
 use App\Http\Controllers\VenueSearchController;
 use Illuminate\Support\Facades\Log;
@@ -113,18 +113,15 @@ Route::get('/home/venue-search', [VenueSearchController::class, 'index'])->name(
 
 Route::any('/dashboard', [HomeController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('authendicate')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-
 });
 
 Route::any('/guestblog/show/{id}',[HomeController::class, 'show'])->name('guestblog.show');
 
-Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
+Route::prefix('home')->middleware([Authenticate::class, FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
 
     Route::any(session('userpath').'/occasion', [UserOccasionController::class, 'index'])->name('home.occasion');
     Route::any(session('userpath').'/occasion/add', [UserOccasionController::class, 'store'])->name('home/occasion/add');
@@ -237,12 +234,6 @@ Route::prefix('home')->middleware(['auth', FlashMessageMiddleware::class, Handle
    
 
 });
-
-
-Route::middleware(['auth'])->group(function () {
-   
-});
-
 Route::get('/test-purifier', function () {
     $html = "<p>This is a <strong>test</strong>.</p>"; // Simple HTML
     return view('test-purifier', ['html' => $html]);
@@ -256,7 +247,7 @@ Route::any('/errorpage',function () {
 
 
 
-Route::middleware(['auth', FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
+Route::middleware([Authenticate::class, FlashMessageMiddleware::class, HandleInertiaRequests::class])->group(function () { 
 
     Route::get('/api/home/invitationcard-search', [InvitationCardDesignController::class, 'index'])->name('invitationcard.search');
     Route::get('/api/home/invitationcard-occasiontype', [InvitationCardDesignController::class, 'getCardTemplates'])->name('invitationcardsearch.occasiontype');
