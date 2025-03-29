@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Intervention\Image\Facades\Image;
+
 
 class VideoController extends Controller
 {
@@ -154,126 +156,322 @@ class VideoController extends Controller
 }
 
 
-    
-    public function usercreateVideo(Request $request)
-    {
-         // Validate request
-         $request->validate([
-            'images' => 'required|array',
-            'images.*' => 'required|image|max:10240', // 10MB max per image
-            'audio' => 'nullable|file|mimes:mp3,wav,ogg|max:20480', // 20MB max for audio
-            'duration' => 'required|integer|min:1|max:10', // Seconds per image
-        ]);
+public function usercreateVideo(Request $request)
+{
+    $request->validate([
+        'images' => 'required|array|min:1|max:20',
+        'images.*' => 'required|image|mimes:jpeg,png|max:10240|dimensions:min_width=640,min_height=480',
+        'audio' => 'nullable|file|mimes:mp3,wav,ogg,aac|max:20480',
+        'durations' => 'required|array|size:'.count($request->file('images')),
+        'texts' => 'nullable|array',
+        'texts.*.text' => 'nullable|string|max:100',
+        'texts.*.color' => 'nullable|string',
+        'texts.*.fontSize' => 'nullable|integer|min:10|max:50',
+        'texts.*.position' => 'nullable|in:top,center,bottom',
+        'texts.*.duration' => 'nullable|numeric|min:1|max:10',
+        'effect' => 'nullable|in:fade,zoom,slide,none'
+    ]);
 
-        // Create unique folder for this process
-        $processId = Str::uuid();
-        $tempPath = "temp/{$processId}";
-        $outputPath = "public/videos";
-        
-        Storage::makeDirectory($tempPath);
-        Storage::makeDirectory($outputPath);
-        
-        try {
-            // Save images to disk
-            $imageFiles = [];
-            $imageCount = 0;
+    $processId = Str::uuid();
+    
+    // Normalize paths for Windows
+    $tempPath = str_replace('/', '\\', public_path('video-temp' . DIRECTORY_SEPARATOR . $processId));
+    $outputPath = str_replace('/', '\\', public_path('storage' . DIRECTORY_SEPARATOR . 'videos'));
+
+    try {
+        // Create directories with proper error handling
+        if (!file_exists($tempPath) && !mkdir($tempPath, 0755, true)) {
+            throw new \Exception("Failed to create temporary directory: {$tempPath}");
+        }
+
+        if (!file_exists($outputPath) && !mkdir($outputPath, 0755, true)) {
+            throw new \Exception("Failed to create output directory: {$outputPath}");
+        }
+
+        // Verify directory is writable
+        if (!is_writable($tempPath)) {
+            throw new \Exception("Temporary directory is not writable: {$tempPath}");
+        }
+
+        $imageFiles = [];
+        $imageCount = 0;
+        foreach ($request->file('images') as $key => $imageFile) {
+            $fileName = "{$imageCount}.jpg";
+            $imagePath = $tempPath . DIRECTORY_SEPARATOR . $fileName;
             
-            foreach ($request->file('images') as $imageFile) {
-                $fileName = "{$imageCount}.jpg";
-                $path = $imageFile->storeAs($tempPath, $fileName);
-                $imageFiles[] = Storage::path($path);
-                $imageCount++;
-            }
-            
-            // Save audio file if provided
-            $audioPath = null;
-            if ($request->hasFile('audio')) {
-                $audioFile = $request->file('audio');
-                $audioPath = $audioFile->storeAs($tempPath, 'audio.' . $audioFile->getClientOriginalExtension());
-                $audioPath = Storage::path($audioPath);
-            }
-            
-            // Create a text file with file paths for ffmpeg
-            $fileListPath = Storage::path("{$tempPath}/filelist.txt");
-            $fileContents = '';
-            
-            $duration = $request->input('duration', '2.0'); // Default 2 seconds per image
-            
-            foreach ($imageFiles as $img) {
-                $fileContents .= "file '{$img}'\n";
-                $fileContents .= "duration {$duration}\n";
-            }
-            
-            // Add the last image with a very small duration to avoid issues with certain players
-            if (count($imageFiles) > 0) {
-                $fileContents .= "file '{$imageFiles[count($imageFiles) - 1]}'\n";
-                $fileContents .= "duration 2.5\n";
-            }
-            
-            file_put_contents($fileListPath, $fileContents);
-            
-            // Output video name
-            $videoFileName = "video_{$processId}.mp4";
-            $outputVideoPath = Storage::path("{$outputPath}/{$videoFileName}");
-            
-            // Command for creating video from images
-            $ffmpegCommand = [
-                'ffmpeg',
-                '-y',  // Overwrite output files
-                '-f', 'concat',
-                '-safe', '0',
-                '-i', $fileListPath,
-                '-vsync', 'vfr',
-                '-pix_fmt', 'yuv420p'
-            ];
-            
-            // Add audio if provided
-            if ($audioPath) {
-                $ffmpegCommand = array_merge($ffmpegCommand, [
-                    '-i', $audioPath,
-                    '-c:v', 'libx264',
-                    '-c:a', 'aac',
-                    '-shortest'  // End when the shortest input stream ends
-                ]);
+            // Convert image to JPG if it's PNG
+            if (strtolower($imageFile->getClientOriginalExtension()) === 'png') {
+                $image = imagecreatefrompng($imageFile->getPathname());
+                imagejpeg($image, $imagePath, 90);
+                imagedestroy($image);
             } else {
-                $ffmpegCommand = array_merge($ffmpegCommand, [
-                    '-c:v', 'libx264',
-                ]);
+                $imageFile->move($tempPath, $fileName);
             }
-            
-            // Complete the command with output file
-            $ffmpegCommand[] = $outputVideoPath;
-            
-            // Execute ffmpeg command
-            $process = new Process($ffmpegCommand);
-            $process->setTimeout(300); // 5 minutes timeout
+
+            $textOverlays = $request->input('texts', []);
+            if (!empty($textOverlays)) {
+                foreach ($textOverlays as $textData) {
+                    $this->addTextToImage($imagePath, $textData);
+                }
+            }
+
+            $imageFiles[] = $imagePath;
+            $imageCount++;
+        }
+
+        $audioPath = null;
+        if ($request->hasFile('audio')) {
+            $audioExt = $request->file('audio')->getClientOriginalExtension();
+            $audioFileName = "audio.{$audioExt}";
+            $request->file('audio')->move($tempPath, $audioFileName);
+            $audioPath = $tempPath . DIRECTORY_SEPARATOR . $audioFileName;
+        }
+
+        $fileListPath = $tempPath . DIRECTORY_SEPARATOR . 'filelist.txt';
+        $fileContents = '';
+        $durations = $request->input('durations', []);
+        $effect = $request->input('effect', 'fade');
+
+        foreach ($imageFiles as $index => $img) {
+            $normalizedImgPath = str_replace('\\', '/', $img); // FFmpeg needs forward slashes
+            $fileContents .= "file '{$normalizedImgPath}'\n";
+            $duration = $durations[$index] ?? 2;
+            $fileContents .= "duration " . number_format((float)$duration, 1, '.', '') . "\n";
+        }
+        
+        if (count($imageFiles) > 0) {
+            $normalizedLastImg = str_replace('\\', '/', $imageFiles[count($imageFiles) - 1]);
+            $fileContents .= "file '{$normalizedLastImg}'\n";
+            $fileContents .= "duration 2.5\n";
+        }
+
+        $bytesWritten = file_put_contents($fileListPath, $fileContents);
+        if ($bytesWritten === false) {
+            throw new \Exception("Failed to write to filelist.txt");
+        }
+
+        $videoFileName = "video_{$processId}.mp4";
+        $outputVideoPath = $outputPath . DIRECTORY_SEPARATOR . $videoFileName;
+
+        $ffmpegCmd = [
+            'ffmpeg',
+            '-y',
+            '-f', 'concat',
+            '-safe', '0',
+            '-i', $fileListPath,
+        ];
+
+        if ($audioPath) {
+            $normalizedAudioPath = str_replace('\\', '/', $audioPath);
+            $ffmpegCmd = array_merge($ffmpegCmd, [
+                '-i', $normalizedAudioPath,
+                '-c:v', 'libx264',
+                '-preset', 'slow',
+                '-crf', '22',
+                '-c:a', 'aac',
+                '-b:a', '192k',
+                '-pix_fmt', 'yuv420p',
+                '-shortest',
+                '-movflags', '+faststart'
+            ]);
+        } else {
+            $ffmpegCmd = array_merge($ffmpegCmd, [
+                '-c:v', 'libx264',
+                '-preset', 'slow',
+                '-crf', '22',
+                '-pix_fmt', 'yuv420p',
+                '-movflags', '+faststart'
+            ]);
+        }
+
+        switch ($effect) {
+            case 'fade':
+                $ffmpegCmd[] = '-vf';
+                $ffmpegCmd[] = 'fade=type=in:duration=1,fade=type=out:duration=1';
+                break;
+            case 'zoom':
+                $ffmpegCmd[] = '-vf';
+                $ffmpegCmd[] = "zoompan=z='min(zoom+0.03,1.5)':d=1:x='iw/2':y='ih/2'";
+                break;
+            case 'slide':
+                // Alternative slide implementation
+                try {
+                    $ffmpegCmd[] = '-vf';
+                    $ffmpegCmd[] = 'slide=out_w=1280:out_h=720:duration=1';
+                } catch (\Exception $e) {
+                    // Fallback to fade if slide not available
+                    Log::warning('Slide filter not available, using fade instead');
+                    $ffmpegCmd[] = '-vf';
+                    $ffmpegCmd[] = 'fade=type=in:duration=1,fade=type=out:duration=1';
+                }
+                break;
+            default:
+                // No effect
+                break;
+        }
+
+        $ffmpegCmd[] = str_replace('\\', '/', $outputVideoPath);
+
+        try {
+            $process = new Process($ffmpegCmd);
+            $process->setTimeout(600);
             $process->run();
             
             if (!$process->isSuccessful()) {
+                $errorOutput = $process->getErrorOutput();
+                if (strpos($errorOutput, 'No such filter') !== false) {
+                    throw new \Exception("The requested video effect is not available in your FFmpeg installation");
+                }
                 throw new ProcessFailedException($process);
             }
-            
-            // Clean up temporary files
-            Storage::deleteDirectory($tempPath);
-            
-            // Return success response with video URL
-            return response()->json([
-                'success' => true,
-                'videoUrl' => asset("storage/videos/{$videoFileName}"),
-                'message' => 'Video created successfully',
-            ]);
-            
         } catch (\Exception $e) {
-            // Clean up temporary files on error
-            Storage::deleteDirectory($tempPath);
-            
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create video: ' . $e->getMessage(),
-            ], 500);
+            Log::error('Process Error: '.$e->getMessage());
+            throw new ProcessFailedException($process);
         }
+        // Create thumbnail
+        $thumbnailPath = $outputPath . DIRECTORY_SEPARATOR . "thumb_{$processId}.jpg";
+        $thumbnailCmd = [
+            'ffmpeg',
+            '-y',
+            '-ss', '00:00:01',
+            '-i', str_replace('\\', '/', $outputVideoPath),
+            '-vframes', '1',
+            '-q:v', '2',
+            str_replace('\\', '/', $thumbnailPath)
+        ];
+        
+        $thumbnailProcess = new Process($thumbnailCmd);
+        $thumbnailProcess->run();
+
+        // Cleanup
+        array_map('unlink', glob($tempPath . DIRECTORY_SEPARATOR . '*'));
+        rmdir($tempPath);
+
+        return response()->json([
+            'success' => true,
+            'videoUrl' => asset("storage/videos/" . rawurlencode($videoFileName)),
+            'thumbnail' => asset("storage/videos/" . rawurlencode("thumb_{$processId}.jpg")),
+            'message' => 'Video created successfully',
+        ]);
+
+    } catch (\Exception $e) {
+        // Cleanup on failure
+        if (file_exists($tempPath)) {
+            array_map('unlink', glob($tempPath . DIRECTORY_SEPARATOR . '*'));
+            @rmdir($tempPath);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to create video: ' . $e->getMessage(),
+            'error_details' => $e instanceof ProcessFailedException ? $e->getProcess()->getErrorOutput() : null,
+        ], 500);
     }
+}
+
+private function addTextToImage($imagePath, $textData)
+{
+    try {
+        $text = $textData['text'] ?? '';
+        if (empty($text)) return;
+
+        $imageInfo = getimagesize($imagePath);
+        $extension = strtolower(pathinfo($imagePath, PATHINFO_EXTENSION));
+        
+        // Support both JPG and PNG
+        if ($extension === 'png') {
+            $image = imagecreatefrompng($imagePath);
+        } else {
+            $image = imagecreatefromjpeg($imagePath);
+        }
+        
+        // Add background to text for better readability
+        $this->addTextBackground($image, $textData, $imageInfo[0], $imageInfo[1]);
+        
+        // Rest of your text overlay code...
+    } catch (\Exception $e) {
+        Log::error('Text overlay error: '.$e->getMessage());
+    }
+}
+private function addTextBackground($image, $textData, $imageWidth, $imageHeight)
+{
+    $text = $textData['text'];
+    $fontSize = $textData['fontSize'] ?? 24;
+    $position = $textData['position'] ?? 'center';
     
+    $bbox = imagettfbbox($fontSize, 0, public_path('fonts/arial.ttf'), $text);
+    $textWidth = abs($bbox[4] - $bbox[0]);
+    $textHeight = abs($bbox[1] - $bbox[5]);
+    
+    $padding = 10;
+    $bgWidth = $textWidth + ($padding * 2);
+    $bgHeight = $textHeight + ($padding * 2);
+    
+    $x = ($imageWidth - $bgWidth) / 2;
+    $y = match($position) {
+        'top' => $textHeight + $padding + 20,
+        'bottom' => $imageHeight - $textHeight - $padding - 20,
+        default => ($imageHeight - $bgHeight) / 2,
+    };
+    
+    $bgColor = imagecolorallocatealpha($image, 0, 0, 0, 60); // Semi-transparent black
+    imagefilledrectangle($image, $x, $y, $x + $bgWidth, $y + $bgHeight, $bgColor);
+}
+
+private function hexToRGB($hex)
+{
+    $hex = str_replace('#', '', $hex);
+
+    if (strlen($hex) == 3) {
+        $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+        $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+        $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+    } else {
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+    }
+
+    return ['r' => $r, 'g' => $g, 'b' => $b];
+}
+
+private function calculateTextBox($text, $fontSize, $imageWidth, $imageHeight, $position)
+{
+    $bbox = imagettfbbox($fontSize, 0, public_path('fonts/arial.ttf'), $text);
+    $textWidth = abs($bbox[4] - $bbox[0]);
+    $textHeight = abs($bbox[1] - $bbox[5]);
+    $x = ($imageWidth - $textWidth) / 2;
+
+    $y = match($position) {
+        'top' => $textHeight + 20,
+        'bottom' => $imageHeight - 20,
+        default => $imageHeight / 2,
+    };
+
+    return [
+        'x' => max(0, $x),
+        'y' => $y
+    ];
+}
+public function deleteVideo(Request $request)
+{
+    $request->validate([
+        'video_id' => 'required|integer|exists:videos,id',
+    ]); 
+    $video = Video::find($request->video_id);
+    if ($video) {
+        $video->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Video deleted successfully',
+        ]);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Video not found',
+        ], 404);
+    }   
+}   
 
 
     public function createVideo_old(Request $request)

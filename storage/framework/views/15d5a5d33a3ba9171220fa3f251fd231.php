@@ -6,23 +6,8 @@
         <div class="col-lg-11 col-md-11 stickymenucontent"> 
 
             <!--blog section start-->
-    
-        <div class="container">
-    <div class="row justify-content-center">
-    <center><h2 class="text-center"><?php echo e(__('Create Slideshow Video')); ?></h2></center>
-    <div class="col-md-12 mb-12">
-    <div class="col-md-12 mb-12">
-            <div class="card shadow-lg border-0 rounded-3">
-           
+    	<div id="video-creator"></div>
 
-                <div class="card-body">
-                <div id="video-creator"></div>
-                </div>
-            </div>
-    </div>
-    </div>
-    </div>
-    </div>
         </div>
     </div>
 </div>

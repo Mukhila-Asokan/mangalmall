@@ -11,10 +11,12 @@ use App\Models\OccasionDataField;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Modules\Invitation\Models\InvitationWebpage;
 use Svg\Tag\Rect;
 use App\Models\UserImageLibrary as Imagelibrary;
+use App\Models\UserCampaign;
 
 class UserWebPageController extends Controller
 {
@@ -115,21 +117,48 @@ class UserWebPageController extends Controller
 
     public function preview($id)
     {       
-        $template = InvitationWebpage::where('id', $id)->first();
-        $themefullpath = $template->pathname;
-        $pathurl = url('/').$themefullpath.'/index.html'; 
-        $url = url('/').$themefullpath;
-        return redirect()->away($pathurl); 
+        $userid = Auth::user()->id;
+        $usercampaign = UserCampaign::where('userid', $userid)->where('theme_id', $id)->first();
+        if($usercampaign)
+        {
+            $html = $usercampaign->template_html;
+            echo $html;
+        }
+        else
+        {
+            $template = InvitationWebpage::where('id', $id)->first();
+            $themefullpath = $template->pathname;
+            $pathurl = url('/').$themefullpath.'/index.html'; 
+            $url = url('/').$themefullpath;
+            return redirect()->away($pathurl); 
+        }
+    
     }
     public function themeeditor($userid,$id)  
     {
-        $theme = InvitationWebpage::where('id', $id)->first();
-        $userWebPage = UserWebPage::where('userid', $userid)->where('occasion_id', '40')->first();
-        $occasiondata = OccasionDataField::where('occasion_id', '40')->get();
-        $webpagedata = UserWebPageData::where('webpage_id', $id)->get();
-        $themefullpath = $theme->pathname;  
-        $pathurl = url('/').$themefullpath.'/index.html';
-        return view('home.showwebpage',compact('pathurl','userid','id','theme','themefullpath','webpagedata','userWebPage'));
+        $usercampaign = UserCampaign::where('userid', $userid)->where('theme_id', $id)->first();
+
+        if($usercampaign)
+        {
+            $template = $usercampaign;
+            $theme = InvitationWebpage::where('id', $id)->first();
+            $userWebPage = UserWebPage::where('userid', $userid)->where('occasion_id', '40')->first();           
+            $webpagedata = UserWebPageData::where('webpage_id', $id)->get();
+            $themefullpath = $theme->pathname;  
+            $pathurl = url('/').$themefullpath.'/index.html';
+        }
+        else
+        {
+            $template = '';
+            $theme = InvitationWebpage::where('id', $id)->first();
+            $userWebPage = UserWebPage::where('userid', $userid)->where('occasion_id', '40')->first();           
+            $webpagedata = UserWebPageData::where('webpage_id', $id)->get();
+            $themefullpath = $theme->pathname;  
+            $pathurl = url('/').$themefullpath.'/index.html';
+        }
+
+       
+        return view('home.showwebpage',compact('pathurl','userid','id','template','theme','themefullpath','webpagedata','userWebPage'));
     }
     public function load_media_library_img(Request $request)
     {
@@ -208,40 +237,67 @@ class UserWebPageController extends Controller
 
     public function saveMyTemplate(Request $request)
     {
+        $userid = Auth::user()->id;
         $template_id = $request->template_id;
         $html = $request->template_content;
-        $venueid = $request->venueid;
-        $venuename = $request->venuename;
-        $themname = $request->themname;
-        $venuecampaign = new VenueCampaigns;
-        $venuecampaign->venueid = $venueid;
-        $venuecampaign->venuename = $venuename;
-        $venuecampaign->theme_id = $template_id;
-        $venuecampaign->themename = $themname;
-        $venuecampaign->custom_css = $request->custom_css ?? '-';
-        $venuecampaign->custom_js = $request->custom_js  ?? '-';
-        $venuecampaign->template_html = $html;  
+       
 
-        $venuecampaign->save();
-        $upload_path = $this->createTemplateDirectory($venueid);
-        $p = $upload_path.time().'.html';
-        file_put_contents($p, $html);
+        $template_id = $request->input('template_id');
+        $themname = $request->input('themname');
+        $html = $request->input('template_content');
 
-        $browserResponse['status']   = 'success';
-        $browserResponse['message']  = 'Template updated successfully';
-        return response()->json($browserResponse, 200);
+        $usercampaign = UserCampaign::where('userid', $userid)->where('theme_id', $template_id)->first();
+
+        if($usercampaign){
+            $usercampaign->template_html = $html;
+            $usercampaign->save();
+            $upload_path = $this->createTemplateDirectory($userid);
+            $p = $upload_path.time().'.html';
+            file_put_contents($p, $html);
+            $browserResponse['status']   = 'success';
+            $browserResponse['message']  = 'Template updated successfully';
+            return response()->json($browserResponse, 200);
+        }else
+        {
+            $usercampaign = new UserCampaign;
+            $usercampaign->userid = $userid;
+            $usercampaign->validupto = now()->addDays(30);
+            $usercampaign->occasion_id = 1;
+            $usercampaign->theme_id = $template_id;
+            $usercampaign->themename = $themname;
+            $usercampaign->custom_css = $request->custom_css ?? '-';
+            $usercampaign->custom_js = $request->custom_js  ?? '-';
+            $usercampaign->template_html = $html;  
+            $usercampaign->status = 'Active';
+            $usercampaign->delete_status = 0;
+            $usercampaign->save();
+            $upload_path = $this->createTemplateDirectory($userid);
+            $p = $upload_path.time().'.html';
+            file_put_contents($p, $html);
+            $browserResponse['status']   = 'success';
+            $browserResponse['message']  = 'Template updated successfully';
+            return response()->json($browserResponse, 200);
+        }
 
     }
 
-    function createTemplateDirectory($venueid){  
-        $upload_path = public_path('storage/uploads/sites/venue'.$venueid.'/');
-        $checkPath   = public_path('storage/uploads/sites/venue'.$venueid.'/');
+    function createTemplateDirectory($userid){  
+        $upload_path = public_path('storage/uploads/sites/user'.$userid.'/');
+        $checkPath   = public_path('storage/uploads/sites/user'.$userid.'/');
 
         if(!File::exists($checkPath)) {
             File::makeDirectory($upload_path, 0755, true); 
         }
         return $upload_path;
     }
+    public function upload_image(Request $request)
+    {
 
+    }
+
+    public function uploadImageUrl(Request $request)
+    {
+        
+    }
 
 }

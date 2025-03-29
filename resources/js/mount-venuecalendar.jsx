@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import VenueCalendarComponent from '@/components/venuecalendar';
 import AdsSlider from './components/adscomponents';
 import VideoCreator from './components/videomaking';
+import '../css/app.css';
+
 
 // Mount the component when the DOM is ready
 if (document.getElementById('calendar-component')) {

@@ -34,6 +34,10 @@
 											
 						
 					<?php 
+					if(isset($template)) {
+						$file_contents = $template->template_html;
+						$webpagename = $template->themename;
+					} else {
 						 $themefullpath = $theme->pathname;
 
 						 $publicurl = str_replace('\\', '/', public_path());
@@ -41,8 +45,9 @@
 						 $filePath = $url.'/index.html'; 
 						 $asseturl = url('/').$themefullpath;
        					 $file_contents = file_get_contents( $filePath );
-       					  $file_contents = str_replace("asset",$asseturl.'/asset' , $file_contents );
-       					
+       					$file_contents = str_replace("asset",$asseturl.'/asset' , $file_contents );
+						$webpagename = $theme->webpagename;
+					}	
 
 					?>
 					 <?php echo $file_contents; ?> 
@@ -58,4 +63,4 @@
 					</div>
 				</div>
 				<input type="hidden" id="userid" name = "userid" value="<?php echo e($userid); ?>">	
-				<input type="hidden" id="themname" name = "themname" value="<?php echo e($theme->webpagename); ?>"><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/editor/editing_screen_1.blade.php ENDPATH**/ ?>
+				<input type="hidden" id="themname" name = "themname" value="<?php echo e($webpagename); ?>"><?php /**PATH C:\xampp\htdocs\mangalmall\resources\views/editor/editing_screen_1.blade.php ENDPATH**/ ?>
