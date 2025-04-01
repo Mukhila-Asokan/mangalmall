@@ -31,7 +31,7 @@
         <div class="col-lg-11 col-md-11 stickymenucontent">  
         <div class="container">
     
-        <h2 class="text-center">Budget Board</h2>
+        <h4 class="text-center">Budget Board</h4>
        
 
 
@@ -463,6 +463,10 @@ document.querySelector('.sortable-list').addEventListener('mouseleave', function
                         title: 'Success!',
                         text: 'New budget item added successfully!',
                         timer: 2000
+                    }).then((result) => {
+                        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+                            location.reload(); // Reloads the page
+                        }
                     });
 
                   

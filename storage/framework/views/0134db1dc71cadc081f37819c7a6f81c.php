@@ -50,7 +50,7 @@
                     <!--responsive toggle button end-->
 
                     <!--main menu start-->
-                    <div id="navBar" class="collapse navbar-collapse">
+                    <div id="navBar" class="navbar-collapse">
                         <ul class="navbar-nav ml-auto main-navbar-nav">
                           
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('accessPaidMenus', Auth::user())): ?>

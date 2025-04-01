@@ -75,15 +75,31 @@ margin-bottom: 10px;
                                                                 <p class="card-text mt-2 text-muted mb-0 font-14">Event - {{ $occasion->Occasionname->eventtypename }}</p>
                                                             </div>
                                                             <div class="col-md-6 d-flex justify-content-end">
-                                                                @if(($occasion->occasionCollaborate)->pluck('user_id')->contains(auth()->user()->id))
-                                                                    <div class="d-flex"><i class="bi bi-person-fill-check mt-1"></i> <p class="card-text mt-2 text-muted mb-0 font-14 text-end ml-1"> You </p></div>
-                                                                @else
-                                                                    <?php 
-                                                                        $user = ($occasion->occasionCollaborate)->first();
-                                                                    ?>
-                                                                    <div class="d-flex"><i class="fa-solid fa-handshake-simple mt-1"></i><p class="card-text mt-2 text-muted mb-0 font-14 text-end ml-1">{{ $user->user->name }}</p></div>
-                                                                @endif
-                                                            </div>    
+    @php
+        $collaborators = $occasion->occasionCollaborate;
+        $currentUserId = optional(auth()->user())->id;
+    @endphp
+
+    @if($collaborators && $collaborators->pluck('user_id')->contains($currentUserId))
+        <div class="d-flex">
+            <i class="bi bi-person-fill-check mt-1"></i>
+            <p class="card-text mt-2 text-muted mb-0 font-14 text-end ml-1">You</p>
+        </div>
+    @else
+        @php
+            $collaborator = optional($collaborators)->first();
+            $collaboratorName = optional(optional($collaborator)->user)->name;
+        @endphp
+        <div class="d-flex">
+            <i class="fa-solid fa-handshake-simple mt-1"></i>
+            <p class="card-text mt-2 text-muted mb-0 font-14 text-end ml-1">
+                {{ $collaboratorName ?? 'Collaborator' }}
+            </p>
+        </div>
+    @endif
+</div>
+
+
                                                         </div>
 
                                                         <hr class="my-3">
